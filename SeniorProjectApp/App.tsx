@@ -6,43 +6,34 @@
  */
 <script src="http://localhost:8097" />;
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Image,
-  TextInput,
-  Pressable,
-  Button,
-} from 'react-native';
+import {StyleSheet, Text, View, Image, TextInput, Button} from 'react-native';
+
+import {NavigationContainer} from '@react-navigation/native';
 
 function App(): JSX.Element {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('./Images/unionHealthLogo.png')}
-        style={styles.logo}
-        resizeMethod={'auto'}
-      />
-      <View>
-        <Text style={styles.inputLabel}>Username:</Text>
-        <TextInput style={styles.inputBox} />
-      </View>
-      <View>
-        <Text style={styles.inputLabel}>Password: </Text>
-        <TextInput secureTextEntry style={styles.inputBox} />
-      </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Image
+          source={require('./Images/unionHealthLogo.png')}
+          style={styles.logo}
+          resizeMethod={'auto'}
+        />
+        <View>
+          <Text style={styles.inputLabel}>Username:</Text>
+          <TextInput style={styles.inputBox} />
+        </View>
+        <View>
+          <Text style={styles.inputLabel}>Password: </Text>
+          <TextInput secureTextEntry style={styles.inputBox} />
+        </View>
 
-      <View style={{flexDirection: 'row'}}>
-        <Button title={'Signup'} />
-        <Button title={'Login'} />
+        <View style={{flexDirection: 'row'}}>
+          <Button title={'Signup'} />
+          <Button title={'Login'} />
+        </View>
       </View>
-    </View>
+    </NavigationContainer>
   );
 }
 
