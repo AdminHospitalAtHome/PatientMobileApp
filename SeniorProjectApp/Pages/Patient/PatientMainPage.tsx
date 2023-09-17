@@ -1,5 +1,5 @@
 import React from 'react';
 import {View} from 'react-native';
-export default function MainPage(): JSX.Element {
+export default function PatientMainPage(): JSX.Element {
   return <View />;
 }
