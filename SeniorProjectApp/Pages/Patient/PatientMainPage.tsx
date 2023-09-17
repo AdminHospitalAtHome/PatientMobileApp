@@ -1,5 +1,16 @@
 import React from 'react';
 import {View} from 'react-native';
-export default function PatientMainPage(): JSX.Element {
-  return <View />;
+import PatientWeightNav from './PatientWeight/PatientWeightNav';
+
+export default function PatientMainPage({navigation}: {navigation: any}): JSX.Element {
+
+  // Function to navigate to the PatientWeightPage
+  const handlePatientWeightNavClick = () => {
+    navigation.navigate('patientWeightPage');
+  };
+  return (
+    <View>
+      <PatientWeightNav handleNavClick = {handlePatientWeightNavClick}></PatientWeightNav>
+    </View>
+  );
 }
