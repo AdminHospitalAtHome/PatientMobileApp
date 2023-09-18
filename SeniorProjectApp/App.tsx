@@ -4,7 +4,7 @@
  *
  * @format
  */
-// <script src="http://localhost:8097" />;
+// <script src="http://locralhost:8097" />;
 import React from 'react';
 import Login from './Login';
 import PatientMainPage from './Pages/Patient/PatientMainPage';

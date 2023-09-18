@@ -13,6 +13,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "bootstrap": "^5.3.1",
+    "chart.js": "^4.4.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-native": "0.72.4",
