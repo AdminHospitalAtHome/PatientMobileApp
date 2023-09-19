@@ -13,7 +13,7 @@ import {
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState<String>('');
-  const floatRegex: RegExp = /^[+]?(\d+\.\d{0,1}|\.\d{1})$/; // user input regulation
+  const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [invalidVisible, setInvalidVisible] = useState(false);
 
   return (
@@ -63,7 +63,9 @@ export default function PatientWeightPage(): JSX.Element {
   );
 
   function checkInput(text: string): void {
-    if (floatRegex.test(text) || text === '') {
+    const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
+
+    if (numberRegex.test(text) || text === '') {
       setInvalidVisible(false);
       setInput(text);
     } else {
