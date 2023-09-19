@@ -6,7 +6,6 @@ import {
   Text,
   StyleSheet,
   Modal,
-  Pressable,
   TextInput,
 } from 'react-native';
 
@@ -63,8 +62,6 @@ export default function PatientWeightPage(): JSX.Element {
   );
 
   function checkInput(text: string): void {
-    const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
-
     if (numberRegex.test(text) || text === '') {
       setInvalidVisible(false);
       setInput(text);
@@ -73,7 +70,7 @@ export default function PatientWeightPage(): JSX.Element {
     }
   }
 
-  function addWeight(): void{
+  function addWeight(): void {
     console.log(input);
     setModalVisible(!modalVisible);
   }
