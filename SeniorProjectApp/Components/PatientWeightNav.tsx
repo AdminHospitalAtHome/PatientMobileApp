@@ -1,5 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text,TouchableOpacity} from 'react-native';
+import {
+LineChart,} from "react-native-chart-kit";
+import WeightLineChart from './WeightLineChart';
 
 export default function PatientWeightNav({handleNavClick}:
     {handleNavClick:() => void}
@@ -10,10 +13,15 @@ export default function PatientWeightNav({handleNavClick}:
 
   return (
     <TouchableOpacity onPress={handleNavClick}>
-            <View style={styles.container}>
-                <View style={styles.box}>
-                    <Text style={styles.weightLabel}>Weight</Text>
+        <View style={styles.container}>
+            <View style={styles.box}>
+                <Text style={styles.weightLabel}>Weight</Text>
+                <View style= {styles.chart}>
+                    <WeightLineChart></WeightLineChart>
                 </View>
+            </View>
+           
+
         </View>
     </TouchableOpacity>
     
@@ -22,6 +30,13 @@ export default function PatientWeightNav({handleNavClick}:
 }
 
 const styles = StyleSheet.create({
+    chart: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:30
+        
+    },
     container: {
         paddingTop:20,
         justifyContent: 'center',
@@ -29,8 +44,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f0',
     },
     box: {
-        width: 300, // Adjusted to make it a rectangle
-        height: 150, // Adjusted to make it a rectangle
+        width: 300, 
+        height: 150, 
         borderColor: '#333',
         borderWidth: 2,
         borderRadius: 8,
@@ -42,11 +57,13 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.1,
         shadowRadius: 8,
+        flexDirection:'row'
+        
     },
+
+    
     weightLabel: {
         position: 'absolute',
-        top: 10,
-        left: 10,
         fontWeight: 'bold',
         fontSize: 20,
         color: '#333',
@@ -63,4 +80,3 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
     }
 });
-
