@@ -18,9 +18,9 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='home' component={Login} />
-        <Stack.Screen name='patientMain' component={PatientMainPage} />
-        <Stack.Screen name='patientWeightPage' component={PatientWeightPage} />
+        <Stack.Screen name={'home'} component={Login} />
+        <Stack.Screen name={'patientMain'} component={PatientMainPage} />
+        <Stack.Screen name={'patientWeightPage'} component={PatientWeightPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

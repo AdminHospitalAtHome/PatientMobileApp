@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import {View,ScrollView, Button, Text} from 'react-native';
 import {useState, useEffect} from 'react';
 
 export default function PatientWeightPage(): JSX.Element {
   return (
-    
-    <View>
-        <Text>Patient Weight Page</Text>
-    </View>
-  
+    <ScrollView>
+      <Text>Patient Weight Page</Text>
+      <View>
+        <Button title={'Add Manually'} />
+        <Button title={'Add automatically'} />
+      </View>
+    </ScrollView>
   );
 }
