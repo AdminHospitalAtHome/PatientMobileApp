@@ -13,7 +13,7 @@ export default function PatientWeightNav({
         <View style={styles.box}>
           <Text style={styles.weightLabel}>Weight</Text>
           <View style={styles.chart}>
-            <WeightLineChart />
+            {/*<WeightLineChart />*/}
           </View>
         </View>
       </View>
