@@ -18,12 +18,22 @@ it('renders correctly', () => {
 
 // Test UploadWeight API
 // Refrence: https://aboutreact.com/react-native-http-networking/
-it('Upload Data to UploadWeight correctly', () => {
+it('Upload Data to getWeight correctly', () => {
   fetch('https://hospital-at-home.azurewebsites.net/api/uploadWeight?code=a_i9B0rOEP4VLleK5_AR3HUo_B3sWT-ghKnyUVPtGeaaAzFu-gQYIw==', {
-    method: 'POST',
-    body: '{"PatientID":"1", "DateTimeTaken": "2023-9-20 08:00:00.000", "WeightInPounds":200, "IfManualInput":1}'
+    method: 'GET',
+    body: '{"PatientID":"1", "StartDateTime":"2023-01-01 07:00:00.000", "EndDateTime":"2023-01-01 09:00:00.000"}'
   }).then((response) => response.json())
   .then((responseJson) => {
     expect(responseJson.status_code).toBe(200);
+    expect(responseJson.Data[0].DateTimeTaken).toBe('2023-01-01 08:00:00.000')
+    expect(responseJson.Data[0].WeightInPounds).toBe(190.2)
+    expect(responseJson.Data[0].IfManualInput).toBe(1)
   })
 });
+
+// Refrence Output of API
+/*
+{'Data': [{'DateTimeTaken':'2023-01-10 08:00:00.000', 'WeightInPounds':200, 'IfManualInput':1}]}
+*/
+
+//'1', '2023-01-01 08:00:00.000', 190.2, 1)
