@@ -9,6 +9,7 @@ import {
   Modal,
   TextInput,
 } from 'react-native';
+import {AddWeight} from "../../../BackEndFunctionCall/AddWeight";
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -23,7 +24,7 @@ export default function PatientWeightPage(): JSX.Element {
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
               <Row data={['Date', 'Time', 'Weight']} widthArr={[50, 50, 50]} />
           </Table>
-        
+
       </View>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
@@ -79,6 +80,8 @@ export default function PatientWeightPage(): JSX.Element {
 
   function addWeight(): void {
     console.log(input);
+    // @ts-ignore
+    AddWeight({patientId: '3', weight: {input}, ifManualInput: "true"});
     setModalVisible(!modalVisible);
   }
 }
