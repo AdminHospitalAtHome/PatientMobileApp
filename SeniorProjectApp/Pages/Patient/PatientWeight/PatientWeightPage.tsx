@@ -23,6 +23,7 @@ export default function PatientWeightPage(): JSX.Element {
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
               <Row data={['Date', 'Time', 'Weight']} widthArr={[50, 50, 50]} />
           </Table>
+        
       </View>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
