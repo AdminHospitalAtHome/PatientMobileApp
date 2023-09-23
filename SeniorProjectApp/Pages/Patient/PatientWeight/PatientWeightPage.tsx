@@ -20,7 +20,9 @@ export default function PatientWeightPage(): JSX.Element {
     <ScrollView style={styles.container}>
       <Text>Patient Weight Page</Text>
       <View>
-
+        <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
+              <Row data={['Date', 'Time', 'Weight']} widthArr={[50, 50, 50]} />
+          </Table>
       </View>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
