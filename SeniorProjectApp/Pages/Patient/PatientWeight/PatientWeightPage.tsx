@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import {
   View,
   ScrollView,
@@ -18,6 +19,9 @@ export default function PatientWeightPage(): JSX.Element {
   return (
     <ScrollView style={styles.container}>
       <Text>Patient Weight Page</Text>
+      <View>
+
+      </View>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />

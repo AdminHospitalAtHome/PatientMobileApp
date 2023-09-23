@@ -1,0 +1,28 @@
+{
+    "bindings": [
+      {
+        "authLevel": "anonymous",
+        "type": "httpTrigger",
+        "direction": "in",
+        "name": "req",
+        "methods": [
+          "get",
+          "post"
+        ]
+      },
+      {
+        "type": "http",
+        "direction": "out",
+        "name": "res"
+      },
+      {
+        "name": "weight",
+        "direction": "in",
+        "type": "sql",
+        "connectionStringSetting": "SqlConnectionString",
+        "commandText": "Select * FROM [dbo].[Patient_Weight] WHERE PatientID=@PatientID AND DateTimeTaken > @StartDateTime AND DateTimeTaken < @StopDateTime;",
+        "commandType": "Text",
+        "parameters": "@PatientID={Query.patientID},@StartDateTime={Query.startDateTime},@StopDateTime={Query.stopDateTime}"
+      }
+    ]
+  }
