@@ -13,6 +13,7 @@ import {it, expect} from '@jest/globals';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import getCurrentDateTime from "../BackEndFunctionCall/getCurrentDateAndTime";
+import * as querystring from "querystring";
 
 it('renders correctly', () => {
   renderer.create(<App />);
@@ -43,11 +44,16 @@ it('renders correctly', () => {
 it("Post weight data", ()=>{
   fetch("https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight", {
     method: 'POST',
-    body:'{"PatientID" : "3", "DateTimeTaken" : "2023-01-01 07:00:00.000", "WeightInPounds": "106", "IfManualInput": "True"}'
+    body: `{"PatientID" : 3, "DateTimeTaken" : "2023-07-12 07:00:00.000", "WeightInPounds": 145, "IfManualInput": true}`,
   }).then((response) => response.json())
-      .then((responseJson)=>{
-        expect(responseJson.status_code).toBe(201);
+    .then(responseJson => {
+        console.log(responseJson);
+      expect(responseJson.status_code).toBe(201);
+
+
       })
 
 })
+
+
 

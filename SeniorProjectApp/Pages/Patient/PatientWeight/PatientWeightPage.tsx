@@ -79,9 +79,7 @@ export default function PatientWeightPage(): JSX.Element {
   }
 
   function addWeight(): void {
-    console.log(input);
-    // @ts-ignore
-    AddWeight({patientId: '3', weight: {input}, ifManualInput: "true"});
+    AddWeight({patientId: '3', weight: String(input), ifManualInput: "true"});
     setModalVisible(!modalVisible);
   }
 }
