@@ -9,22 +9,24 @@ import {
   Modal,
   TextInput,
 } from 'react-native';
-import {AddWeight} from "../../../BackEndFunctionCall/AddWeight";
+import {AddWeight} from '../../../BackEndFunctionCall/AddWeight';
+import AddSuccessfullyDialog from '../../../Components/AddSuccessfullyDialog';
+import AddFailedDialog from '../../../Components/AddFailedDialog';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState<String>('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [invalidVisible, setInvalidVisible] = useState(false);
+  const [addSuccess, setAddSuccess] = useState(false);
 
   return (
     <ScrollView style={styles.container}>
       <Text>Patient Weight Page</Text>
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-              <Row data={['Date', 'Time', 'Weight']} widthArr={[50, 50, 50]} />
-          </Table>
-
+          <Row data={['Date', 'Time', 'Weight']} widthArr={[50, 50, 50]} />
+        </Table>
       </View>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
@@ -66,6 +68,7 @@ export default function PatientWeightPage(): JSX.Element {
           </View>
         </View>
       </Modal>
+      {addSuccess && <AddSuccessfullyDialog />}
     </ScrollView>
   );
 
@@ -79,9 +82,13 @@ export default function PatientWeightPage(): JSX.Element {
   }
 
   function addWeight(): void {
-
-    AddWeight({patientId: 3, weight: Number(input), ifManualInput: true});
+    // const success: boolean = AddWeight({
+    //   patientId: 3,
+    //   weight: Number(input),
+    //   ifManualInput: true,
+    // });
     setModalVisible(!modalVisible);
+    setAddSuccess(true);
   }
 }
 

@@ -41,19 +41,14 @@ it('renders correctly', () => {
 //'1', '2023-01-01 08:00:00.000', 190.2, 1)
 
 // addWeight test
-it("Post weight data", ()=>{
-  fetch("https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight", {
+it('Post weight data', () => {
+  fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight', {
     method: 'POST',
     body: `{"PatientID" : 3, "DateTimeTaken" : "2023-07-12 07:00:00.000", "WeightInPounds": 145, "IfManualInput": true}`,
-  }).then((response) => response.json())
+  })
+    .then(response => response.json())
     .then(responseJson => {
-        console.log(responseJson);
+      console.log(responseJson);
       expect(responseJson.status_code).toBe(201);
-
-
-      })
-
-})
-
-
-
+    });
+});
