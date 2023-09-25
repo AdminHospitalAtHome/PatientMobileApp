@@ -12,7 +12,7 @@ import {View} from 'react-native'
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import PatientWeightPage from './Pages/Patient/PatientWeight/PatientWeightPage';
+import PatientWeightPage from './Pages/Patient/PatientWeightPage';
 
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {

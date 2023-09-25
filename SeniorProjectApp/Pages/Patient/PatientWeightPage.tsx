@@ -11,9 +11,10 @@ import {
 import { Row, Rows, Table } from 'react-native-table-component';
 import {
   getDefaultStartTime,
-  parseWeightData
-} from '../../../BackEndFunctionCall/weightHelper';
-import AddSuccessfullyDialog from '../../../Components/AddSuccessfullyDialog';
+  getWeightCall,
+  addWeight
+} from '../../BackEndFunctionCall/weightFunction';
+import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,15 +30,10 @@ export default function PatientWeightPage(): JSX.Element {
   const patientID = 3;
 
   useEffect(() => {
-    fetch(
-      `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-    )
-      .then(response => response.json())
-    .then((json) =>
-      parseWeightData(json)
-    )
-    .then(setWeightData)
+    getWeightCall(patientID, startDateTime, stopDateTime).then(setWeightData)
   }, [stopDateTime]);
+
+ 
 
   return (
     <ScrollView style={styles.container}>
@@ -116,7 +112,7 @@ export default function PatientWeightPage(): JSX.Element {
                 title={'Cancel'}
                 onPress={() => setModalVisible(!modalVisible)}
               />
-              <Button title={'Add'} onPress={addWeight} />
+              <Button title={'Add'} onPress={addWeightOnClick} />
             </View>
           </View>
         </View>
@@ -136,15 +132,16 @@ export default function PatientWeightPage(): JSX.Element {
     }
   }
 
-  function addWeight(): void {
-    const success: boolean = addWeight({
+  function addWeightOnClick(): void {
+    addWeight({
       patientId: 3,
       weight: Number(input),
       ifManualInput: true,
+    }).then((successful) => {
+      setModalVisible(!modalVisible);
+      setAddSuccessVisible(true);
+      setStopDateTime((new Date()).toISOString());
     });
-    setModalVisible(!modalVisible);
-    setAddSuccessVisible(true);
-    setStopDateTime(new Date().toISOString());
   }
 }
 
