@@ -138,8 +138,13 @@ export default function PatientWeightPage(): JSX.Element {
       weight: Number(input),
       ifManualInput: true,
     }).then((successful) => {
+      console.log(successful)
       setModalVisible(!modalVisible);
-      setAddSuccessVisible(true);
+      if (successful === "add successful") {
+        setAddSuccessVisible(true);
+      } else {
+        // Failed view here
+      }
       setStopDateTime((new Date()).toISOString());
     });
   }
