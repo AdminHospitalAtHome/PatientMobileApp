@@ -1,21 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  ScrollView,
   Button,
-  Text,
-  StyleSheet,
   Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
   TextInput,
+  View,
 } from 'react-native';
-import {AddWeight} from '../../../BackEndFunctionCall/AddWeight';
-import AddSuccessfullyDialog from '../../../Components/AddSuccessfullyDialog';
-import AddFailedDialog from '../../../Components/AddFailedDialog';
+import { Row, Rows, Table } from 'react-native-table-component';
 import {
-  parseWeightData,
   getDefaultStartTime,
+  parseWeightData
 } from '../../../BackEndFunctionCall/weightHelper';
+import AddSuccessfullyDialog from '../../../Components/AddSuccessfullyDialog';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -139,7 +137,7 @@ export default function PatientWeightPage(): JSX.Element {
   }
 
   function addWeight(): void {
-    const success: boolean = AddWeight({
+    const success: boolean = addWeight({
       patientId: 3,
       weight: Number(input),
       ifManualInput: true,
