@@ -12,61 +12,75 @@ import {
 import {AddWeight} from '../../../BackEndFunctionCall/AddWeight';
 import AddSuccessfullyDialog from '../../../Components/AddSuccessfullyDialog';
 import AddFailedDialog from '../../../Components/AddFailedDialog';
-import {parseWeightData, getDefaultStartTime} from '../../../BackEndFunctionCall/weightHelper';
+import {
+  parseWeightData,
+  getDefaultStartTime,
+} from '../../../BackEndFunctionCall/weightHelper';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState<String>('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [invalidVisible, setInvalidVisible] = useState(false);
-  const [addSuccess, setAddSuccess] = useState(false);
-  const [weightData, setWeightData] = useState(null)
-  const [startDateTime, setStartDateTime] = useState(getDefaultStartTime())
-  const [stopDateTime, setStopDateTime] = useState((new Date()).toISOString())
+  const [addSuccessVisible, setAddSuccessVisible] = useState(false);
+  const [weightData, setWeightData] = useState(null);
+  const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
+  const [stopDateTime, setStopDateTime] = useState((new Date()).toISOString());
 
   //TODO: Change to dynamic later!!!!
-  const patientID = 3
+  const patientID = 3;
 
   useEffect(() => {
-    fetch(`https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`)
-    .then((response) => response.json())
-    .then((json) => 
+    fetch(
+      `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
+    )
+      .then(response => response.json())
+    .then((json) =>
       parseWeightData(json)
     )
     .then(setWeightData)
-  }, [stopDateTime])
+  }, [stopDateTime]);
 
   return (
     <ScrollView style={styles.container}>
       <Text>Patient Weight Page</Text>
       <View style={{flexDirection: 'row'}}>
-        <Button title={'Day'} onPress={() => {
+        <Button
+          title={'Day'}
+          onPress={() => {
             var startDateTimeTemp = new Date()
             startDateTimeTemp.setHours(0,0,0,0)
             setStartDateTime(startDateTimeTemp.toISOString())
             setStopDateTime((new Date()).toISOString())
-          }}/>
-        <Button title={'Week'} onPress={() => {
-            var startDateTimeTemp = new Date()
-            startDateTimeTemp.setHours(0,0,0,0)
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7)
-            console.log(startDateTimeTemp.toISOString())
-            setStartDateTime(startDateTimeTemp.toISOString())
-            setStopDateTime((new Date()).toISOString())
-          }}/>
-        <Button title={'Month'} onPress={() => {
-            var startDateTimeTemp = new Date()
-            startDateTimeTemp.setHours(0,0,0,0)
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 31)
-            console.log(startDateTimeTemp.toISOString())
-            setStartDateTime(startDateTimeTemp.toISOString())
-            setStopDateTime((new Date()).toISOString())
-          }}/>
+          }}
+        />
+        <Button
+          title={'Week'}
+          onPress={(): void => {
+            const startDateTimeTemp = new Date();
+            startDateTimeTemp.setHours(0, 0, 0, 0);
+            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7);
+            console.log(startDateTimeTemp.toISOString());
+            setStartDateTime(startDateTimeTemp.toISOString());
+            setStopDateTime(new Date().toISOString());
+          }}
+        />
+        <Button
+          title={'Month'}
+          onPress={(): void => {
+            const startDateTimeTemp = new Date();
+            startDateTimeTemp.setHours(0, 0, 0, 0);
+            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 31);
+            console.log(startDateTimeTemp.toISOString());
+            setStartDateTime(startDateTimeTemp.toISOString());
+            setStopDateTime(new Date().toISOString());
+          }}
+        />
       </View>
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-          <Row data={['Date', 'Time', 'Weight']}/>
-          <Rows data={weightData}/>
+          <Row data={['Date', 'Time', 'Weight']} />
+          <Rows data={weightData} />
         </Table>
       </View>
       <View style={{flexDirection: 'row'}}>
@@ -109,7 +123,9 @@ export default function PatientWeightPage(): JSX.Element {
           </View>
         </View>
       </Modal>
-      {addSuccess && <AddSuccessfullyDialog />}
+      {addSuccessVisible && (
+        <AddSuccessfullyDialog setter={setAddSuccessVisible} />
+      )}
     </ScrollView>
   );
 
@@ -129,8 +145,8 @@ export default function PatientWeightPage(): JSX.Element {
       ifManualInput: true,
     });
     setModalVisible(!modalVisible);
-    setAddSuccess(true);
-    setStopDateTime((new Date()).toISOString())
+    setAddSuccessVisible(true);
+    setStopDateTime(new Date().toISOString());
   }
 }
 
