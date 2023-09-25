@@ -1,21 +1,18 @@
-import {Modal, View, Button, Text, StyleSheet} from "react-native";
-import {useState} from 'react';
+import {Modal, View, Button, Text, StyleSheet} from 'react-native';
+import React from 'react';
 
-export default function AddSuccessfullyDialog(): JSX.Element {
-  const [visible, setVisible] = useState(true);
+export default function AddSuccessfullyDialog({
+  setter,
+}: {
+  setter: React.Dispatch<React.SetStateAction<boolean>>;
+}): JSX.Element {
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={() => {
-        setVisible(!visible);
-      }}>
+    <Modal animationType="slide" transparent={true}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Add Successfully</Text>
           <View style={styles.modalButtonContainer}>
-            <Button title={'Confirm'} onPress={() => setVisible(!visible)} />
+            <Button title={'Confirm'} onPress={() => setter(false)} />
           </View>
         </View>
       </View>
@@ -55,4 +52,3 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
-
