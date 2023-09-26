@@ -1,8 +1,10 @@
+import getDefaultStartTime from "./getDefaultStartTime";
+
 export function parseWeightData(weightJson) {
   let weightArr = []
   for (var i = 0; i<weightJson.length; i++) {
     var tmpDate = weightJson[i].DateTimeTaken.split('T')[0].split('-')
-    
+
     const tmpDateString = tmpDate[1] + '-' + tmpDate[2] + '-' + tmpDate[0]
 
     var tmpTime = weightJson[i].DateTimeTaken.split('T')[1].split(':')
@@ -19,12 +21,6 @@ export function parseWeightData(weightJson) {
   return weightArr;
 }
 
-export function getDefaultStartTime() {
-    var startDateTimeTemp = new Date()
-    startDateTimeTemp.setHours(0,0,0,0)
-    startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7)
-    return startDateTimeTemp.toISOString()
-  }
 
 export function addWeight({
   patientId,
@@ -51,11 +47,11 @@ export function addWeight({
         reject("failed to add weight");
       }
     });
-    
+
   })
   return promise;
 }
-  
+
 export function getWeightCall(patientID, startDateTime, stopDateTime) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,

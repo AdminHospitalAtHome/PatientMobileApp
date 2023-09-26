@@ -2,22 +2,14 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import WeightLineChart from './WeightLineChart';
 
-export default function PatientWeightNav({
-  handleNavClick,
-}: {
-  handleNavClick: () => void;
-}): JSX.Element {
+export default function PatientWeightNavCard(): JSX.Element {
   return (
-    <TouchableOpacity onPress={handleNavClick}>
-      <View style={styles.container}>
-        <View style={styles.box}>
-          <Text style={styles.weightLabel}>Weight</Text>
-          <View style={styles.chart}>
-            {/*<WeightLineChart />*/}
-          </View>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.box}>
+        <Text style={styles.weightLabel}>Weight</Text>
+        <View style={styles.chart}>{/*<WeightLineChart />*/}</View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 

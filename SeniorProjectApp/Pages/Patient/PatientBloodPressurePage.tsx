@@ -10,20 +10,19 @@ import {
 } from 'react-native';
 import { Row, Rows, Table } from 'react-native-table-component';
 import {
-  getWeightCall,
-  addWeight
-} from '../../BackEndFunctionCall/weightFunction';
-import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
+  getBloodPressure,
+  addBloodPressure
+} from '../../BackEndFunctionCall/bloodPressureFunction';
+import getDefaultStartTime from "../../BackEndFunctionCall/getDefaultStartTime";
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 
-
-export default function PatientWeightPage(): JSX.Element {
+export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState<String>('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
-  const [weightData, setWeightData] = useState(null);
+  const [bloodPressureData, setBloodPressureData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState((new Date()).toISOString());
 
@@ -31,22 +30,24 @@ export default function PatientWeightPage(): JSX.Element {
   const patientID = 3;
 
   useEffect(() => {
-    getWeightCall(patientID, startDateTime, stopDateTime).then(setWeightData)
+    getBloodPressure(patientID, startDateTime, stopDateTime).then(
+      setBloodPressureData
+    );
   }, [stopDateTime]);
 
 
 
   return (
     <ScrollView style={styles.container}>
-      <Text>Patient Weight Page</Text>
+      <Text>Patient Blood Pressure Page</Text>
       <View style={{flexDirection: 'row'}}>
         <Button
           title={'Day'}
           onPress={() => {
-            var startDateTimeTemp = new Date()
-            startDateTimeTemp.setHours(0,0,0,0)
-            setStartDateTime(startDateTimeTemp.toISOString())
-            setStopDateTime((new Date()).toISOString())
+            var startDateTimeTemp = new Date();
+            startDateTimeTemp.setHours(0, 0, 0, 0);
+            setStartDateTime(startDateTimeTemp.toISOString());
+            setStopDateTime((new Date()).toISOString());
           }}
         />
         <Button
@@ -75,7 +76,7 @@ export default function PatientWeightPage(): JSX.Element {
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Weight']} />
-          <Rows data={weightData} />
+          <Rows data={bloodPressureData} />
         </Table>
       </View>
       <View style={{flexDirection: 'row'}}>
@@ -92,7 +93,7 @@ export default function PatientWeightPage(): JSX.Element {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Add Weight Data</Text>
+            <Text style={styles.modalText}>Add Blood Pressure Data</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -113,7 +114,7 @@ export default function PatientWeightPage(): JSX.Element {
                 title={'Cancel'}
                 onPress={() => setModalVisible(!modalVisible)}
               />
-              <Button title={'Add'} onPress={addWeightOnClick} />
+              <Button title={'Add'} onPress={addBloodPressureOnClick} />
             </View>
           </View>
         </View>
@@ -133,15 +134,12 @@ export default function PatientWeightPage(): JSX.Element {
     }
   }
 
-  function addWeightOnClick(): void {
-    addWeight({
-      patientId: 3,
-      weight: Number(input),
-      ifManualInput: true,
-    }).then((successful) => {
-      console.log(successful)
+  //todo: add boolean argument for auto input later
+  function addBloodPressureOnClick(): void {
+    //todo fix later for two input
+    addBloodPressure(3, Number(input), Number(input), true).then(successful => {
       setModalVisible(!modalVisible);
-      if (successful === "add successful") {
+      if (successful === 'add successful') {
         setAddSuccessVisible(true);
       } else {
         // Failed view here
