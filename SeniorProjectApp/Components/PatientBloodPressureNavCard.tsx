@@ -5,7 +5,7 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.weightLabel}>Weight</Text>
+        <Text style={styles.weightLabel}>Blood Pressure</Text>
         <View style={styles.chart}>{/*<WeightLineChart />*/}</View>
       </View>
     </View>
