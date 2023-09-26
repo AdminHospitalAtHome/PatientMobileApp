@@ -21,7 +21,7 @@ export function addHeartRate(patientID:number, heartRate:number, IfManualInput:b
 
 export function getHeartRate(patientID:number, startDateTime:String, stopDateTime:String) {
     return fetch(
-        `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodPressure?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
+        `https://hosptial-at-home-js-api.azurewebsites.net/api/getHeartRate?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
       )
         .then(response => response.json())
       .then((json) =>

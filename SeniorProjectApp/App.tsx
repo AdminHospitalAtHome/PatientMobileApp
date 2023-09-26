@@ -14,6 +14,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PatientWeightPage from './Pages/Patient/PatientWeightPage';
 import PatientBloodPressurePage from './Pages/Patient/PatientBloodPressurePage';
+import PatientHeartRatePage from './Pages/Patient/PatientHeartRatePage';
 
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
@@ -25,6 +26,7 @@ function App(): JSX.Element {
         <Stack.Screen name={'patientMain'} component={PatientMainPage} />
         <Stack.Screen name={'patientWeightPage'} component={PatientWeightPage} />
         <Stack.Screen name={'patientBloodPressurePage'} component={PatientBloodPressurePage} />
+        <Stack.Screen name={'patientHeartRatePage'} component={PatientHeartRatePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

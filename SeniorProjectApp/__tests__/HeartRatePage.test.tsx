@@ -4,14 +4,13 @@
 import 'react-native';
 
 import {it, expect} from '@jest/globals';
-import { addBloodPressure, getBloodPressure } from '../BackEndFunctionCall/bloodPressureFunction';
-import { getHeartRate } from '../BackEndFunctionCall/heartRateFunction';
+import { addHeartRate, getHeartRate } from '../BackEndFunctionCall/heartRateFunction';
 
 
 
 // Add Heart Rate test
 it('Add Heart Rate Test', () => {
-  addBloodPressure(3, 120, 80, true).then((output) => {
+  addHeartRate(3, 269, true).then((output) => {
     expect(output).toBe('add successful')
   })
 });
