@@ -18,13 +18,15 @@ import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
-  const [input, setInput] = useState<String>('');
+  const [inputSystolic, setInputSystolic] = useState('');
+  const [inputDiastolic,setInputDiastolic] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [bloodPressureData, setBloodPressureData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState((new Date()).toISOString());
+
 
   //TODO: Change to dynamic later!!!!
   const patientID = 3;
@@ -39,7 +41,6 @@ export default function PatientBloodPressurePage(): JSX.Element {
 
   return (
     <ScrollView style={styles.container}>
-      <Text>Patient Blood Pressure Page</Text>
       <View style={{flexDirection: 'row'}}>
         <Button
           title={'Day'}
@@ -75,7 +76,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
       </View>
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-          <Row data={['Date', 'Time', 'Weight']} />
+          <Row data={['Date', 'Time', 'Systolic', 'Diastolic']} />
           <Rows data={bloodPressureData} />
         </Table>
       </View>
@@ -94,6 +95,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Add Blood Pressure Data</Text>
+            <Text style={styles.modalLabel}>Systolic Blood Pressure</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -102,10 +104,24 @@ export default function PatientBloodPressurePage(): JSX.Element {
               }}>
               <TextInput
                 style={styles.input}
-                onChangeText={text => checkInput(text)}
+                onChangeText={text => checkInput(text, setInputSystolic)}
               />
-              <Text style={{fontSize: 25}}>lb</Text>
+              <Text style={{fontSize: 25}}>mmHg</Text>
             </View>
+            <Text style={styles.modalLabel}>Diastolic Blood Pressure</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => checkInput(text, setInputDiastolic)}
+              />
+              <Text style={{fontSize: 25}}>mmHg</Text>
+            </View>
+
             {invalidVisible && (
               <Text style={{color: 'red'}}>Invalid Input!</Text>
             )}
@@ -125,7 +141,10 @@ export default function PatientBloodPressurePage(): JSX.Element {
     </ScrollView>
   );
 
-  function checkInput(text: string): void {
+  function checkInput(
+    text: string,
+    setInput: React.Dispatch<React.SetStateAction<string>>,
+  ): void {
     if (numberRegex.test(text) || text === '') {
       setInvalidVisible(false);
       setInput(text);
@@ -136,20 +155,36 @@ export default function PatientBloodPressurePage(): JSX.Element {
 
   //todo: add boolean argument for auto input later
   function addBloodPressureOnClick(): void {
-    //todo fix later for two input
-    addBloodPressure(3, Number(input), Number(input), true).then(successful => {
-      setModalVisible(!modalVisible);
-      if (successful === 'add successful') {
-        setAddSuccessVisible(true);
-      } else {
-        // Failed view here
-      }
-      setStopDateTime((new Date()).toISOString());
-    });
+    if (
+      inputSystolic === '' ||
+      inputDiastolic === '' ||
+      !numberRegex.test(inputSystolic) ||
+      !numberRegex.test(inputDiastolic)
+    ) {
+      //todo: raise error message dialog
+    } else {
+      addBloodPressure(3, Number(inputSystolic), Number(inputDiastolic), true).then(successful => {
+        setModalVisible(!modalVisible);
+        if (successful === 'add successful') {
+          setAddSuccessVisible(true);
+        } else {
+          // Failed view here
+        }
+        setStopDateTime((new Date()).toISOString());
+      });
+      setInputDiastolic('');
+      setInputSystolic('');
+    }
   }
 }
 
 const styles = StyleSheet.create({
+  modalLabel: {
+    fontSize: 15,
+    color: 'grey',
+    alignItems: 'flex-start',
+  },
+
   container: {
     flex: 1,
   },
