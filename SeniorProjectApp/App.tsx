@@ -22,11 +22,11 @@ function App(): JSX.Element {
       //<View/>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name={'home'} component={Login} />
-        <Stack.Screen name={'patientMain'} component={PatientMainPage} />
-        <Stack.Screen name={'patientWeightPage'} component={PatientWeightPage} />
-        <Stack.Screen name={'patientBloodPressurePage'} component={PatientBloodPressurePage} />
-        <Stack.Screen name={'patientHeartRatePage'} component={PatientHeartRatePage} />
+        <Stack.Screen name={'home'} component={Login} options={{title: 'Login'}}/>
+        <Stack.Screen name={'patientMain'} component={PatientMainPage} options={{title: 'Home'}}/>
+        <Stack.Screen name={'patientWeightPage'} component={PatientWeightPage} options={{title: 'My Weight'}} />
+        <Stack.Screen name={'patientBloodPressurePage'} component={PatientBloodPressurePage} options={{ title: 'My Blood Pressure'}} />
+        <Stack.Screen name={'patientHeartRatePage'} component={PatientHeartRatePage} options = {{ title: 'My Heart Rate'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

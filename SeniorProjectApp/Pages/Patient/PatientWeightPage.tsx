@@ -19,7 +19,7 @@ import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
-  const [input, setInput] = useState<String>('');
+  const [input, setInput] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
@@ -134,20 +134,24 @@ export default function PatientWeightPage(): JSX.Element {
   }
 
   function addWeightOnClick(): void {
-    addWeight({
-      patientId: 3,
-      weight: Number(input),
-      ifManualInput: true,
-    }).then((successful) => {
-      console.log(successful)
-      setModalVisible(!modalVisible);
-      if (successful === "add successful") {
-        setAddSuccessVisible(true);
-      } else {
-        // Failed view here
-      }
-      setStopDateTime((new Date()).toISOString());
-    });
+    if (input === '' || !numberRegex.test(input)) {
+      //todo : raise error message/dialog
+    } else {
+      addWeight({
+        patientId: 3,
+        weight: Number(input),
+        ifManualInput: true,
+      }).then((successful) => {
+        setModalVisible(!modalVisible);
+        if (successful === 'add successful') {
+          setAddSuccessVisible(true);
+        } else {
+          // Failed view here
+        }
+        setStopDateTime((new Date()).toISOString());
+      });
+      setInput('');
+    }
   }
 }
 
