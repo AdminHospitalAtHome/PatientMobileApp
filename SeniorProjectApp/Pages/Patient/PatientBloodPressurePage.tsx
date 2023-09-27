@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Modal,
@@ -8,41 +8,41 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Row, Rows, Table } from 'react-native-table-component';
-import DateSellectionBar from "../../Components/DateSelectionBar";
+import {Row, Rows, Table} from 'react-native-table-component';
+import DateSellectionBar from '../../Components/DateSelectionBar';
 import {
   getBloodPressure,
-  addBloodPressure
+  addBloodPressure,
 } from '../../BackEndFunctionCall/bloodPressureFunction';
-import getDefaultStartTime from "../../BackEndFunctionCall/getDefaultStartTime";
+import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputSystolic, setInputSystolic] = useState('');
-  const [inputDiastolic,setInputDiastolic] = useState('');
+  const [inputDiastolic, setInputDiastolic] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [bloodPressureData, setBloodPressureData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const [stopDateTime, setStopDateTime] = useState((new Date()).toISOString());
-
+  const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
 
   //TODO: Change to dynamic later!!!!
   const patientID = 3;
 
   useEffect(() => {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(
-      setBloodPressureData
+      setBloodPressureData,
     );
   }, [stopDateTime]);
 
-
-
   return (
     <ScrollView style={styles.container}>
-      <DateSellectionBar setStartDateTime={setStartDateTime} setStopDateTime={setStopDateTime} />
+      <DateSellectionBar
+        setStartDateTime={setStartDateTime}
+        setStopDateTime={setStopDateTime}
+      />
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Systolic', 'Diastolic']} />
@@ -132,14 +132,19 @@ export default function PatientBloodPressurePage(): JSX.Element {
     ) {
       //todo: raise error message dialog
     } else {
-      addBloodPressure(3, Number(inputSystolic), Number(inputDiastolic), true).then(successful => {
+      addBloodPressure(
+        3,
+        Number(inputSystolic),
+        Number(inputDiastolic),
+        true,
+      ).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);
         } else {
           // Failed view here
         }
-        setStopDateTime((new Date()).toISOString());
+        setStopDateTime(new Date().toISOString());
       });
       setInputDiastolic('');
       setInputSystolic('');

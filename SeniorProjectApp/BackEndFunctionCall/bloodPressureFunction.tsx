@@ -1,4 +1,9 @@
-export function addBloodPressure(patientID, SystolicBloodPressureInMmHg, DiastolicBloodPressureInMmHg, IfManualInput){
+export function addBloodPressure(
+  patientID,
+  SystolicBloodPressureInMmHg,
+  DiastolicBloodPressureInMmHg,
+  IfManualInput,
+) {
   const promise: Promise<any> = new Promise((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch(
@@ -15,37 +20,45 @@ export function addBloodPressure(patientID, SystolicBloodPressureInMmHg, Diastol
         reject('failed to add blood pressure');
       }
     });
-  })
-      return promise;
+  });
+  return promise;
 }
 
 export function getBloodPressure(patientID, startDateTime, stopDateTime) {
-    return fetch(
-        `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodPressure?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-      )
-        .then(response => response.json())
-      .then((json) =>
-      parseBloodPressureData(json)
-      )
+  return fetch(
+    `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodPressure?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
+  )
+    .then(response => response.json())
+    .then(json => parseBloodPressureData(json));
 }
 
 function parseBloodPressureData(bloodPressureJSON) {
-    let bloodPressureArr = []
-    for (var i = 0; i<bloodPressureJSON.length; i++) {
-      var tmpDate = bloodPressureJSON[i].DateTimeTaken.split('T')[0].split('-')
+  let bloodPressureArr = [];
+  for (var i = 0; i < bloodPressureJSON.length; i++) {
+    var tempDateObject = new Date(bloodPressureJSON[i].DateTimeTaken);
+    tempDateObject.setMinutes(
+      tempDateObject.getMinutes() - tempDateObject.getTimezoneOffset(),
+    );
 
-      const tmpDateString = tmpDate[1] + '-' + tmpDate[2] + '-' + tmpDate[0]
+    var tmpDate = tempDateObject.toISOString().split('T')[0].split('-');
 
-      var tmpTime = bloodPressureJSON[i].DateTimeTaken.split('T')[1].split(':')
-      var tmpHour = parseInt(tmpTime[0])
-      var tmpTimeString = ''
-      if (tmpHour > 12) {
-        tmpTimeString = String(tmpHour-12) + ":" + tmpTime[1] + " PM"
-      } else {
-        tmpTimeString = String(tmpHour) + ":" + tmpTime[1] + " AM"
-      }
+    const tmpDateString = tmpDate[1] + '-' + tmpDate[2] + '-' + tmpDate[0];
 
-      bloodPressureArr.push([tmpDateString,tmpTimeString,bloodPressureJSON[i].SystolicBloodPressureInMmHg, bloodPressureJSON[i].DiastolicBloodPressureInMmHg])
+    var tmpTime = tempDateObject.toISOString().split('T')[1].split(':');
+    var tmpHour = parseInt(tmpTime[0]);
+    var tmpTimeString = '';
+    if (tmpHour > 12) {
+      tmpTimeString = String(tmpHour - 12) + ':' + tmpTime[1] + ' PM';
+    } else {
+      tmpTimeString = String(tmpHour) + ':' + tmpTime[1] + ' AM';
     }
-    return bloodPressureArr;
+
+    bloodPressureArr.push([
+      tmpDateString,
+      tmpTimeString,
+      bloodPressureJSON[i].SystolicBloodPressureInMmHg,
+      bloodPressureJSON[i].DiastolicBloodPressureInMmHg,
+    ]);
   }
+  return bloodPressureArr;
+}
