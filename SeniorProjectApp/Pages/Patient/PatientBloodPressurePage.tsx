@@ -57,7 +57,6 @@ export default function PatientBloodPressurePage(): JSX.Element {
             const startDateTimeTemp = new Date();
             startDateTimeTemp.setHours(0, 0, 0, 0);
             startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7);
-            console.log(startDateTimeTemp.toISOString());
             setStartDateTime(startDateTimeTemp.toISOString());
             setStopDateTime(new Date().toISOString());
           }}
@@ -68,7 +67,6 @@ export default function PatientBloodPressurePage(): JSX.Element {
             const startDateTimeTemp = new Date();
             startDateTimeTemp.setHours(0, 0, 0, 0);
             startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 31);
-            console.log(startDateTimeTemp.toISOString());
             setStartDateTime(startDateTimeTemp.toISOString());
             setStopDateTime(new Date().toISOString());
           }}
