@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 export default function DateSellectionBar({
@@ -17,38 +12,36 @@ export default function DateSellectionBar({
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.pressable}
-        onPress={() => {
-          var startDateTimeTemp = new Date();
-          startDateTimeTemp.setHours(0, 0, 0, 0);
-          setStartDateTime(startDateTimeTemp.toISOString());
-          setStopDateTime(new Date().toISOString());
-        }}>
+        onPress={() => select(1, setStartDateTime, setStopDateTime)}>
         <Text style={styles.buttonText}>Day</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.pressable, {borderColor: 'white', borderLeftWidth: 2, borderRightWidth: 2}]}
-        onPress={(): void => {
-          const startDateTimeTemp = new Date();
-          startDateTimeTemp.setHours(0, 0, 0, 0);
-          startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7);
-          setStartDateTime(startDateTimeTemp.toISOString());
-          setStopDateTime(new Date().toISOString());
-        }}>
+        style={[
+          styles.pressable,
+          {borderColor: 'white', borderLeftWidth: 2, borderRightWidth: 2},
+        ]}
+        onPress={() => select(7, setStartDateTime, setStopDateTime)}>
         <Text style={styles.buttonText}>Week</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.pressable}
-        onPress={(): void => {
-          const startDateTimeTemp = new Date();
-          startDateTimeTemp.setHours(0, 0, 0, 0);
-          startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 31);
-          setStartDateTime(startDateTimeTemp.toISOString());
-          setStopDateTime(new Date().toISOString());
-        }}>
+        onPress={() => select(31, setStartDateTime, setStopDateTime)}>
         <Text style={styles.buttonText}>Month</Text>
       </TouchableOpacity>
     </View>
   );
+}
+
+function select(
+  selection: number,
+  setStartDateTime: React.Dispatch<React.SetStateAction<any>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<any>>,
+): void {
+  const startDateTimeTemp = new Date();
+  startDateTimeTemp.setHours(0, 0, 0, 0);
+  startDateTimeTemp.setDate(startDateTimeTemp.getDate() - selection);
+  setStartDateTime(startDateTimeTemp.toISOString());
+  setStopDateTime(new Date().toISOString());
 }
 
 const styles = StyleSheet.create({
@@ -68,6 +61,5 @@ const styles = StyleSheet.create({
   },
   pressable: {
     flex: 1,
-
   },
 });
