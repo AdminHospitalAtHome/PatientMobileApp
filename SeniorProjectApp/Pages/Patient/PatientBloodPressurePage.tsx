@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { Row, Rows, Table } from 'react-native-table-component';
+import DateSellectionBar from "../../Components/DateSelectionBar";
 import {
   getBloodPressure,
   addBloodPressure
@@ -41,37 +42,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
-        <Button
-          title={'Day'}
-          onPress={() => {
-            var startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime((new Date()).toISOString());
-          }}
-        />
-        <Button
-          title={'Week'}
-          onPress={(): void => {
-            const startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7);
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-        <Button
-          title={'Month'}
-          onPress={(): void => {
-            const startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 31);
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-      </View>
+      <DateSellectionBar setStartDateTime={setStartDateTime} setStopDateTime={setStopDateTime} />
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Systolic', 'Diastolic']} />
