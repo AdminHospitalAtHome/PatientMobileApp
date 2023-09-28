@@ -29,23 +29,32 @@ export function getHeartRate(patientID:number, startDateTime:String, stopDateTim
       )
 }
 
+
 export function parseHeartRateData(heartRateJson:any) {
-    let heartRateArr = []
-    for (var i = 0; i<heartRateJson.length; i++) {
-      var tmpDate = heartRateJson[i].DateTimeTaken.split('T')[0].split('-')
-      
-      const tmpDateString = tmpDate[1] + '-' + tmpDate[2] + '-' + tmpDate[0]
+    let heartRateArr = [];
+    for (var i = 0; i < heartRateJson.length; i++) {
+      var tempDateObject = new Date(heartRateJson[i].DateTimeTaken);
+      tempDateObject.setMinutes(
+        tempDateObject.getMinutes() - tempDateObject.getTimezoneOffset(),
+      );
+      var tmpDate = tempDateObject.toISOString().split('T')[0].split('-');
   
-      var tmpTime = heartRateJson[i].DateTimeTaken.split('T')[1].split(':')
-      var tmpHour = parseInt(tmpTime[0])
-      var tmpTimeString = ''
+      const tmpDateString = tmpDate[1] + '-' + tmpDate[2] + '-' + tmpDate[0];
+  
+      var tmpTime = tempDateObject.toISOString().split('T')[1].split(':');
+      var tmpHour = parseInt(tmpTime[0]);
+      var tmpTimeString = '';
       if (tmpHour > 12) {
-        tmpTimeString = String(tmpHour-12) + ":" + tmpTime[1] + " PM"
+        tmpTimeString = String(tmpHour - 12) + ':' + tmpTime[1] + ' PM';
       } else {
-        tmpTimeString = String(tmpHour) + ":" + tmpTime[1] + " AM"
+        tmpTimeString = String(tmpHour) + ':' + tmpTime[1] + ' AM';
       }
   
-      heartRateArr.push([tmpDateString,tmpTimeString,heartRateJson[i].HeartRateInBPM])
+      heartRateArr.push([
+        tmpDateString,
+        tmpTimeString,
+        heartRateJson[i].HeartRateInBPM,
+      ]);
     }
     return heartRateArr;
   }

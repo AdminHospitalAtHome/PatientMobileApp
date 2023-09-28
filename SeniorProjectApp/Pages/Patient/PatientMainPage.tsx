@@ -3,6 +3,7 @@ import { Pressable, View, TouchableOpacity } from "react-native";
 import PatientWeightNavCard from '../../Components/PatientWeightNavCard';
 import PatientBloodPressureNavCard from "../../Components/PatientBloodPressureNavCard";
 import PatientHeartRateNavCard from '../../Components/PatientHeartRateNavCard';
+import PatientBloodOxygenNavCard from '../../Components/PatientBloodOxygenNavCard';
 
 export default function PatientMainPage({
   navigation,
@@ -22,6 +23,9 @@ export default function PatientMainPage({
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('patientHeartRatePage')}>
         <PatientHeartRateNavCard/>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('patientBloodOxygenPage')}>
+        <PatientBloodOxygenNavCard/>
       </TouchableOpacity>
     </View>
   );
