@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Modal,
@@ -8,15 +8,15 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Row, Rows, Table } from 'react-native-table-component';
+import {Row, Rows, Table} from 'react-native-table-component';
 import {
   getBloodOxygen,
-  addBloodOxygen
+  addBloodOxygen,
 } from '../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 import DateSellectionBar from '../../Components/DateSelectionBar';
-
+import {addBloodPressure} from '../../BackEndFunctionCall/bloodPressureFunction';
 
 export default function PatientBloodOxygen(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,24 +26,24 @@ export default function PatientBloodOxygen(): JSX.Element {
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [bloodOxygenData, setBloodOxygenData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const [stopDateTime, setStopDateTime] = useState((new Date()).toISOString());
+  const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
 
   //TODO: Change to dynamic later!!!!
   const patientID = 3;
 
   useEffect(() => {
-    getBloodOxygen(patientID, startDateTime, stopDateTime).then(setBloodOxygenData)
+    getBloodOxygen(patientID, startDateTime, stopDateTime).then(
+      setBloodOxygenData,
+    );
   }, [stopDateTime]);
-
-
 
   return (
     <ScrollView style={styles.container}>
-      <Text>Patient Blood Oxygen Page</Text>
       <DateSellectionBar
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
+
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Blood Oxygen']} />
@@ -54,12 +54,84 @@ export default function PatientBloodOxygen(): JSX.Element {
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Add Blood Oxygen Data</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => checkInput(text, setInput)}
+              />
+              <Text style={{fontSize: 25}}>%</Text>
+            </View>
+
+            {invalidVisible && (
+              <Text style={{color: 'red'}}>Invalid Input!</Text>
+            )}
+            <View style={styles.modalButtonContainer}>
+              <Button
+                title={'Cancel'}
+                onPress={() => setModalVisible(!modalVisible)}
+              />
+              <Button title={'Add'} onPress={addBloodOxygenOnClick} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {addSuccessVisible && (
+        <AddSuccessfullyDialog setter={setAddSuccessVisible} />
+      )}
     </ScrollView>
   );
+  function checkInput(
+    text: string,
+    setInput: React.Dispatch<React.SetStateAction<string>>,
+  ): void {
+    if (numberRegex.test(text) || text === '') {
+      setInvalidVisible(false);
+      setInput(text);
+    } else {
+      setInvalidVisible(true);
+    }
+  }
 
- 
-
+  function addBloodOxygenOnClick(): void {
+    if (input === '' || !numberRegex.test(input)) {
+      //todo: raise error message dialog
+    } else {
+      addBloodOxygen(
+          3,
+          Number(input),
+          true,
+      ).then(successful => {
+        setModalVisible(!modalVisible);
+        if (successful === 'add successful') {
+          setAddSuccessVisible(true);
+        } else {
+          // Failed view here
+        }
+        setStopDateTime(new Date().toISOString());
+      });
+      setInput('');
+    }
+  }
 }
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {

@@ -49,6 +49,8 @@ function parseBloodPressureData(bloodPressureJSON) {
     var tmpTimeString = '';
     if (tmpHour > 12) {
       tmpTimeString = String(tmpHour - 12) + ':' + tmpTime[1] + ' PM';
+    } else if (tmpHour === 0) {
+      tmpTimeString = String(tmpHour + 12) + ':' + tmpTime[1] + 'AM';
     } else {
       tmpTimeString = String(tmpHour) + ':' + tmpTime[1] + ' AM';
     }

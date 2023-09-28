@@ -10,7 +10,10 @@ import {
   TextInput,
 } from 'react-native';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import {addHeartRate, getHeartRate} from '../../BackEndFunctionCall/heartRateFunction';
+import {
+  addHeartRate,
+  getHeartRate,
+} from '../../BackEndFunctionCall/heartRateFunction';
 import {Row, Rows, Table} from 'react-native-table-component';
 import DateSellectionBar from '../../Components/DateSelectionBar';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
@@ -31,16 +34,11 @@ export default function PatientHeartRatePage(): JSX.Element {
     console.log(stopDateTime);
   }, [stopDateTime]);
 
-
   function addHeartRateOnClick(): void {
     if (input === '' || !numberRegex.test(input)) {
       //todo : raise error message/dialog
     } else {
-      addHeartRate(
-       3,
-       Number(input),
-       true,
-      ).then(successful => {
+      addHeartRate(3, Number(input), true).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);
@@ -64,7 +62,6 @@ export default function PatientHeartRatePage(): JSX.Element {
 
   return (
     <ScrollView style={styles.container}>
-      <Text>Patient Heart Rate Page</Text>
       <DateSellectionBar
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
@@ -119,9 +116,6 @@ export default function PatientHeartRatePage(): JSX.Element {
       )}
     </ScrollView>
   );
-
-
-  
 }
 
 const styles = StyleSheet.create({
