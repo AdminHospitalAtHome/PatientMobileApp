@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Modal,
@@ -8,14 +8,13 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Row, Rows, Table } from 'react-native-table-component';
+import {Row, Rows, Table} from 'react-native-table-component';
 import {
   getWeightCall,
-  addWeight
+  addWeight,
 } from '../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
-
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,16 +24,14 @@ export default function PatientWeightPage(): JSX.Element {
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [weightData, setWeightData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const [stopDateTime, setStopDateTime] = useState((new Date()).toISOString());
+  const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
 
   //TODO: Change to dynamic later!!!!
   const patientID = 3;
 
   useEffect(() => {
-    getWeightCall(patientID, startDateTime, stopDateTime).then(setWeightData)
+    getWeightCall(patientID, startDateTime, stopDateTime).then(setWeightData);
   }, [stopDateTime]);
-
-
 
   return (
     <ScrollView style={styles.container}>
@@ -44,9 +41,9 @@ export default function PatientWeightPage(): JSX.Element {
           title={'Day'}
           onPress={() => {
             var startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0,0,0,0)
+            startDateTimeTemp.setHours(0, 0, 0, 0);
             setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime((new Date()).toISOString())
+            setStopDateTime(new Date().toISOString());
           }}
         />
         <Button
@@ -139,14 +136,14 @@ export default function PatientWeightPage(): JSX.Element {
         patientId: 3,
         weight: Number(input),
         ifManualInput: true,
-      }).then((successful) => {
+      }).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);
         } else {
           // Failed view here
         }
-        setStopDateTime((new Date()).toISOString());
+        setStopDateTime(new Date().toISOString());
       });
       setInput('');
     }
