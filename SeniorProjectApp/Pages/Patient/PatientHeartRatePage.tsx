@@ -6,10 +6,14 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
+  Modal,
+  TextInput,
 } from 'react-native';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import {getHeartRate} from '../../BackEndFunctionCall/heartRateFunction';
+import {addHeartRate, getHeartRate} from '../../BackEndFunctionCall/heartRateFunction';
 import {Row, Rows, Table} from 'react-native-table-component';
+import DateSellectionBar from '../../Components/DateSelectionBar';
+import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 export default function PatientHeartRatePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState<String>('');
@@ -27,42 +31,44 @@ export default function PatientHeartRatePage(): JSX.Element {
     console.log(stopDateTime);
   }, [stopDateTime]);
 
+
+  function addHeartRateOnClick(): void {
+    if (input === '' || !numberRegex.test(input)) {
+      //todo : raise error message/dialog
+    } else {
+      addHeartRate(
+       3,
+       Number(input),
+       true,
+      ).then(successful => {
+        setModalVisible(!modalVisible);
+        if (successful === 'add successful') {
+          setAddSuccessVisible(true);
+        } else {
+          // Failed view here
+        }
+        setStopDateTime(new Date().toISOString());
+      });
+      setInput('');
+    }
+  }
+
+  function checkInput(text: string): void {
+    if (numberRegex.test(text) || text === '') {
+      setInvalidVisible(false);
+      setInput(text);
+    } else {
+      setInvalidVisible(true);
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
       <Text>Patient Heart Rate Page</Text>
-      <View style={{flexDirection: 'row'}}>
-        <Button
-          title={'Day'}
-          onPress={() => {
-            var startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-        <Button
-          title={'Week'}
-          onPress={(): void => {
-            const startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7);
-            console.log(startDateTimeTemp.toISOString());
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-        <Button
-          title={'Month'}
-          onPress={(): void => {
-            const startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 31);
-            console.log(startDateTimeTemp.toISOString());
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-      </View>
+      <DateSellectionBar
+        setStartDateTime={setStartDateTime}
+        setStopDateTime={setStopDateTime}
+      />
       <View>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Heart Rate']} />
@@ -73,8 +79,49 @@ export default function PatientHeartRatePage(): JSX.Element {
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Add Weight Data</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => checkInput(text)}
+              />
+              <Text style={{fontSize: 25}}>BPM</Text>
+            </View>
+            {invalidVisible && (
+              <Text style={{color: 'red'}}>Invalid Input!</Text>
+            )}
+            <View style={styles.modalButtonContainer}>
+              <Button
+                title={'Cancel'}
+                onPress={() => setModalVisible(!modalVisible)}
+              />
+              <Button title={'Add'} onPress={addHeartRateOnClick} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {addSuccessVisible && (
+        <AddSuccessfullyDialog setter={setAddSuccessVisible} />
+      )}
     </ScrollView>
   );
+
+
+  
 }
 
 const styles = StyleSheet.create({
