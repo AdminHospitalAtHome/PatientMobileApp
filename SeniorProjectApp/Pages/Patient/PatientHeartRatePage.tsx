@@ -61,17 +61,17 @@ export default function PatientHeartRatePage(): JSX.Element {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <DateSellectionBar
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
-      <View>
+      <ScrollView>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Heart Rate']} />
           <Rows data={heartData} />
         </Table>
-      </View>
+      </ScrollView>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />
@@ -114,7 +114,7 @@ export default function PatientHeartRatePage(): JSX.Element {
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-    </ScrollView>
+    </View>
   );
 }
 

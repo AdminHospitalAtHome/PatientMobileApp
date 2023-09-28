@@ -38,18 +38,18 @@ export default function PatientBloodOxygen(): JSX.Element {
   }, [stopDateTime]);
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <DateSellectionBar
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
 
-      <View>
+      <ScrollView>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Blood Oxygen']} />
           <Rows data={bloodOxygenData} />
         </Table>
-      </View>
+      </ScrollView>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />
@@ -93,7 +93,7 @@ export default function PatientBloodOxygen(): JSX.Element {
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-    </ScrollView>
+    </View>
   );
   function checkInput(
     text: string,

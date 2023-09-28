@@ -35,17 +35,17 @@ export default function PatientWeightPage(): JSX.Element {
   }, [stopDateTime]);
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <DateSellectionBar
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
-      <View>
+      <ScrollView>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Weight']} />
           <Rows data={weightData} />
         </Table>
-      </View>
+      </ScrollView>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />
@@ -89,7 +89,7 @@ export default function PatientWeightPage(): JSX.Element {
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-    </ScrollView>
+    </View>
   );
 
   function checkInput(text: string): void {
