@@ -4,7 +4,7 @@ export function addBloodOxygen(
   IfManualInput: boolean,
 ): Promise<any> {
   const promise: Promise<any> = new Promise((resolve, reject) => {
-    const dateTime: String = (new Date()).toISOString();
+    const dateTime: String = new Date().toISOString();
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addBloodOxygen',
       {
@@ -23,19 +23,19 @@ export function addBloodOxygen(
   return promise;
 }
 
-
-export function getBloodOxygen(patientID:number, startDateTime:String, stopDateTime:String) {
+export function getBloodOxygen(
+  patientID: number,
+  startDateTime: String,
+  stopDateTime: String,
+) {
   return fetch(
-      `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodOxygen?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-    )
-      .then(response => response.json())
-    .then((json) =>
-    parseBloodOxygenData(json)
-    )
+    `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodOxygen?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
+  )
+    .then(response => response.json())
+    .then(json => parseBloodOxygenData(json));
 }
 
-
-export function parseBloodOxygenData(bloodOxygenJson:any) {
+export function parseBloodOxygenData(bloodOxygenJson: any) {
   let bloodOxygenArr = [];
   for (var i = 0; i < bloodOxygenJson.length; i++) {
     var tempDateObject = new Date(bloodOxygenJson[i].DateTimeTaken);
@@ -51,6 +51,8 @@ export function parseBloodOxygenData(bloodOxygenJson:any) {
     var tmpTimeString = '';
     if (tmpHour > 12) {
       tmpTimeString = String(tmpHour - 12) + ':' + tmpTime[1] + ' PM';
+    } else if (tmpHour === 0) {
+      tmpTimeString = String(tmpHour + 12) + ':' + tmpTime[1] + 'AM';
     } else {
       tmpTimeString = String(tmpHour) + ':' + tmpTime[1] + ' AM';
     }

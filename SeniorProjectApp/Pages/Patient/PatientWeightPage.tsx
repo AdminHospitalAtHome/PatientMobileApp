@@ -15,6 +15,7 @@ import {
 } from '../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
+import DateSellectionBar from '../../Components/DateSelectionBar';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,45 +35,17 @@ export default function PatientWeightPage(): JSX.Element {
   }, [stopDateTime]);
 
   return (
-    <ScrollView style={styles.container}>
-      <Text>Patient Weight Page</Text>
-      <View style={{flexDirection: 'row'}}>
-        <Button
-          title={'Day'}
-          onPress={() => {
-            var startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-        <Button
-          title={'Week'}
-          onPress={(): void => {
-            const startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 7);
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-        <Button
-          title={'Month'}
-          onPress={(): void => {
-            const startDateTimeTemp = new Date();
-            startDateTimeTemp.setHours(0, 0, 0, 0);
-            startDateTimeTemp.setDate(startDateTimeTemp.getDate() - 31);
-            setStartDateTime(startDateTimeTemp.toISOString());
-            setStopDateTime(new Date().toISOString());
-          }}
-        />
-      </View>
-      <View>
+    <View style={styles.container}>
+      <DateSellectionBar
+        setStartDateTime={setStartDateTime}
+        setStopDateTime={setStopDateTime}
+      />
+      <ScrollView>
         <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
           <Row data={['Date', 'Time', 'Weight']} />
           <Rows data={weightData} />
         </Table>
-      </View>
+      </ScrollView>
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />
@@ -116,7 +89,7 @@ export default function PatientWeightPage(): JSX.Element {
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-    </ScrollView>
+    </View>
   );
 
   function checkInput(text: string): void {
