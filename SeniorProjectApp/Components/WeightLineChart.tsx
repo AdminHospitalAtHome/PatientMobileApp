@@ -1,43 +1,45 @@
 import {LineChart} from 'react-native-chart-kit';
 
 import {View} from 'react-native';
+import { Dimensions } from "react-native";
+import {getWeightCall} from "../BackEndFunctionCall/weightFunction";
+import getDefaultStartTime, {getNDaysAgo} from "../BackEndFunctionCall/getDefaultStartTime";
+
 
 export default function WeightLineChart(): JSX.Element {
-  //fake data for temporary use
+  const screenWidth = Dimensions.get('window').width;
+  const sample: number[] = [100, 120, 125, 110, 129];
+  const data: number[] = [];
+
+  let i: number = 7;
+
+
+
   const lineChart = (
     <LineChart
       data={{
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        labels: ['9.26', '9.27', '9.28', '9.29', '9.30'],
         datasets: [
           {
-            data: [
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-            ],
+            data: sample,
           },
         ],
       }}
-      width={150} // from react-native
-      height={100}
-      yAxisLabel="$"
-      yAxisSuffix="k"
+      width={screenWidth * 0.95} // from react-native
+      height={170}
+      yAxisSuffix="lb"
       yAxisInterval={1} // optional, defaults to 1
       chartConfig={{
-        backgroundColor: '#e26a00',
-        backgroundGradientFrom: '#fb8c00',
+        backgroundGradientFrom: '#BA4618',
         backgroundGradientTo: '#ffa726',
-        decimalPlaces: 2, // optional, defaults to 2dp
+        decimalPlaces: 1,
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         style: {
-          borderRadius: 16,
+          borderRadius: 10,
         },
         propsForDots: {
-          r: '6',
+          r: '5',
           strokeWidth: '2',
           stroke: '#ffa726',
         },
@@ -45,7 +47,7 @@ export default function WeightLineChart(): JSX.Element {
       bezier
       style={{
         marginVertical: 8,
-        borderRadius: 16,
+        borderRadius: 10,
       }}
     />
   );
