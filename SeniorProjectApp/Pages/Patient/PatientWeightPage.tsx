@@ -1,14 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import {Row, Rows, Table} from 'react-native-table-component';
+import {Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
 import {
   getWeightCall,
   addWeight,
@@ -16,6 +7,7 @@ import {
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 import DateSellectionBar from '../../Components/DateSelectionBar';
+import VitalTable from '../../Components/VitalTable';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +24,7 @@ export default function PatientWeightPage(): JSX.Element {
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(setWeightData);
+    console.log(typeof weightData);
   }, [stopDateTime]);
 
   return (
@@ -40,12 +33,8 @@ export default function PatientWeightPage(): JSX.Element {
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
-      <ScrollView>
-        <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-          <Row data={['Date', 'Time', 'Weight']} />
-          <Rows data={weightData} />
-        </Table>
-      </ScrollView>
+
+      <VitalTable columnTitles={['Date', 'Weight']} vitalData={weightData} />
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />

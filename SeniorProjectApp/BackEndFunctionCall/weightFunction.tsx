@@ -1,30 +1,10 @@
 import getDefaultStartTime from './getDefaultStartTime';
-
+import timeTableParser from './tableTimeParser';
 export function parseWeightData(weightJson) {
   let weightArr = [];
   for (var i = 0; i < weightJson.length; i++) {
-    var tempDateObject = new Date(weightJson[i].DateTimeTaken);
-    tempDateObject.setMinutes(
-      tempDateObject.getMinutes() - tempDateObject.getTimezoneOffset(),
-    );
-    var tmpDate = tempDateObject.toISOString().split('T')[0].split('-');
-
-    const tmpDateString = tmpDate[1] + '-' + tmpDate[2] + '-' + tmpDate[0];
-
-    var tmpTime = tempDateObject.toISOString().split('T')[1].split(':');
-    var tmpHour = parseInt(tmpTime[0]);
-    var tmpTimeString = '';
-    if (tmpHour > 12) {
-      tmpTimeString = String(tmpHour - 12) + ':' + tmpTime[1] + ' PM';
-    } else if (tmpHour === 0) {
-      tmpTimeString = String(tmpHour + 12) + ':' + tmpTime[1] + 'AM';
-    } else {
-      tmpTimeString = String(tmpHour) + ':' + tmpTime[1] + ' AM';
-    }
-
     weightArr.push([
-      tmpDateString,
-      tmpTimeString,
+      timeTableParser(weightJson[i].DateTimeTaken),
       weightJson[i].WeightInPounds,
     ]);
   }

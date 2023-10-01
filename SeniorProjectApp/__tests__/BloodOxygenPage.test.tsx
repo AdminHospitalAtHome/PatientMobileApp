@@ -5,22 +5,28 @@
 import 'react-native';
 
 import {it, expect} from '@jest/globals';
-import {addBloodOxygen, getBloodOxygen} from '../BackEndFunctionCall/bloodOxygenFunction';
+import {
+  addBloodOxygen,
+  getBloodOxygen,
+} from '../BackEndFunctionCall/bloodOxygenFunction';
 
 // Add Blood Pressure test
 it('Add Blood Oxygen Test', async () => {
- await addBloodOxygen(3, 98, true).then(output => {
+  await addBloodOxygen(3, 98, true).then(output => {
     expect(output).toBe('add successful');
   });
 });
 
-
-it('Get Blood Oxygen Test', async ()=>{
-  await getBloodOxygen(2, '2023-03-29T08:00:00.000', '2023-03-31T08:00:00.000')
-  .then((output) => {
-    expect(output).toStrictEqual([['03-29-2023', '4:00 AM', 92], 
-                         ['03-30-2023', '4:00 AM', 91],
-                         ['03-31-2023','4:00 AM', 90]
-                        ])
-  })
-})
+it('Get Blood Oxygen Test', async () => {
+  await getBloodOxygen(
+    1,
+    '2023-01-01T08:00:00.000',
+    '2023-01-03T08:00:00.000',
+  ).then(output => {
+    expect(output).toStrictEqual([
+      ['01-01-2023\n3:00 AM', 98],
+      ['01-02-2023\n3:00 AM', 97],
+      ['01-03-2023\n3:00 AM', 97],
+    ]);
+  });
+});

@@ -17,6 +17,7 @@ import {
 import {Row, Rows, Table} from 'react-native-table-component';
 import DateSellectionBar from '../../Components/DateSelectionBar';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
+import VitalTable from '../../Components/VitalTable';
 export default function PatientHeartRatePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState<String>('');
@@ -66,12 +67,10 @@ export default function PatientHeartRatePage(): JSX.Element {
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
-      <ScrollView>
-        <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-          <Row data={['Date', 'Time', 'Heart Rate']} />
-          <Rows data={heartData} />
-        </Table>
-      </ScrollView>
+      <VitalTable
+        columnTitles={['Date', 'Heart Rate (BPM)']}
+        vitalData={heartData}
+      />
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />

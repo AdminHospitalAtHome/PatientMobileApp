@@ -16,6 +16,7 @@ import {
 } from '../../BackEndFunctionCall/bloodPressureFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
+import VitalTable from '../../Components/VitalTable';
 
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,12 +44,10 @@ export default function PatientBloodPressurePage(): JSX.Element {
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
-      <ScrollView>
-        <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-          <Row data={['Date', 'Time', 'Systolic', 'Diastolic']} />
-          <Rows data={bloodPressureData} />
-        </Table>
-      </ScrollView>
+      <VitalTable
+        columnTitles={['Date', 'Systolic', 'Diastolic']}
+        vitalData={bloodPressureData}
+      />
       <View style={{flexDirection: 'row'}}>
         <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
         <Button title={'Add automatically'} />

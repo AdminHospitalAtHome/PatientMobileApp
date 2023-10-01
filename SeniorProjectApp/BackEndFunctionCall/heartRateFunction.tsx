@@ -1,3 +1,5 @@
+import timeTableParser from './tableTimeParser';
+
 export function addHeartRate(
   patientID: number,
   heartRate: number,
@@ -38,28 +40,8 @@ export function getHeartRate(
 export function parseHeartRateData(heartRateJson: any) {
   let heartRateArr = [];
   for (var i = 0; i < heartRateJson.length; i++) {
-    var tempDateObject = new Date(heartRateJson[i].DateTimeTaken);
-    tempDateObject.setMinutes(
-      tempDateObject.getMinutes() - tempDateObject.getTimezoneOffset(),
-    );
-    var tmpDate = tempDateObject.toISOString().split('T')[0].split('-');
-
-    const tmpDateString = tmpDate[1] + '-' + tmpDate[2] + '-' + tmpDate[0];
-
-    var tmpTime = tempDateObject.toISOString().split('T')[1].split(':');
-    var tmpHour = parseInt(tmpTime[0]);
-    var tmpTimeString = '';
-    if (tmpHour > 12) {
-      tmpTimeString = String(tmpHour - 12) + ':' + tmpTime[1] + ' PM';
-    } else if (tmpHour === 0) {
-      tmpTimeString = String(tmpHour + 12) + ':' + tmpTime[1] + 'AM';
-    } else {
-      tmpTimeString = String(tmpHour) + ':' + tmpTime[1] + ' AM';
-    }
-
     heartRateArr.push([
-      tmpDateString,
-      tmpTimeString,
+      timeTableParser(heartRateJson[i].DateTimeTaken),
       heartRateJson[i].HeartRateInBPM,
     ]);
   }

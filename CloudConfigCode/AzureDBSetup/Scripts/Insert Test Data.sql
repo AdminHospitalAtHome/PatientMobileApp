@@ -6,7 +6,6 @@ VALUES ('1', 'John', 'Smith', '2001-01-01'),
 
 INSERT INTO dbo.Patient_Weight (PatientID, DateTimeTaken, WeightInPounds, IfManualInput)
 VALUES ('1', '2023-01-01 08:00:00.000', 190.2, 1),
-('1', '2023-01-01 08:00:00.000', 190.2, 1),
 ('1', '2023-01-02 08:00:00.000', 190.4, 0),
 ('1', '2023-01-03 08:00:00.000', 190.6, 1),
 ('1', '2023-01-04 08:00:00.000', 190.8, 1),
@@ -73,7 +72,6 @@ VALUES ('1', '2023-01-01 08:00:00.000', 190.2, 1),
 
 INSERT INTO dbo.Patient_Blood_Pressure (PatientID, DateTimeTaken, SystolicBloodPressureInMmHg, DiastolicBloodPressureInMmHg, IfManualInput)
 VALUES ('1', '2023-01-01 08:00:00.000', 130, 71, 1),
-('1', '2023-01-01 08:00:00.000', 129, 70, 1),
 ('1', '2023-01-02 08:00:00.000', 130, 71, 0),
 ('1', '2023-01-03 08:00:00.000', 131, 72, 1),
 ('1', '2023-01-04 08:00:00.000', 130, 71, 1),
@@ -140,7 +138,6 @@ VALUES ('1', '2023-01-01 08:00:00.000', 130, 71, 1),
 
 INSERT INTO dbo.Patinet_Blood_Oxygen (PatientID, DateTimeTaken, BloodOxygenLevelInPercentage, IfManualInput)
 VALUES ('1', '2023-01-01 08:00:00.000', 98, 1),
-('1', '2023-01-01 08:00:00.000', 97, 1),
 ('1', '2023-01-02 08:00:00.000', 97, 0),
 ('1', '2023-01-03 08:00:00.000', 97, 1),
 ('1', '2023-01-04 08:00:00.000', 98, 1),
@@ -207,7 +204,6 @@ VALUES ('1', '2023-01-01 08:00:00.000', 98, 1),
 
 INSERT INTO dbo.Patinet_Heart_Rate (PatientID, DateTimeTaken, HeartRateInBPM, IfManualInput)
 VALUES ('1', '2023-01-01 08:00:00.000', 98, 1),
-('1', '2023-01-01 08:00:00.000', 97, 1),
 ('1', '2023-01-02 08:00:00.000', 97, 0),
 ('1', '2023-01-03 08:00:00.000', 123, 1),
 ('1', '2023-01-04 08:00:00.000', 124, 1),
