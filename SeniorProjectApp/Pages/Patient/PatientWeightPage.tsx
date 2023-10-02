@@ -8,7 +8,8 @@ import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 import DateSellectionBar from '../../Components/DateSelectionBar';
 import VitalTable from '../../Components/VitalTable';
-import WeightLineChart from "../../Components/WeightLineChart";
+import WeightLineChart from '../../Components/WeightLineChart';
+import AddButtons from '../../Components/AddButtons';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,7 +31,13 @@ export default function PatientWeightPage(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 3, justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
+      <View
+        style={{
+          flex: 3,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 15,
+        }}>
         <WeightLineChart data={weightData} />
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
@@ -42,10 +49,10 @@ export default function PatientWeightPage(): JSX.Element {
       <View style={{flex: 7, justifyContent: 'center'}}>
         <VitalTable columnTitles={['Date', 'Weight']} vitalData={weightData} />
       </View>
-      <View style={{flexDirection: 'row', flex: 2, justifyContent: 'center'}}>
-        <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
-        <Button title={'Add automatically'} />
-      </View>
+      <AddButtons
+        setManualModalVisible={setModalVisible}
+        setAutoModalVisible={setModalVisible}
+      />
 
       <Modal
         animationType="slide"

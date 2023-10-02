@@ -17,7 +17,8 @@ import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 import DateSellectionBar from '../../Components/DateSelectionBar';
 import {addBloodPressure} from '../../BackEndFunctionCall/bloodPressureFunction';
-import VitalTable from "../../Components/VitalTable";
+import VitalTable from '../../Components/VitalTable';
+import AddButtons from '../../Components/AddButtons';
 
 export default function PatientBloodOxygen(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -49,10 +50,10 @@ export default function PatientBloodOxygen(): JSX.Element {
         columnTitles={['Date', 'Blood Oxygen (%)']}
         vitalData={bloodOxygenData}
       />
-      <View style={{flexDirection: 'row'}}>
-        <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
-        <Button title={'Add automatically'} />
-      </View>
+      <AddButtons
+        setManualModalVisible={setModalVisible}
+        setAutoModalVisible={setModalVisible}
+      />
       <Modal
         animationType="slide"
         transparent={true}
@@ -110,11 +111,7 @@ export default function PatientBloodOxygen(): JSX.Element {
     if (input === '' || !numberRegex.test(input)) {
       //todo: raise error message dialog
     } else {
-      addBloodOxygen(
-          3,
-          Number(input),
-          true,
-      ).then(successful => {
+      addBloodOxygen(3, Number(input), true).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);
@@ -127,10 +124,6 @@ export default function PatientBloodOxygen(): JSX.Element {
     }
   }
 }
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {

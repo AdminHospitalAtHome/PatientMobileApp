@@ -17,6 +17,7 @@ import {
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 import VitalTable from '../../Components/VitalTable';
+import AddButtons from '../../Components/AddButtons';
 
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,10 +49,10 @@ export default function PatientBloodPressurePage(): JSX.Element {
         columnTitles={['Date', 'Systolic', 'Diastolic']}
         vitalData={bloodPressureData}
       />
-      <View style={{flexDirection: 'row'}}>
-        <Button title={'Add Manually'} onPress={() => setModalVisible(true)} />
-        <Button title={'Add automatically'} />
-      </View>
+      <AddButtons
+        setManualModalVisible={setModalVisible}
+        setAutoModalVisible={setModalVisible}
+      />
 
       <Modal
         animationType="slide"
