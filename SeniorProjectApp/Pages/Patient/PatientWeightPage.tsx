@@ -31,7 +31,7 @@ export default function PatientWeightPage(): JSX.Element {
   return (
     <View style={styles.container}>
       <View style={{flex: 3, justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
-        <WeightLineChart />
+        <WeightLineChart data={weightData} />
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <DateSellectionBar

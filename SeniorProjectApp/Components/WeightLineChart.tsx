@@ -4,21 +4,32 @@ import {View} from 'react-native';
 import { Dimensions } from "react-native";
 import {getWeightCall} from "../BackEndFunctionCall/weightFunction";
 import getDefaultStartTime, {getNDaysAgo} from "../BackEndFunctionCall/getDefaultStartTime";
+import getDefaultHeaderHeight from "react-native-screens/lib/typescript/native-stack/utils/getDefaultHeaderHeight";
+import {useState, useEffect} from "react";
 
 
-export default function WeightLineChart(): JSX.Element {
+export default function WeightLineChart({data}): JSX.Element {
+
   const screenWidth = Dimensions.get('window').width;
-  const sample: number[] = [100, 120, 125, 110, 129];
-  const data: number[] = [];
-
-  let i: number = 7;
+  const sample: number[] = [100, 120, 125, 110, 129, 122, 124];
 
 
+  const dates: string[] = [];
+  let date: Date = new Date();
+  date.setDate(date.getDate() - 7);
+  for (let i = 0; i < 7; i++) {
+    let dateString: string = '';
+    dateString += new Date(date).toISOString().split('T')[0].split('-')[1];
+    dateString += '.';
+    dateString += new Date(date).toISOString().split('T')[0].split('-')[2];
+    dates.push(dateString);
+    date.setDate(date.getDate() + 1);
+  }
 
   const lineChart = (
     <LineChart
       data={{
-        labels: ['9.26', '9.27', '9.28', '9.29', '9.30'],
+        labels: dates,
         datasets: [
           {
             data: sample,
