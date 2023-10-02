@@ -1,9 +1,10 @@
 import React from 'react';
-import { Pressable, View, TouchableOpacity } from "react-native";
+import {View, TouchableOpacity, ScrollView} from 'react-native';
 import PatientWeightNavCard from '../../Components/PatientWeightNavCard';
-import PatientBloodPressureNavCard from "../../Components/PatientBloodPressureNavCard";
+import PatientBloodPressureNavCard from '../../Components/PatientBloodPressureNavCard';
 import PatientHeartRateNavCard from '../../Components/PatientHeartRateNavCard';
 import PatientBloodOxygenNavCard from '../../Components/PatientBloodOxygenNavCard';
+import MenuNav from '../../Components/MenuNav';
 
 export default function PatientMainPage({
   navigation,
@@ -13,29 +14,26 @@ export default function PatientMainPage({
   // Function to navigate to the PatientWeightPage
   return (
     <View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('patientWeightPage')}>
-        <PatientWeightNavCard />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('patientBloodPressurePage')}>
-        <PatientBloodPressureNavCard />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('patientHeartRatePage')}>
-        <PatientHeartRateNavCard/>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('patientBloodOxygenPage')}>
-        <PatientBloodOxygenNavCard/>
-      </TouchableOpacity>
+      <ScrollView>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('patientWeightPage')}>
+          <PatientWeightNavCard />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('patientBloodPressurePage')}>
+          <PatientBloodPressureNavCard />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('patientHeartRatePage')}>
+          <PatientHeartRateNavCard />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('patientBloodOxygenPage')}>
+          <PatientBloodOxygenNavCard />
+        </TouchableOpacity>
+      </ScrollView>
+      <MenuNav navigation={navigation} />
     </View>
   );
 
-  // function cardOnClick(path: String): void {
-  //   navigation.navigate({path});
-  // }
-  //
-  // function clickTest(): void {
-  //   console.log('blood pressure');
-  //   navigation.navigate('PatientBloodPressurePage');
-  // }
 }

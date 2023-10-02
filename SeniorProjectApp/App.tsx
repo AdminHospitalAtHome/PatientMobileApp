@@ -16,7 +16,7 @@ import PatientWeightPage from './Pages/Patient/PatientWeightPage';
 import PatientBloodPressurePage from './Pages/Patient/PatientBloodPressurePage';
 import PatientHeartRatePage from './Pages/Patient/PatientHeartRatePage';
 import PatientBloodOxygenPage from './Pages/Patient/PatientBloodOxygenPage';
-// import PatientBloodOxygenPage from './Pages/Patient/PatientBloodOxygenPage';
+import PatientSettingPage from './Pages/Patient/PatientSettingPage';
 
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
@@ -49,9 +49,16 @@ function App(): JSX.Element {
           component={PatientHeartRatePage}
           options={{title: 'My Heart Rate'}}
         />
-        <Stack.Screen name={'patientBloodOxygenPage'} 
-        component={PatientBloodOxygenPage} 
-        options = {{ title: 'My Blood Oxygen'}}/>
+        <Stack.Screen
+          name={'patientBloodOxygenPage'}
+          component={PatientBloodOxygenPage}
+          options={{title: 'My Blood Oxygen'}}
+        />
+        <Stack.Screen
+          name={'patientSettingPage'}
+          component={PatientSettingPage}
+          options={{title: 'My Settings'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
