@@ -10,12 +10,13 @@ import DateSellectionBar from '../../Components/DateSelectionBar';
 import VitalTable from '../../Components/VitalTable';
 import WeightLineChart from '../../Components/WeightLineChart';
 import AddButtons from '../../Components/AddButtons';
+import InputManualModal from '../../Components/ManualInputs/InputManualModal';
+import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
-  const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [weightData, setWeightData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
@@ -26,7 +27,6 @@ export default function PatientWeightPage(): JSX.Element {
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(setWeightData);
-    console.log(typeof weightData);
   }, [stopDateTime]);
 
   return (
@@ -54,57 +54,26 @@ export default function PatientWeightPage(): JSX.Element {
         setAutoModalVisible={setModalVisible}
       />
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Add Weight Data</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => checkInput(text)}
-              />
-              <Text style={{fontSize: 25}}>lb</Text>
-            </View>
-            {invalidVisible && (
-              <Text style={{color: 'red'}}>Invalid Input!</Text>
-            )}
-            <View style={styles.modalButtonContainer}>
-              <Button
-                title={'Cancel'}
-                onPress={() => setModalVisible(!modalVisible)}
-              />
-              <Button title={'Add'} onPress={addWeightOnClick} />
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <InputManualModal
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+        addButtonFunction={addWeightOnClick}
+        inputBoxes={
+          <SingleTextInput
+            modalTitle={'Add Weight'}
+            modalUnit={'lbs'}
+            setInput={setInput}
+            numberRegex={numberRegex}
+          />
+        }
+      />
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
     </View>
   );
 
-  function checkInput(text: string): void {
-    if (numberRegex.test(text) || text === '') {
-      setInvalidVisible(false);
-      setInput(text);
-    } else {
-      setInvalidVisible(true);
-    }
-  }
-
-  function addWeightOnClick(): void {
+  function addWeightOnClick() {
     if (input === '' || !numberRegex.test(input)) {
       //todo : raise error message/dialog
     } else {
