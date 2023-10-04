@@ -26,7 +26,9 @@ export default function PatientWeightPage(): JSX.Element {
   const patientID = 3;
 
   useEffect(() => {
-    getWeightCall(patientID, startDateTime, stopDateTime).then(setWeightData);
+    getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
+      setWeightData(response);
+    });
   }, [stopDateTime]);
 
   return (
@@ -38,7 +40,7 @@ export default function PatientWeightPage(): JSX.Element {
           alignItems: 'center',
           marginTop: 15,
         }}>
-        <WeightLineChart data={weightData} />
+        <WeightLineChart data={weightData} unit={'lb'} />
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <DateSellectionBar
