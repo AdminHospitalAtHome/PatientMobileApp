@@ -1,4 +1,4 @@
-import timeTableParser from "./tableTimeParser";
+import timeTableParser from './tableTimeParser';
 
 export function addBloodOxygen(
   patientID: number,

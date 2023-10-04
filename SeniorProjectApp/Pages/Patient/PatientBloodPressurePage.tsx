@@ -18,6 +18,9 @@ import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 import VitalTable from '../../Components/VitalTable';
 import AddButtons from '../../Components/AddButtons';
+import InputManualModal from '../../Components/ManualInputs/InputManualModal';
+import MultipleTextInput from '../../Components/ManualInputs/MultipleTextInput';
+import AddFailedDialog from "../../Components/AddFailedDialog";
 
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,7 +32,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
   const [bloodPressureData, setBloodPressureData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
-
+  const [addFailedVisible, setAddFailedVisible] = useState(false);
   //TODO: Change to dynamic later!!!!
   const patientID = 3;
 
@@ -54,58 +57,29 @@ export default function PatientBloodPressurePage(): JSX.Element {
         setAutoModalVisible={setModalVisible}
       />
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Add Blood Pressure Data</Text>
-            <Text style={styles.modalLabel}>Systolic Blood Pressure</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => checkInput(text, setInputSystolic)}
-              />
-              <Text style={{fontSize: 25}}>mmHg</Text>
-            </View>
-            <Text style={styles.modalLabel}>Diastolic Blood Pressure</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => checkInput(text, setInputDiastolic)}
-              />
-              <Text style={{fontSize: 25}}>mmHg</Text>
-            </View>
+      <InputManualModal
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+        inputBoxes={
+          <MultipleTextInput
+            inputTitles={[
+              'Systolic Blood Pressure',
+              'Disatolic Blood Pressure',
+            ]}
+            modalTitle={'Add Blood Pressure'}
+            modalUnit={['mmHg', 'mmHg']}
+            numberRegex={[numberRegex, numberRegex]}
+            setInput={[setInputSystolic, setInputDiastolic]}
+          />
+        }
+        addButtonFunction={addBloodPressureOnClick}
+      />
 
-            {invalidVisible && (
-              <Text style={{color: 'red'}}>Invalid Input!</Text>
-            )}
-            <View style={styles.modalButtonContainer}>
-              <Button
-                title={'Cancel'}
-                onPress={() => setModalVisible(!modalVisible)}
-              />
-              <Button title={'Add'} onPress={addBloodPressureOnClick} />
-            </View>
-          </View>
-        </View>
-      </Modal>
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
+      )}
+      {addFailedVisible && (
+          <AddFailedDialog setter={setAddFailedVisible} />
       )}
     </View>
   );

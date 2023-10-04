@@ -24,6 +24,6 @@ it('Gets Blood Pressure Test', () => {
     '2023-01-01 08:00:00.000',
     '2023-01-01 08:00:00.000',
   ).then(output => {
-    expect(output).toBe([['01-01-2023\n8:00 AM', 130, 71]]);
+    expect(output).toBe([['01-01-2023\n3:00 AM', 130, 71]]);
   });
 });

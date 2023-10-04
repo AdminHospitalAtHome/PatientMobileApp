@@ -26,7 +26,6 @@ export function addWeight({
       method: 'POST',
       body: `{"PatientID": ${patientId}, "DateTimeTaken": "${dateTime}", "WeightInPounds": ${weight}, "IfManualInput": ${ifManualInput}}`,
     }).then(response => {
-      console.log(response.status);
       if (response.status === 201) {
         resolve('add successful');
       } else {

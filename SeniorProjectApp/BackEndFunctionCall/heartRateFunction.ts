@@ -14,7 +14,6 @@ export function addHeartRate(
         body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}","HeartRateInBPM": ${heartRate}, "IfManualInput": ${IfManualInput}}`,
       },
     ).then(response => {
-      console.log(response.status);
       if (response.status === 201) {
         resolve('add successful');
       } else {

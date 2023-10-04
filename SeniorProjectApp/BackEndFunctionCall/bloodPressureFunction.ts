@@ -15,7 +15,6 @@ export function addBloodPressure(
         body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}", "SystolicBloodPressureInMmHg": ${SystolicBloodPressureInMmHg},"DiastolicBloodPressureInMmHg": ${DiastolicBloodPressureInMmHg}, "IfManualInput": ${IfManualInput}}`,
       },
     ).then(response => {
-      console.log(response.status);
       if (response.status === 201) {
         resolve('add successful');
       } else {

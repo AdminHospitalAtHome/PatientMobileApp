@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Modal, StyleSheet, Text, TextInput, View, Dimensions} from 'react-native';
+import {
+  Button,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Dimensions,
+} from 'react-native';
 import {
   getWeightCall,
   addWeight,
@@ -12,6 +20,7 @@ import WeightLineChart from '../../Components/WeightLineChart';
 import AddButtons from '../../Components/AddButtons';
 import InputManualModal from '../../Components/ManualInputs/InputManualModal';
 import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
+import AddFailedDialog from '../../Components/AddFailedDialog';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -21,7 +30,7 @@ export default function PatientWeightPage(): JSX.Element {
   const [weightData, setWeightData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
-
+  const [addFailedVisible, setAddFailedVisible] = useState(false);
   //TODO: Change to dynamic later!!!!
   const patientID = 3;
   const screenWidth: number = Dimensions.get('window').width;
@@ -41,7 +50,12 @@ export default function PatientWeightPage(): JSX.Element {
           alignItems: 'center',
           marginTop: 15,
         }}>
-        <WeightLineChart data={weightData} unit={'lb'} width={0.95 * screenWidth} height={170}/>
+        <WeightLineChart
+          data={weightData}
+          unit={'lb'}
+          width={0.95 * screenWidth}
+          height={170}
+        />
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <DateSellectionBar
@@ -73,6 +87,7 @@ export default function PatientWeightPage(): JSX.Element {
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
+      {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
 

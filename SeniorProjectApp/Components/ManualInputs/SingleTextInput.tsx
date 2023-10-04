@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 5,
+    fontSize: 25,
     textAlign: 'center',
   },
   modalButtonContainer: {
@@ -108,5 +109,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     textAlign: 'center',
+  },
+  inputRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

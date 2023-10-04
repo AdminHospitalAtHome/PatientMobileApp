@@ -1,11 +1,9 @@
 import {
-  Button,
   Modal,
   StyleSheet,
-  Text,
-  TouchableOpacity,
-  TextInput,
   View,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import React from 'react';
 
@@ -31,12 +29,20 @@ export default function InputManualModal({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           {inputBoxes}
-          <View style={styles.modalButtonContainer}>
-            <Button
-              title={'Cancel'}
-              onPress={() => setModalVisible(!modalVisible)}
-            />
-            <Button title={'Add'} onPress={addButtonFunction} />
+          <View style={styles.container}>
+            <TouchableOpacity
+              style={styles.pressable}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.pressable,
+                {borderColor: 'white', borderLeftWidth: 2},
+              ]}
+              onPress={addButtonFunction}>
+              <Text style={styles.buttonText}>Add</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -45,9 +51,6 @@ export default function InputManualModal({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -69,31 +72,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 5,
-    textAlign: 'center',
-  },
-  modalButtonContainer: {
-    flexDirection: 'row',
-    width: 180,
-    justifyContent: 'space-between',
-  },
   input: {
     height: 40,
     width: 200,
@@ -102,5 +80,22 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     textAlign: 'center',
+  },
+  pressable: {
+    flex: 1,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  container: {
+    flexDirection: 'row',
+    backgroundColor: '#ba4618',
+    padding: 5,
+    borderRadius: 10,
+
+    justifyContent: 'space-around',
   },
 });

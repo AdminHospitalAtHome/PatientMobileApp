@@ -7,7 +7,7 @@ import {
   ScrollView,
   Button,
   Modal,
-  TextInput,
+  TextInput, Dimensions,
 } from 'react-native';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {
@@ -19,6 +19,10 @@ import DateSellectionBar from '../../Components/DateSelectionBar';
 import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
 import VitalTable from '../../Components/VitalTable';
 import AddButtons from '../../Components/AddButtons';
+import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
+import InputManualModal from '../../Components/ManualInputs/InputManualModal';
+import AddFailedDialog from "../../Components/AddFailedDialog";
+import WeightLineChart from "../../Components/WeightLineChart";
 export default function PatientHeartRatePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState<String>('');
@@ -28,8 +32,10 @@ export default function PatientHeartRatePage(): JSX.Element {
   const [heartData, setHeartData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
-
+  const [addFailedVisible, setAddFailedVisible] = useState(false);
   const patientID = 3;
+
+  const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
     getHeartRate(patientID, startDateTime, stopDateTime).then(setHeartData);
@@ -46,6 +52,7 @@ export default function PatientHeartRatePage(): JSX.Element {
           setAddSuccessVisible(true);
         } else {
           // Failed view here
+          setAddFailedVisible(true);
         }
         setStopDateTime(new Date().toISOString());
       });
@@ -53,66 +60,56 @@ export default function PatientHeartRatePage(): JSX.Element {
     }
   }
 
-  function checkInput(text: string): void {
-    if (numberRegex.test(text) || text === '') {
-      setInvalidVisible(false);
-      setInput(text);
-    } else {
-      setInvalidVisible(true);
-    }
-  }
-
   return (
     <View style={styles.container}>
+      <View
+          style={{
+            flex: 3,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 15,
+          }}>
+        <WeightLineChart
+            data={heartData}
+            unit={'BPM'}
+            width={0.95 * screenWidth}
+            height={170}
+        />
+      </View>
+      <View style={{flex: 1, justifyContent: 'center'}}>
       <DateSellectionBar
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
+      </View>
+      <View style={{flex: 7, justifyContent: 'center'}}>
       <VitalTable
         columnTitles={['Date', 'Heart Rate (BPM)']}
         vitalData={heartData}
       />
+      </View>
       <AddButtons
         setManualModalVisible={setModalVisible}
         setAutoModalVisible={setModalVisible}
       />
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Add Weight Data</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => checkInput(text)}
-              />
-              <Text style={{fontSize: 25}}>BPM</Text>
-            </View>
-            {invalidVisible && (
-              <Text style={{color: 'red'}}>Invalid Input!</Text>
-            )}
-            <View style={styles.modalButtonContainer}>
-              <Button
-                title={'Cancel'}
-                onPress={() => setModalVisible(!modalVisible)}
-              />
-              <Button title={'Add'} onPress={addHeartRateOnClick} />
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <InputManualModal
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+        addButtonFunction={addHeartRateOnClick}
+        inputBoxes={
+          <SingleTextInput
+            modalTitle={'Add Heart Rate'}
+            modalUnit={'BPM'}
+            setInput={setInput}
+            numberRegex={numberRegex}
+          />
+        }
+      />
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
+      )}
+      {addFailedVisible && (
+          <AddFailedDialog setter={setAddFailedVisible} />
       )}
     </View>
   );
