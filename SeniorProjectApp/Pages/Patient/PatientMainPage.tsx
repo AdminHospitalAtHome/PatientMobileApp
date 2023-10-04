@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, ScrollView} from 'react-native';
+import {View, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
 import PatientWeightNavCard from '../../Components/PatientWeightNavCard';
 import PatientBloodPressureNavCard from '../../Components/PatientBloodPressureNavCard';
 import PatientHeartRateNavCard from '../../Components/PatientHeartRateNavCard';
@@ -13,7 +13,7 @@ export default function PatientMainPage({
 }): JSX.Element {
   // Function to navigate to the PatientWeightPage
   return (
-    <View>
+    <SafeAreaView>
       <ScrollView>
         <TouchableOpacity
           onPress={() => navigation.navigate('patientWeightPage')}>
@@ -33,7 +33,7 @@ export default function PatientMainPage({
         </TouchableOpacity>
       </ScrollView>
       <MenuNav navigation={navigation} />
-    </View>
+    </SafeAreaView>
   );
 
 }

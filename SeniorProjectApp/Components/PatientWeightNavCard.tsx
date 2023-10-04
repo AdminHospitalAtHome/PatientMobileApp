@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import WeightLineChart from "./WeightLineChart";
 import {getWeightCall} from "../BackEndFunctionCall/weightFunction";
 import getDefaultStartTime from "../BackEndFunctionCall/getDefaultStartTime";
@@ -9,6 +9,7 @@ export default function PatientWeightNavCard(): JSX.Element {
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const patientID:number = 3;
+  const screenWidth:number = Dimensions.get('window').width;
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
@@ -21,7 +22,7 @@ export default function PatientWeightNavCard(): JSX.Element {
     <View style={styles.container}>
       <View style={styles.box}>
         <Text style={styles.weightLabel}>Weight</Text>
-        <View style={styles.chart}></View>
+        <View style={styles.chart}><WeightLineChart data={weightData} unit={'lb'} width={280} height={145}/></View>
       </View>
     </View>
   );
@@ -39,11 +40,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
+
   },
   box: {
     width: 300,
-    height: 150,
-    borderColor: '#333',
+    height: 200,
     borderWidth: 2,
     borderRadius: 8,
     backgroundColor: '#f9f9f9',
@@ -59,12 +60,11 @@ const styles = StyleSheet.create({
   weightLabel: {
     position: 'absolute',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 25,
     color: '#333',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 4,
-    backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

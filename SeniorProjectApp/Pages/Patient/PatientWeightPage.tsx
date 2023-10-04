@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, Modal, StyleSheet, Text, TextInput, View, Dimensions} from 'react-native';
 import {
   getWeightCall,
   addWeight,
@@ -24,6 +24,7 @@ export default function PatientWeightPage(): JSX.Element {
 
   //TODO: Change to dynamic later!!!!
   const patientID = 3;
+  const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
@@ -40,7 +41,7 @@ export default function PatientWeightPage(): JSX.Element {
           alignItems: 'center',
           marginTop: 15,
         }}>
-        <WeightLineChart data={weightData} unit={'lb'} />
+        <WeightLineChart data={weightData} unit={'lb'} width={0.95 * screenWidth} height={170}/>
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <DateSellectionBar
