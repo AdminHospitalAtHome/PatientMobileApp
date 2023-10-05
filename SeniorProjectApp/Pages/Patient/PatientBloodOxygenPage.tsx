@@ -15,14 +15,14 @@ import {
   addBloodOxygen,
 } from '../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
+import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
 import DateSellectionBar from '../../Components/DateSelectionBar';
 import {addBloodPressure} from '../../BackEndFunctionCall/bloodPressureFunction';
 import VitalTable from '../../Components/VitalTable';
-import AddButtons from '../../Components/AddButtons';
+import AddButtons from '../../Components/Dialogs/AddButtons';
 import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
 import InputManualModal from '../../Components/ManualInputs/InputManualModal';
-import AddFailedDialog from '../../Components/AddFailedDialog';
+import AddFailedDialog from '../../Components/Dialogs/AddFailedDialog';
 import WeightLineChart from '../../Components/WeightLineChart';
 
 export default function PatientBloodOxygen(): JSX.Element {

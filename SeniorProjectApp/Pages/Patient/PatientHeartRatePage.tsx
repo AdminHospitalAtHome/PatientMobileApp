@@ -16,12 +16,12 @@ import {
 } from '../../BackEndFunctionCall/heartRateFunction';
 import {Row, Rows, Table} from 'react-native-table-component';
 import DateSellectionBar from '../../Components/DateSelectionBar';
-import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
+import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
 import VitalTable from '../../Components/VitalTable';
-import AddButtons from '../../Components/AddButtons';
+import AddButtons from '../../Components/Dialogs/AddButtons';
 import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
 import InputManualModal from '../../Components/ManualInputs/InputManualModal';
-import AddFailedDialog from "../../Components/AddFailedDialog";
+import AddFailedDialog from "../../Components/Dialogs/AddFailedDialog";
 import WeightLineChart from "../../Components/WeightLineChart";
 export default function PatientHeartRatePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);

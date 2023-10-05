@@ -5,3 +5,8 @@ export default function getAccessbilityMode(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getAccessbilityMode?patientID=${patientID}`,
   ).then(response => response.bodyUsed);
 }
+
+
+export function setAccessbilityMode(patientID: number, mode: boolean){
+
+}

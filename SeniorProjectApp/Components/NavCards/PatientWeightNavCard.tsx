@@ -6,11 +6,10 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import WeightLineChart from './WeightLineChart';
-import {getWeightCall} from '../BackEndFunctionCall/weightFunction';
-import getDefaultStartTime from '../BackEndFunctionCall/getDefaultStartTime';
-import getAccessbilityMode from '../BackEndFunctionCall/userInfo';
-import * as process from 'process';
+import WeightLineChart from '../WeightLineChart';
+import {getWeightCall} from '../../BackEndFunctionCall/weightFunction';
+import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
+import getAccessbilityMode from '../../BackEndFunctionCall/userInfo';
 
 export default function PatientWeightNavCard(): JSX.Element {
   const [accessbilityMode, setAccessbilityMode] = useState(false);
@@ -26,10 +25,13 @@ export default function PatientWeightNavCard(): JSX.Element {
     });
   }, [stopDateTime]);
 
-  getAccessbilityMode(patientID).then(res => setAccessbilityMode(res));
+  getAccessbilityMode(patientID).then(res => {
+    setAccessbilityMode(res);
+  });
+  // console.log(accessbilityMode)
 
   if (accessbilityMode) {
-    return <View />;
+    <View/>
   } else {
     return (
       <View style={styles.container}>

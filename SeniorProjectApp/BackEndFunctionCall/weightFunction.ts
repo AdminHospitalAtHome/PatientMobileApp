@@ -43,3 +43,10 @@ export function getWeightCall(patientID, startDateTime, stopDateTime) {
     .then(response => response.json())
     .then(json => parseWeightData(json));
 }
+
+export function getMostRecentTwo(patientID: number){
+  return fetch(
+    `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}`,
+  );
+
+}

@@ -13,14 +13,14 @@ import {
   addWeight,
 } from '../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
+import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
 import DateSellectionBar from '../../Components/DateSelectionBar';
 import VitalTable from '../../Components/VitalTable';
 import WeightLineChart from '../../Components/WeightLineChart';
-import AddButtons from '../../Components/AddButtons';
+import AddButtons from '../../Components/Dialogs/AddButtons';
 import InputManualModal from '../../Components/ManualInputs/InputManualModal';
 import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
-import AddFailedDialog from '../../Components/AddFailedDialog';
+import AddFailedDialog from '../../Components/Dialogs/AddFailedDialog';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);

@@ -15,12 +15,12 @@ import {
   addBloodPressure,
 } from '../../BackEndFunctionCall/bloodPressureFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import AddSuccessfullyDialog from '../../Components/AddSuccessfullyDialog';
+import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
 import VitalTable from '../../Components/VitalTable';
-import AddButtons from '../../Components/AddButtons';
+import AddButtons from '../../Components/Dialogs/AddButtons';
 import InputManualModal from '../../Components/ManualInputs/InputManualModal';
 import MultipleTextInput from '../../Components/ManualInputs/MultipleTextInput';
-import AddFailedDialog from "../../Components/AddFailedDialog";
+import AddFailedDialog from "../../Components/Dialogs/AddFailedDialog";
 
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);

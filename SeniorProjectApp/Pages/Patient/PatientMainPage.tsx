@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
-import PatientWeightNavCard from '../../Components/PatientWeightNavCard';
-import PatientBloodPressureNavCard from '../../Components/PatientBloodPressureNavCard';
-import PatientHeartRateNavCard from '../../Components/PatientHeartRateNavCard';
-import PatientBloodOxygenNavCard from '../../Components/PatientBloodOxygenNavCard';
-import MenuNav from '../../Components/MenuNav';
+import PatientWeightNavCard from '../../Components/NavCards/PatientWeightNavCard';
+import PatientBloodPressureNavCard from '../../Components/NavCards/PatientBloodPressureNavCard';
+import PatientHeartRateNavCard from '../../Components/NavCards/PatientHeartRateNavCard';
+import PatientBloodOxygenNavCard from '../../Components/NavCards/PatientBloodOxygenNavCard';
+import MenuNav from '../../Components/NavCards/MenuNav';
 
 export default function PatientMainPage({
   navigation,
