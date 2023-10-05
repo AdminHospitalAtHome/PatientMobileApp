@@ -1,15 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Dimensions} from 'react-native';
-import WeightLineChart from "./WeightLineChart";
-import {getWeightCall} from "../BackEndFunctionCall/weightFunction";
-import getDefaultStartTime from "../BackEndFunctionCall/getDefaultStartTime";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+import WeightLineChart from './WeightLineChart';
+import {getWeightCall} from '../BackEndFunctionCall/weightFunction';
+import getDefaultStartTime from '../BackEndFunctionCall/getDefaultStartTime';
+import getAccessbilityMode from '../BackEndFunctionCall/userInfo';
+import * as process from 'process';
 
 export default function PatientWeightNavCard(): JSX.Element {
+  const [accessbilityMode, setAccessbilityMode] = useState(false);
   const [weightData, setWeightData] = useState(null);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const patientID:number = 3;
-  const screenWidth:number = Dimensions.get('window').width;
+  const patientID: number = 3;
+  const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
@@ -17,15 +26,27 @@ export default function PatientWeightNavCard(): JSX.Element {
     });
   }, [stopDateTime]);
 
+  getAccessbilityMode(patientID).then(res => setAccessbilityMode(res));
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <Text style={styles.weightLabel}>Weight</Text>
-        <View style={styles.chart}><WeightLineChart data={weightData} unit={'lb'} width={280} height={145}/></View>
+  if (accessbilityMode) {
+    return <View />;
+  } else {
+    return (
+      <View style={styles.container}>
+        <View style={styles.box}>
+          <Text style={styles.weightLabel}>Weight</Text>
+          <View style={styles.chart}>
+            <WeightLineChart
+              data={weightData}
+              unit={'lb'}
+              width={280}
+              height={145}
+            />
+          </View>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -40,7 +61,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
-
   },
   box: {
     width: 300,
