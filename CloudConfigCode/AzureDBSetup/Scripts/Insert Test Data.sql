@@ -1,4 +1,4 @@
-INSERT INTO dbo.Patient_Info (PatientID, FirstName, LastName, DateOfBirth)
+INSERT INTO dbo.Patient_Info (PatientID, FirstName, LastName, DateOfBirth, IfAccessibilityMode)
 VALUES (100000001, 'John', 'Smith', '2001-01-01', 0),
         (200000001, 'Noah', 'Johnson', '1994-05-21', 1),
         (300000001, 'David', 'Brown', '1987-02-12', 0),

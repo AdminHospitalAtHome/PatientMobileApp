@@ -27,7 +27,7 @@ CREATE TABLE Patient_Blood_Pressure (
 )
 
 -- Create Blood Oxygen Level Table
-CREATE TABLE Patinet_Blood_Oxygen (
+CREATE TABLE Patient_Blood_Oxygen (
 	UniqueID INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- Unique ID for entry
 	PatientID INT FOREIGN KEY REFERENCES Patient_Info(PatientID), -- May change based on client Needs
 	DateTimeTaken DateTime NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE Patinet_Blood_Oxygen (
 )
 
 -- Create Heart Rate Table
-CREATE TABLE Patinet_Heart_Rate (
+CREATE TABLE Patient_Heart_Rate (
 	UniqueID INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- Unique ID for entry
 	PatientID INT FOREIGN KEY REFERENCES Patient_Info(PatientID), -- May change based on client Needs
 	DateTimeTaken DateTime NOT NULL,
