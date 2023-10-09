@@ -2,7 +2,7 @@ INSERT INTO dbo.Patient_Info (PatientID, FirstName, LastName, DateOfBirth)
 VALUES (100000001, 'John', 'Smith', '2001-01-01', 0),
         (200000001, 'Noah', 'Johnson', '1994-05-21', 1),
         (300000001, 'David', 'Brown', '1987-02-12', 0),
-        (400000004, 'Paul', 'Williams', '1965-12-04', 0);
+        (400000004, 'Paul', 'Williams', '1965-12-04', 0),
         (500000001, 'Client', 'Demo', '2001-11-11', 0);
 
 INSERT INTO dbo.Patient_Weight (PatientID, DateTimeTaken, WeightInPounds, IfManualInput)
