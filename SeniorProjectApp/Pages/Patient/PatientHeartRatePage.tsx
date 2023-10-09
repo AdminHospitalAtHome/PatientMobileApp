@@ -33,7 +33,7 @@ export default function PatientHeartRatePage(): JSX.Element {
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
-  const patientID = 3;
+  const patientID = 300000001;
 
   const screenWidth: number = Dimensions.get('window').width;
 
@@ -46,7 +46,7 @@ export default function PatientHeartRatePage(): JSX.Element {
     if (input === '' || !numberRegex.test(input)) {
       //todo : raise error message/dialog
     } else {
-      addHeartRate(3, Number(input), true).then(successful => {
+      addHeartRate(patientID, Number(input), true).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);

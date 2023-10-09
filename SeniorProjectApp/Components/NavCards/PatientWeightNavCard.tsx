@@ -16,7 +16,7 @@ export default function PatientWeightNavCard(): JSX.Element {
   const [weightData, setWeightData] = useState(null);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const patientID: number = 3;
+  const patientID: number = 300000001;
   const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {

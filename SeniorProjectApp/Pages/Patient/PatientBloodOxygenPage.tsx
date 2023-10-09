@@ -36,7 +36,7 @@ export default function PatientBloodOxygen(): JSX.Element {
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
   //TODO: Change to dynamic later!!!!
-  const patientID = 3;
+  const patientID = 300000001;
   const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export default function PatientBloodOxygen(): JSX.Element {
     if (input === '' || !numberRegex.test(input)) {
       //todo: raise error message dialog
     } else {
-      addBloodOxygen(3, Number(input), true).then(successful => {
+      addBloodOxygen(patientID, Number(input), true).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);

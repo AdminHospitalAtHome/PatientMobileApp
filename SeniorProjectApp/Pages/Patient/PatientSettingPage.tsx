@@ -7,7 +7,7 @@ import getAccessbilityMode from '../../BackEndFunctionCall/userInfo';
 export default function PatientSettingPage(): JSX.Element {
   const [accessbilityMode, setAccessbilityMode] = useState(false);
 
-  // getAccessbilityMode(3).then(res => setAccessbilityMode(res));
+  // getAccessbilityMode(300000001).then(res => setAccessbilityMode(res));
 
   return (
     <View style={{flex: 1, alignItems: 'center', padding: 10}}>

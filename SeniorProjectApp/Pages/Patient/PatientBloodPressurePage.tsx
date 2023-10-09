@@ -34,7 +34,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
   //TODO: Change to dynamic later!!!!
-  const patientID = 3;
+  const patientID = 300000001;
 
   useEffect(() => {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(
@@ -107,7 +107,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
       //todo: raise error message dialog
     } else {
       addBloodPressure(
-        3,
+        patientID,
         Number(inputSystolic),
         Number(inputDiastolic),
         true,
