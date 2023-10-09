@@ -11,15 +11,11 @@ export function parseWeightData(weightJson) {
   return weightArr;
 }
 
-export function addWeight({
-  patientId,
-  weight,
-  ifManualInput,
-}: {
-  patientId: number;
-  weight: number;
-  ifManualInput: boolean;
-}): Promise<any> {
+export function addWeight(
+  patientId: number,
+  weight: number,
+  ifManualInput: boolean,
+): Promise<any> {
   const promise: Promise<any> = new Promise((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight', {
@@ -44,9 +40,8 @@ export function getWeightCall(patientID, startDateTime, stopDateTime) {
     .then(json => parseWeightData(json));
 }
 
-export function getMostRecentTwo(patientID: number){
+export function getMostRecentTwo(patientID: number) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}`,
   );
-
 }

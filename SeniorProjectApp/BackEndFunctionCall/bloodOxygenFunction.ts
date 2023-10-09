@@ -14,7 +14,6 @@ export function addBloodOxygen(
         body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}", "BloodOxygenLevelInPercentage": ${bloodOxygenLevelInPercentage} ,"IfManualInput": ${IfManualInput}}`,
       },
     ).then(response => {
-      console.log(response.status);
       if (response.status === 201) {
         resolve('add successful');
       } else {

@@ -12,14 +12,14 @@ import {
 
 // Add Blood Pressure test
 it('Add Blood Oxygen Test', async () => {
-  await addBloodOxygen(3, 98, true).then(output => {
+  await addBloodOxygen(300000001, 98, true).then(output => {
     expect(output).toBe('add successful');
   });
 });
 
 it('Get Blood Oxygen Test', async () => {
   await getBloodOxygen(
-    1,
+    100000001,
     '2023-01-01T08:00:00.000',
     '2023-01-03T08:00:00.000',
   ).then(output => {

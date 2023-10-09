@@ -95,11 +95,7 @@ export default function PatientWeightPage(): JSX.Element {
     if (input === '' || !numberRegex.test(input)) {
       //todo : raise error message/dialog
     } else {
-      addWeight({
-        patientId: 3,
-        weight: Number(input),
-        ifManualInput: true,
-      }).then(successful => {
+      addWeight(3, Number(input), true).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);
