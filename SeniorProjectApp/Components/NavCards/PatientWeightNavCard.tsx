@@ -9,10 +9,13 @@ import {
 import WeightLineChart from '../WeightLineChart';
 import {getWeightCall} from '../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import getAccessbilityMode from '../../BackEndFunctionCall/userInfo';
+import {
+  getAccessibilityMode,
+  setAccessbilityMode,
+} from '../../BackEndFunctionCall/userInfo';
 
 export default function PatientWeightNavCard(): JSX.Element {
-  const [accessbilityMode, setAccessbilityMode] = useState(false);
+  const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [weightData, setWeightData] = useState(null);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
@@ -25,12 +28,12 @@ export default function PatientWeightNavCard(): JSX.Element {
     });
   }, [stopDateTime]);
 
-  // getAccessbilityMode(patientID).then(res => {
-  //   setAccessbilityMode(res);
-  // });
-  // console.log(accessbilityMode)
+  getAccessibilityMode(patientID).then(res => {
+    setAccessibilityMode(res[0].IfAccessibilityMode);
+  });
 
-  if (accessbilityMode) {
+
+  if (accessibilityMode) {
     <View/>
   } else {
     return (

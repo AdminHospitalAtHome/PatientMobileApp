@@ -6,7 +6,7 @@
 
 export function setAccessbilityMode(patientID: number, mode: boolean) {}
 
-export function getAccessbilityMode(patientID: number) {
+export function getAccessibilityMode(patientID: number) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getAccessbilityMode?patientID=${patientID}`,
   ).then(response => response.json());

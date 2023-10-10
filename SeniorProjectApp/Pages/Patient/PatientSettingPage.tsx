@@ -2,21 +2,20 @@ import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
 import Switch from '../../Components/Switch';
 import {useState} from 'react';
-import {getAccessbilityMode} from '../../BackEndFunctionCall/userInfo';
+import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 
 export default function PatientSettingPage(): JSX.Element {
-  const [accessbilityMode, setAccessbilityMode] = useState(false);
+  const [accessibilityMode, setAccessibilityMode] = useState(false);
 
-  getAccessbilityMode(200000001).then(res => console.log(res));
+  getAccessibilityMode(300000001).then(res => setAccessibilityMode(res[0].IfAccessibilityMode));
 
-  // getAccessbilityMode(300000001);
   return (
     <View style={{flex: 1, alignItems: 'center', padding: 10}}>
       <View style={styles.card}>
         <Text style={{marginLeft: 10}}>Accessibility Mode</Text>
         <View style={styles.switchGroup}>
           <TouchableOpacity onPress={switchOnPress}>
-            <Switch mode={accessbilityMode} />
+            <Switch mode={accessibilityMode} />
           </TouchableOpacity>
         </View>
       </View>
@@ -24,7 +23,7 @@ export default function PatientSettingPage(): JSX.Element {
   );
 
   function switchOnPress(): void {
-    setAccessbilityMode(!accessbilityMode);
+    setAccessibilityMode(!accessibilityMode);
     //call function here
   }
 }
