@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import {
   getWeightCall,
   addWeight,
-} from '../../BackEndFunctionCall/weightFunction';
-import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
-import DateSelectionBar from '../../Components/DateSelectionBar';
-import VitalTable from '../../Components/VitalTable';
-import WeightLineChart from '../../Components/WeightLineChart';
-import AddButtons from '../../Components/Dialogs/AddButtons';
-import InputManualModal from '../../Components/ManualInputs/InputManualModal';
-import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
-import AddFailedDialog from '../../Components/Dialogs/AddFailedDialog';
-
+} from '../../../BackEndFunctionCall/weightFunction';
+import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
+import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
+import DateSelectionBar from '../../../Components/DateSelectionBar';
+import VitalTable from '../../../Components/VitalTable';
+import WeightLineChart from '../../../Components/WeightLineChart';
+import AddButtons from '../../../Components/AddButtons';
+import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
+import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
+import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
+import {PatientDetailStyles} from './Styles';
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState('');
@@ -35,14 +35,8 @@ export default function PatientWeightPage(): JSX.Element {
   }, [stopDateTime, startDateTime]);
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flex: 3,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 15,
-        }}>
+    <View style={PatientDetailStyles.container}>
+      <View style={PatientDetailStyles.chartContainer}>
         <WeightLineChart
           data={weightData}
           unit={'lb'}
@@ -50,13 +44,13 @@ export default function PatientWeightPage(): JSX.Element {
           height={170}
         />
       </View>
-      <View style={{flex: 1, justifyContent: 'center'}}>
+      <View style={PatientDetailStyles.dateSelectionContainer}>
         <DateSelectionBar
           setStartDateTime={setStartDateTime}
           setStopDateTime={setStopDateTime}
         />
       </View>
-      <View style={{flex: 7, justifyContent: 'center'}}>
+      <View style={PatientDetailStyles.vitalTableContainer}>
         <VitalTable columnTitles={['Date', 'Weight']} vitalData={weightData} />
       </View>
       <AddButtons
@@ -101,64 +95,3 @@ export default function PatientWeightPage(): JSX.Element {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 5,
-    textAlign: 'center',
-  },
-  modalButtonContainer: {
-    flexDirection: 'row',
-    width: 180,
-    justifyContent: 'space-between',
-  },
-  input: {
-    height: 40,
-    width: 200,
-    margin: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-    textAlign: 'center',
-  },
-});

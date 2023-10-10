@@ -1,5 +1,6 @@
-import {Modal, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Modal, View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {AddDialogStyle} from './Styles';
 
 export default function AddFailedDialog({
   setter,
@@ -8,12 +9,12 @@ export default function AddFailedDialog({
 }): JSX.Element {
   return (
     <Modal animationType="slide" transparent={true}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>Failed To Add</Text>
-          <View style={styles.container}>
+      <View style={AddDialogStyle.centeredView}>
+        <View style={AddDialogStyle.modalView}>
+          <Text style={AddDialogStyle.modalText}>Failed To Add</Text>
+          <View style={AddDialogStyle.container}>
             <TouchableOpacity onPress={() => setter(false)}>
-              <Text style={styles.buttonText}>Continue</Text>
+              <Text style={AddDialogStyle.buttonText}>Continue</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -21,46 +22,3 @@ export default function AddFailedDialog({
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  modalText: {
-    marginBottom: 20,
-    fontSize: 25,
-    textAlign: 'center',
-  },
-  container: {
-    flexDirection: 'row',
-    backgroundColor: '#ba4618',
-    padding: 10,
-    borderRadius: 10,
-
-    justifyContent: 'space-around',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-});

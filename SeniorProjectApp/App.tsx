@@ -12,10 +12,10 @@ import {View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import PatientWeightPage from './Pages/Patient/PatientWeightPage';
-import PatientBloodPressurePage from './Pages/Patient/PatientBloodPressurePage';
-import PatientHeartRatePage from './Pages/Patient/PatientHeartRatePage';
-import PatientBloodOxygenPage from './Pages/Patient/PatientBloodOxygenPage';
+import PatientWeightPage from './Pages/Patient/PatientDetailPages/PatientWeightPage';
+import PatientBloodPressurePage from './Pages/Patient/PatientDetailPages/PatientBloodPressurePage';
+import PatientHeartRatePage from './Pages/Patient/PatientDetailPages/PatientHeartRatePage';
+import PatientBloodOxygenPage from './Pages/Patient/PatientDetailPages/PatientBloodOxygenPage';
 import PatientSettingPage from './Pages/Patient/PatientSettingPage';
 
 const Stack = createNativeStackNavigator();

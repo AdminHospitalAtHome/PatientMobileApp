@@ -1,98 +1,94 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
-
+import {StyleSheet, View} from 'react-native';
+import DateSelectionBar from '../../../Components/DateSelectionBar';
 import {
-  getBloodOxygen,
-  addBloodOxygen,
-} from '../../BackEndFunctionCall/bloodOxygenFunction';
-import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
-import DateSelectionBar from '../../Components/DateSelectionBar';
-import VitalTable from '../../Components/VitalTable';
-import AddButtons from '../../Components/Dialogs/AddButtons';
-import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
-import InputManualModal from '../../Components/ManualInputs/InputManualModal';
-import AddFailedDialog from '../../Components/Dialogs/AddFailedDialog';
-import WeightLineChart from '../../Components/WeightLineChart';
+  getBloodPressure,
+  addBloodPressure,
+} from '../../../BackEndFunctionCall/bloodPressureFunction';
+import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
+import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
+import VitalTable from '../../../Components/VitalTable';
+import AddButtons from '../../../Components/AddButtons';
+import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
+import MultipleTextInput from '../../../Components/ManualInputs/MultipleTextInput';
+import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 
-export default function PatientBloodOxygen(): JSX.Element {
+export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
-  const [input, setInput] = useState('');
+  const [inputSystolic, setInputSystolic] = useState('');
+  const [inputDiastolic, setInputDiastolic] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
-  const [bloodOxygenData, setBloodOxygenData] = useState(null);
+  const [bloodPressureData, setBloodPressureData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
   //TODO: Change to dynamic later!!!!
   const patientID = 300000001;
-  const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
-    getBloodOxygen(patientID, startDateTime, stopDateTime).then(
+    getBloodPressure(patientID, startDateTime, stopDateTime).then(
       // @ts-ignore
-      setBloodOxygenData, //TODO: suppressing typescript typing error, Fix Later...
+      setBloodPressureData,
     );
   }, [stopDateTime, startDateTime]);
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flex: 3,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 15,
-        }}>
-        <WeightLineChart
-          data={bloodOxygenData}
-          unit={'%'}
-          width={0.95 * screenWidth}
-          height={170}
-        />
-      </View>
-      <View style={{flex: 1, justifyContent: 'center'}}>
-        <DateSelectionBar
-          setStartDateTime={setStartDateTime}
-          setStopDateTime={setStopDateTime}
-        />
-      </View>
-      <View style={{flex: 7, justifyContent: 'center'}}>
-        <VitalTable
-          columnTitles={['Date', 'Blood Oxygen (%)']}
-          vitalData={bloodOxygenData}
-        />
-      </View>
+      <DateSelectionBar
+        setStartDateTime={setStartDateTime}
+        setStopDateTime={setStopDateTime}
+      />
+      <VitalTable
+        columnTitles={['Date', 'Systolic', 'Diastolic']}
+        vitalData={bloodPressureData}
+      />
       <AddButtons
         setManualModalVisible={setModalVisible}
         setAutoModalVisible={setModalVisible}
       />
+
       <InputManualModal
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
-        addButtonFunction={addBloodOxygenOnClick}
         inputBoxes={
-          <SingleTextInput
-            modalTitle={'Add Blood Oxygen'}
-            modalUnit={'%'}
-            setInput={setInput}
-            numberRegex={numberRegex}
+          <MultipleTextInput
+            inputTitles={[
+              'Systolic Blood Pressure',
+              'Diastolic Blood Pressure',
+            ]}
+            modalTitle={'Add Blood Pressure'}
+            modalUnit={['mmHg', 'mmHg']}
+            numberRegex={[numberRegex, numberRegex]}
+            setInput={[setInputSystolic, setInputDiastolic]}
           />
         }
+        addButtonFunction={addBloodPressureOnClick}
       />
+
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-
       {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
 
-  function addBloodOxygenOnClick(): void {
-    if (input === '' || !numberRegex.test(input)) {
+  //todo: add boolean argument for auto input later
+  function addBloodPressureOnClick(): void {
+    if (
+      inputSystolic === '' ||
+      inputDiastolic === '' ||
+      !numberRegex.test(inputSystolic) ||
+      !numberRegex.test(inputDiastolic)
+    ) {
       //todo: raise error message dialog
     } else {
-      addBloodOxygen(patientID, Number(input), true).then(successful => {
+      addBloodPressure(
+        patientID,
+        Number(inputSystolic),
+        Number(inputDiastolic),
+        true,
+      ).then(successful => {
         setModalVisible(!modalVisible);
         if (successful === 'add successful') {
           setAddSuccessVisible(true);
@@ -101,12 +97,19 @@ export default function PatientBloodOxygen(): JSX.Element {
         }
         setStopDateTime(new Date().toISOString());
       });
-      setInput('');
+      setInputDiastolic('');
+      setInputSystolic('');
     }
   }
 }
 
 const styles = StyleSheet.create({
+  modalLabel: {
+    fontSize: 15,
+    color: 'grey',
+    alignItems: 'flex-start',
+  },
+
   container: {
     flex: 1,
   },
