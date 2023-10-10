@@ -31,7 +31,11 @@ export function addWeight(
   return promise;
 }
 
-export function getWeightCall(patientID: number, startDateTime: string, stopDateTime: string) {
+export function getWeightCall(
+  patientID: number,
+  startDateTime: string,
+  stopDateTime: string,
+) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
   )
@@ -43,4 +47,10 @@ export function getMostRecentTwo(patientID: number) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}`,
   );
+}
+
+export function getRecentWeight(patientID: number): Promise<void> {
+  return fetch(
+    `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentWeight?patientID=${patientID}`,
+  ).then(res => res.json());
 }
