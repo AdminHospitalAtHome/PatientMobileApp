@@ -1,4 +1,11 @@
-import {Modal, View, Button, Text, StyleSheet} from 'react-native';
+import {
+  Modal,
+  View,
+  Button,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 
 export default function AddSuccessfullyDialog({
@@ -10,9 +17,11 @@ export default function AddSuccessfullyDialog({
     <Modal animationType="slide" transparent={true}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Add Successfully</Text>
-          <View style={styles.modalButtonContainer}>
-            <Button title={'Confirm'} onPress={() => setter(false)} />
+          <Text style={styles.modalText}>Added Successfully</Text>
+          <View style={styles.container}>
+            <TouchableOpacity onPress={() => setter(false)}>
+              <Text style={styles.buttonText}>Continue</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -22,13 +31,17 @@ export default function AddSuccessfullyDialog({
 
 const styles = StyleSheet.create({
   modalText: {
-    marginBottom: 5,
+    marginBottom: 20,
+    fontSize: 25,
     textAlign: 'center',
   },
-  modalButtonContainer: {
+  container: {
     flexDirection: 'row',
-    width: 180,
-    justifyContent: 'space-between',
+    backgroundColor: '#ba4618',
+    padding: 10,
+    borderRadius: 10,
+
+    justifyContent: 'space-around',
   },
   centeredView: {
     flex: 1,
@@ -50,5 +63,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
   },
 });
