@@ -7,7 +7,7 @@ import React from 'react';
 
 // Note: import explicitly to use the types shiped with jest.
 import {it, expect} from '@jest/globals';
-import {addWeight, getWeightCall} from '../BackEndFunctionCall/weightFunction';
+import {addWeight, getRecentWeight, getWeightCall} from '../BackEndFunctionCall/weightFunction';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
@@ -28,3 +28,21 @@ it('Gets Weight Data Correctly', async () => {
     expect(output).toStrictEqual([['01-01-2023\n3:00 AM', 190]]);
   });
 });
+
+it('Get Recent Weight Data Correctly', async() => {
+  await getRecentWeight(
+      100000001,
+  ).then(res => {
+    expect(res[0].WeightInPounds).toBe(200);
+  expect(res[1].WeightInPounds).toBe(200);
+
+  });
+});
+
+// it('Test Weight Trend Correctly', async() => {
+//   await weightTrend(
+//       100000001,
+//   ).then(res => {
+//     expect().toBe();
+//   });
+// });
