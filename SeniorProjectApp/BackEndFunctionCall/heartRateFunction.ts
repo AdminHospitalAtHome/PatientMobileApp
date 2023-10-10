@@ -26,8 +26,8 @@ export function addHeartRate(
 
 export function getHeartRate(
   patientID: number,
-  startDateTime: String,
-  stopDateTime: String,
+  startDateTime: string,
+  stopDateTime: string,
 ) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getHeartRate?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,

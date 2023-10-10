@@ -26,8 +26,8 @@ export function addBloodOxygen(
 
 export function getBloodOxygen(
   patientID: number,
-  startDateTime: String,
-  stopDateTime: String,
+  startDateTime: string,
+  stopDateTime: string,
 ) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodOxygen?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
@@ -39,8 +39,6 @@ export function getBloodOxygen(
 export function parseBloodOxygenData(bloodOxygenJson: any) {
   let bloodOxygenArr = [];
   for (var i = 0; i < bloodOxygenJson.length; i++) {
-
-
     bloodOxygenArr.push([
       timeTableParser(bloodOxygenJson[i].DateTimeTaken),
       bloodOxygenJson[i].BloodOxygenLevelInPercentage,

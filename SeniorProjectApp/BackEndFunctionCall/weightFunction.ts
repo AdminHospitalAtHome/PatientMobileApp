@@ -1,6 +1,5 @@
-import getDefaultStartTime from './getDefaultStartTime';
 import timeTableParser from './tableTimeParser';
-export function parseWeightData(weightJson) {
+export function parseWeightData(weightJson: any) {
   let weightArr = [];
   for (var i = 0; i < weightJson.length; i++) {
     weightArr.push([
@@ -32,7 +31,7 @@ export function addWeight(
   return promise;
 }
 
-export function getWeightCall(patientID, startDateTime, stopDateTime) {
+export function getWeightCall(patientID: number, startDateTime: string, stopDateTime: string) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
   )

@@ -1,10 +1,10 @@
 import timeTableParser from './tableTimeParser';
 
 export function addBloodPressure(
-  patientID,
-  SystolicBloodPressureInMmHg,
-  DiastolicBloodPressureInMmHg,
-  IfManualInput,
+  patientID: number,
+  SystolicBloodPressureInMmHg: number,
+  DiastolicBloodPressureInMmHg: number,
+  IfManualInput: boolean,
 ) {
   const promise: Promise<any> = new Promise((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
@@ -25,7 +25,11 @@ export function addBloodPressure(
   return promise;
 }
 
-export function getBloodPressure(patientID, startDateTime, stopDateTime) {
+export function getBloodPressure(
+  patientID: number,
+  startDateTime: string,
+  stopDateTime: string,
+) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodPressure?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
   )
@@ -33,7 +37,7 @@ export function getBloodPressure(patientID, startDateTime, stopDateTime) {
     .then(json => parseBloodPressureData(json));
 }
 
-function parseBloodPressureData(bloodPressureJSON) {
+function parseBloodPressureData(bloodPressureJSON: any) {
   let bloodPressureArr = [];
   for (var i = 0; i < bloodPressureJSON.length; i++) {
     bloodPressureArr.push([

@@ -15,6 +15,5 @@ export default function timeTableParser(dateTime: string): string {
   } else {
     tmpTimeString = String(tmpHour) + ':' + tmpTime[1] + ' AM';
   }
-  const finalString = tmpDateString + '\n' + tmpTimeString;
-  return finalString;
+  return tmpDateString + '\n' + tmpTimeString;
 }
