@@ -14,7 +14,7 @@ export default function PatientMainPage({
   // Function to navigate to the PatientWeightPage
   return (
     <SafeAreaView>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{alignItems: 'center', padding: 5}}>
         <TouchableOpacity
           onPress={() => navigation.navigate('patientWeightPage')}>
           <PatientWeightNavCard />

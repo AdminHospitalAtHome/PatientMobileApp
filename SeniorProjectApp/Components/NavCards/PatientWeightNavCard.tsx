@@ -1,19 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import WeightLineChart from '../WeightLineChart';
-import {getWeightCall} from '../../BackEndFunctionCall/weightFunction';
-import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {
-  getAccessibilityMode,
-} from '../../BackEndFunctionCall/userInfo';
-import {defaultStyle, accessStyle} from "./navStyle";
+  getWeightCall,
+  getRecentWeight,
+} from '../../BackEndFunctionCall/weightFunction';
+import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
+import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
+import {defaultStyle, accessStyle} from './navStyle';
 
 export default function PatientWeightNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [weightData, setWeightData] = useState(null);
+  const [trend, setTrend] = useState('UP');
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const patientID: number = 300000001;
+  const [recentWeight, setRecentWeight] = useState(null);
+  getRecentWeight(patientID).then(res =>
+    setRecentWeight(res[0].WeightInPounds),
+  );
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
@@ -26,11 +32,17 @@ export default function PatientWeightNavCard(): JSX.Element {
   });
 
   if (accessibilityMode) {
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <Text style={styles.weightLabel}Weight/>
+    return (
+      <View style={accessStyle.container}>
+        <View style={accessStyle.labelHolder}>
+          <Text style={accessStyle.label}>Weight</Text>
+          <Text style={accessStyle.label}>UP</Text>
+        </View>
+        <View style={accessStyle.textHolder}>
+          <Text style={accessStyle.value}>{recentWeight}</Text>
+        </View>
       </View>
-    </View>
+    );
   } else {
     return (
       <View style={defaultStyle.container}>

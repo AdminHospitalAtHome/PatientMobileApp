@@ -54,3 +54,7 @@ export function getRecentWeight(patientID: number): Promise<void> {
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentWeight?patientID=${patientID}`,
   ).then(res => res.json());
 }
+
+export function weightTrend(patientID:number): Promise<void> {
+
+}
