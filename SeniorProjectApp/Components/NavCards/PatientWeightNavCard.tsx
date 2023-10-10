@@ -13,6 +13,7 @@ import {
   getAccessibilityMode,
   setAccessibilityMode,
 } from '../../BackEndFunctionCall/userInfo';
+import {defaultStyle, accessStyle} from "./navStyle";
 
 export default function PatientWeightNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
@@ -32,14 +33,17 @@ export default function PatientWeightNavCard(): JSX.Element {
     setAccessibilityMode(res[0].IfAccessibilityMode);
   });
 
-
   if (accessibilityMode) {
-    <View/>
+    <View style={styles.container}>
+      <View style={styles.box}>
+        <Text style={styles.weightLabel}Weight/>
+      </View>
+    </View>
   } else {
     return (
-      <View style={styles.container}>
-        <View style={styles.box}>
-          <Text style={styles.weightLabel}>Weight</Text>
+      <View style={defaultStyle.container}>
+        <View style={defaultStyle.subContainer}>
+          <Text style={defaultStyle.label}>Weight</Text>
           <View style={styles.chart}>
             <WeightLineChart
               data={weightData}
