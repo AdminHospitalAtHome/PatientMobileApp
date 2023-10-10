@@ -1,0 +1,28 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "accessibilityMode",
+      "direction": "in",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "update [dbo].[Patient_Info] set IfAccessibilityMode = @IfAccessibilityMode where PatientID = @PatientID",
+      "commandType": "Text",
+      "parameters": "@PatientID={Query.PatientID},@IfAccessibilityMode={Query.IfAccessibilityMode}"
+    }
+  ]
+}

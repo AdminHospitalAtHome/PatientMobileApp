@@ -11,7 +11,7 @@ import {getWeightCall} from '../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {
   getAccessibilityMode,
-  setAccessbilityMode,
+  setAccessibilityMode,
 } from '../../BackEndFunctionCall/userInfo';
 
 export default function PatientWeightNavCard(): JSX.Element {
