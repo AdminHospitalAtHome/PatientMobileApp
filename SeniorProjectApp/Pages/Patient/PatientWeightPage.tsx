@@ -1,20 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {
   getWeightCall,
   addWeight,
 } from '../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
-import DateSellectionBar from '../../Components/DateSelectionBar';
+import DateSelectionBar from '../../Components/DateSelectionBar';
 import VitalTable from '../../Components/VitalTable';
 import WeightLineChart from '../../Components/WeightLineChart';
 import AddButtons from '../../Components/Dialogs/AddButtons';
@@ -37,9 +29,10 @@ export default function PatientWeightPage(): JSX.Element {
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
+      // @ts-ignore
       setWeightData(response);
     });
-  }, [stopDateTime]);
+  }, [stopDateTime, startDateTime]);
 
   return (
     <View style={styles.container}>
@@ -58,7 +51,7 @@ export default function PatientWeightPage(): JSX.Element {
         />
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <DateSellectionBar
+        <DateSelectionBar
           setStartDateTime={setStartDateTime}
           setStopDateTime={setStopDateTime}
         />

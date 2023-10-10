@@ -1,11 +1,4 @@
-import {
-  Modal,
-  View,
-  Button,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {Modal, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 export default function AddSuccessfullyDialog({
@@ -70,4 +63,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
   },
+
 });

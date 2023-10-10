@@ -4,7 +4,17 @@ import {View} from 'react-native';
 import {Dimensions} from 'react-native';
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
-export default function WeightLineChart({data, unit, width, height}: {data: [][], unit: string, width: number, height: number}): JSX.Element {
+export default function WeightLineChart({
+  data,
+  unit,
+  width,
+  height,
+}: {
+  data: any;
+  unit: string;
+  width: number;
+  height: number;
+}): JSX.Element {
   const screenWidth = Dimensions.get('window').width;
   const chartData: number[] = [];
 

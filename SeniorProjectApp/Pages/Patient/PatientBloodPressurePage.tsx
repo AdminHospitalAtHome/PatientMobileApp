@@ -1,15 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import {Row, Rows, Table} from 'react-native-table-component';
-import DateSellectionBar from '../../Components/DateSelectionBar';
+import {StyleSheet, View} from 'react-native';
+import DateSelectionBar from '../../Components/DateSelectionBar';
 import {
   getBloodPressure,
   addBloodPressure,
@@ -20,14 +11,13 @@ import VitalTable from '../../Components/VitalTable';
 import AddButtons from '../../Components/Dialogs/AddButtons';
 import InputManualModal from '../../Components/ManualInputs/InputManualModal';
 import MultipleTextInput from '../../Components/ManualInputs/MultipleTextInput';
-import AddFailedDialog from "../../Components/Dialogs/AddFailedDialog";
+import AddFailedDialog from '../../Components/Dialogs/AddFailedDialog';
 
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputSystolic, setInputSystolic] = useState('');
   const [inputDiastolic, setInputDiastolic] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
-  const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [bloodPressureData, setBloodPressureData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
@@ -38,13 +28,14 @@ export default function PatientBloodPressurePage(): JSX.Element {
 
   useEffect(() => {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(
+      // @ts-ignore
       setBloodPressureData,
     );
-  }, [stopDateTime]);
+  }, [stopDateTime, startDateTime]);
 
   return (
     <View style={styles.container}>
-      <DateSellectionBar
+      <DateSelectionBar
         setStartDateTime={setStartDateTime}
         setStopDateTime={setStopDateTime}
       />
@@ -64,7 +55,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
           <MultipleTextInput
             inputTitles={[
               'Systolic Blood Pressure',
-              'Disatolic Blood Pressure',
+              'Diastolic Blood Pressure',
             ]}
             modalTitle={'Add Blood Pressure'}
             modalUnit={['mmHg', 'mmHg']}
@@ -78,23 +69,9 @@ export default function PatientBloodPressurePage(): JSX.Element {
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-      {addFailedVisible && (
-          <AddFailedDialog setter={setAddFailedVisible} />
-      )}
+      {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
-
-  function checkInput(
-    text: string,
-    setInput: React.Dispatch<React.SetStateAction<string>>,
-  ): void {
-    if (numberRegex.test(text) || text === '') {
-      setInvalidVisible(false);
-      setInput(text);
-    } else {
-      setInvalidVisible(true);
-    }
-  }
 
   //todo: add boolean argument for auto input later
   function addBloodPressureOnClick(): void {

@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-
+import React from 'react';
 export default ({navigation}: {navigation: any}) => (
   <View style={styles.menuContainer}>
     <TouchableOpacity style={styles.labelContainer}>

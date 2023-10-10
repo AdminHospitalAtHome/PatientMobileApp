@@ -1,23 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Dimensions,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import {Row, Rows, Table} from 'react-native-table-component';
+import {Dimensions, StyleSheet, View} from 'react-native';
+
 import {
   getBloodOxygen,
   addBloodOxygen,
 } from '../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
-import DateSellectionBar from '../../Components/DateSelectionBar';
-import {addBloodPressure} from '../../BackEndFunctionCall/bloodPressureFunction';
+import DateSelectionBar from '../../Components/DateSelectionBar';
 import VitalTable from '../../Components/VitalTable';
 import AddButtons from '../../Components/Dialogs/AddButtons';
 import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
@@ -29,7 +19,6 @@ export default function PatientBloodOxygen(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
-  const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [bloodOxygenData, setBloodOxygenData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
@@ -41,9 +30,10 @@ export default function PatientBloodOxygen(): JSX.Element {
 
   useEffect(() => {
     getBloodOxygen(patientID, startDateTime, stopDateTime).then(
-      setBloodOxygenData,
+      // @ts-ignore
+      setBloodOxygenData, //TODO: suppressing typescript typing error, Fix Later...
     );
-  }, [stopDateTime]);
+  }, [stopDateTime, startDateTime]);
 
   return (
     <View style={styles.container}>
@@ -62,7 +52,7 @@ export default function PatientBloodOxygen(): JSX.Element {
         />
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <DateSellectionBar
+        <DateSelectionBar
           setStartDateTime={setStartDateTime}
           setStopDateTime={setStopDateTime}
         />
@@ -97,17 +87,6 @@ export default function PatientBloodOxygen(): JSX.Element {
       {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
-  function checkInput(
-    text: string,
-    setInput: React.Dispatch<React.SetStateAction<string>>,
-  ): void {
-    if (numberRegex.test(text) || text === '') {
-      setInvalidVisible(false);
-      setInput(text);
-    } else {
-      setInvalidVisible(true);
-    }
-  }
 
   function addBloodOxygenOnClick(): void {
     if (input === '' || !numberRegex.test(input)) {

@@ -1,28 +1,6 @@
-import {Modal, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {StyleSheet} from 'react-native';
 
-export default function AddFailedDialog({
-  setter,
-}: {
-  setter: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element {
-  return (
-    <Modal animationType="slide" transparent={true}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>Failed To Add</Text>
-          <View style={styles.container}>
-            <TouchableOpacity onPress={() => setter(false)}>
-              <Text style={styles.buttonText}>Continue</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  );
-}
-
-const styles = StyleSheet.create({
+export const AddDialogStyle = StyleSheet.create({
   modalText: {
     marginBottom: 20,
     fontSize: 25,
