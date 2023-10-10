@@ -25,9 +25,9 @@ export default function PatientWeightNavCard(): JSX.Element {
     });
   }, [stopDateTime]);
 
-  getAccessbilityMode(patientID).then(res => {
-    setAccessbilityMode(res);
-  });
+  // getAccessbilityMode(patientID).then(res => {
+  //   setAccessbilityMode(res);
+  // });
   // console.log(accessbilityMode)
 
   if (accessbilityMode) {

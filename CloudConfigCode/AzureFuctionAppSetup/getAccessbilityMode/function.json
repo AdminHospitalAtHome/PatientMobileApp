@@ -19,7 +19,7 @@
       "direction": "in",
       "type": "sql",
       "connectionStringSetting": "SqlConnectionString",
-      "commandText": "select ifAccessbilityMode from [dbo].[Patient_Info] where PatientID = @PatientID",
+      "commandText": "select ifAccessibilityMode from [dbo].[Patient_Info] where PatientID = @PatientID",
       "commandType": "Text",
       "parameters": "@PatientID = {Query.patientID}"
     }

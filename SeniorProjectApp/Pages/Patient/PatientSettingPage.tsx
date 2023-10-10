@@ -2,13 +2,14 @@ import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
 import Switch from '../../Components/Switch';
 import {useState} from 'react';
-import getAccessbilityMode from '../../BackEndFunctionCall/userInfo';
+import {getAccessbilityMode} from '../../BackEndFunctionCall/userInfo';
 
 export default function PatientSettingPage(): JSX.Element {
   const [accessbilityMode, setAccessbilityMode] = useState(false);
 
-  // getAccessbilityMode(300000001).then(res => setAccessbilityMode(res));
+  getAccessbilityMode(200000001).then(res => console.log(res));
 
+  // getAccessbilityMode(300000001);
   return (
     <View style={{flex: 1, alignItems: 'center', padding: 10}}>
       <View style={styles.card}>
