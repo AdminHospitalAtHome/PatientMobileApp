@@ -1,13 +1,13 @@
 import 'react-native';
 import {it, expect} from '@jest/globals';
 import {
-  getAccessbilityMode,
+  getAccessibilityMode,
   setAccessbilityMode,
 } from '../BackEndFunctionCall/userInfo';
 
 //todo: add setFalse test right before and test together
 it('Get Accessbility Mode - Flase', async (): Promise<void> =>
-  await getAccessbilityMode(100000001).then(res => expect(res).toBe(false)));
+  await getAccessibilityMode(100000001).then(res => expect(res[0].IfAccessibilityMode).toBe(false)));
 
 it('Get Accessbility Mode - Flase', async (): Promise<void> =>
-  await getAccessbilityMode(200000001).then(res => expect(res).toBe(true)));
+  await getAccessibilityMode(200000001).then(res => expect(res[0].IfAccessibilityMode).toBe(true)));
