@@ -1,17 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import WeightLineChart from '../WeightLineChart';
 import {getWeightCall} from '../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {
   getAccessibilityMode,
-  setAccessibilityMode,
 } from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from "./navStyle";
 
@@ -21,7 +14,6 @@ export default function PatientWeightNavCard(): JSX.Element {
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const patientID: number = 300000001;
-  const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {

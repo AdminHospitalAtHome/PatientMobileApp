@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
+import {TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
 import PatientWeightNavCard from '../../Components/NavCards/PatientWeightNavCard';
 import PatientBloodPressureNavCard from '../../Components/NavCards/PatientBloodPressureNavCard';
 import PatientHeartRateNavCard from '../../Components/NavCards/PatientHeartRateNavCard';
@@ -35,5 +35,4 @@ export default function PatientMainPage({
       <MenuNav navigation={navigation} />
     </SafeAreaView>
   );
-
 }

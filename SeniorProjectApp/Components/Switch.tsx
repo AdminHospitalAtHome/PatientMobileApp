@@ -1,6 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {useState} from 'react';
-import getAccessbilityMode from '../BackEndFunctionCall/userInfo';
+
 
 export default function Switch({mode}: {mode: boolean}) {
 

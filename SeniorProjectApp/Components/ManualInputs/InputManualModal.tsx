@@ -1,10 +1,4 @@
-import {
-  Modal,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {Modal, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import React from 'react';
 
 export default function InputManualModal({
@@ -36,10 +30,7 @@ export default function InputManualModal({
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[
-                styles.pressable,
-                {borderColor: 'white', borderLeftWidth: 2},
-              ]}
+              style={[styles.pressableBorder, styles.pressable]}
               onPress={addButtonFunction}>
               <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>
@@ -56,6 +47,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
+  },
+  pressableBorder: {
+    borderColor: 'white',
+    borderLeftWidth: 2,
   },
   modalView: {
     margin: 20,

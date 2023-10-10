@@ -1,33 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Button,
-  Modal,
-  TextInput, Dimensions,
-} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {
   addHeartRate,
   getHeartRate,
 } from '../../BackEndFunctionCall/heartRateFunction';
-import {Row, Rows, Table} from 'react-native-table-component';
-import DateSellectionBar from '../../Components/DateSelectionBar';
+import DateSelectionBar from '../../Components/DateSelectionBar';
 import AddSuccessfullyDialog from '../../Components/Dialogs/AddSuccessfullyDialog';
 import VitalTable from '../../Components/VitalTable';
 import AddButtons from '../../Components/Dialogs/AddButtons';
 import SingleTextInput from '../../Components/ManualInputs/SingleTextInput';
 import InputManualModal from '../../Components/ManualInputs/InputManualModal';
-import AddFailedDialog from "../../Components/Dialogs/AddFailedDialog";
-import WeightLineChart from "../../Components/WeightLineChart";
+import AddFailedDialog from '../../Components/Dialogs/AddFailedDialog';
+import WeightLineChart from '../../Components/WeightLineChart';
 export default function PatientHeartRatePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
-  const [input, setInput] = useState<String>('');
+  const [input, setInput] = useState<string>('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
-  const [invalidVisible, setInvalidVisible] = useState(false);
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [heartData, setHeartData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
@@ -38,9 +27,9 @@ export default function PatientHeartRatePage(): JSX.Element {
   const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
+    // @ts-ignore
     getHeartRate(patientID, startDateTime, stopDateTime).then(setHeartData);
-    console.log(stopDateTime);
-  }, [stopDateTime]);
+  }, [stopDateTime, startDateTime]);
 
   function addHeartRateOnClick(): void {
     if (input === '' || !numberRegex.test(input)) {
@@ -63,30 +52,30 @@ export default function PatientHeartRatePage(): JSX.Element {
   return (
     <View style={styles.container}>
       <View
-          style={{
-            flex: 3,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 15,
-          }}>
+        style={{
+          flex: 3,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 15,
+        }}>
         <WeightLineChart
-            data={heartData}
-            unit={'BPM'}
-            width={0.95 * screenWidth}
-            height={170}
+          data={heartData}
+          unit={'BPM'}
+          width={0.95 * screenWidth}
+          height={170}
         />
       </View>
       <View style={{flex: 1, justifyContent: 'center'}}>
-      <DateSellectionBar
-        setStartDateTime={setStartDateTime}
-        setStopDateTime={setStopDateTime}
-      />
+        <DateSelectionBar
+          setStartDateTime={setStartDateTime}
+          setStopDateTime={setStopDateTime}
+        />
       </View>
       <View style={{flex: 7, justifyContent: 'center'}}>
-      <VitalTable
-        columnTitles={['Date', 'Heart Rate (BPM)']}
-        vitalData={heartData}
-      />
+        <VitalTable
+          columnTitles={['Date', 'Heart Rate (BPM)']}
+          vitalData={heartData}
+        />
       </View>
       <AddButtons
         setManualModalVisible={setModalVisible}
@@ -108,9 +97,7 @@ export default function PatientHeartRatePage(): JSX.Element {
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-      {addFailedVisible && (
-          <AddFailedDialog setter={setAddFailedVisible} />
-      )}
+      {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
 }

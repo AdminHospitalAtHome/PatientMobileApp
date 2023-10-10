@@ -1,12 +1,4 @@
-import {
-  Button,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 
 export default function MultipleTextInput({
@@ -23,17 +15,18 @@ export default function MultipleTextInput({
   setInput: React.Dispatch<React.SetStateAction<any>>[];
 }): JSX.Element {
   //const [invalidVisible, setInvalidVisible] = useState(false);
-  var invalidVisible: any[] = [];
-  for (var i = 0; i < numberRegex.length; i++) {
+  let invalidVisible: any[] = [];
+  for (let i = 0; i < numberRegex.length; i++) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     invalidVisible.push(useState(false));
   }
 
-  function checkInput(text: string, i: number): void {
-    if (numberRegex[i].test(text) || text === '') {
-      invalidVisible[i][1](false);
-      setInput[i](text);
+  function checkInput(text: string, num: number): void {
+    if (numberRegex[num].test(text) || text === '') {
+      invalidVisible[num][1](false);
+      setInput[num](text);
     } else {
-      invalidVisible[i][1](true);
+      invalidVisible[num][1](true);
     }
   }
 
@@ -43,43 +36,43 @@ export default function MultipleTextInput({
       <View>
         {inputTitles.map((title, index) => {
           return (
-            <View style={index !== (numberRegex.length-1) && ({borderBottomWidth: 3, borderColor: '#ba4618'})}>
+            <View
+              style={index !== numberRegex.length - 1 && styles.inputBorder}>
               <View>
                 <Text style={styles.modalLabel}>{title}</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.inputRow}>
                 <TextInput
                   style={styles.input}
                   onChangeText={text => checkInput(text, index)}
                 />
-                <Text style={{fontSize: 25}}>{modalUnit[index]}</Text>
+                <Text style={styles.modalUnitText}>{modalUnit[index]}</Text>
               </View>
               {invalidVisible[index][0] && (
-                <Text style={{color: 'red'}}>Invalid Input!</Text>
+                <Text style={styles.invalidInput}>Invalid Input!</Text>
               )}
             </View>
           );
         })}
       </View>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  centeredView: {
-    flex: 1,
+  invalidInput: {
+    color: 'red',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+    textAlign: 'center',
+    fontSize: 18,
+    paddingBottom: 5,
+  },
+  modalUnitText: {
+    fontSize: 25,
+  },
+  inputBorder: {
+    borderBottomWidth: 3,
+    borderColor: '#ba4618',
   },
   modalView: {
     margin: 20,
