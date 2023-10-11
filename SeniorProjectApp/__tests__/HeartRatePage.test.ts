@@ -8,24 +8,18 @@ import {
   addHeartRate,
   getHeartRate,
 } from '../BackEndFunctionCall/heartRateFunction';
+import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
 // Add Heart Rate test
-it('Add Heart Rate Test', async () => {
-  await addHeartRate(300000001, 269, true).then(output => {
+
+it('Adds and Gets Heart Rate', async () => {
+  const startDateTime: string = new Date().toISOString();
+  await addHeartRate(300000001, 76, true).then(output => {
     expect(output).toBe('add successful');
   });
-});
+  const stopDateTime: string = new Date().toISOString();
 
-// Get Heart Rate Test
-it('Gets Heart Rate Test', async () => {
-  await getHeartRate(
-    100000001,
-    '2023-01-01 08:00:00.000',
-    '2023-01-02 08:00:00.000',
-  ).then(output => {
-    expect(output).toStrictEqual([
-      ['01-01-2023\n3:00 AM', 98],
-      ['01-02-2023\n3:00 AM', 97],
-    ]);
+  await getHeartRate(300000001, startDateTime, stopDateTime).then(output => {
+    expect(output).toStrictEqual([[timeTableParser(startDateTime), 76]]);
   });
 });

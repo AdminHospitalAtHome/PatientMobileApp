@@ -9,21 +9,20 @@ import {
   addBloodPressure,
   getBloodPressure,
 } from '../BackEndFunctionCall/bloodPressureFunction';
+import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
 // Add Blood Pressure test
-it('Add Blood Pressure Test', () => {
-  addBloodPressure(300000001, 120, 80, true).then(output => {
+
+it('Adds and Gets Blood Pressure', async () => {
+  const startDateTime: string = new Date().toISOString();
+  await addBloodPressure(300000001, 120, 80, true).then(output => {
     expect(output).toBe('add successful');
   });
-});
+  const stopDateTime: string = new Date().toISOString();
 
-// Get Blood Pressure Test
-it('Gets Blood Pressure Test', () => {
-  getBloodPressure(
-    100000001,
-    '2023-01-01 08:00:00.000',
-    '2023-01-01 08:00:00.000',
-  ).then(output => {
-    expect(output).toStrictEqual([['01-01-2023\n3:00 AM', 130, 71]]);
-  });
+  await getBloodPressure(300000001, startDateTime, stopDateTime).then(
+    output => {
+      expect(output).toStrictEqual([[timeTableParser(startDateTime), 120, 80]]);
+    },
+  );
 });

@@ -17,3 +17,4 @@ export default function timeTableParser(dateTime: string): string {
   }
   return tmpDateString + '\n' + tmpTimeString;
 }
+

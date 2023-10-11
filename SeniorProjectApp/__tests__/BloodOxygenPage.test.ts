@@ -9,24 +9,16 @@ import {
   addBloodOxygen,
   getBloodOxygen,
 } from '../BackEndFunctionCall/bloodOxygenFunction';
+import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
-// Add Blood Pressure test
-it('Add Blood Oxygen Test', async () => {
+it('Adds and Gets Blood Oxygen', async () => {
+  const startDateTime: string = new Date().toISOString();
   await addBloodOxygen(300000001, 98, true).then(output => {
     expect(output).toBe('add successful');
   });
-});
+  const stopDateTime: string = new Date().toISOString();
 
-it('Get Blood Oxygen Test', async () => {
-  await getBloodOxygen(
-    100000001,
-    '2023-01-01T08:00:00.000',
-    '2023-01-03T08:00:00.000',
-  ).then(output => {
-    expect(output).toStrictEqual([
-      ['01-01-2023\n3:00 AM', 98],
-      ['01-02-2023\n3:00 AM', 97],
-      ['01-03-2023\n3:00 AM', 97],
-    ]);
+  await getBloodOxygen(300000001, startDateTime, stopDateTime).then(output => {
+    expect(output).toStrictEqual([[timeTableParser(startDateTime), 98]]);
   });
 });
