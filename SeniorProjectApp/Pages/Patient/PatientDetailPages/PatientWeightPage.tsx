@@ -29,7 +29,7 @@ export default function PatientWeightPage(): JSX.Element {
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
-      // @ts-ignore
+
       setWeightData(response);
     });
   }, [stopDateTime, startDateTime]);
