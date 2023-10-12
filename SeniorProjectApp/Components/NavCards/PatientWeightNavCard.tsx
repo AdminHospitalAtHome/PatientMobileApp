@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
-import WeightLineChart from '../WeightLineChart';
+import SingleLineChart from '../SingleLineChart';
 import {
   getWeightCall,
   getRecentWeight,
@@ -53,7 +53,7 @@ export default function PatientWeightNavCard(): JSX.Element {
           <Text style={defaultStyle.label}>UP</Text>
         </View>
         <View style={defaultStyle.chartHolder}>
-          <WeightLineChart
+          <SingleLineChart
             data={weightData}
             unit={'lb'}
             width={260}

@@ -8,7 +8,7 @@ import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTim
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
 import DateSelectionBar from '../../../Components/DateSelectionBar';
 import VitalTable from '../../../Components/VitalTable';
-import WeightLineChart from '../../../Components/WeightLineChart';
+import SingleLineChart from '../../../Components/SingleLineChart';
 import AddButtons from '../../../Components/AddButtons';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
@@ -37,7 +37,7 @@ export default function PatientWeightPage(): JSX.Element {
   return (
     <View style={PatientDetailStyles.container}>
       <View style={PatientDetailStyles.chartContainer}>
-        <WeightLineChart
+        <SingleLineChart
           data={weightData}
           unit={'lb'}
           width={0.95 * screenWidth}

@@ -5,12 +5,13 @@ import {getBloodPressure} from '../../BackEndFunctionCall/bloodPressureFunction'
 import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {useIsFocused} from '@react-navigation/native';
-import WeightLineChart from '../WeightLineChart';
+import SingleLineChart from '../SingleLineChart';
+import DoubleLineChart from './DoubleLineChart';
 
 const patientID = 300000001;
 export default function PatientBloodPressureNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
-  const [bloodPresureData, setBloodPresure] = useState(null);
+  const [bloodPresureData, setBloodPresureData] = useState(null);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [recentBloodPressure, setRecentBloodPressure] = useState(null);
@@ -18,7 +19,7 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
 
   useEffect(() => {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(res => {
-      setBloodPresure(res);
+      setBloodPresureData(res);
     });
     getAccessibilityMode(patientID).then(res => {
       setAccessibilityMode(res[0].IfAccessibilityMode);
@@ -41,11 +42,13 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
     return (
       <View style={defaultStyle.container}>
         <View style={defaultStyle.labelHolder}>
-          <Text style={defaultStyle.label}>Blood Pressure: {recentBloodPressure}</Text>
+          <Text style={defaultStyle.label}>
+            Blood Pressure: {recentBloodPressure}
+          </Text>
           <Text style={defaultStyle.label}>UP</Text>
         </View>
         <View style={defaultStyle.chartHolder}>
-          <WeightLineChart
+          <DoubleLineChart
             data={bloodPresureData}
             unit={'lb'}
             width={260}

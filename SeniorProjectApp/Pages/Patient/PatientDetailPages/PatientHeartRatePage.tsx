@@ -12,7 +12,7 @@ import AddButtons from '../../../Components/AddButtons';
 import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
-import WeightLineChart from '../../../Components/WeightLineChart';
+import SingleLineChart from '../../../Components/SingleLineChart';
 import {PatientDetailStyles} from './Styles';
 export default function PatientHeartRatePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -53,7 +53,7 @@ export default function PatientHeartRatePage(): JSX.Element {
   return (
     <View style={PatientDetailStyles.container}>
       <View style={PatientDetailStyles.chartContainer}>
-        <WeightLineChart
+        <SingleLineChart
           data={heartData}
           unit={'BPM'}
           width={0.95 * screenWidth}

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
-import WeightLineChart from '../WeightLineChart';
+import SingleLineChart from '../SingleLineChart';
 import {getBloodOxygen} from '../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
@@ -52,7 +52,7 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
           <Text style={defaultStyle.label}>UP</Text>
         </View>
         <View style={defaultStyle.chartHolder}>
-          <WeightLineChart
+          <SingleLineChart
             data={bloodOxygenData}
             unit={'lb'}
             width={260}

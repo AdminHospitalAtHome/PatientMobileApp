@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {Dimensions} from 'react-native';
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
-export default function WeightLineChart({
+export default function DoubleLineChart({
   data,
   unit,
   width,
@@ -15,12 +15,13 @@ export default function WeightLineChart({
   width: number;
   height: number;
 }): JSX.Element {
-  const screenWidth = Dimensions.get('window').width;
-  const chartData: number[] = [];
+  const chartData1: number[] = [];
+  const chartData2: number[] = [];
 
   if (data) {
-    data.forEach((i):void => {
-      chartData.push(i[1]);
+    data.forEach((i): void => {
+      chartData1.push(i[1]);
+      chartData2.push(i[2]);
     });
 
     return (
@@ -28,8 +29,9 @@ export default function WeightLineChart({
         data={{
           datasets: [
             {
-              data: chartData,
+              data: chartData1,
             },
+            {data: chartData2},
           ],
         }}
         width={width}
@@ -55,11 +57,9 @@ export default function WeightLineChart({
         style={{
           marginVertical: 8,
           borderRadius: 10,
-        }}
-      />
+        }}></LineChart>
     );
-  }
-  else{
+  } else {
     return <View />;
   }
 }

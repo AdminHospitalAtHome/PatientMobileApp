@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import DateSelectionBar from '../../../Components/DateSelectionBar';
 import {
   getBloodPressure,
@@ -12,7 +12,11 @@ import AddButtons from '../../../Components/AddButtons';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import MultipleTextInput from '../../../Components/ManualInputs/MultipleTextInput';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
+import DoubleLineChart from '../../../Components/NavCards/DoubleLineChart';
+import {PatientDetailStyles} from './Styles';
 
+const patientID = 300000001;
+const screenWidth = Dimensions.get('window').width;
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputSystolic, setInputSystolic] = useState('');
@@ -24,7 +28,6 @@ export default function PatientBloodPressurePage(): JSX.Element {
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
   //TODO: Change to dynamic later!!!!
-  const patientID = 300000001;
 
   useEffect(() => {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(
@@ -35,14 +38,27 @@ export default function PatientBloodPressurePage(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <DateSelectionBar
-        setStartDateTime={setStartDateTime}
-        setStopDateTime={setStopDateTime}
-      />
-      <VitalTable
-        columnTitles={['Date', 'Systolic', 'Diastolic']}
-        vitalData={bloodPressureData}
-      />
+      <View style={PatientDetailStyles.chartContainer}>
+        <DoubleLineChart
+          data={bloodPressureData}
+          unit={'lb'}
+          width={0.95 * screenWidth}
+          height={170}
+        />
+      </View>
+      <View style={PatientDetailStyles.dateSelectionContainer}>
+        <DateSelectionBar
+          setStartDateTime={setStartDateTime}
+          setStopDateTime={setStopDateTime}
+        />
+      </View>
+      <View style={PatientDetailStyles.vitalTableContainer}>
+        <VitalTable
+          columnTitles={['Date', 'Systolic', 'Diastolic']}
+          vitalData={bloodPressureData}
+        />
+      </View>
+
       <AddButtons
         setManualModalVisible={setModalVisible}
         setAutoModalVisible={setModalVisible}

@@ -4,7 +4,7 @@ import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
-import WeightLineChart from '../WeightLineChart';
+import SingleLineChart from '../SingleLineChart';
 import {getHeartRate} from '../../BackEndFunctionCall/heartRateFunction';
 import {
   getRecentWeight,
@@ -53,7 +53,7 @@ export default function PatientHeartRateNavCard(): JSX.Element {
           <Text style={defaultStyle.label}>DOWN</Text>
         </View>
         <View style={defaultStyle.chartHolder}>
-          <WeightLineChart
+          <SingleLineChart
             data={heartRateData}
             unit={'lb'}
             width={260}
