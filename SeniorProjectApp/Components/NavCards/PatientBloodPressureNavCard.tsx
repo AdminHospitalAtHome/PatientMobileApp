@@ -31,8 +31,8 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
     getRecentBloodPressure(patientID).then(res => {
-      setRecentSystolicBloodPressure(res[0]);
-      setRecentDiastolicBloodPressure(res[0]);
+      setRecentSystolicBloodPressure(res[0].SystolicBloodPressureInMmHg);
+      setRecentDiastolicBloodPressure(res[0].DiastolicBloodPressureInMmHg);
     });
   }, [isFocused]);
 
