@@ -23,19 +23,16 @@ it('Adds and Gets Blood Oxygen', async () => {
   });
 });
 
-
-it('Add to Blood Pressure Failure Test', async () => {
+it('Add to Blood Oxygen Failure Test', async () => {
   await addBloodOxygen(999999999, 98, true).catch(output => {
     expect(output).toBe('failed to add blood pressure');
   });
 });
 
-it("Get Blood Pressure Failure Test", async () => {
+it('Get Blood Oxygen Failure Test', async () => {
   const startDateTime: string = new Date().toISOString();
   const stopDateTime: string = new Date().toISOString();
   await getBloodOxygen(999999999, startDateTime, stopDateTime).then(output => {
     expect(output).toStrictEqual([]);
   });
 });
-
-
