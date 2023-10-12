@@ -19,7 +19,7 @@ export default function SingleLineChart({
   const chartData: number[] = [];
 
   if (data) {
-    data.forEach((i):void => {
+    data.forEach((i): void => {
       chartData.push(i[1]);
     });
 
@@ -36,6 +36,7 @@ export default function SingleLineChart({
         height={height}
         yAxisSuffix={unit}
         yAxisInterval={1} // optional, defaults to 1
+        withDots={false}
         chartConfig={{
           backgroundGradientFrom: '#BA4618',
           backgroundGradientTo: '#ffa726',
@@ -51,15 +52,13 @@ export default function SingleLineChart({
             stroke: '#ffa726',
           },
         }}
-        bezier
         style={{
           marginVertical: 8,
           borderRadius: 10,
         }}
       />
     );
-  }
-  else{
+  } else {
     return <View />;
   }
 }

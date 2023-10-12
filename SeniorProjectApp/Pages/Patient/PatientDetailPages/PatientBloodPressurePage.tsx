@@ -12,7 +12,7 @@ import AddButtons from '../../../Components/AddButtons';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import MultipleTextInput from '../../../Components/ManualInputs/MultipleTextInput';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
-import DoubleLineChart from '../../../Components/NavCards/DoubleLineChart';
+import DoubleLineChart from '../../../Components/DoubleLineChart';
 import {PatientDetailStyles} from './Styles';
 
 const patientID = 300000001;
@@ -41,7 +41,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
       <View style={PatientDetailStyles.chartContainer}>
         <DoubleLineChart
           data={bloodPressureData}
-          unit={'lb'}
+          unit={'mmHg'}
           width={0.95 * screenWidth}
           height={170}
         />

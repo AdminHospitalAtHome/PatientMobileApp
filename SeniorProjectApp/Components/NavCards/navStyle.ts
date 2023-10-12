@@ -61,11 +61,15 @@ export const accessStyle = StyleSheet.create({
   textHolder:{
     flex: 7,
     width: windowWidth * 0.8,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   value:{
     fontSize: 90,
     fontWeight: 'bold',
+  },
+  text:{
+    fontSize: 50,
+    fontWeight: 'bold'
   }
 });

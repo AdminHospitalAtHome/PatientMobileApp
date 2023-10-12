@@ -48,3 +48,9 @@ function parseBloodPressureData(bloodPressureJSON: any) {
   }
   return bloodPressureArr;
 }
+
+export function getRecentBloodPressure(patientID: number): Promise<void> {
+  return fetch(
+    `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentBloodPressure?patientID=${patientID}`,
+  ).then(res => res.json());
+}
