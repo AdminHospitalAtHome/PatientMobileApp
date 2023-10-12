@@ -43,3 +43,17 @@ it('Adds and Gets Weight', async () => {
     expect(output).toStrictEqual([[timeTableParser(startDateTime), 180]]);
   });
 });
+
+it('Add to Weight Failure Test', async () => {
+  await addWeight(999999999, 199, true).catch(output => {
+    expect(output).toBe('failed to add weight');
+  });
+});
+
+it('Get Weight Failure Test', async () => {
+  const startDateTime: string = new Date().toISOString();
+  const stopDateTime: string = new Date().toISOString();
+  await getWeightCall(999999999, startDateTime, stopDateTime).then(output => {
+    expect(output).toStrictEqual([]);
+  });
+});

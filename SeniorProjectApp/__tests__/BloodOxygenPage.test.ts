@@ -25,7 +25,7 @@ it('Adds and Gets Blood Oxygen', async () => {
 
 it('Add to Blood Oxygen Failure Test', async () => {
   await addBloodOxygen(999999999, 98, true).catch(output => {
-    expect(output).toBe('failed to add blood pressure');
+    expect(output).toBe('failed to add blood oxygen');
   });
 });
 

@@ -23,3 +23,17 @@ it('Adds and Gets Heart Rate', async () => {
     expect(output).toStrictEqual([[timeTableParser(startDateTime), 76]]);
   });
 });
+
+it('Add to Heart Rate Failure Test', async () => {
+  await addHeartRate(999999999, 121, true).catch(output => {
+    expect(output).toBe('failed to add heart rate');
+  });
+});
+
+it('Get Heart Rate Failure Test', async () => {
+  const startDateTime: string = new Date().toISOString();
+  const stopDateTime: string = new Date().toISOString();
+  await getHeartRate(999999999, startDateTime, stopDateTime).then(output => {
+    expect(output).toStrictEqual([]);
+  });
+});

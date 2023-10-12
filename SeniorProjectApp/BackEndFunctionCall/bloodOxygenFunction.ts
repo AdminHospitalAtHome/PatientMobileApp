@@ -17,7 +17,7 @@ export function addBloodOxygen(
       if (response.status === 201) {
         resolve('add successful');
       } else {
-        reject('failed to add blood pressure');
+        reject('failed to add blood oxygen');
       }
     });
   });
