@@ -28,7 +28,7 @@ export default function PatientWeightNavCard(): JSX.Element {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
     getRecentWeight(patientID).then(res =>
-      setRecentWeight(res[0].WeightInPounds),
+      setRecentWeight(res[0]),
     );
   }, [isFocused]);
 

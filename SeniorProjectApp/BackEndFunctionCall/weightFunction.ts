@@ -1,7 +1,7 @@
 import timeTableParser from './tableTimeParser';
 export function parseWeightData(weightJson: any) {
   let weightArr = [];
-  for (var i = 0; i < weightJson.length; i++) {
+  for (let i = 0; i < weightJson.length; i++) {
     weightArr.push([
       timeTableParser(weightJson[i].DateTimeTaken),
       weightJson[i].WeightInPounds,
@@ -49,12 +49,23 @@ export function getMostRecentTwo(patientID: number) {
   );
 }
 
-export function getRecentWeight(patientID: number): Promise<void> {
-  return fetch(
-    `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentWeight?patientID=${patientID}`,
-  ).then(res => res.json());
+// Returns a promise with best case scenario [Most Recent, Second Most Recent]
+export function getRecentWeight(patientID: number): Promise<number[] | string> {
+  return new Promise((resolve, reject) => {
+    fetch(
+      `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentWeight?patientID=${patientID}`,
+    )
+      .then(res => res.json())
+      .then(output => {
+        if (output.length === 2) {
+          resolve([output[0].WeightInPounds, output[1].WeightInPounds]);
+        } else if (output.length === 1) {
+          resolve([output[0].WeightInPounds]);
+        } else {
+          reject('N/A');
+        }
+      });
+  });
 }
 
-export function weightTrend(patientID:number): Promise<void> {
-
-}
+export function weightTrend(data: number[] | String): Promise<void> {}
