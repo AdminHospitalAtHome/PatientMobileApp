@@ -1,7 +1,8 @@
 import {StyleSheet, View} from 'react-native';
+import {useEffect, useState} from 'react';
 
 
-export default function Switch({mode}: {mode: boolean}) {
+export default function Switch({mode}: {mode: boolean}):JSX.Element {
 
   if (mode) {
     return (

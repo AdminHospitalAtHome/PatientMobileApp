@@ -1,13 +1,21 @@
 import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
 import Switch from '../../Components/Switch';
-import {useState} from 'react';
-import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
+import {useEffect, useState} from 'react';
+import {
+  getAccessibilityMode,
+  setAccessibilityMode,
+} from '../../BackEndFunctionCall/userInfo';
 
+const patientID = 300000001;
 export default function PatientSettingPage(): JSX.Element {
-  const [accessibilityMode, setAccessibilityMode] = useState(false);
+  const [mode, setMode] = useState(false);
 
-  getAccessibilityMode(300000001).then(res => setAccessibilityMode(res[0].IfAccessibilityMode));
+  useEffect(() => {
+    getAccessibilityMode(300000001).then(res =>
+      setMode(res[0].IfAccessibilityMode),
+    );
+  },[mode]);
 
   return (
     <View style={{flex: 1, alignItems: 'center', padding: 10}}>
@@ -15,7 +23,7 @@ export default function PatientSettingPage(): JSX.Element {
         <Text style={{marginLeft: 10}}>Accessibility Mode</Text>
         <View style={styles.switchGroup}>
           <TouchableOpacity onPress={switchOnPress}>
-            <Switch mode={accessibilityMode} />
+            <Switch mode={mode} />
           </TouchableOpacity>
         </View>
       </View>
@@ -23,8 +31,8 @@ export default function PatientSettingPage(): JSX.Element {
   );
 
   function switchOnPress(): void {
-    setAccessibilityMode(!accessibilityMode);
-    //call function here
+    setMode(!mode);
+    setAccessibilityMode(patientID, !mode);
   }
 }
 

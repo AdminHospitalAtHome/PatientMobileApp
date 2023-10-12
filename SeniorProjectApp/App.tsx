@@ -19,9 +19,9 @@ import PatientBloodOxygenPage from './Pages/Patient/PatientDetailPages/PatientBl
 import PatientSettingPage from './Pages/Patient/PatientSettingPage';
 
 const Stack = createNativeStackNavigator();
+
 function App(): JSX.Element {
   return (
-    //<View/>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen

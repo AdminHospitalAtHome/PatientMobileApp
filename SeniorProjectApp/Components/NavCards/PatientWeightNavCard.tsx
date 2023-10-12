@@ -8,6 +8,7 @@ import {
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from './navStyle';
+import {useIsFocused} from '@react-navigation/native';
 
 export default function PatientWeightNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
@@ -17,19 +18,20 @@ export default function PatientWeightNavCard(): JSX.Element {
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const patientID: number = 300000001;
   const [recentWeight, setRecentWeight] = useState(null);
-  getRecentWeight(patientID).then(res =>
-    setRecentWeight(res[0].WeightInPounds),
-  );
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
-      setWeightData(response);
+    getWeightCall(patientID, startDateTime, stopDateTime).then(res => {
+      setWeightData(res);
     });
-  }, [stopDateTime]);
+    getAccessibilityMode(patientID).then(res => {
+      setAccessibilityMode(res[0].IfAccessibilityMode);
+    });
+    getRecentWeight(patientID).then(res =>
+      setRecentWeight(res[0].WeightInPounds),
+    );
+  }, [isFocused]);
 
-  getAccessibilityMode(patientID).then(res => {
-    setAccessibilityMode(res[0].IfAccessibilityMode);
-  });
 
   if (accessibilityMode) {
     return (
@@ -46,64 +48,19 @@ export default function PatientWeightNavCard(): JSX.Element {
   } else {
     return (
       <View style={defaultStyle.container}>
-        <View style={defaultStyle.subContainer}>
-          <Text style={defaultStyle.label}>Weight</Text>
-          <View style={styles.chart}>
-            <WeightLineChart
-              data={weightData}
-              unit={'lb'}
-              width={280}
-              height={145}
-            />
-          </View>
+        <View style={defaultStyle.labelHolder}>
+          <Text style={defaultStyle.label}>Weight: {recentWeight}</Text>
+          <Text style={defaultStyle.label}>UP</Text>
+        </View>
+        <View style={defaultStyle.chartHolder}>
+          <WeightLineChart
+            data={weightData}
+            unit={'lb'}
+            width={260}
+            height={140}
+          />
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  chart: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,
-  },
-  container: {
-    paddingTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  box: {
-    width: 300,
-    height: 200,
-    borderWidth: 2,
-    borderRadius: 8,
-    backgroundColor: '#f9f9f9',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    flexDirection: 'row',
-  },
-  weightLabel: {
-    position: 'absolute',
-    fontWeight: 'bold',
-    fontSize: 25,
-    color: '#333',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 4,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-});

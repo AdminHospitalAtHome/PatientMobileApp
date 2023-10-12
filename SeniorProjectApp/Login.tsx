@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {createContext, useState} from 'react';
 import {Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
 
+// const Setting = createContext({
+//     accessibility: false
+// });
+
 export default function Login({navigation}: {navigation: any}): JSX.Element {
+  // const [accessMode, setAccessMode] = useState(false);
   return (
     <View style={styles.container}>
       <Image
