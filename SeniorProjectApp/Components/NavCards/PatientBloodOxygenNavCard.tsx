@@ -28,7 +28,7 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
     getRecentWeight(patientID).then(res =>
-      setRecentBloodOxygen(res[0].WeightInPounds),
+      setRecentBloodOxygen(res[0]),
     );
   }, [isFocused]);
 

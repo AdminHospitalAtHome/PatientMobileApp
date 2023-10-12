@@ -29,7 +29,7 @@ export default function PatientHeartRateNavCard(): JSX.Element {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
     getRecentWeight(patientID).then(res =>
-      setRecentHeartRate(res[0].WeightInPounds),
+      setRecentHeartRate(res[0]),
     );
   }, [isFocused]);
 
