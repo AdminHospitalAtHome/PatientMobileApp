@@ -29,6 +29,8 @@ export default function SingleLineChart({
           datasets: [
             {
               data: chartData,
+              color: (opacity) => `rgba(255,255,255, ${0.7})`,
+              strokeWidth: 2,
             },
           ],
         }}
