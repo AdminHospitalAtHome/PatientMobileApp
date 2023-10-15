@@ -1,0 +1,24 @@
+name: Run ESLint
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: SeniorProjectApp
+    steps:
+      - uses: actions/checkout@v4
+      - name: use Node.js
+        uses: actions/setup-node@v3.8.1
+        with:
+          node-version: '18'
+      - name: npm install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+
