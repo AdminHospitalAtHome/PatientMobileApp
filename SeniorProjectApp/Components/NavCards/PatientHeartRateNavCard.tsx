@@ -11,7 +11,7 @@ import {
   getWeightCall,
 } from '../../BackEndFunctionCall/weightFunction';
 
-const patientID = 300000001;
+const patientID = 100000001;
 export default function PatientHeartRateNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [heartRateData, setHeartRateData] = useState(null);

@@ -16,7 +16,7 @@ export default function PatientWeightNavCard(): JSX.Element {
   const [trend, setTrend] = useState('UP');
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const patientID: number = 300000001;
+  const patientID: number = 100000001;
   const [recentWeight, setRecentWeight] = useState(null);
   const isFocused = useIsFocused();
 

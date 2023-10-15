@@ -7,12 +7,12 @@ import {
   setAccessibilityMode,
 } from '../../BackEndFunctionCall/userInfo';
 
-const patientID = 300000001;
+const patientID = 100000001;
 export default function PatientSettingPage(): JSX.Element {
   const [mode, setMode] = useState(false);
 
   useEffect(() => {
-    getAccessibilityMode(300000001).then(res =>
+    getAccessibilityMode(patientID).then(res =>
       setMode(res[0].IfAccessibilityMode),
     );
   },[mode]);

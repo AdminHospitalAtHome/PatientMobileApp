@@ -23,7 +23,7 @@ export default function PatientHeartRatePage(): JSX.Element {
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
-  const patientID = 300000001;
+  const patientID = 100000001;
 
   const screenWidth: number = Dimensions.get('window').width;
 

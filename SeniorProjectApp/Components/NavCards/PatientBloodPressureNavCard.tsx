@@ -11,7 +11,7 @@ import {useIsFocused} from '@react-navigation/native';
 import SingleLineChart from '../SingleLineChart';
 import DoubleLineChart from '../DoubleLineChart';
 
-const patientID = 300000001;
+const patientID = 100000001;
 export default function PatientBloodPressureNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [bloodPresureData, setBloodPresureData] = useState(null);

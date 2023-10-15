@@ -15,7 +15,7 @@ import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import DoubleLineChart from '../../../Components/DoubleLineChart';
 import {PatientDetailStyles} from './Styles';
 
-const patientID = 300000001;
+const patientID = 100000001;
 const screenWidth = Dimensions.get('window').width;
 export default function PatientBloodPressurePage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
