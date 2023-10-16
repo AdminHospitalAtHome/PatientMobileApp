@@ -39,13 +39,13 @@ it('Get Heart Rate Failure Test', async () => {
   });
 });
 
-test('Get Recent HeartRate', async () => {
+it('Get Recent HeartRate', async () => {
   await addHeartRate(300000001, 76, true).then(output => {
     expect(output).toBe('add successful');
   });
   await expect(getRecentHeartRate(300000001)).resolves.toBe(76);
 });
 
-test('Get Recent HeartRate Failure', async () => {
+it('Get Recent HeartRate Failure', async () => {
   await expect(getRecentHeartRate(999999999)).rejects.toEqual('N/A');
 });

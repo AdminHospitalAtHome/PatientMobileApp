@@ -38,13 +38,13 @@ it('Get Blood Oxygen Failure Test', async () => {
   });
 });
 
-test('Get Recent Blood Oxygen', async () => {
+it('Get Recent Blood Oxygen', async () => {
   await addBloodOxygen(300000001, 98, true).then(output => {
     expect(output).toBe('add successful');
   });
   await expect(getRecentBloodOxygen(300000001)).resolves.toBe(98);
 });
 
-test('Get Recent Blood Oxygen Failure', async () => {
+it('Get Recent Blood Oxygen Failure', async () => {
   await expect(getRecentBloodOxygen(999999999)).rejects.toEqual('N/A');
 });

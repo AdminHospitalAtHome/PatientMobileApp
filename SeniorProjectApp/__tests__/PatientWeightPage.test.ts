@@ -53,13 +53,13 @@ it('Get Weight Failure Test', async () => {
   });
 });
 
-test('Get Recent Weight', async () => {
+it('Get Recent Weight', async () => {
   await addWeight(300000001, 180, true).then(output => {
     expect(output).toBe('add successful');
   });
   await expect(getRecentWeight(300000001)).resolves.toBe(180);
 });
 
-test('Get Recent Weight Failure', async () => {
+it('Get Recent Weight Failure', async () => {
   await expect(getRecentWeight(999999999)).rejects.toEqual('N/A');
 });

@@ -44,7 +44,7 @@ it('Get Blood Oxygen Failure Test', async () => {
   );
 });
 
-test('Get Recent Blood Pressure', async () => {
+it('Get Recent Blood Pressure', async () => {
   await addBloodPressure(300000001, 121, 81, true).then(output => {
     expect(output).toBe('add successful');
   });
@@ -53,6 +53,6 @@ test('Get Recent Blood Pressure', async () => {
   ]);
 });
 
-test('Get Recent Blood Pressure Failure', async () => {
+it('Get Recent Blood Pressure Failure', async () => {
   await expect(getRecentBloodPressure(999999999)).rejects.toEqual('N/A');
 });
