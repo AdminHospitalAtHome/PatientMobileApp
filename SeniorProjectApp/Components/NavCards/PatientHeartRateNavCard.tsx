@@ -38,7 +38,6 @@ export default function PatientHeartRateNavCard(): JSX.Element {
       <View style={accessStyle.container}>
         <View style={accessStyle.labelHolder}>
           <Text style={accessStyle.label}>Heart Rate</Text>
-          <Text style={accessStyle.label}>DOWN</Text>
         </View>
         <View style={accessStyle.textHolder}>
           <Text style={accessStyle.value}>{recentHeartRate}</Text>
@@ -50,7 +49,6 @@ export default function PatientHeartRateNavCard(): JSX.Element {
       <View style={defaultStyle.container}>
         <View style={defaultStyle.labelHolder}>
           <Text style={defaultStyle.label}>Heart Rate: {recentHeartRate}</Text>
-          <Text style={defaultStyle.label}>DOWN</Text>
         </View>
         <View style={defaultStyle.chartHolder}>
           <SingleLineChart

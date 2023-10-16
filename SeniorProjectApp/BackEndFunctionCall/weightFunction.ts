@@ -43,7 +43,7 @@ export function getWeightCall(
     .then(json => parseWeightData(json));
 }
 
-export function getMostRecentTwo(patientID: number) {
+export function getMostRecent(patientID: number) {
   return fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}`,
   );
@@ -57,10 +57,8 @@ export function getRecentWeight(patientID: number): Promise<number[] | string> {
     )
       .then(res => res.json())
       .then(output => {
-        if (output.length === 2) {
-          resolve([output[0].WeightInPounds, output[1].WeightInPounds]);
-        } else if (output.length === 1) {
-          resolve([output[0].WeightInPounds]);
+        if (output.length === 1) {
+          resolve(output[0].WeightInPounds);
         } else {
           reject('N/A');
         }

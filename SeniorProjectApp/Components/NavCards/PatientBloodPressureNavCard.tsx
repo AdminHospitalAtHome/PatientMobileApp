@@ -41,11 +41,10 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
       <View style={accessStyle.container}>
         <View style={accessStyle.labelHolder}>
           <Text style={accessStyle.label}>Blood Pressure</Text>
-          <Text style={accessStyle.label}>UP</Text>
         </View>
         <View style={accessStyle.textHolder}>
-            <Text style={accessStyle.text}>{recentSystolicBloodPressure}</Text>
-            <Text style={accessStyle.text}>{recentDiastolicBloodPressure}</Text>
+            <Text style={accessStyle.text}>Systolic {recentSystolicBloodPressure}</Text>
+            <Text style={accessStyle.text}>Diastolic {recentDiastolicBloodPressure}</Text>
         </View>
       </View>
     );
@@ -56,7 +55,6 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
           <Text style={defaultStyle.label}>
             Blood Pressure: {recentSystolicBloodPressure}
           </Text>
-          <Text style={defaultStyle.label}>UP</Text>
         </View>
         <View style={defaultStyle.chartHolder}>
           <DoubleLineChart

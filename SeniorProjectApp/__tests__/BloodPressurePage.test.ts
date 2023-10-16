@@ -8,6 +8,7 @@ import {it, expect} from '@jest/globals';
 import {
   addBloodPressure,
   getBloodPressure,
+  getRecentBloodPressure,
 } from '../BackEndFunctionCall/bloodPressureFunction';
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
@@ -41,4 +42,17 @@ it('Get Blood Oxygen Failure Test', async () => {
       expect(output).toStrictEqual([]);
     },
   );
+});
+
+test('Get Recent Blood Pressure', async () => {
+  await addBloodPressure(300000001, 121, 81, true).then(output => {
+    expect(output).toBe('add successful');
+  });
+  await expect(getRecentBloodPressure(300000001)).resolves.toStrictEqual([
+    121, 81,
+  ]);
+});
+
+test('Get Recent Blood Pressure Failure', async () => {
+  await expect(getRecentBloodPressure(999999999)).rejects.toEqual('N/A');
 });

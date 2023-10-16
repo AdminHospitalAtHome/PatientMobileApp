@@ -36,19 +36,21 @@ export function getHeartRate(
     .then(json => parseHeartRateData(json));
 }
 
-export function getRecentHeartRate(
+export async function getRecentHeartRate(
   patientID: number,
 ): Promise<{mode: string} | string> {
   return new Promise((resolve, reject) => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentHeartRate?patientID=${patientID}`,
-    ).then(res => {
-      if (res.status === 200) {
-        resolve(res.json());
-      } else {
-        reject('failed to get recent heart rate!');
-      }
-    });
+    )
+      .then(response => response.json())
+      .then(json => {
+        if (json.length === 1) {
+          resolve(json[0].HeartRateInBPM);
+        } else {
+          reject('N/A');
+        }
+      });
   });
 }
 

@@ -38,7 +38,6 @@ export default function PatientWeightNavCard(): JSX.Element {
       <View style={accessStyle.container}>
         <View style={accessStyle.labelHolder}>
           <Text style={accessStyle.label}>Weight</Text>
-          <Text style={accessStyle.label}>UP</Text>
         </View>
         <View style={accessStyle.textHolder}>
           <Text style={accessStyle.value}>{recentWeight}</Text>
@@ -50,7 +49,6 @@ export default function PatientWeightNavCard(): JSX.Element {
       <View style={defaultStyle.container}>
         <View style={defaultStyle.labelHolder}>
           <Text style={defaultStyle.label}>Weight: {recentWeight}</Text>
-          <Text style={defaultStyle.label}>UP</Text>
         </View>
         <View style={defaultStyle.chartHolder}>
           <SingleLineChart
