@@ -30,11 +30,12 @@ export default function DoubleLineChart({
           datasets: [
             {
               data: chartData1,
-              color: (opacity) => `rgba(255,255,255, ${0.7})`,
+              color: opacity => `rgba(255,255,255, ${0.7})`,
               strokeWidth: 3,
             },
-            {data: chartData2,
-              color: (opacity) => `rgba(255, 255, 25, ${0.5})`,
+            {
+              data: chartData2,
+              color: opacity => `rgba(255, 255, 25, ${0.5})`,
               strokeWidth: 3,
             },
           ],
@@ -43,7 +44,7 @@ export default function DoubleLineChart({
         height={height}
         yAxisSuffix={unit}
         yAxisInterval={1} // optional, defaults to 1
-          withDots={false}
+        withDots={false}
         chartConfig={{
           backgroundGradientFrom: '#BA4618',
           backgroundGradientTo: '#ffa726',
@@ -63,7 +64,8 @@ export default function DoubleLineChart({
         style={{
           marginVertical: 8,
           borderRadius: 10,
-        }}></LineChart>
+        }}
+      />
     );
   } else {
     return <View />;
