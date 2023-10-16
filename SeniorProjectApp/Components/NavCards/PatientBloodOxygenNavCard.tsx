@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import SingleLineChart from '../SingleLineChart';
-import {getBloodOxygen, getRecentBloodOxygen} from '../../BackEndFunctionCall/bloodOxygenFunction';
+import {
+  getBloodOxygen,
+  getRecentBloodOxygen,
+} from '../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from './navStyle';
@@ -25,7 +28,7 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
     getRecentBloodOxygen(patientID).then(res =>
-      setRecentBloodOxygen(res[0].BloodOxygenLevelInPercentage)
+      setRecentBloodOxygen(res),
     );
   }, [isFocused]);
 
@@ -44,7 +47,9 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
     return (
       <View style={defaultStyle.container}>
         <View style={defaultStyle.labelHolder}>
-          <Text style={defaultStyle.label}>Blood Oxygen: {recentBloodOxygen}</Text>
+          <Text style={defaultStyle.label}>
+            Blood Oxygen: {recentBloodOxygen}
+          </Text>
         </View>
         <View style={defaultStyle.chartHolder}>
           <SingleLineChart
