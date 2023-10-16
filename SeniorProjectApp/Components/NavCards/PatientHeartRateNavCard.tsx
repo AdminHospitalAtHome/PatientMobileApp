@@ -5,7 +5,7 @@ import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
 import SingleLineChart from '../SingleLineChart';
-import {getHeartRate} from '../../BackEndFunctionCall/heartRateFunction';
+import {getHeartRate, getRecentHeartRate} from '../../BackEndFunctionCall/heartRateFunction';
 import {
   getRecentWeight,
   getWeightCall,
@@ -22,15 +22,14 @@ export default function PatientHeartRateNavCard(): JSX.Element {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    getWeightCall(patientID, startDateTime, stopDateTime).then(res => {
+    getHeartRate(patientID, startDateTime, stopDateTime).then(res => {
       setHeartRateData(res);
     });
     getAccessibilityMode(patientID).then(res => {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
-    getRecentWeight(patientID).then(res =>
-      setRecentHeartRate(res[0]),
-    );
+    getRecentHeartRate(patientID).then(res => setRecentHeartRate(res[0].HeartRateInBPM));
+
   }, [isFocused]);
 
   if (accessibilityMode) {

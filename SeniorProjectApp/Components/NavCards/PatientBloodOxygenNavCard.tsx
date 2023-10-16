@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import SingleLineChart from '../SingleLineChart';
-import {getBloodOxygen} from '../../BackEndFunctionCall/bloodOxygenFunction';
+import {getBloodOxygen, getRecentBloodOxygen} from '../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
-import {
-  getRecentWeight,
-  getWeightCall,
-} from '../../BackEndFunctionCall/weightFunction';
+
 export default function PatientBloodOxygenNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [bloodOxygenData, setBloodOxygenData] = useState(null);
@@ -21,14 +18,14 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    getWeightCall(patientID, startDateTime, stopDateTime).then(res => {
+    getBloodOxygen(patientID, startDateTime, stopDateTime).then(res => {
       setBloodOxygenData(res);
     });
     getAccessibilityMode(patientID).then(res => {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
-    getRecentWeight(patientID).then(res =>
-      setRecentBloodOxygen(res[0]),
+    getRecentBloodOxygen(patientID).then(res =>
+      setRecentBloodOxygen(res[0].BloodOxygenLevelInPercentage)
     );
   }, [isFocused]);
 
