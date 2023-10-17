@@ -19,6 +19,8 @@ export default function PatientWeightNavCard(): JSX.Element {
   const patientID: number = 100000001;
   const [recentWeight, setRecentWeight] = useState(null);
   const isFocused = useIsFocused();
+  const windowWidth: number = Dimensions.get('window').width;
+  const windowHeight: number = Dimensions.get('window').height;
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(res => {
@@ -54,8 +56,8 @@ export default function PatientWeightNavCard(): JSX.Element {
           <SingleLineChart
             data={weightData}
             unit={'lb'}
-            width={260}
-            height={140}
+            width={windowWidth*0.65}
+            height={windowHeight*0.22}
           />
         </View>
       </View>

@@ -29,7 +29,7 @@ export default function SingleLineChart({
           datasets: [
             {
               data: chartData,
-              color: (opacity) => `rgba(255,255,255, ${0.7})`,
+              color: opacity => `rgba(255,255,255, ${0.7})`,
               strokeWidth: 2,
             },
           ],
@@ -39,10 +39,12 @@ export default function SingleLineChart({
         yAxisSuffix={unit}
         yAxisInterval={1} // optional, defaults to 1
         withDots={false}
+
         chartConfig={{
           backgroundGradientFrom: '#BA4618',
           backgroundGradientTo: '#ffa726',
           decimalPlaces: 1,
+          useShadowColorFromDataset: false,
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
@@ -53,11 +55,14 @@ export default function SingleLineChart({
             strokeWidth: '2',
             stroke: '#ffa726',
           },
+
         }}
         style={{
           marginVertical: 8,
           borderRadius: 10,
         }}
+        bezier={false}
+        withShadow={false}
       />
     );
   } else {

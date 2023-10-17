@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from './navStyle';
@@ -21,6 +21,8 @@ export default function PatientHeartRateNavCard(): JSX.Element {
   const [recentHeartRate, setRecentHeartRate] = useState(null);
   const isFocused = useIsFocused();
 
+  const windowWidth: number = Dimensions.get('window').width;
+  const windowHeight: number = Dimensions.get('window').height;
   useEffect(() => {
     getHeartRate(patientID, startDateTime, stopDateTime).then(res => {
       setHeartRateData(res);
@@ -53,8 +55,8 @@ export default function PatientHeartRateNavCard(): JSX.Element {
           <SingleLineChart
             data={heartRateData}
             unit={'lb'}
-            width={260}
-            height={140}
+            width={windowWidth*0.65}
+            height={windowHeight*0.22}
           />
         </View>
       </View>

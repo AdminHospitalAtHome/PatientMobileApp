@@ -18,6 +18,8 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const patientID: number = 100000001;
   const [recentBloodOxygen, setRecentBloodOxygen] = useState(null);
+  const windowWidth: number = Dimensions.get('window').width;
+  const windowHeight: number = Dimensions.get('window').height;
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -55,8 +57,8 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
           <SingleLineChart
             data={bloodOxygenData}
             unit={'lb'}
-            width={260}
-            height={140}
+            width={windowWidth*0.65}
+            height={windowHeight*0.22}
           />
         </View>
       </View>

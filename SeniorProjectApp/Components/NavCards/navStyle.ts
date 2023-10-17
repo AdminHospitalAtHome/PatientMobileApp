@@ -6,7 +6,7 @@ const windowHeight: number = Dimensions.get('window').height;
 export const defaultStyle = StyleSheet.create({
   container: {
     width: windowWidth * 0.75,
-    height: windowHeight * 0.22,
+    height: windowHeight * 0.3,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
@@ -20,7 +20,6 @@ export const defaultStyle = StyleSheet.create({
     width: windowWidth * 0.8,
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 5,
     flexDirection: 'row',
   },
   label: {

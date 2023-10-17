@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import {defaultStyle, accessStyle} from './navStyle';
 import {
   getBloodPressure,
@@ -21,6 +21,8 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
     useState(null);
   const [recentDiastolicBloodPressure, setRecentDiastolicBloodPressure] =
     useState(null);
+    const windowWidth: number = Dimensions.get('window').width;
+    const windowHeight: number = Dimensions.get('window').height;
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -60,8 +62,8 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
           <DoubleLineChart
             data={bloodPresureData}
             unit={'lb'}
-            width={260}
-            height={140}
+            width={windowWidth*0.65}
+            height={windowHeight*0.22}
           />
         </View>
       </View>
