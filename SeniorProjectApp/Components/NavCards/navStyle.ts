@@ -1,12 +1,12 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
-const windowWidth: number = Dimensions.get('window').width;
-const windowHeight: number = Dimensions.get('window').height;
+const windowWidth: number = Dimensions.get('screen').width;
+const windowHeight: number = Dimensions.get('screen').height;
 
 export const defaultStyle = StyleSheet.create({
   container: {
     width: windowWidth * 0.75,
-    height: windowHeight * 0.3,
+    height: windowHeight * 0.25,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
@@ -27,7 +27,7 @@ export const defaultStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   chartHolder: {
-    flex: 7,
+    flex: 5,
     width: windowWidth * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
