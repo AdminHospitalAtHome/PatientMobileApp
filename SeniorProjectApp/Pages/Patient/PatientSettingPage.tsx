@@ -1,6 +1,6 @@
-import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {View, Text, Dimensions, TouchableOpacity, Switch} from 'react-native';
 import {StyleSheet} from 'react-native';
-import Switch from '../../Components/Switch';
+
 import {useEffect, useState} from 'react';
 import {
   getAccessibilityMode,
@@ -15,7 +15,7 @@ export default function PatientSettingPage(): JSX.Element {
     getAccessibilityMode(patientID).then(res =>
       setMode(res[0].IfAccessibilityMode),
     );
-  },[mode]);
+  }, [mode]);
 
   return (
     <View style={{flex: 1, alignItems: 'center', padding: 10}}>
@@ -23,7 +23,11 @@ export default function PatientSettingPage(): JSX.Element {
         <Text style={{marginLeft: 10}}>Accessibility Mode</Text>
         <View style={styles.switchGroup}>
           <TouchableOpacity onPress={switchOnPress}>
-            <Switch mode={mode} />
+            <Switch
+              trackColor={{false: '#767577', true: '#75b04c'}}
+              onValueChange={switchOnPress}
+              value={mode}
+            />
           </TouchableOpacity>
         </View>
       </View>
