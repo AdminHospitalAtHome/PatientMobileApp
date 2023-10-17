@@ -1,4 +1,5 @@
 import {HAH_Device, HAH_Device_Connection} from './DeviceConnection';
+import {XMLParser} from 'fast-xml-parser';
 
 export class MedMDeviceConnection implements HAH_Device_Connection {
   register(license_key: string): Promise<void> {
@@ -58,6 +59,9 @@ export class MedMDevice implements HAH_Device {
 }
 
 export function parseXMLWeightData(xml: string): Record<string, any>[] {
+  const parser = new XMLParser();
+  let obj = parser.parse(xml);
+
   return [{}];
 }
 

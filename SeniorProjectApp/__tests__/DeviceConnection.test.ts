@@ -145,6 +145,41 @@ it('Test Unpairing a Device', async () => {
   ).rejects.toBeUndefined();
 });
 
+it('Test Parsing XML Weight Data', () => {
+  let exampleXML =
+    '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<measurements-weight>\n' +
+    '  <id>1553d4d9-76b1-48ba-8051-d9699aaab882</id>\n' +
+    '  <instance-id>ae770afe-2e21-4f31-b410-2c2f5006b5b1</instance-id>\n' +
+    '  <measured-at>2019-08-14T14:38:16.000000000+00:00</measured-at>\n' +
+    '  <measured-at-local>2019-08-14T07:38:16.000000000-07:00</measured-at-local>\n' +
+    '  <measured-at-utc-offset>-25200</measured-at-utc-offset>\n' +
+    '  <client-received-at>2019-08-14T14:38:18.000000000+00:00</client-received-at>\n' +
+    '  <client-received-at-local>2019-08-14T07:38:18.000000000-07:00</client-received-at-local>\n' +
+    '  <client-received-at-utc-offset>-25200</client-received-at-utc-offset>\n' +
+    '  <value>78.6</value>\n' +
+    '  <units>kg</units>\n' +
+    '  <value-in-metric>78.6</value-in-metric>\n' +
+    '  <value-in-us>173.3</value-in-us>\n' +
+    '  <bc-fat-percent>18.8</bc-fat-percent>\n' +
+    '  <bc-muscle-weight>60.7</bc-muscle-weight>\n' +
+    '  <bc-water-percent>57.8</bc-water-percent>\n' +
+    '  <bc-bones-weight>3.2</bc-bones-weight>\n' +
+    '  <bc-amr>2883</bc-amr>\n' +
+    '  <bc-metabolic-age>31</bc-metabolic-age>\n' +
+    '  <bc-overall-rating>5</bc-overall-rating>\n' +
+    '  <bcp-user-number>1</bcp-user-number>\n' +
+    '  <bcp-height-in-mm>1700</bcp-height-in-mm>\n' +
+    '  <bcp-age>34</bcp-age>\n' +
+    '  <bcp-activity-level>1</bcp-activity-level>\n' +
+    '  <bcp-gender>male</bcp-gender>\n' +
+    '</measurements-weight>';
+
+  expect(parseXMLWeightData(exampleXML)).toStrictEqual([
+    {WeightInPounds: 173, DateTimeTaken: '2019-08-14 07:38:16.000'},
+  ]);
+});
+
 it('Test Getting Weight Data', async () => {
   let connection: HAH_Device_Connection = new MedMDeviceConnection();
   //TODO: update License Key
@@ -159,7 +194,9 @@ it('Test Getting Weight Data', async () => {
   );
 
   await connection.pair_device(sampleGoodDevice);
-  await expect(connection.get_data(1, parseXMLWeightData)).resolves.toBe([
+  await expect(
+    connection.get_data(1, parseXMLWeightData),
+  ).resolves.toStrictEqual([
     {
       WeightInPounds: 200,
       DateTimeTaken: '2023-01-02 08:00:00.000',
@@ -186,7 +223,9 @@ it('Test Getting Heart Rate Data', async () => {
   );
 
   await connection.pair_device(sampleGoodDevice);
-  await expect(connection.get_data(1, parseXMLHeartRateData)).resolves.toBe([
+  await expect(
+    connection.get_data(1, parseXMLHeartRateData),
+  ).resolves.toStrictEqual([
     {
       HeartRateInBPM: 100,
       DateTimeTaken: '2023-01-02 08:00:00.000',
@@ -213,20 +252,20 @@ it('Test Getting Blood Pressure Data', async () => {
   );
 
   await connection.pair_device(sampleGoodDevice);
-  await expect(connection.get_data(1, parseXMLBloodPressureData)).resolves.toBe(
-    [
-      {
-        SystolicBloodPressureInmmHg: 120,
-        DiastolicBloodPressureInmmHg: 80,
-        DateTimeTaken: '2023-01-02 08:00:00.000',
-      },
-      {
-        SystolicBloodPressureInmmHg: 130,
-        DiastolicBloodPressureInmmHg: 70,
-        DateTimeTaken: '2023-01-01 08:00:00.000',
-      },
-    ],
-  );
+  await expect(
+    connection.get_data(1, parseXMLBloodPressureData),
+  ).resolves.toStrictEqual([
+    {
+      SystolicBloodPressureInmmHg: 120,
+      DiastolicBloodPressureInmmHg: 80,
+      DateTimeTaken: '2023-01-02 08:00:00.000',
+    },
+    {
+      SystolicBloodPressureInmmHg: 130,
+      DiastolicBloodPressureInmmHg: 70,
+      DateTimeTaken: '2023-01-01 08:00:00.000',
+    },
+  ]);
 });
 
 it('Test Getting Blood Oxygen Data', async () => {
@@ -242,7 +281,9 @@ it('Test Getting Blood Oxygen Data', async () => {
   );
 
   await connection.pair_device(sampleGoodDevice);
-  await expect(connection.get_data(1, parseXMLBloodOxygenData)).resolves.toBe([
+  await expect(
+    connection.get_data(1, parseXMLBloodOxygenData),
+  ).resolves.toStrictEqual([
     {
       BloodOxygenInPercentage: 98,
       DateTimeTaken: '2023-01-02 08:00:00.000',
