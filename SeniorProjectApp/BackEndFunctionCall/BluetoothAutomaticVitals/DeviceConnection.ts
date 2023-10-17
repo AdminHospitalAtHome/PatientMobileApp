@@ -6,14 +6,14 @@ export interface HAH_Device_Connection {
   unpair_device: (device: HAH_Device) => Promise<void>;
   get_data: (
     id: number,
-    parse: (xml: string) => Record<string, any>,
-  ) => Record<string, any>;
+    parse: (xml: string) => Record<string, any>[],
+  ) => Record<string, any>[];
 }
 
 export interface HAH_Device {
   address: string;
   id: number;
   manufacturer: string;
-  modeName: string;
+  modelName: string;
   name: string;
 }

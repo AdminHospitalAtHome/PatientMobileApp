@@ -29,8 +29,46 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
 
   get_data(
     id: number,
-    parse: (xml: string) => Record<string, any>,
-  ): Record<string, any> {
-    return {};
+    parse: (xml: string) => Record<string, any>[],
+  ): Record<string, any>[] {
+    return [{}];
   }
+}
+
+export class MedMDevice implements HAH_Device {
+  address: string;
+  id: number;
+  manufacturer: string;
+  modelName: string;
+  name: string;
+
+  constructor(
+    address: string,
+    id: number,
+    manufacturer: string,
+    modelName: string,
+    name: string,
+  ) {
+    this.address = address;
+    this.id = id;
+    this.manufacturer = manufacturer;
+    this.modelName = modelName;
+    this.name = name;
+  }
+}
+
+export function parseXMLWeightData(xml: string): Record<string, any>[] {
+  return [{}];
+}
+
+export function parseXMLHeartRateData(xml: string): Record<string, any>[] {
+  return [{}];
+}
+
+export function parseXMLBloodPressureData(xml: string): Record<string, any>[] {
+  return [{}];
+}
+
+export function parseXMLBloodOxygenData(xml: string): Record<string, any>[] {
+  return [{}];
 }
