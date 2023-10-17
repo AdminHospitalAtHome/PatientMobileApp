@@ -56,8 +56,8 @@ export default function PatientWeightNavCard(): JSX.Element {
           <SingleLineChart
             data={weightData}
             unit={'lb'}
-            width={windowWidth * 0.7}
-            height={windowHeight * 0.18}
+            width={windowWidth*0.7}
+            height={windowHeight*0.18}
           />
         </View>
       </View>

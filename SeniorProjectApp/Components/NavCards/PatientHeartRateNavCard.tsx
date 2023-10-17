@@ -55,8 +55,8 @@ export default function PatientHeartRateNavCard(): JSX.Element {
           <SingleLineChart
             data={heartRateData}
             unit={'lb'}
-            width={windowWidth*0.65}
-            height={windowHeight*0.22}
+            width={windowWidth*0.7}
+            height={windowHeight*0.18}
           />
         </View>
       </View>

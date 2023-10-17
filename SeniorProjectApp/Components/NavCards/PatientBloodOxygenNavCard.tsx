@@ -57,8 +57,8 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
           <SingleLineChart
             data={bloodOxygenData}
             unit={'lb'}
-            width={windowWidth*0.65}
-            height={windowHeight*0.22}
+            width={windowWidth*0.7}
+            height={windowHeight*0.18}
           />
         </View>
       </View>
