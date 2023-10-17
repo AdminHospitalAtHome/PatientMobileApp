@@ -13,7 +13,6 @@ import {useIsFocused} from '@react-navigation/native';
 export default function PatientBloodOxygenNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [bloodOxygenData, setBloodOxygenData] = useState(null);
-  const [trend, setTrend] = useState('UP');
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const patientID: number = 100000001;

@@ -15,7 +15,6 @@ const patientID = 100000001;
 export default function PatientHeartRateNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [heartRateData, setHeartRateData] = useState(null);
-  const [trend, setTrend] = useState('UP');
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [recentHeartRate, setRecentHeartRate] = useState(null);
