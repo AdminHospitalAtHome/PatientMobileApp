@@ -5,7 +5,7 @@
 import 'react-native';
 
 // Note: import explicitly to use the types shipped with jest.
-import {it, expect} from '@jest/globals';
+import {it, expect, jest} from '@jest/globals';
 import {
   addWeight,
   getRecentWeight,
@@ -15,6 +15,8 @@ import {
 // Note: test renderer must be required after react-native.
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
+// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
+jest.setTimeout(40000);
 
 it('Adds and Gets Weight', async () => {
   const startDateTime: string = new Date().toISOString();

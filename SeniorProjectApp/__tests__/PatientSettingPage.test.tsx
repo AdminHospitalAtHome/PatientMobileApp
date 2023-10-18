@@ -1,11 +1,11 @@
 import 'react-native';
-import {it, expect} from '@jest/globals';
+import {it, expect, jest} from '@jest/globals';
 import {
   getAccessibilityMode,
   setAccessibilityMode,
 } from '../BackEndFunctionCall/userInfo';
-import timeTableParser from "../BackEndFunctionCall/tableTimeParser";
-
+// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
+jest.setTimeout(40000);
 
 it('update and Gets accessibility mode', async () => {
   await setAccessibilityMode(300000001, true).then(output => {
@@ -22,6 +22,5 @@ it('fail to get accessibility mode ', async () => {
     'failed to get accessibility mode',
   );
 });
-
 
 //todo: create fail to update accessibility mode when applying user identification

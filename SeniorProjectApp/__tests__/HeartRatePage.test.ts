@@ -3,7 +3,7 @@
  */
 import 'react-native';
 
-import {it, expect} from '@jest/globals';
+import {it, expect, jest} from '@jest/globals';
 import {
   addHeartRate,
   getHeartRate,
@@ -11,6 +11,8 @@ import {
 } from '../BackEndFunctionCall/heartRateFunction';
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
+// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
+jest.setTimeout(40000);
 // Add Heart Rate test
 
 it('Adds and Gets Heart Rate', async () => {
