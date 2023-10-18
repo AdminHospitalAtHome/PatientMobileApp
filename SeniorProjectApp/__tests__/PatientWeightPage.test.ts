@@ -15,17 +15,6 @@ import {
 // Note: test renderer must be required after react-native.
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
-// it('Get Trend For Recent Weight Data Correctly', async () => {
-//   await addWeight(300000001, 190, true).then(output => {
-//     expect(output).toBe('add successful');
-//   });
-//   await addWeight(300000001, 180, true).then(output => {
-//     expect(output).toBe('add successful');
-//   });
-//   await getRecentWeight(300000001).then(res => {
-//     weightTrend(res);
-//   });
-// });
 
 it('Adds and Gets Weight', async () => {
   const startDateTime: string = new Date().toISOString();

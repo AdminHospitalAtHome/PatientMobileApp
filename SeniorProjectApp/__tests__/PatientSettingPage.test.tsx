@@ -4,16 +4,24 @@ import {
   getAccessibilityMode,
   setAccessibilityMode,
 } from '../BackEndFunctionCall/userInfo';
+import timeTableParser from "../BackEndFunctionCall/tableTimeParser";
 
 
-it('Set Accessibility to false', async (): Promise<void> => {
-  await setAccessibilityMode(100000001, false).then()
+it('update and Gets accessibility mode', async () => {
+  await setAccessibilityMode(300000001, true).then(output => {
+    expect(output).toBe('set successful');
+  });
 
+  await getAccessibilityMode(300000001).then(output => {
+    expect(output).toStrictEqual(true);
+  });
 });
-it('Get Accessbility Mode - Flase', async (): Promise<void> =>
-  await getAccessibilityMode(100000001).then(res => expect(res[0].IfAccessibilityMode).toBe(false)));
+
+it('fail to get accessibility mode ', async () => {
+  await expect(getAccessibilityMode(999999999)).rejects.toBe(
+    'failed to get accessibility mode',
+  );
+});
 
 
-
-it('Get Accessbility Mode - Flase', async (): Promise<void> =>
-  await getAccessibilityMode(100000001).then(res => expect(res[0].IfAccessibilityMode).toBe(true)));
+//todo: create fail to update accessibility mode when applying user identification

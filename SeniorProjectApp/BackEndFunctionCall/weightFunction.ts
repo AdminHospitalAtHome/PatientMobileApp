@@ -14,7 +14,7 @@ export function addWeight(
   patientId: number,
   weight: number,
   ifManualInput: boolean,
-): Promise<any> {
+): Promise<string> {
   const promise: Promise<any> = new Promise((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight', {
@@ -41,12 +41,6 @@ export function getWeightCall(
   )
     .then(response => response.json())
     .then(json => parseWeightData(json));
-}
-
-export function getMostRecent(patientID: number) {
-  return fetch(
-    `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}`,
-  );
 }
 
 // Returns a promise with best case scenario [Most Recent, Second Most Recent]

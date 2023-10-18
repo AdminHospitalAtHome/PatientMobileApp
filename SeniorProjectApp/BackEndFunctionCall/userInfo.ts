@@ -19,12 +19,14 @@ export function getAccessibilityMode(patientID: number): Promise<boolean> {
   return new Promise((resolve, reject) => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getAccessbilityMode?patientID=${patientID}`,
-    ).then(res => {
-      if (res.status === 200) {
-        resolve(res.json());
-      } else {
-        reject('failed to get accessibility mode');
-      }
-    });
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.length === 1) {
+          resolve(json[0].IfAccessibilityMode);
+        } else {
+          reject('failed to get accessibility mode');
+        }
+      });
   });
 }
