@@ -6,8 +6,8 @@ export interface HAH_Device_Connection {
   unpair_device: (device: HAH_Device) => Promise<void>;
   get_data: (
     id: number,
-    parse: (xml: string) => Record<string, any>[],
-  ) => Record<string, any>[];
+    parse: (xml: string) => Promise<Record<string, any>[]>,
+  ) => Promise<Record<string, any>[]>;
 }
 
 export interface HAH_Device {
