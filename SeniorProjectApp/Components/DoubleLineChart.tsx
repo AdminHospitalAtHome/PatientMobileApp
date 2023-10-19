@@ -46,6 +46,7 @@ export default function DoubleLineChart({
         yAxisInterval={1} // optional, defaults to 1
         withDots={false}
         chartConfig={{
+
           backgroundGradientFrom: '#BA4618',
           backgroundGradientTo: '#ffa726',
           decimalPlaces: 1,
@@ -53,6 +54,8 @@ export default function DoubleLineChart({
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
             borderRadius: 10,
+            paddingRight: 20, // Add some padding to the right
+            paddingLeft: 20,
           },
           propsForDots: {
             r: '5',
@@ -60,7 +63,8 @@ export default function DoubleLineChart({
             stroke: '#ffa726',
           },
         }}
-        bezier
+        bezier={false}
+        withShadow={false}
         style={{
           marginVertical: 8,
           borderRadius: 10,
