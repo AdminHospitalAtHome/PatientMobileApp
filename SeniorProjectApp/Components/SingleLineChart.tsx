@@ -29,8 +29,8 @@ export default function SingleLineChart({
           datasets: [
             {
               data: chartData,
-              color: opacity => `rgba(255,255,255, ${0.7})`,
-              strokeWidth: 2,
+              color: () => 'black',
+              strokeWidth: 3,
             },
           ],
         }}
@@ -41,21 +41,24 @@ export default function SingleLineChart({
         withDots={false}
 
         chartConfig={{
-          backgroundGradientFrom: '#BA4618',
-          backgroundGradientTo: '#ffa726',
-          decimalPlaces: 1,
-          useShadowColorFromDataset: false,
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          backgroundGradientFrom: '#f5f7fa',
+          backgroundGradientTo: '#c3cfe2',
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // Black label color
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 10,
+
+          },
+
+          propsForLabels:{
+            // fontSize: Dimensions.get('screen').width / 30,
           },
           propsForDots: {
             r: '5',
             strokeWidth: '2',
             stroke: '#ffa726',
           },
-
         }}
         style={{
           marginVertical: 8,
