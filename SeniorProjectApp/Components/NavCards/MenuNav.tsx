@@ -28,9 +28,8 @@ export default ({navigation}: {navigation: any}) => (
 const styles = StyleSheet.create({
   menuContainer: {
     width: Dimensions.get('window').width,
-    height: 40,
+    flex: 1,
     backgroundColor: '#BA4618',
-    borderRadius: 3,
     flexDirection: 'row',
   },
   labelContainer: {
