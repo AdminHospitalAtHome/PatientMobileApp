@@ -25,9 +25,13 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
     getBloodOxygen(patientID, startDateTime, stopDateTime).then(res => {
       setBloodOxygenData(res);
     });
-    getAccessibilityMode(patientID).then(res => {
-      setAccessibilityMode(res[0].IfAccessibilityMode);
-    });
+    getAccessibilityMode(patientID)
+      .then(res => {
+        setAccessibilityMode(res);
+      }) // TODO: Check that the catch is always returning a boolean
+      .catch(res => {
+        setAccessibilityMode(res);
+      });
     getRecentBloodOxygen(patientID).then(res => setRecentBloodOxygen(res));
   }, [isFocused]);
 

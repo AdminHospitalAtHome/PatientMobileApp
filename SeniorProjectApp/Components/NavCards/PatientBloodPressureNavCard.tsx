@@ -29,9 +29,13 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(res => {
       setBloodPresureData(res);
     });
-    getAccessibilityMode(patientID).then(res => {
-      setAccessibilityMode(res[0].IfAccessibilityMode);
-    });
+    getAccessibilityMode(patientID)
+      .then(res => {
+        setAccessibilityMode(res);
+      })
+      .catch(res => {
+        setAccessibilityMode(res);
+      });
     getRecentBloodPressure(patientID).then(res => {
       setRecentSystolicBloodPressure(res[0]);
       setRecentDiastolicBloodPressure(res[1]);

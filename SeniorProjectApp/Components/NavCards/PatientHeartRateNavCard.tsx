@@ -29,9 +29,13 @@ export default function PatientHeartRateNavCard(): JSX.Element {
     getHeartRate(patientID, startDateTime, stopDateTime).then(res => {
       setHeartRateData(res);
     });
-    getAccessibilityMode(patientID).then(res => {
-      setAccessibilityMode(res[0].IfAccessibilityMode);
-    });
+    getAccessibilityMode(patientID)
+      .then(res => {
+        setAccessibilityMode(res);
+      })
+      .catch(res => {
+        setAccessibilityMode(res);
+      });
     getRecentHeartRate(patientID).then(res => setRecentHeartRate(res));
   }, [isFocused]);
 

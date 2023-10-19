@@ -25,8 +25,12 @@ export function getAccessibilityMode(patientID: number): Promise<boolean> {
         if (json.length === 1) {
           resolve(json[0].IfAccessibilityMode);
         } else {
-          reject('failed to get accessibility mode');
+          reject(false);
         }
+      })
+      .catch(() => {
+        // In case of error with fetch, return false
+        reject(false);
       });
   });
 }
