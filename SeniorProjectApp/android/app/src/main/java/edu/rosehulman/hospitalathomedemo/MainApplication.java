@@ -1,4 +1,4 @@
-package com.seniorprojectapp;
+package edu.rosehulman.hospitalathomedemo;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

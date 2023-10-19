@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* SeniorProjectAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SeniorProjectAppTests.m */; };
+		00E356F31AD99517003FC87E /* HospitalAtHomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HospitalAtHomeTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		6FF508921D187275ED0B73F1 /* libPods-SeniorProjectApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2C086CCF562DF58007D4C2 /* libPods-SeniorProjectApp.a */; };
+		6FF508921D187275ED0B73F1 /* libPods-HospitalAtHome.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2C086CCF562DF58007D4C2 /* libPods-HospitalAtHome.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D27D14B3E6D6448C32B4C833 /* libPods-SeniorProjectApp-SeniorProjectAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31CF107CC3CDEC77DA868842 /* libPods-SeniorProjectApp-SeniorProjectAppTests.a */; };
+		D27D14B3E6D6448C32B4C833 /* libPods-HospitalAtHome-HospitalAtHomeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31CF107CC3CDEC77DA868842 /* libPods-HospitalAtHome-HospitalAtHomeTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,27 +22,27 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = SeniorProjectApp;
+			remoteInfo = HospitalAtHome;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* SeniorProjectAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeniorProjectAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* HospitalAtHomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HospitalAtHomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* SeniorProjectAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeniorProjectAppTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* SeniorProjectApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeniorProjectApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = SeniorProjectApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = SeniorProjectApp/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SeniorProjectApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SeniorProjectApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SeniorProjectApp/main.m; sourceTree = "<group>"; };
-		31CF107CC3CDEC77DA868842 /* libPods-SeniorProjectApp-SeniorProjectAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SeniorProjectApp-SeniorProjectAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DDE0DB97431FA73141C3CC4 /* Pods-SeniorProjectApp-SeniorProjectAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeniorProjectApp-SeniorProjectAppTests.release.xcconfig"; path = "Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		6FAB05A134085AE0BB9C857E /* Pods-SeniorProjectApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeniorProjectApp.debug.xcconfig"; path = "Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp.debug.xcconfig"; sourceTree = "<group>"; };
-		7638EA6ACDF182D9DB7708FF /* Pods-SeniorProjectApp-SeniorProjectAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeniorProjectApp-SeniorProjectAppTests.debug.xcconfig"; path = "Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		76DB688BDDF86DE9B16C0D91 /* Pods-SeniorProjectApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeniorProjectApp.release.xcconfig"; path = "Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp.release.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SeniorProjectApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		DB2C086CCF562DF58007D4C2 /* libPods-SeniorProjectApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SeniorProjectApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F21AD99517003FC87E /* HospitalAtHomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HospitalAtHomeTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* HospitalAtHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HospitalAtHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = HospitalAtHome/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = HospitalAtHome/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HospitalAtHome/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HospitalAtHome/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HospitalAtHome/main.m; sourceTree = "<group>"; };
+		31CF107CC3CDEC77DA868842 /* libPods-HospitalAtHome-HospitalAtHomeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HospitalAtHome-HospitalAtHomeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DDE0DB97431FA73141C3CC4 /* Pods-HospitalAtHome-HospitalAtHomeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalAtHome-HospitalAtHomeTests.release.xcconfig"; path = "Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests.release.xcconfig"; sourceTree = "<group>"; };
+		6FAB05A134085AE0BB9C857E /* Pods-HospitalAtHome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalAtHome.debug.xcconfig"; path = "Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome.debug.xcconfig"; sourceTree = "<group>"; };
+		7638EA6ACDF182D9DB7708FF /* Pods-HospitalAtHome-HospitalAtHomeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalAtHome-HospitalAtHomeTests.debug.xcconfig"; path = "Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		76DB688BDDF86DE9B16C0D91 /* Pods-HospitalAtHome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalAtHome.release.xcconfig"; path = "Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome.release.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HospitalAtHome/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DB2C086CCF562DF58007D4C2 /* libPods-HospitalAtHome.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HospitalAtHome.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D27D14B3E6D6448C32B4C833 /* libPods-SeniorProjectApp-SeniorProjectAppTests.a in Frameworks */,
+				D27D14B3E6D6448C32B4C833 /* libPods-HospitalAtHome-HospitalAtHomeTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,20 +59,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FF508921D187275ED0B73F1 /* libPods-SeniorProjectApp.a in Frameworks */,
+				6FF508921D187275ED0B73F1 /* libPods-HospitalAtHome.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* SeniorProjectAppTests */ = {
+		00E356EF1AD99517003FC87E /* HospitalAtHomeTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* SeniorProjectAppTests.m */,
+				00E356F21AD99517003FC87E /* HospitalAtHomeTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = SeniorProjectAppTests;
+			path = HospitalAtHomeTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -83,7 +83,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* SeniorProjectApp */ = {
+		13B07FAE1A68108700A75B9A /* HospitalAtHome */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -93,15 +93,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = SeniorProjectApp;
+			name = HospitalAtHome;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				DB2C086CCF562DF58007D4C2 /* libPods-SeniorProjectApp.a */,
-				31CF107CC3CDEC77DA868842 /* libPods-SeniorProjectApp-SeniorProjectAppTests.a */,
+				DB2C086CCF562DF58007D4C2 /* libPods-HospitalAtHome.a */,
+				31CF107CC3CDEC77DA868842 /* libPods-HospitalAtHome-HospitalAtHomeTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -116,9 +116,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* SeniorProjectApp */,
+				13B07FAE1A68108700A75B9A /* HospitalAtHome */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* SeniorProjectAppTests */,
+				00E356EF1AD99517003FC87E /* HospitalAtHomeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -131,8 +131,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* SeniorProjectApp.app */,
-				00E356EE1AD99517003FC87E /* SeniorProjectAppTests.xctest */,
+				13B07F961A680F5B00A75B9A /* HospitalAtHome.app */,
+				00E356EE1AD99517003FC87E /* HospitalAtHomeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,10 +140,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6FAB05A134085AE0BB9C857E /* Pods-SeniorProjectApp.debug.xcconfig */,
-				76DB688BDDF86DE9B16C0D91 /* Pods-SeniorProjectApp.release.xcconfig */,
-				7638EA6ACDF182D9DB7708FF /* Pods-SeniorProjectApp-SeniorProjectAppTests.debug.xcconfig */,
-				6DDE0DB97431FA73141C3CC4 /* Pods-SeniorProjectApp-SeniorProjectAppTests.release.xcconfig */,
+				6FAB05A134085AE0BB9C857E /* Pods-HospitalAtHome.debug.xcconfig */,
+				76DB688BDDF86DE9B16C0D91 /* Pods-HospitalAtHome.release.xcconfig */,
+				7638EA6ACDF182D9DB7708FF /* Pods-HospitalAtHome-HospitalAtHomeTests.debug.xcconfig */,
+				6DDE0DB97431FA73141C3CC4 /* Pods-HospitalAtHome-HospitalAtHomeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -151,9 +151,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* SeniorProjectAppTests */ = {
+		00E356ED1AD99517003FC87E /* HospitalAtHomeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SeniorProjectAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "HospitalAtHomeTests" */;
 			buildPhases = (
 				6B88994996157DD8A71CB218 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -167,14 +167,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = SeniorProjectAppTests;
-			productName = SeniorProjectAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* SeniorProjectAppTests.xctest */;
+			name = HospitalAtHomeTests;
+			productName = HospitalAtHomeTests;
+			productReference = 00E356EE1AD99517003FC87E /* HospitalAtHomeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* SeniorProjectApp */ = {
+		13B07F861A680F5B00A75B9A /* HospitalAtHome */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SeniorProjectApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "HospitalAtHome" */;
 			buildPhases = (
 				F943DF553395C46C299EADF3 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -189,9 +189,9 @@
 			);
 			dependencies = (
 			);
-			name = SeniorProjectApp;
-			productName = SeniorProjectApp;
-			productReference = 13B07F961A680F5B00A75B9A /* SeniorProjectApp.app */;
+			name = HospitalAtHome;
+			productName = HospitalAtHome;
+			productReference = 13B07F961A680F5B00A75B9A /* HospitalAtHome.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -211,7 +211,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SeniorProjectApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "HospitalAtHome" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -224,8 +224,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* SeniorProjectApp */,
-				00E356ED1AD99517003FC87E /* SeniorProjectAppTests */,
+				13B07F861A680F5B00A75B9A /* HospitalAtHome */,
+				00E356ED1AD99517003FC87E /* HospitalAtHomeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -272,15 +272,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4BE7CF7F86D09C2E67584CE4 /* [CP] Embed Pods Frameworks */ = {
@@ -289,15 +289,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5EA98C2B1D8A64DF4BB51A8D /* [CP] Copy Pods Resources */ = {
@@ -306,15 +306,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp-SeniorProjectAppTests/Pods-SeniorProjectApp-SeniorProjectAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome-HospitalAtHomeTests/Pods-HospitalAtHome-HospitalAtHomeTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6B88994996157DD8A71CB218 /* [CP] Check Pods Manifest.lock */ = {
@@ -332,7 +332,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SeniorProjectApp-SeniorProjectAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-HospitalAtHome-HospitalAtHomeTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -345,15 +345,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SeniorProjectApp/Pods-SeniorProjectApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HospitalAtHome/Pods-HospitalAtHome-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F943DF553395C46C299EADF3 /* [CP] Check Pods Manifest.lock */ = {
@@ -371,7 +371,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SeniorProjectApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-HospitalAtHome-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -404,7 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* SeniorProjectAppTests.m in Sources */,
+				00E356F31AD99517003FC87E /* HospitalAtHomeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,7 +422,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* SeniorProjectApp */;
+			target = 13B07F861A680F5B00A75B9A /* HospitalAtHome */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -430,14 +430,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7638EA6ACDF182D9DB7708FF /* Pods-SeniorProjectApp-SeniorProjectAppTests.debug.xcconfig */;
+			baseConfigurationReference = 7638EA6ACDF182D9DB7708FF /* Pods-HospitalAtHome-HospitalAtHomeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = SeniorProjectAppTests/Info.plist;
+				INFOPLIST_FILE = HospitalAtHomeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -449,19 +449,19 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.rosehulman.hospitalathomedemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SeniorProjectApp.app/SeniorProjectApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HospitalAtHome.app/HospitalAtHome";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DDE0DB97431FA73141C3CC4 /* Pods-SeniorProjectApp-SeniorProjectAppTests.release.xcconfig */;
+			baseConfigurationReference = 6DDE0DB97431FA73141C3CC4 /* Pods-HospitalAtHome-HospitalAtHomeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = SeniorProjectAppTests/Info.plist;
+				INFOPLIST_FILE = HospitalAtHomeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -473,21 +473,23 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.rosehulman.hospitalathomedemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SeniorProjectApp.app/SeniorProjectApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HospitalAtHome.app/HospitalAtHome";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6FAB05A134085AE0BB9C857E /* Pods-SeniorProjectApp.debug.xcconfig */;
+			baseConfigurationReference = 6FAB05A134085AE0BB9C857E /* Pods-HospitalAtHome.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3K2N977YA5;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = SeniorProjectApp/Info.plist;
+				INFOPLIST_FILE = HospitalAtHome/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Hospital At Home";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -498,8 +500,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = SeniorProjectApp;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.rosehulman.hospitalathomedemo;
+				PRODUCT_NAME = HospitalAtHome;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -508,12 +510,14 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76DB688BDDF86DE9B16C0D91 /* Pods-SeniorProjectApp.release.xcconfig */;
+			baseConfigurationReference = 76DB688BDDF86DE9B16C0D91 /* Pods-HospitalAtHome.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = SeniorProjectApp/Info.plist;
+				DEVELOPMENT_TEAM = 3K2N977YA5;
+				INFOPLIST_FILE = HospitalAtHome/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Hospital At Home";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -524,8 +528,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = SeniorProjectApp;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.rosehulman.hospitalathomedemo;
+				PRODUCT_NAME = HospitalAtHome;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -673,7 +677,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SeniorProjectAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "HospitalAtHomeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -682,7 +686,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SeniorProjectApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "HospitalAtHome" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -691,7 +695,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SeniorProjectApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "HospitalAtHome" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
