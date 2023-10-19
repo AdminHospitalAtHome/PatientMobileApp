@@ -6,30 +6,34 @@ import {
   getAccessibilityMode,
   setAccessibilityMode,
 } from '../../BackEndFunctionCall/userInfo';
+import MenuNav from "../../Components/NavCards/MenuNav";
 
 const patientID = 100000001;
-export default function PatientSettingPage(): JSX.Element {
+export default function PatientSettingPage(navigation: any): JSX.Element {
   const [mode, setMode] = useState(false);
 
   useEffect(() => {
-    getAccessibilityMode(patientID).then(res =>
-      setMode(res),
-    );
+    getAccessibilityMode(patientID).then(res => setMode(res));
   }, [mode]);
 
   return (
-    <View style={{flex: 1, alignItems: 'center', padding: 10}}>
-      <View style={styles.card}>
-        <Text style={{marginLeft: 10}}>Accessibility Mode</Text>
-        <View style={styles.switchGroup}>
-          <TouchableOpacity onPress={switchOnPress}>
-            <Switch
-              trackColor={{false: '#767577', true: '#75b04c'}}
-              onValueChange={switchOnPress}
-              value={mode}
-            />
-          </TouchableOpacity>
+    <View style={{flex: 1, alignItems: 'center'}}>
+      <View style={{flex: 13}}>
+        <View style={styles.card}>
+          <Text style={{marginLeft: 10}}>Accessibility Mode</Text>
+          <View style={styles.switchGroup}>
+            <TouchableOpacity onPress={switchOnPress}>
+              <Switch
+                trackColor={{false: '#767577', true: '#75b04c'}}
+                onValueChange={switchOnPress}
+                value={mode}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
+      </View>
+      <View style={{flex: 1}}>
+        <MenuNav navigation={navigation}/>
       </View>
     </View>
   );
@@ -44,6 +48,7 @@ const styles = StyleSheet.create({
   card: {
     width: 0.97 * Dimensions.get('window').width,
     height: 40,
+    marginTop: 10,
     backgroundColor: 'white',
     borderRadius: 5,
     borderColor: 'black',
