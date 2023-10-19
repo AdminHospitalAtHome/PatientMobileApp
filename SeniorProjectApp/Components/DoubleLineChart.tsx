@@ -30,12 +30,12 @@ export default function DoubleLineChart({
           datasets: [
             {
               data: chartData1,
-              color: opacity => `rgba(255,255,255, ${0.7})`,
+              color: opacity => `rgba(0,0,0, ${0.7})`,
               strokeWidth: 3,
             },
             {
               data: chartData2,
-              color: opacity => `rgba(255, 255, 25, ${0.5})`,
+              color: opacity => `rgba(0, 0, 0, ${0.5})`,
               strokeWidth: 3,
             },
           ],
@@ -47,15 +47,18 @@ export default function DoubleLineChart({
         withDots={false}
         chartConfig={{
 
-          backgroundGradientFrom: '#BA4618',
-          backgroundGradientTo: '#ffa726',
-          decimalPlaces: 1,
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          backgroundGradientFrom: '#f5f7fa',
+          backgroundGradientTo: '#c3cfe2',
+          decimalPlaces: 0,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 10,
             paddingRight: 20, // Add some padding to the right
             paddingLeft: 20,
+          },
+          propsForLabels:{
+            fontSize: 10,
           },
           propsForDots: {
             r: '5',
