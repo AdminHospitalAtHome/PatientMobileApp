@@ -43,7 +43,7 @@ export default function SingleLineChart({
         chartConfig={{
           backgroundGradientFrom: '#f5f7fa',
           backgroundGradientTo: '#c3cfe2',
-          decimalPlaces: 2, // optional, defaults to 2dp
+          decimalPlaces: 0, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // Black label color
           labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {

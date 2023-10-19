@@ -49,13 +49,16 @@ export default function DoubleLineChart({
 
           backgroundGradientFrom: '#BA4618',
           backgroundGradientTo: '#ffa726',
-          decimalPlaces: 1,
+          decimalPlaces: 0,
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
             borderRadius: 10,
             paddingRight: 20, // Add some padding to the right
             paddingLeft: 20,
+          },
+          propsForLabels:{
+            fontSize: 10,
           },
           propsForDots: {
             r: '5',
