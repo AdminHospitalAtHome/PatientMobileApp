@@ -20,7 +20,7 @@ export default function PatientSettingPage(navigation: any): JSX.Element {
     <View style={{flex: 1, alignItems: 'center'}}>
       <View style={{flex: 13}}>
         <View style={styles.card}>
-          <Text style={{marginLeft: 10}}>Accessibility Mode</Text>
+          <Text style={styles.text}>Accessibility Mode</Text>
           <View style={styles.switchGroup}>
             <TouchableOpacity onPress={switchOnPress}>
               <Switch
@@ -62,4 +62,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     alignItems: 'center',
   },
+  text: {
+    color: 'black',
+    marginLeft: 10
+  }
 });
