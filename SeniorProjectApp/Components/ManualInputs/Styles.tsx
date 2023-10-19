@@ -5,10 +5,12 @@ export const ManualTextInputStyle = StyleSheet.create({
     marginBottom: 5,
     fontSize: 25,
     textAlign: 'center',
+    color: 'black',
   },
 
   inputUnit: {
     fontSize: 25,
+    color: 'black',
   },
   invalidInput: {
     color: 'red',
@@ -32,6 +34,7 @@ export const ManualTextInputStyle = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     textAlign: 'center',
+    color: 'black',
   },
 });
 

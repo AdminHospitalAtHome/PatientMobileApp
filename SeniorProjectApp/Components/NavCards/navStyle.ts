@@ -13,7 +13,7 @@ export const defaultStyle = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     borderRadius: 10,
-    marginTop: 10
+    marginTop: 10,
   },
   labelHolder: {
     flex: 1,
@@ -25,13 +25,14 @@ export const defaultStyle = StyleSheet.create({
   label: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'black',
   },
   chartHolder: {
     flex: 5,
     width: windowWidth * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });
 
 export const accessStyle = StyleSheet.create({
@@ -46,7 +47,7 @@ export const accessStyle = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
-  labelHolder:{
+  labelHolder: {
     flex: 2,
     width: windowWidth * 0.8,
     justifyContent: 'space-around',
@@ -57,18 +58,19 @@ export const accessStyle = StyleSheet.create({
   label: {
     fontSize: 30,
   },
-  textHolder:{
+  textHolder: {
     flex: 7,
     width: windowWidth * 0.8,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  value:{
+  value: {
     fontSize: 90,
     fontWeight: 'bold',
   },
-  text:{
+  text: {
     fontSize: 50,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+    color: 'black',
+  },
 });

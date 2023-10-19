@@ -21,8 +21,8 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
     useState(null);
   const [recentDiastolicBloodPressure, setRecentDiastolicBloodPressure] =
     useState(null);
-    const windowWidth: number = Dimensions.get('window').width;
-    const windowHeight: number = Dimensions.get('window').height;
+  const windowWidth: number = Dimensions.get('window').width;
+  const windowHeight: number = Dimensions.get('window').height;
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -45,8 +45,12 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
           <Text style={accessStyle.label}>Blood Pressure</Text>
         </View>
         <View style={accessStyle.textHolder}>
-            <Text style={accessStyle.text}>Systolic {recentSystolicBloodPressure}</Text>
-            <Text style={accessStyle.text}>Diastolic {recentDiastolicBloodPressure}</Text>
+          <Text style={accessStyle.text}>
+            Systolic {recentSystolicBloodPressure}
+          </Text>
+          <Text style={accessStyle.text}>
+            Diastolic {recentDiastolicBloodPressure}
+          </Text>
         </View>
       </View>
     );
@@ -61,9 +65,9 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
         <View style={defaultStyle.chartHolder}>
           <DoubleLineChart
             data={bloodPresureData}
-            unit={'lb'}
-            width={windowWidth*0.7}
-            height={windowHeight*0.18}
+            unit={'mmHg'}
+            width={windowWidth * 0.7}
+            height={windowHeight * 0.18}
           />
         </View>
       </View>

@@ -5,6 +5,7 @@ export const AddDialogStyle = StyleSheet.create({
     marginBottom: 20,
     fontSize: 25,
     textAlign: 'center',
+    color: 'black',
   },
   container: {
     flexDirection: 'row',

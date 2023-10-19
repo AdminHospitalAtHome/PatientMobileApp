@@ -28,9 +28,7 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
     getAccessibilityMode(patientID).then(res => {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
-    getRecentBloodOxygen(patientID).then(res =>
-      setRecentBloodOxygen(res),
-    );
+    getRecentBloodOxygen(patientID).then(res => setRecentBloodOxygen(res));
   }, [isFocused]);
 
   if (accessibilityMode) {
@@ -55,9 +53,9 @@ export default function PatientBloodOxygenNavCard(): JSX.Element {
         <View style={defaultStyle.chartHolder}>
           <SingleLineChart
             data={bloodOxygenData}
-            unit={'lb'}
-            width={windowWidth*0.7}
-            height={windowHeight*0.18}
+            unit={'%'}
+            width={windowWidth * 0.7}
+            height={windowHeight * 0.18}
           />
         </View>
       </View>

@@ -5,7 +5,10 @@ import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
 import SingleLineChart from '../SingleLineChart';
-import {getHeartRate, getRecentHeartRate} from '../../BackEndFunctionCall/heartRateFunction';
+import {
+  getHeartRate,
+  getRecentHeartRate,
+} from '../../BackEndFunctionCall/heartRateFunction';
 import {
   getRecentWeight,
   getWeightCall,
@@ -30,7 +33,6 @@ export default function PatientHeartRateNavCard(): JSX.Element {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
     getRecentHeartRate(patientID).then(res => setRecentHeartRate(res));
-
   }, [isFocused]);
 
   if (accessibilityMode) {
@@ -53,9 +55,9 @@ export default function PatientHeartRateNavCard(): JSX.Element {
         <View style={defaultStyle.chartHolder}>
           <SingleLineChart
             data={heartRateData}
-            unit={'lb'}
-            width={windowWidth*0.7}
-            height={windowHeight*0.18}
+            unit={'BPM'}
+            width={windowWidth * 0.7}
+            height={windowHeight * 0.18}
           />
         </View>
       </View>

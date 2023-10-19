@@ -33,11 +33,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     textAlign: 'center',
+    color: 'black',
   },
 
   tableText: {
     fontSize: 18,
     textAlign: 'center',
+    color: 'black',
   },
 
   headerBorder: {

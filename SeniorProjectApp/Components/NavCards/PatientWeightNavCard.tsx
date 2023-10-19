@@ -28,11 +28,8 @@ export default function PatientWeightNavCard(): JSX.Element {
     getAccessibilityMode(patientID).then(res => {
       setAccessibilityMode(res[0].IfAccessibilityMode);
     });
-    getRecentWeight(patientID).then(res =>
-      setRecentWeight(res),
-    );
+    getRecentWeight(patientID).then(res => setRecentWeight(res));
   }, [isFocused]);
-
 
   if (accessibilityMode) {
     return (
@@ -55,8 +52,8 @@ export default function PatientWeightNavCard(): JSX.Element {
           <SingleLineChart
             data={weightData}
             unit={'lb'}
-            width={windowWidth*0.7}
-            height={windowHeight*0.18}
+            width={windowWidth * 0.7}
+            height={windowHeight * 0.18}
           />
         </View>
       </View>
