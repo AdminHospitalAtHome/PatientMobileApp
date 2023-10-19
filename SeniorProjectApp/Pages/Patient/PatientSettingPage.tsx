@@ -13,7 +13,7 @@ export default function PatientSettingPage(): JSX.Element {
 
   useEffect(() => {
     getAccessibilityMode(patientID).then(res =>
-      setMode(res[0].IfAccessibilityMode),
+      setMode(res),
     );
   }, [mode]);
 
