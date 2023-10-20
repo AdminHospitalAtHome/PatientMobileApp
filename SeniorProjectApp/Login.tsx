@@ -10,7 +10,7 @@ export default function Login({navigation}: {navigation: any}): JSX.Element {
   return (
     <View style={styles.container}>
       <Image
-        source={require('./Images/unionHealthLogo.png')}
+        source={require('./Images/newLogo.png')}
         style={styles.logo}
         resizeMethod={'auto'}
       />
