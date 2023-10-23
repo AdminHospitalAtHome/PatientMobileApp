@@ -13,9 +13,12 @@ import AddButtons from '../../../Components/AddButtons';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
+import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {PatientDetailStyles} from './Styles';
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
+  const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
+    useState(false);
   const [input, setInput] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
@@ -54,7 +57,7 @@ export default function PatientWeightPage(): JSX.Element {
       </View>
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setModalVisible}
+        setAutoModalVisible={setChooseDeviceModalVisible}
       />
 
       <InputManualModal
@@ -70,6 +73,12 @@ export default function PatientWeightPage(): JSX.Element {
           />
         }
       />
+
+      <ChooseDeviceModal
+        setModalVisible={setChooseDeviceModalVisible}
+        modalVisible={chooseDeviceModalVisible}
+      />
+
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}

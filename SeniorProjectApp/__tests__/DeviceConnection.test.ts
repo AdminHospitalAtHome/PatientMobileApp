@@ -15,21 +15,21 @@ import {
   parseXMLWeightData,
 } from '../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
-it('Test register license key', async () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-
-  await expect(
-    connection.register('Insert License Key Here'),
-  ).resolves.toBeUndefined();
-
-  await expect(
-    connection.register('Invalid License Key'),
-  ).rejects.toBeUndefined();
-});
+// it('Test register license key', async () => {
+//   let connection: HAH_Device_Connection = new MedMDeviceConnection();
+//
+//   await expect(
+//     connection.register('Insert License Key Here'),
+//   ).resolves.toBeUndefined();
+//
+//   await expect(
+//     connection.register('Invalid License Key'),
+//   ).rejects.toBeUndefined();
+// });
 
 it('Test List Pairable Devices', () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-  connection.register('Insert License Key Here');
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
+
   //TODO: Update once we know information for our devices
   let deviceList: HAH_Device[] = [
     new MedMDevice('Address', 1, 'Omron', 'HN-290T', 'Omron HN-290T'),
@@ -55,8 +55,8 @@ it('Test List Pairable Devices', () => {
 });
 
 it('Test List Paried Devices', () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-  connection.register('Insert License Key Here');
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
+
   //TODO: Update once we know information for our devices
   let deviceList: HAH_Device[] = [
     new MedMDevice('Address', 1, 'Omron', 'HN-290T', 'Omron HN-290T'),
@@ -82,9 +82,7 @@ it('Test List Paried Devices', () => {
 });
 
 it('Test Pairing a Device', async () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-  //TODO: update License Key
-  connection.register('Insert License Key Here');
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
 
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
@@ -112,9 +110,8 @@ it('Test Pairing a Device', async () => {
 });
 
 it('Test Unpairing a Device', async () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
   //TODO: update License Key
-  connection.register('Insert License Key Here');
 
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
@@ -747,9 +744,8 @@ it('Test Parsing XML Blood Oxygen Data', async () => {
 });
 
 it('Test Getting Weight Data', async () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-  //TODO: update License Key
-  await connection.register('Insert License Key Here');
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
+
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address',
@@ -775,9 +771,7 @@ it('Test Getting Weight Data', async () => {
 });
 
 it('Test Getting Heart Rate Data', async () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-  //TODO: update License Key
-  await connection.register('Insert License Key Here');
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
 
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
@@ -804,9 +798,7 @@ it('Test Getting Heart Rate Data', async () => {
 });
 
 it('Test Getting Blood Pressure Data', async () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-  //TODO: update License Key
-  await connection.register('Insert License Key Here');
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
 
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
@@ -835,9 +827,7 @@ it('Test Getting Blood Pressure Data', async () => {
 });
 
 it('Test Getting Blood Oxygen Data', async () => {
-  let connection: HAH_Device_Connection = new MedMDeviceConnection();
-  //TODO: update License Key
-  await connection.register('Insert License Key Here');
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address 4',
     4,

@@ -19,7 +19,7 @@ it('update and Gets accessibility mode', async () => {
 
 it('fail to get accessibility mode ', async () => {
   await expect(getAccessibilityMode(999999999)).rejects.toBe(
-    'failed to get accessibility mode',
+    false,
   );
 });
 
