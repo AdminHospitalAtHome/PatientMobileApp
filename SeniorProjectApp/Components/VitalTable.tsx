@@ -7,7 +7,7 @@ export default function VitalTable({
   vitalData,
 }: {
   columnTitles: string[];
-  vitalData: any;
+  vitalData: any[][];
 }): JSX.Element {
   return (
     <ScrollView style={styles.viewBorder}>

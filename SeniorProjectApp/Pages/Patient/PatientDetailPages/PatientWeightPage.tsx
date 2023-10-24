@@ -15,10 +15,12 @@ import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {PatientDetailStyles} from './Styles';
+import DataModal from '../../../Components/AutomaticInputs/DataModal';
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
     useState(false);
+  const [dataModalVisible, setDataModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
@@ -77,6 +79,11 @@ export default function PatientWeightPage(): JSX.Element {
       <ChooseDeviceModal
         setModalVisible={setChooseDeviceModalVisible}
         modalVisible={chooseDeviceModalVisible}
+        setDataModalVisible={setDataModalVisible}
+      />
+      <DataModal
+        dataModalVisible={dataModalVisible}
+        setDataModalVisible={setDataModalVisible}
       />
 
       {addSuccessVisible && (

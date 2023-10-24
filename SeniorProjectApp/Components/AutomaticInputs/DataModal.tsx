@@ -1,61 +1,44 @@
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
-import {
-  HAH_Device,
-  HAH_Device_Connection,
-  VitalType,
-} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
-import {MedMDeviceConnection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import React from 'react';
+import VitalTable from "../VitalTable";
 
-export default function ChooseDeviceModal({
-  setModalVisible,
-  modalVisible,
+export default function DataModal({
+  dataModalVisible,
   setDataModalVisible,
+    getVitalData,
+    getVitalColumns,
 }: {
-  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  modalVisible: boolean;
+  dataModalVisible: boolean;
   setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  getVitalData: () => any[][];
+  getVitalColumns: () => string[];
 }): JSX.Element {
-  const connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-  let device_name: string = '';
-  const [deviceName, setDeviceName] = useState('');
-
-  connection
-    .default_paried_device(VitalType.WEIGHT)
-    .then(res => {
-      setDeviceName(res.name);
-    })
-    .catch(() => setDeviceName('N/A'));
-
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
+      visible={dataModalVisible}
       onRequestClose={() => {
-        setModalVisible(!modalVisible);
+        setDataModalVisible(false);
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.labelText}>Get Data From Device</Text>
-          <View style={styles.textContainer}>
-            <Text style={styles.deviceLabelText}>Device: </Text>
-            <Text style={styles.text}>{deviceName}</Text>
-          </View>
+
           <View style={styles.editButtonContainer}>
             <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Change Device</Text>
+              <Text style={styles.buttonText}>Edit Data</Text>
             </TouchableOpacity>
           </View>
 
           <View style={[styles.buttonContainer, styles.BottomContainer]}>
             <TouchableOpacity
               style={[styles.button, styles.buttonBorder]}
-              onPress={() => setModalVisible(false)}>
+              onPress={() => setDataModalVisible(false)}>
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={yesOnPress}>
-              <Text style={styles.buttonText}>Yes</Text>
+            <TouchableOpacity style={styles.button} onPress={addOnPress}>
+              <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -63,9 +46,8 @@ export default function ChooseDeviceModal({
     </Modal>
   );
 
-  function yesOnPress(): void {
-    setModalVisible(false);
-    setDataModalVisible(true);
+  function addOnPress(): void {
+    setDataModalVisible(false);
   }
 }
 
@@ -93,25 +75,15 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: 'black',
-    fontSize: 25,
-    marginBottom: 10,
+    fontSize: 20,
   },
   textContainer: {
     flexShrink: 0,
     flexDirection: 'column',
     alignItems: 'flex-start',
-    marginRight: 'auto',
-    marginLeft: 5,
   },
   text: {
-    color: 'black',
-    fontSize: 20,
-  },
-
-  deviceLabelText: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -127,9 +99,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#c87525',
     padding: 5,
     borderRadius: 10,
-    marginTop: 15,
+
     justifyContent: 'space-around',
   },
+
   button: {
     flex: 1,
   },
@@ -140,7 +113,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
   },
-
 
   buttonBorder: {
     borderColor: 'white',

@@ -82,7 +82,7 @@ export default function SingleLineChart({
               strArr = tooltipPos.value.split('\n');
             }
             let flag: number = 0;
-            console.log(chartData);
+            // console.log(chartData);
             let largest: number;
             largest = Math.max(...chartData);
             let smallest: number;
@@ -119,7 +119,7 @@ export default function SingleLineChart({
             ) : null;
           }}
           onDataPointClick={data => {
-            console.log(dates[data.index]);
+            // console.log(dates[data.index]);
             let isSamePoint =
               tooltipPos.x === data.x && tooltipPos.y === data.y;
             isSamePoint
