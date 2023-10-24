@@ -1,6 +1,7 @@
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, View, Text} from 'react-native';
 import React from 'react';
-import {Row, Rows, Table} from 'react-native-table-component';
+import {Row, Rows, Table} from 'react-native-reanimated-table';
+
 
 export default function VitalTable({
   columnTitles,
@@ -9,6 +10,13 @@ export default function VitalTable({
   columnTitles: string[];
   vitalData: any[][];
 }): JSX.Element {
+  if (vitalData === null || vitalData.length === 0) {
+    return (
+      <View style={styles.textContainer}>
+        <Text style={styles.noDataText}>No Data...</Text>
+      </View>
+    );
+  }
   return (
     <ScrollView style={styles.viewBorder}>
       <Table borderStyle={styles.tableBorder}>
@@ -46,4 +54,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 5,
     borderColor: '#ba4618',
   },
+  noDataText: {
+    color: 'black',
+    fontSize: 20,
+  },
+  textContainer:{
+    alignItems: 'center',
+
+  }
+
 });

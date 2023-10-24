@@ -1,12 +1,12 @@
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import VitalTable from "../VitalTable";
+import VitalTable from '../VitalTable';
 
 export default function DataModal({
   dataModalVisible,
   setDataModalVisible,
-    getVitalData,
-    getVitalColumns,
+  getVitalData,
+  getVitalColumns,
 }: {
   dataModalVisible: boolean;
   setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +24,10 @@ export default function DataModal({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.labelText}>Get Data From Device</Text>
+          <VitalTable
+            columnTitles={getVitalColumns()}
+            vitalData={getVitalData()}
+          />
 
           <View style={styles.editButtonContainer}>
             <TouchableOpacity style={styles.button}>

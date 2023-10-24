@@ -44,20 +44,18 @@ export function getWeightCall(
 }
 
 // Returns a promise with best case scenario [Most Recent, Second Most Recent]
-export function getRecentWeight(patientID: number): Promise<number[] | string> {
-  return new Promise((resolve, reject) => {
+export function getRecentWeight(patientID: number): Promise<string> {
+  return new Promise(resolve => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentWeight?patientID=${patientID}`,
     )
       .then(res => res.json())
       .then(output => {
         if (output.length === 1) {
-          resolve(output[0].WeightInPounds);
+          resolve(`${output[0].WeightInPounds} lbs`);
         } else {
-          reject('N/A');
+          resolve('N/A');
         }
       });
   });
 }
-
-export function weightTrend(data: number[] | String): Promise<void> {}
