@@ -7,11 +7,13 @@ export default function DataModal({
   setDataModalVisible,
   getVitalData,
   getVitalColumns,
+  addDataFunction,
 }: {
   dataModalVisible: boolean;
   setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   getVitalData: () => any[][];
   getVitalColumns: () => string[];
+  addDataFunction: () => void;
 }): JSX.Element {
   return (
     <Modal
@@ -61,6 +63,7 @@ export default function DataModal({
 
   function addOnPress(): void {
     setDataModalVisible(false);
+    addDataFunction();
   }
 }
 
