@@ -47,9 +47,7 @@ export function parseBloodOxygenData(bloodOxygenJson: any) {
   return bloodOxygenArr;
 }
 
-export function getRecentBloodOxygen(
-  patientID: number,
-): Promise<number[] | string> {
+export function getRecentBloodOxygen(patientID: number): Promise<string> {
   return new Promise((resolve, reject) => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentBloodOxygen?patientID=${patientID}`,
@@ -57,9 +55,9 @@ export function getRecentBloodOxygen(
       .then(res => res.json())
       .then(output => {
         if (output.length === 1) {
-          resolve(output[0].BloodOxygenLevelInPercentage);
+          resolve(`${output[0].BloodOxygenLevelInPercentage}%`);
         } else {
-          reject('N/A');
+          resolve('N/A');
         }
       });
   });

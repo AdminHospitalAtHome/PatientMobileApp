@@ -85,7 +85,11 @@ export default function PatientWeightPage(): JSX.Element {
         dataModalVisible={dataModalVisible}
         setDataModalVisible={setDataModalVisible}
         getVitalColumns={() => ['Date', 'Weight']}
-        getVitalData={() => [[]]}
+        getVitalData={() => [
+          ['10-24-2023\n3:45PM', '201 lbs'],
+          ['10-24-2023\n3:45PM', '201 lbs'],
+          ['10-24-2023\n3:45PM', '201 lbs'],
+        ]}
       />
 
       {addSuccessVisible && (

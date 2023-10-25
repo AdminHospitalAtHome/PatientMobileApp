@@ -51,8 +51,8 @@ function parseBloodPressureData(bloodPressureJSON: any) {
 
 export function getRecentBloodPressure(
   patientID: number,
-): Promise<number[] | string> {
-  return new Promise((resolve, reject) => {
+): Promise<string[]> {
+  return new Promise((resolve) => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentBloodPressure?patientID=${patientID}`,
     )
@@ -60,11 +60,11 @@ export function getRecentBloodPressure(
       .then(output => {
         if (output.length === 1) {
           resolve([
-            output[0].SystolicBloodPressureInMmHg,
-            output[0].DiastolicBloodPressureInMmHg,
+            `${output[0].SystolicBloodPressureInMmHg}`,
+            `${output[0].DiastolicBloodPressureInMmHg}`,
           ]);
         } else {
-          reject('N/A');
+          resolve(['N/A', 'N/A']);
         }
       });
   });

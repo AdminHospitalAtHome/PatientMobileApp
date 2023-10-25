@@ -36,19 +36,17 @@ export function getHeartRate(
     .then(json => parseHeartRateData(json));
 }
 
-export async function getRecentHeartRate(
-  patientID: number,
-): Promise<{mode: string} | string> {
-  return new Promise((resolve, reject) => {
+export async function getRecentHeartRate(patientID: number): Promise<string> {
+  return new Promise(resolve => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentHeartRate?patientID=${patientID}`,
     )
       .then(response => response.json())
       .then(json => {
         if (json.length === 1) {
-          resolve(json[0].HeartRateInBPM);
+          resolve(`${json[0].HeartRateInBPM}`);
         } else {
-          reject('N/A');
+          resolve('N/A');
         }
       });
   });
@@ -56,7 +54,7 @@ export async function getRecentHeartRate(
 
 export function parseHeartRateData(heartRateJson: any) {
   let heartRateArr = [];
-  for (var i = 0; i < heartRateJson.length; i++) {
+  for (let i = 0; i < heartRateJson.length; i++) {
     heartRateArr.push([
       timeTableParser(heartRateJson[i].DateTimeTaken),
       heartRateJson[i].HeartRateInBPM,

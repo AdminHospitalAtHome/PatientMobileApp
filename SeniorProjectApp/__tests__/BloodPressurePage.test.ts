@@ -51,10 +51,11 @@ it('Get Recent Blood Pressure', async () => {
     expect(output).toBe('add successful');
   });
   await expect(getRecentBloodPressure(300000001)).resolves.toStrictEqual([
-    121, 81,
+    '121',
+    '81',
   ]);
 });
 
 it('Get Recent Blood Pressure Failure', async () => {
-  await expect(getRecentBloodPressure(999999999)).rejects.toEqual('N/A');
+  await expect(getRecentBloodPressure(999999999)).resolves.toStrictEqual(['N/A', 'N/A']);
 });

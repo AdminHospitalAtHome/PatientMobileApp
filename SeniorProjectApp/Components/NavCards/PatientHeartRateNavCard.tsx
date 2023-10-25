@@ -9,18 +9,13 @@ import {
   getHeartRate,
   getRecentHeartRate,
 } from '../../BackEndFunctionCall/heartRateFunction';
-import {
-  getRecentWeight,
-  getWeightCall,
-} from '../../BackEndFunctionCall/weightFunction';
-
 const patientID = 100000001;
 export default function PatientHeartRateNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [heartRateData, setHeartRateData] = useState(null);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const [recentHeartRate, setRecentHeartRate] = useState(null);
+  const [recentHeartRate, setRecentHeartRate] = useState('N/A');
   const isFocused = useIsFocused();
 
   const windowWidth: number = Dimensions.get('window').width;
@@ -36,7 +31,7 @@ export default function PatientHeartRateNavCard(): JSX.Element {
       .catch(res => {
         setAccessibilityMode(res);
       });
-    getRecentHeartRate(patientID).then(res => setRecentHeartRate(res));
+    getRecentHeartRate(patientID).then(setRecentHeartRate);
   }, [isFocused]);
 
   if (accessibilityMode) {

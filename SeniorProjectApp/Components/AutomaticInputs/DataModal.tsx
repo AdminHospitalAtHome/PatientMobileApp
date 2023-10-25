@@ -24,10 +24,19 @@ export default function DataModal({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.labelText}>Get Data From Device</Text>
-          <VitalTable
-            columnTitles={getVitalColumns()}
-            vitalData={getVitalData()}
-          />
+          <View
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              marginTop: 10,
+              marginBottom: 15,
+              alignItems: 'center',
+            }}>
+            <VitalTable
+              columnTitles={getVitalColumns()}
+              vitalData={getVitalData()}
+            />
+          </View>
 
           <View style={styles.editButtonContainer}>
             <TouchableOpacity style={styles.button}>
@@ -63,6 +72,8 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    minHeight: '40%',
+    flexDirection: 'column',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
