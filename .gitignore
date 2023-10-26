@@ -6,3 +6,6 @@
 .idea/2023-2024seniorProjectTest.iml
 
 node_modules/
+.idea/*
+.vscode/*
+.vscode/
