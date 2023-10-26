@@ -11,7 +11,9 @@ export default ({navigation}: {navigation: any}) => (
     <TouchableOpacity style={styles.labelContainer}>
       <Text style={styles.labelText}>Home</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.labelContainer}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('patientChatPage')}
+      style={styles.labelContainer}>
       <Text style={styles.labelText}>Chat</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.labelContainer}>

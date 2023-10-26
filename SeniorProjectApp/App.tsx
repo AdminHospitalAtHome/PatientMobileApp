@@ -4,6 +4,8 @@
  *
  * @format
  */
+import ChatPage from './Pages/ChatPage';
+
 <script src="http://locralhost:8097" />;
 
 import React from 'react';
@@ -49,6 +51,11 @@ function App(): JSX.Element {
           name={'patientHeartRatePage'}
           component={PatientHeartRatePage}
           options={{title: 'My Heart Rate'}}
+        />
+        <Stack.Screen
+          name={'patientChatPage'}
+          component={ChatPage}
+          options={{title: 'Patient Chat'}}
         />
         <Stack.Screen
           name={'patientBloodOxygenPage'}
