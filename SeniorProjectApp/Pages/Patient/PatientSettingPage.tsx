@@ -6,10 +6,14 @@ import {
   getAccessibilityMode,
   setAccessibilityMode,
 } from '../../BackEndFunctionCall/userInfo';
-import MenuNav from "../../Components/NavCards/MenuNav";
+import MenuNav from '../../Components/NavCards/MenuNav';
 
 const patientID = 100000001;
-export default function PatientSettingPage(navigation: any): JSX.Element {
+export default function PatientSettingPage({
+  navigation,
+}: {
+  navigation: any;
+}): JSX.Element {
   const [mode, setMode] = useState(false);
 
   useEffect(() => {
@@ -31,9 +35,14 @@ export default function PatientSettingPage(navigation: any): JSX.Element {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
-      <View style={{flex: 1}}>
-        <MenuNav navigation={navigation}/>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('deviceSettingsPage')}>
+          <Text style={styles.text}>Devices</Text>
+          <View style={styles.switchGroup}>
+            <Text>click</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -64,6 +73,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black',
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 });

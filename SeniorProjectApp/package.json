@@ -14,6 +14,7 @@
     "@azure/communication-common": "^1.1.0",
     "@azure/communication-identity": "^1.2.0",
     "@azure/communication-signaling": "^1.0.0-beta.11",
+    "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "axios": "^1.5.1",
