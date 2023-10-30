@@ -34,9 +34,6 @@ export default function PatientMainPage({
           </TouchableOpacity>
         </ScrollView>
       </View>
-      <View style={{flex: 1}}>
-        <MenuNav navigation={navigation} />
-      </View>
     </View>
   );
 }

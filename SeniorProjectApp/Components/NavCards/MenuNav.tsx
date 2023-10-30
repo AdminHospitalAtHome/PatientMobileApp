@@ -6,26 +6,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-export default ({navigation}: {navigation: any}) => (
-  <View style={styles.menuContainer}>
-    <TouchableOpacity style={styles.labelContainer}>
-      <Text style={styles.labelText}>Home</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={() => navigation.navigate('patientChatPage')}
-      style={styles.labelContainer}>
-      <Text style={styles.labelText}>Chat</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.labelContainer}>
-      <Text style={styles.labelText}>Other</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.labelContainer}
-      onPress={() => navigation.navigate('patientSettingPage')}>
-      <Text style={styles.labelText}>Setting</Text>
-    </TouchableOpacity>
-  </View>
-);
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import PatientMainPage from '../../Pages/Patient/PatientMainPage';
+import ChatPage from '../../Pages/ChatPage';
+import PatientSettingPage from '../../Pages/Patient/PatientSettingPage';
+
+export default function MenuNav(): JSX.Element {
+  const Tab = createBottomTabNavigator();
+  return (
+      <Tab.Navigator screenOptions={{headerShown: false}}>
+        <Tab.Screen name={'home'} component={PatientMainPage} />
+        <Tab.Screen name={'chat'} component={ChatPage} />
+        <Tab.Screen name={'settings'} component={PatientSettingPage} />
+      </Tab.Navigator>
+  );
+}
+
 
 const styles = StyleSheet.create({
   menuContainer: {
