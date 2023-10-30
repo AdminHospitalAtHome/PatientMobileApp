@@ -29,7 +29,7 @@ export default function SingleLineChart({
   const dates: number[] = [];
 
   if (data) {
-    data.forEach((i): void => {
+    data.forEach((i: any): void => {
       chartData.push(i[1]);
       dates.push(i[0]);
     });
