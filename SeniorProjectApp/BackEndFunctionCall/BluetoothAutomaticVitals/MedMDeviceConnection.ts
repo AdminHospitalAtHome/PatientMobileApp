@@ -1,7 +1,12 @@
 import {HAH_Device, HAH_Device_Connection, VitalType} from './DeviceConnection';
 import {XMLParser} from 'fast-xml-parser';
+import {NativeModules} from "react-native";
+
+const {MedMDeviceManager} = NativeModules;
 
 export class MedMDeviceConnection implements HAH_Device_Connection {
+
+
   private static instance: MedMDeviceConnection;
 
   public static getInstance(): HAH_Device_Connection {
