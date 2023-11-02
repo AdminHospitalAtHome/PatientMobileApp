@@ -8,6 +8,7 @@ export interface HAH_Device_Connection {
     id: number,
     parse: (xml: string) => Promise<Record<string, any>[]>,
   ) => Promise<Record<string, any>[]>;
+  startDeviceScan: () => void;
 }
 
 export interface HAH_Device {

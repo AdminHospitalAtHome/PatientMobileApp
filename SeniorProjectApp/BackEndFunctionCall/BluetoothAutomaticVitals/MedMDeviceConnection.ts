@@ -14,11 +14,20 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
       MedMDeviceConnection.instance = new MedMDeviceConnection();
     }
 
+    MedMDeviceManager.testMedM().then(res => console.log(res));
+
     return MedMDeviceConnection.instance;
   }
 
   private constructor() {
     //TODO: REGISTER HERE
+    MedMDeviceManager.init();
+
+  }
+
+  public startDeviceScan(): void {
+
+    MedMDeviceManager.startDeviceScan();
   }
 
   pairable_device_list(): HAH_Device[] {
