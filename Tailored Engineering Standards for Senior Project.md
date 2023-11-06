@@ -3,15 +3,15 @@ NOTE: All Quotes are pulled from Kent Beck's book titled "Extreme Programing Exp
 # 6.4.2 Stakeholder Needs and Requirements Definition process
 ## 1. Prepare for Stakeholder Needs and Requirements Definition
 ### a. Identify the stakeholders who have an interest in the software system throughout its lifecycle.
-Outcome: a
+Outcome: a \n
 Implementation: The XP way to implment identification of stakeholders is through "Real Customer Interaction". As a developer you are not going to know all the potentiall people that could be affected by your software, but your customer knows their buisness and thus knows who the stakeholders will be.
 
 ### b. Define the stakeholder needs and requirements definition strategy.
-Outcome: d, e, g
+Outcome: d, e, g \n
 Implementation: The XP way to implement a strategy of defining stakeholder needs and requirments is to get the customer and the stakeholders they identify integrated with the development team as quickly as possible. Once they are integrated, you create will be able to come up with stories that everyone agrees on need to be added to the system. Then by using weekly cicles you can address stakeholder intrests week to week picking what people agree to be the most important thing right now, rather than trying to get people to agree whether over which features will be more imporant to another a year from now.
 
 ### c. Identify and plan for the necessary enabling systems or services needed to support stakeholder needs and requirements definition.
-Outcome: c, h
+Outcome: c, h \n
 Implementation: The XP way to identify or plan for nessicary enabling systems or services you will is to wait until you are actually implmeneting it. While you will get an idea of the rough types of enabling systems you will need when creating stories with the customer, you will not actually plan for how you will get them until you need them because of the process of incremental design. When the book says "Strive to make the design of the system an excelent fit for the needs of the system that day," this includes not worrying about how you will get systems until you need them because they are not needed to fit the needs of the system that day.
 
 ### d. Obtain or acquire acess to the enabling systems or services to be used.
