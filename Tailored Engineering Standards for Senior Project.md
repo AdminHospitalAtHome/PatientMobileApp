@@ -3,7 +3,7 @@ NOTE: All Quotes are pulled from Kent Beck's book titled "Extreme Programing Exp
 # 6.4.2 Stakeholder Needs and Requirements Definition process
 ## 1. Prepare for Stakeholder Needs and Requirements Definition
 ### a. Identify the stakeholders who have an interest in the software system throughout its lifecycle.
-Outcome: a \n
+Outcome: a <br>
 Implementation: The XP way to implment identification of stakeholders is through "Real Customer Interaction". As a developer you are not going to know all the potentiall people that could be affected by your software, but your customer knows their buisness and thus knows who the stakeholders will be.
 
 ### b. Define the stakeholder needs and requirements definition strategy.
