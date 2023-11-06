@@ -226,15 +226,23 @@ Outcome: j <br>
 Implementation: Stories are “customer-visible functionality” and can be used as a guide to select key artifacts and information items. Continuous integration ensures program is always builded and tested, which also provides the key artifacts and information items for baseline.
 
 
-
-
-
 # 6.4.5 Design Definition process
 ## 1. Prepare for software system design definition
 ### a. Define the design definition strategy, consistent with the selected life cycle model and anticpated design artifacts.
+Outcome: a <br>
+Implementation: In XP, the most you should design at the outset of the project is in choosing a analogy that the rest of your design for the project should focus on. For our team we went with the a '3-layer architecture' analogy. This is backed up by Beck who say's to "invest in the desing everyday." Your strategy thus is to wait until the "last responsible moment" to design each part of your system.
+
 ### b. Select and prioritize design principles and design characteristics.
+Outcome: a <br>
+Implementation: In XP, rather than selecting from a wide array design principles and characterstics at the beginning of your project and always working towards them, you instead focus mainly on alwasy creating a system that is "Loosely coupled" and "highly cohesive." Throughout your incremental development you work to make sure that you are following these principles and know you are following them if your test are easy to write because as Beck says "If it's hard to write a test, it's a signal that you have a design promblem."
+
 ### c. Identify and plan for the necessary enabling systems or services needed to support design definition.
+Outcome: c, g <br>
+Implementation: In XP, you do not plan what enabling systems or services you need to support your design definition in advance. Instead when you are assigned a story as a part of the weekly cycle, you find the best tool for the job and make it work. In the event that it would not cleanly fit into your code in a way that could easily be substitute, abstract out the enabling systems through use of interfaces in the case of using external SDKs or web services.
+
 ### d. Obtain or acquire access to the enabling systems or services to be used.
+Outcome: g <br>
+Implementation:
 
 ## 2. Establish designs related to each software system element.
 ### a. Transform architectural and design characteristics into the design of software system elements.
