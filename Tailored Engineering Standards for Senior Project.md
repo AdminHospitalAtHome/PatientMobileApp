@@ -1,37 +1,92 @@
+NOTE: All Quotes are pulled from Kent Beck's book titled "Extreme Programing Explained: Embrace Change"
+
 # 6.4.2 Stakeholder Needs and Requirements Definition process
 ## 1. Prepare for Stakeholder Needs and Requirements Definition
 ### a. Identify the stakeholders who have an interest in the software system throughout its lifecycle.
+Outcome: a
+Implementation: The XP way to implment identification of stakeholders is through "Real Customer Interaction". As a developer you are not going to know all the potentiall people that could be affected by your software, but your customer knows their buisness and thus knows who the stakeholders will be.
+
 ### b. Define the stakeholder needs and requirements definition strategy.
+Outcome: d, e, g
+Implementation: The XP way to implement a strategy of defining stakeholder needs and requirments is to get the customer and the stakeholders they identify integrated with the development team as quickly as possible. Once they are integrated, you create will be able to come up with stories that everyone agrees on need to be added to the system. Then by using weekly cicles you can address stakeholder intrests week to week picking what people agree to be the most important thing right now, rather than trying to get people to agree whether over which features will be more imporant to another a year from now.
+
 ### c. Identify and plan for the necessary enabling systems or services needed to support stakeholder needs and requirements definition.
+Outcome: c, h
+Implementation: The XP way to identify or plan for nessicary enabling systems or services you will is to wait until you are actually implmeneting it. While you will get an idea of the rough types of enabling systems you will need when creating stories with the customer, you will not actually plan for how you will get them until you need them because of the process of incremental design. When the book says "Strive to make the design of the system an excelent fit for the needs of the system that day," this includes not worrying about how you will get systems until you need them because they are not needed to fit the needs of the system that day.
+
 ### d. Obtain or acquire acess to the enabling systems or services to be used.
+Outcome: h
+Implementation: Continuing on my last point, the time to obtain access to enabling systems or services is when they are needed. Since your understanding of what your program will need will improve overtime, you could end up wasting your time getting access to a system that it turns out will not fit your needs when it comes time to integrate it. This is eximplified when Beck's statement that "the most effective time to design is in the light of experience" because you can not choose what systems you will use without in some way constraining or affecting your future design.
 
 ## 2. Define Stakeholder Needs
 ### a. Define Context of use within the concept of operations and the preliminary life cycle concepts
+Outcome: b
+Implementation: The XP way to determine the environment, or context, in which your software will be used goes back to what Beck calls "Real Customer Interaction." The stakeholders know best how and where the software will be used so why not just communicate with them. It is even better if you can spend time with them perhaps even shadowing them for a day or looking at how thier current process works. In our project we were able to do this being being shown how they currently moniter patients.
+
 ### b. Identify stakeholder needs.
+Outcome: d
+Implementation: In XP, rather than interviewing seperate stakeholders for their needs in a tradditional sense, you would instead sit down with your stakeholders, or users, and have them help write stories. This replaces the tradional needs and has the customer picking each thing they want the software to do.
+
 ### c. Prioritize and down-select needs
+Outcome: e
+Implementation: In XP, rather than trying to decide what stories (a combination in a sense of needs and features) are most important, you let the client prioritize them slowly overtime by using weekly cycles in which "Customers pick a week's worth of stories to implement."
+
 ### d. Define the stakeholder needs and rationale.
+Outcome: d
+Implementation: Continuing what I previosly stated in my answer to (b), defining the needs comes at the same point as identifying them as a customer will tell you an issue they are having and why. Then, you work with them to write it a story that solves the need.
+
 
 ## 3. Develope the operational concept and other lifce cycle concepts.
 ### a. Define a representative set of scenarios to identify the required capabilities that correspond to anticipated operational and other life cycle concepts.
+Outcome: b, c, d
+Implementation: In XP, rather than trying to define a set of representative scenarios to identify required capabilites, you involve the customer on the team and then work with them to understand the REAL scenarios that the system will be used in. When you tryi to identify representative scenarios and operational concepts, you are acting as a 'proxy' customer which Beck says "leads to waste as you develop features that aren't used."
+
 ### b. Identify the factors affecting interactions between users and the system
+Outcome: c
+Implementation: In XP, you identify factors that will affect the interactions between the user and system not only through hearing and expereinceing them from the customer through "Real Customer Integration," but also through the value of "Respect." As Beck says "Every person whose life is touched by software development has equal value as a human being." Just as Beck talks about XPs focus on respecting your team mates and having compassion towards them, you need to do the same for the users of your system and take factors that could negativly impact the interaction between users an the system seriously.
 
 ## 4. Transform stakeholder needs into stakeholder requirements.
-### a. Identify the ocntraints on a system solution.
+### a. Identify the constraints on a system solution.
+Outcome: c
+Implementation: Rather than trying to focus on all constraints at the beginning of software developemnt, XP two ways of going about this. If it is a major constraint such as the software needs to integrate with an existing system, that would be identified and written up as a story. This is done with the customer, or user, as Beck says "Users on an XP team help write and pick stories." In the event that it is a more minor constraint that is not very visible to the user, rather than trying to identify them at the beginning, use incremental design where you wait to identify or plan for it until it is the right time to do so.
+
 ### b. Identify the stakeholder requirements and fucntions that relate to critical quality characteristics, such as assurance, safety, security, environment, or health.
+Outcome: e
+Implementation: Just as with identifying needs, identifying requiements is done through a process of "Real Customer Involvment" in which you work with the real users of the system to create stories. By having users write stories, they will be identifying the requirments that are related to quality such as "Complies with HIPPA." It is all about remembering that your cusotmer is the domain expert, not you.
+
 ### c. Define Stakeholder requirements, comsistent with life cycle concepts, scenarios, interactions, constraints, and critical quality characteristics.
+Outcome: e, g, i
+Implementation: Similar to my what I discussed with the needs, in XP, having the user "write and pick stories" with you will mean that the process of identification and definition are combined into one single step that encompasses defining what the system will need to be able to do via "customer-visible functionality."
 
 ## 5. Analyze stakeholder requirements
 ### a. Analyze the complete set of stakeholder requirements
+Outcome: e
+Implementation: In XP, rather than analyzing all the stakeholder requiremnets at one point in time, you identify issues and the requiremnents required to complete stories at quartly and weekly cycle meetings. At quarterly meetings, you can "identify bottlenecks" then at weekly meetings when a client picks what stories they want implemented that week, you work with them to "Break the stories into tasks" which acts as analyzing the stakeholder requirements.
+
 ### b. Define critical performance measures that enable the assessment of technical achievment.
+Outcome: f
+Implementation: In XP, defining critical performance measures is done through XPs approach to testing, in addition to autiomated test, when a customer assignes stories each week, they will give you what they believe is a measure of if the story is done to thier satisfaction that you can then test against. This customer centric testing approach means they are defining the perfomance measures with your assitance.
+
 ### c. Feed back the analyzed requirements to applicable stakeholder to validate that their needs and expectations have been adequately captured and expressed.
+Outcome: g
+Implementation: By making the collection and analysis of requiremnets be done with the customer when they "write and pick stories" and then "pick a week's worth of stories," you do not have to return to your stakeholder to ensure their needs and expectations are met, becuase they chose them wrote them with you.
+
 ### d. Resolve stakeholder requirements issues.
+Outcome: g
+Implementation: Continuing on my previous points, in XP, if there are any requirments issues, they will be brought up by either you or the stakeholder at the time of writing or when the stakeholder is assigning stories for that week. If for example they say to do something that is not posisble, you use Beck's value of "communication" to work through the problem.
 
 ## 6. Manage the stakeholder needs and requirments definiton.
 ### a. Obtain explicit agreement with designated stakeholders on the stakeholder requirements.
+Outcome: g
+Implementation: In XP, you get explicit agreement with the stakeholder about your requirements when both when you create stories with them and when they assign them at "Weekly Cycle" meetings. When you are writing a story with your stakeholder, they are activly involved in the process and should agree to each story before moving on. Then, when the stakeholder "picks a weeks worth of stories" you work with them to agree upon everything that story entails.
+
 ### b. Maintain traceability of stakeholder needs and requirements.
+Outcome: i
+Implementation: Because XP substitutes having indivusal needs and requirments with stories, rather than worrying about tracing needs and requiremetns together, you simply keep the stories visible on a "frequently-passed wall." In the event that you have an excceptionaly large system with many stakeholders, you could write the name of the stakeholder for which each story should be traced to on the story card.
+
 ### c. Provide key artifacts and information items that have been selected for baselines.
-
-
+Outcome: f
+Implementation: Saving and providing key artifacts and information items that have been previosly selected for baselines goes against the principles of XP as in a sense this is all just documentation and documentation "rapidly grows obselete." Instead in XP, you create stories with the client and as they are finished they are removed. There is no need to keep them as a baseline once they are created.
 
 # 6.4.4 Architecture Definition process
 ## 1. Prepare for architecture definition.
