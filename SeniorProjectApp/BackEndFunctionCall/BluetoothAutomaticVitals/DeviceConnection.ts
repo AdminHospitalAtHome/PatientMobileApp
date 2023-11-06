@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface HAH_Device_Connection {
   pairable_device_list: () => HAH_Device[]; //first string: id, second string: name
   paired_device_list: () => HAH_Device[]; //first string: id, second string: name
@@ -8,7 +10,11 @@ export interface HAH_Device_Connection {
     id: number,
     parse: (xml: string) => Promise<Record<string, any>[]>,
   ) => Promise<Record<string, any>[]>;
-  startDeviceScan: () => void;
+  startDeviceScan: (
+    setNewDeviceAvailable: React.Dispatch<React.SetStateAction<boolean>>,
+    newDeviceAvailable: boolean,
+  ) => void;
+  stopDeviceScan: () => Promise<Boolean>;
 }
 
 export interface HAH_Device {

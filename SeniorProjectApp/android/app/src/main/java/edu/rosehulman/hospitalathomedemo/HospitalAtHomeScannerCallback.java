@@ -5,13 +5,22 @@ import android.util.Log;
 import com.medm.devicekit.IDeviceDescription;
 import com.medm.devicekit.IScannerCallback;
 
+import java.util.Set;
+
 public class HospitalAtHomeScannerCallback  implements IScannerCallback {
+
+    private MedMDeviceManager deviceManager;
+
+    public HospitalAtHomeScannerCallback(MedMDeviceManager deviceManager) {
+        this.deviceManager = deviceManager;
+    }
+
     /**
      * @param iDeviceDescription
      */
     @Override
     public void onDeviceFound(IDeviceDescription iDeviceDescription) {
-        Log.d("MedMScannerCallback","Concrete: " + iDeviceDescription.getName());
+        deviceManager.addPairableDevice(iDeviceDescription);
     }
 
     /**

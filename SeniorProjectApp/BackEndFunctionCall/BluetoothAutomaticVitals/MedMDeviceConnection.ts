@@ -1,20 +1,18 @@
 import {HAH_Device, HAH_Device_Connection, VitalType} from './DeviceConnection';
 import {XMLParser} from 'fast-xml-parser';
-import {NativeModules} from "react-native";
+import {NativeModules} from 'react-native';
+import React from 'react';
 
 const {MedMDeviceManager} = NativeModules;
 
 export class MedMDeviceConnection implements HAH_Device_Connection {
-
-
   private static instance: MedMDeviceConnection;
+  //private pairableDevices = new Array<HAH_Device>();
 
   public static getInstance(): HAH_Device_Connection {
     if (!MedMDeviceConnection.instance) {
       MedMDeviceConnection.instance = new MedMDeviceConnection();
     }
-
-    MedMDeviceManager.testMedM().then(res => console.log(res));
 
     return MedMDeviceConnection.instance;
   }
@@ -22,15 +20,24 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   private constructor() {
     //TODO: REGISTER HERE
     MedMDeviceManager.init();
-
   }
 
-  public startDeviceScan(): void {
+  public startDeviceScan(
+    setNewDeviceAvailable: React.Dispatch<React.SetStateAction<boolean>>,
+    newDeviceAvailable: boolean,
+  ): void {
+    MedMDeviceManager.startDeviceScan(() => {
+      console.log('Device Callback Triggered');
+      setNewDeviceAvailable(!newDeviceAvailable);
+    });
+  }
 
-    MedMDeviceManager.startDeviceScan();
+  stopDeviceScan(): Promise<Boolean> {
+    return MedMDeviceManager.stopDeviceScan();
   }
 
   pairable_device_list(): HAH_Device[] {
+    console.log(MedMDeviceManager.pairableDeviceList());
     return [];
   }
 
