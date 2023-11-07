@@ -242,14 +242,29 @@ Implementation: In XP, you do not plan what enabling systems or services you nee
 
 ### d. Obtain or acquire access to the enabling systems or services to be used.
 Outcome: g <br>
-Implementation:
+Implementation: In XP, continuing on my previous note of not planning what enabling systems you need in advance, you wait to obtain or acquire access enabling systems until you are assigned that story. Since your design may vary in some sense depending on what enabling systems you choose or are given access to, I will repeat my earlier statment where I pointed to Beck's statement that "the most effective time to design is in the light of experience" because you can not choose what systems you will use without in some way constraining or affecting your future design. Even when abstracting out using interfaces and adapter patter, until you get a hold of an enabling system, you often don't know all the specific methods you will need until you get to work implementing it.
 
 ## 2. Establish designs related to each software system element.
 ### a. Transform architectural and design characteristics into the design of software system elements.
+Outcome: a <br>
+Implementation: In XP, You convert your charactersitics, such as how we use the metaphor of a 3-layer model, to the software system elements when you are assigned a story that needs it to be coverted. So if your story needs access to a database, you design the database and how it will work/be connected to when your story is in progress. This follows XP's as Beck says "to keep the design investment in porportion to the needs of the system so far." 
+
 ### b. Define and prepare or obtain the necessary design enablers.
+Outcome: c <br>
+Implementation: In XP, you wait to define or even prepare to obtain design enablers until you need them. So if the story you are doing that week needs a particular algorithm, get the algorithm when you work on the story. Don't try to find out how you will get it until then.
+
 ### c. Examine design alternatives and feasibility of implementation.
+Outcome: e <br>
+Implementation: In XP, rather than trying to look at design alternatives and thier feasibilty up front, when it comes time to design something, simply find the simplest way to do it that works and do it that way. This follows Beck's XP value of "Simplicity."
+
 ### d. Refine or define the interfaces among the software system elements and with external entities.
+Outcome: d <br>
+Implementation: In XP, you define the interface that the software will use to external systems when you are implementing the testcases. Rather than desiging interfaces first, you start by writing a test and then as Beck says, the "interface is designed to match the needs of the test."
+
 ### e. Establish the design artifacts.
+Outcome: f <br>
+Implementation: In, XP all, or nearly all, documentation should come from the tests so you should not be establishing design artifacts that will stay around forever and fall out of date. Beck explains that the reason for this is that "documentation of software is an example of a practice that violates mutual benifit." You should not slow down development now to record a bunch of information about your design that you then may not even use in the future, and even if you do want to use it in the future, it is likely to be out of date.
+
 
 ## 3. Assess alternatives for obtaining software system elements.
 ### a.	Determine technology required for each element composing the software system.
