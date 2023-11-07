@@ -251,11 +251,22 @@ Implementation:
 ### d. Refine or define the interfaces among the software system elements and with external entities.
 ### e. Establish the design artifacts.
 
-## 3. Asses alternatives for obtaining software system elements.
-### a. Determine technology required for each element composing the software system.
-### b. Identify candidate alternatives for the software system elements.
+## 3. Assess alternatives for obtaining software system elements.
+### a.	Determine technology required for each element composing the software system.
+Outcome: b <br>
+Implementation: An idea useful in the XP book for this task is to “do the simplest things that could possibly work”. Then developers improve through continuous feedback. Pair-programming can also help make help choosing suitable technologies since two people can help making better decisions.
+
+### b.	Identify candidate alternatives for the software system elements.
+Outcome: e <br>
+Implementation: This can be implemented through refactoring and continuous integration. The design is likely to improve over time and continuous integration can help produce a “short, clear feedback cycle”, which is beneficial for this task. In addition, simplicity is crucial to help avoid writing unnecessary code.
+
 ### c. Assess each candidate alternative against criteria developed from expected design characteristics and element requirements to determine suitability for the inteded application.
+Outcome: e <br>
+Implementation: Test-first programming is extremely useful here. Test-first programming helps to “clarify ideas” and “hold each other accountable to the team’s practices”. This ensures that the current code is suitable for intended application. 
+
 ### d. Choose the preferred alternatives among candidate design solutions for the software system elements.
+Outcome: e <br>
+Implementation: This can be done by pair-programming. When working together on decision making, better decisions tend to be made. In addition, continuous feedback allows the team to be on track. Test-first programming can also help to address “coupling and cohesion” and can detect problems before writing the actual code.
 
 ## 4. Manage the design.
 ### a. Capture the design and rationale.
