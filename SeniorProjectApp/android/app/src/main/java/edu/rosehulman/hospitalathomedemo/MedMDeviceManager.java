@@ -74,14 +74,14 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void deviceScanSetNewCallback(Callback newDeviceCallBack) {
+        this.newDeviceCallBack = newDeviceCallBack;
+    }
+
+    @ReactMethod
     public void pairableDeviceList(Promise promise){
-
-
-        if (pairableDevices.size() == 0) {
-            promise.resolve("");
-        } else {
-            promise.resolve(pairableDevices.get(0).toString());
-        }
+        Log.d("MedMDeviceManager", JsonParser.toJson(pairableDevices));
+        promise.resolve(JsonParser.toJson(pairableDevices));
 
     }
 
@@ -100,7 +100,7 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
     @ReactMethod
     public void init(){
         try {
-            MedMDeviceKit.init(context.getCurrentActivity().getApplication(),"");
+            MedMDeviceKit.init(context.getCurrentActivity().getApplication(),BuildConfig.SECRET);
         } catch(Exception e) {
             Log.e("MedMDeviceManager", e.toString());
         }

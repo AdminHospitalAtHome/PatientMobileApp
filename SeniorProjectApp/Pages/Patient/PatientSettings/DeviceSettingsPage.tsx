@@ -24,7 +24,9 @@ export default function DeviceSettingsPage(navigation: any): JSX.Element {
 
   useEffect(() => {
     // TODO: Fix Typescirpt error later
-    setPairableDevices(MedMDeviceConnection.getInstance().pairable_device_list);
+    MedMDeviceConnection.getInstance()
+      .pairable_device_list()
+      .then(setPairableDevices).catch(console.log);
   }, [newDeviceAvailable]);
 
   return (
@@ -65,7 +67,7 @@ export default function DeviceSettingsPage(navigation: any): JSX.Element {
       </TouchableOpacity>
       <Text style={{color: 'black'}}>Pariable Devices</Text>
       {pairableDevices.map((device: HAH_Device, index: number) => {
-        return <Text>{device.address}</Text>;
+        return <Text style={{color: 'black'}}>{device.name}</Text>;
       })}
     </View>
   );

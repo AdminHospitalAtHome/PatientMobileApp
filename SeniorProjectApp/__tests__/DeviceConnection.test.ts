@@ -32,19 +32,19 @@ it('Test List Pairable Devices', () => {
 
   //TODO: Update once we know information for our devices
   let deviceList: HAH_Device[] = [
-    new MedMDevice('Address', 1, 'Omron', 'HN-290T', 'Omron HN-290T'),
-    new MedMDevice('Address 2', 2, 'Omron', 'HEM-9200T', 'Omron HEM-9200T'),
-    new MedMDevice('Address 3', 3, 'Contec', 'PM10', 'Contec PM10'),
+    new MedMDevice('Address', '1', 'Omron', 'HN-290T', 'Omron HN-290T'),
+    new MedMDevice('Address 2', '2', 'Omron', 'HEM-9200T', 'Omron HEM-9200T'),
+    new MedMDevice('Address 3', '3', 'Contec', 'PM10', 'Contec PM10'),
     new MedMDevice(
       'Address 4',
-      4,
+      '4',
       'Nonin Medical',
       'The Wrist Ox2 3150',
       'Nonin Medical The Wrist Ox2 3150',
     ),
     new MedMDevice(
       'Address 5',
-      5,
+      '5',
       'MIR',
       'Spirobank Smart',
       'MIR Spirobank Smart',
@@ -59,19 +59,19 @@ it('Test List Paried Devices', () => {
 
   //TODO: Update once we know information for our devices
   let deviceList: HAH_Device[] = [
-    new MedMDevice('Address', 1, 'Omron', 'HN-290T', 'Omron HN-290T'),
-    new MedMDevice('Address 2', 2, 'Omron', 'HEM-9200T', 'Omron HEM-9200T'),
-    new MedMDevice('Address 3', 3, 'Contec', 'PM10', 'Contec PM10'),
+    new MedMDevice('Address', '1', 'Omron', 'HN-290T', 'Omron HN-290T'),
+    new MedMDevice('Address 2', '2', 'Omron', 'HEM-9200T', 'Omron HEM-9200T'),
+    new MedMDevice('Address 3', '3', 'Contec', 'PM10', 'Contec PM10'),
     new MedMDevice(
       'Address 4',
-      4,
+      '4',
       'Nonin Medical',
       'The Wrist Ox2 3150',
       'Nonin Medical The Wrist Ox2 3150',
     ),
     new MedMDevice(
       'Address 5',
-      5,
+      '5',
       'MIR',
       'Spirobank Smart',
       'MIR Spirobank Smart',
@@ -87,7 +87,7 @@ it('Test Pairing a Device', async () => {
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address',
-    1,
+    '1',
     'Omron',
     'HN-290T',
     'Omron HN-290T',
@@ -99,7 +99,7 @@ it('Test Pairing a Device', async () => {
 
   let sampleBadDevice: HAH_Device = new MedMDevice(
     'Bad Address',
-    9999,
+    '9999',
     'Omron',
     'HN-290T',
     'Omron HN-290T',
@@ -116,7 +116,7 @@ it('Test Unpairing a Device', async () => {
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address',
-    1,
+    '1',
     'Omron',
     'HN-290T',
     'Omron HN-290T',
@@ -130,7 +130,7 @@ it('Test Unpairing a Device', async () => {
 
   let sampleBadDevice: HAH_Device = new MedMDevice(
     'Bad Address',
-    9999,
+    '9999',
     'Omron',
     'HN-290T',
     'Omron HN-290T',
@@ -749,7 +749,7 @@ it('Test Getting Weight Data', async () => {
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address',
-    1,
+    '1',
     'Omron',
     'HN-290T',
     'Omron HN-290T',
@@ -776,7 +776,7 @@ it('Test Getting Heart Rate Data', async () => {
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address 2',
-    2,
+    '2',
     'Omron',
     'HEM-9200T',
     'Omron HEM-9200T',
@@ -803,7 +803,7 @@ it('Test Getting Blood Pressure Data', async () => {
   // TODO: update Address and ID
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address 2',
-    2,
+    '2',
     'Omron',
     'HEM-9200T',
     'Omron HEM-9200T',
@@ -830,7 +830,7 @@ it('Test Getting Blood Oxygen Data', async () => {
   let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
   let sampleGoodDevice: HAH_Device = new MedMDevice(
     'Address 4',
-    4,
+    '4',
     'Nonin Medical',
     'The Wrist Ox2 3150',
     'Nonin Medical The Wrist Ox2 3150',

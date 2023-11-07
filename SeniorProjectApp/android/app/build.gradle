@@ -68,6 +68,11 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+
+def apikeyPropertiesFile = rootProject.file("../../../apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -80,6 +85,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 7
         versionName "1.0.7"
+        buildConfigField("String", "SECRET",apikeyProperties['SECRET'])
     }
     signingConfigs {
         debug {

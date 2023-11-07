@@ -28,6 +28,10 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   ): void {
     MedMDeviceManager.startDeviceScan(() => {
       console.log('Device Callback Triggered');
+      MedMDeviceManager.deviceScanSetNewCallback(() => {
+        console.log('New Device Callback Triggered');
+        setNewDeviceAvailable(!newDeviceAvailable);
+      });
       setNewDeviceAvailable(!newDeviceAvailable);
     });
   }
@@ -36,19 +40,18 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     return MedMDeviceManager.stopDeviceScan();
   }
 
-  pairable_device_list(): HAH_Device[] {
-    console.log(MedMDeviceManager.pairableDeviceList());
-    return [];
+  pairable_device_list(): Promise<HAH_Device[]> {
+    return MedMDeviceManager.pairableDeviceList().then(res => parseDevicesJson(res));
   }
 
-  paired_device_list(): HAH_Device[] {
-    return [];
+  paired_device_list(): Promise<HAH_Device[]> {
+    return MedMDeviceManager.pairableDeviceList().then(res => res.json());
   }
 
   default_paried_device(vital: VitalType): Promise<HAH_Device> {
     return new Promise((resolve, reject) => {
       resolve(
-        new MedMDevice('Address', 1, 'Omron', 'HN-290T', 'Omron HN-290T'),
+        new MedMDevice('Address', '1', 'Omron', 'HN-290T', 'Omron HN-290T'),
       );
     });
   }
@@ -77,14 +80,14 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
 
 export class MedMDevice implements HAH_Device {
   address: string;
-  id: number;
+  id: string;
   manufacturer: string;
   modelName: string;
   name: string;
 
   constructor(
     address: string,
-    id: number,
+    id: string,
     manufacturer: string,
     modelName: string,
     name: string,
@@ -95,6 +98,30 @@ export class MedMDevice implements HAH_Device {
     this.modelName = modelName;
     this.name = name;
   }
+}
+
+export function parseDevicesJson(text: string): Promise<HAH_Device[]> {
+  return new Promise((resolve, reject) => {
+
+    let devices = new Array<HAH_Device>();
+    try {
+      let json = JSON.parse(text);
+      for (let i = 0; i < json.length; i++) {
+        let device = new MedMDevice(
+          json[i].address,
+          json[i].id,
+          json[i].manufacturer,
+          json[i].modelName,
+          json[i].name,
+        );
+        devices.push(device);
+      }
+      console.log(json);
+      resolve(devices);
+    } catch (e) {
+      reject(devices);
+    }
+  });
 }
 
 export function parseXMLWeightData(

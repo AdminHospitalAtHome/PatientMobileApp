@@ -1,8 +1,8 @@
 import React from "react";
 
 export interface HAH_Device_Connection {
-  pairable_device_list: () => HAH_Device[]; //first string: id, second string: name
-  paired_device_list: () => HAH_Device[]; //first string: id, second string: name
+  pairable_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
+  paired_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
   default_paried_device: (vital: VitalType) => Promise<HAH_Device>;
   pair_device: (device: HAH_Device) => Promise<void>;
   unpair_device: (device: HAH_Device) => Promise<void>;
@@ -17,9 +17,10 @@ export interface HAH_Device_Connection {
   stopDeviceScan: () => Promise<Boolean>;
 }
 
+
 export interface HAH_Device {
   address: string;
-  id: number;
+  id: string;
   manufacturer: string;
   modelName: string;
   name: string;
