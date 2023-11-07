@@ -269,8 +269,18 @@ Outcome: e <br>
 Implementation: This can be done by pair-programming. When working together on decision making, better decisions tend to be made. In addition, continuous feedback allows the team to be on track. Test-first programming can also help to address “coupling and cohesion” and can detect problems before writing the actual code.
 
 ## 4. Manage the design.
-### a. Capture the design and rationale.
-### b. Establish tracability between the detailed design elements, the system/software requirements, and the architectural entities of the software system architecture. 
-### c. Determine the status of the software system and element design.
-### d. Provide key artifacts and information items that have been selected for baselines.
+### a.	Capture the design and rationale.
+Outcome: f <br>
+Implementation: This can be done by creating stories using story cards. In XP book, Beck says that you can “put cards on a wall”, which is easy to reference when forgetting design and rationale. Pair-programming can also help reminding team members the current design and rationale and make sure they are spread across team. Continuous integration can be used to determine the system meets the requirement.
 
+### b.	Establish tracability between the detailed design elements, the system/software requirements, and the architectural entities of the software system architecture.
+Outcome: h <br>
+Implementation: Stories can be used to understand the requirements. Test-first programming can help “continuous testing” and every small piece of small functionality is tested. Pair programming can make sure the designed documents are shared across the team.
+
+### c.	 Determine the status of the software system and element design.
+Outcome: b, f <br>
+Implementation: Test-first programming can help determine the status before writing the actual code. If the test fails, this means there is something wrong with system and design. Continuous Integration helps getting immediate feedback on status of current system and design. “The longer you wait to integrate, the more it costs and the more unpredictable the cost becomes.”
+
+### d.	Provide key artifacts and information items that have been selected for baselines.
+Outcome: f <br>
+Implementation: Stories can be used as reference for key artifacts and information items. “Sorting the cards spatially conveys information quickly.” Test-first programming can ensure that these artifacts and information meet the baseline requirements.
