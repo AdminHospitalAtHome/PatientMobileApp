@@ -19,55 +19,56 @@ export default function DeviceSettingsPage(navigation: any): JSX.Element {
     new Array<HAH_Device>(),
   );
 
-  // alternates between true and false everytime a new device is found
-  const [newDeviceAvailable, setNewDeviceAvailable] = useState(false);
-
-  useEffect(() => {
-    // TODO: Fix Typescirpt error later
-    MedMDeviceConnection.getInstance()
-      .pairable_device_list()
-      .then(setPairableDevices).catch(console.log);
-  }, [newDeviceAvailable]);
-
   return (
-    <View>
-      <Text>Device Setting Page</Text>
+    <View style={styles.mainView}>
       <TouchableOpacity
+        style={styles.Button}
         onPress={() => {
           requestBluetoothScan();
         }}>
         <Text style={{color: 'black'}}>Grant bluetooth connection SCAN</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        style={styles.Button}
         onPress={() => {
           requestBluetoothConnect();
         }}>
         <Text style={{color: 'black'}}>Grant bluetooth connection Connect</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        style={styles.Button}
         onPress={() => {
           console.log('Start Scan');
           MedMDeviceConnection.getInstance().startDeviceScan(
-            setNewDeviceAvailable,
+            setPairableDevices,
           );
         }}>
         <Text style={{color: 'black'}}>Start Scaning for Device</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
+        style={styles.Button}
         onPress={() => {
           console.log('Stop Scan');
           MedMDeviceConnection.getInstance()
-            .stopDeviceScan()
+            .stopDeviceScan(setPairableDevices)
             .then(res =>
               console.log('Stopping Was Success? ' + res.toString()),
             );
         }}>
         <Text style={{color: 'black'}}>Stop device scan</Text>
       </TouchableOpacity>
-      <Text style={{color: 'black'}}>Pariable Devices</Text>
+
+      <Text style={{color: 'black'}}>Parable Devices</Text>
+
       {pairableDevices.map((device: HAH_Device, index: number) => {
-        return <Text style={{color: 'black'}}>{device.name}</Text>;
+        return (
+          <TouchableOpacity
+            style={styles.Device}
+            onPress={() => navigation.navigate('DevicePage')}>
+            <Text style={styles.text}>{'Pair to ' + device.name}</Text>
+          </TouchableOpacity>
+        );
       })}
     </View>
   );
@@ -120,3 +121,22 @@ const requestBluetoothConnect = async () => {
     console.warn(err);
   }
 };
+
+const styles = StyleSheet.create({
+  Button: {
+    backgroundColor: 'yellow',
+    margin: 10,
+    padding: 10,
+  },
+  mainView: {
+    margin: 10,
+  },
+    text:{
+      textAlign: 'center',
+    },
+  Device: {
+    backgroundColor: '#ba4618',
+    borderRadius: 10,
+    padding: 10,
+  },
+});

@@ -1,13 +1,22 @@
 import {HAH_Device, HAH_Device_Connection, VitalType} from './DeviceConnection';
 import {XMLParser} from 'fast-xml-parser';
-import {NativeModules} from 'react-native';
+import {
+  NativeModules,
+  NativeEventEmitter,
+  EmitterSubscription,
+} from 'react-native';
 import React from 'react';
 
 const {MedMDeviceManager} = NativeModules;
+const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
 
 export class MedMDeviceConnection implements HAH_Device_Connection {
   private static instance: MedMDeviceConnection;
   //private pairableDevices = new Array<HAH_Device>();
+  private newDeviceEventListiner: EmitterSubscription =
+    eventEmitter.addListener('New_Device', event => {
+      console.log('Event Running but not set yet.');
+    });
 
   public static getInstance(): HAH_Device_Connection {
     if (!MedMDeviceConnection.instance) {
@@ -23,25 +32,36 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   }
 
   public startDeviceScan(
-    setNewDeviceAvailable: React.Dispatch<React.SetStateAction<boolean>>,
-    newDeviceAvailable: boolean,
+    setPairableDevices: React.Dispatch<React.SetStateAction<HAH_Device[]>>,
   ): void {
-    MedMDeviceManager.startDeviceScan(() => {
-      console.log('Device Callback Triggered');
-      MedMDeviceManager.deviceScanSetNewCallback(() => {
-        console.log('New Device Callback Triggered');
-        setNewDeviceAvailable(!newDeviceAvailable);
-      });
-      setNewDeviceAvailable(!newDeviceAvailable);
-    });
+    this.newDeviceEventListiner.remove();
+    this.newDeviceEventListiner = eventEmitter.addListener(
+      'New_Device',
+      event => {
+        console.log('AAGHH');
+        console.log(parseDevicesJson(event.pairableDevices));
+        setPairableDevices(parseDevicesJson(event.pairableDevices));
+
+        console.log('Evnet Triggered');
+      },
+    );
+
+    MedMDeviceManager.startDeviceScan();
   }
 
-  stopDeviceScan(): Promise<Boolean> {
+  public stopDeviceScan(
+    setPairableDevices: React.Dispatch<React.SetStateAction<HAH_Device[]>>,
+  ): Promise<Boolean> {
+    setPairableDevices(new Array<HAH_Device>());
+    this.newDeviceEventListiner.remove();
     return MedMDeviceManager.stopDeviceScan();
   }
 
   pairable_device_list(): Promise<HAH_Device[]> {
-    return MedMDeviceManager.pairableDeviceList().then(res => parseDevicesJson(res));
+    console.log('get pairable devices');
+    return MedMDeviceManager.pairableDeviceList().then(res =>
+      parseDevicesJson(res),
+    );
   }
 
   paired_device_list(): Promise<HAH_Device[]> {
@@ -100,28 +120,21 @@ export class MedMDevice implements HAH_Device {
   }
 }
 
-export function parseDevicesJson(text: string): Promise<HAH_Device[]> {
-  return new Promise((resolve, reject) => {
-
-    let devices = new Array<HAH_Device>();
-    try {
-      let json = JSON.parse(text);
-      for (let i = 0; i < json.length; i++) {
-        let device = new MedMDevice(
-          json[i].address,
-          json[i].id,
-          json[i].manufacturer,
-          json[i].modelName,
-          json[i].name,
-        );
-        devices.push(device);
-      }
-      console.log(json);
-      resolve(devices);
-    } catch (e) {
-      reject(devices);
-    }
-  });
+export function parseDevicesJson(text: string): HAH_Device[] {
+  let devices = new Array<HAH_Device>();
+  let json = JSON.parse(text);
+  for (let i = 0; i < json.length; i++) {
+    let device = new MedMDevice(
+      json[i].address,
+      json[i].id,
+      json[i].manufacturer,
+      json[i].modelName,
+      json[i].name,
+    );
+    devices.push(device);
+  }
+  console.log(json);
+  return devices;
 }
 
 export function parseXMLWeightData(

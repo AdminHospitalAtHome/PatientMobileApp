@@ -1,4 +1,5 @@
 package edu.rosehulman.hospitalathomedemo;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
@@ -21,7 +22,11 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.medm.devicekit.*;
+
+import javax.annotation.Nullable;
 
 public class MedMDeviceManager extends ReactContextBaseJavaModule {
     private ReactApplicationContext context;
@@ -29,6 +34,8 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
 
     private Callback newDeviceCallBack = null;
     private ScannerStopToken stopToken = null;
+
+    private int newDeviceDetectedListeners = 0;
 
     MedMDeviceManager(ReactApplicationContext context) {
         super(context);
@@ -42,7 +49,7 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startDeviceScan(Callback newDeviceCallback) {
+    public void startDeviceScan() {
         Log.d("MedMDeviceManager", "Start Scan");
 
         if (MedMDeviceKit.isInitialized()) {
@@ -50,10 +57,12 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
         }
         MedMScanner scanner = MedMDeviceKit.getScanner();
         IScannerCallback callback = new HospitalAtHomeScannerCallback(this);
-        this.newDeviceCallBack = newDeviceCallback;
         scanner.setCallback(callback);
         IErrorCallback errorCallback = new HospitalAtHomeScannerIErrorCallback();
         scanner.setErrorCallback(errorCallback);
+
+
+
         stopToken = scanner.start();
     }
     public void addPairableDevice(IDeviceDescription iDeviceDescription) {
@@ -67,14 +76,30 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
         }
         if (!isIn) {
             pairableDevices.add(iDeviceDescription);
+            Log.d("MedMDeviceManagaer", iDeviceDescription.getAddress());
             Log.d("MedMDeviceManager", "New ADDED");
-            newDeviceCallBack.invoke();
+            Log.d("MedMDeviceManager", ""+pairableDevices.size());
+            WritableMap params= Arguments.createMap();
+            params.putString("pairableDevices", JsonParser.toJson(pairableDevices));
+            sendNewDeviceDetectedEvent(context, "New_Device", params);
         }
 
     }
 
+    private void sendNewDeviceDetectedEvent(ReactContext reactContext, String eventName, WritableMap params) {
+        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    }
+
+    @ReactMethod
+    public void addNewDeviceDetectedListener(String eventName) {
+        newDeviceDetectedListeners += 1;
+    }
+
+
+
     @ReactMethod
     public void deviceScanSetNewCallback(Callback newDeviceCallBack) {
+        Log.d("MedMDeviceManager", "New Callback");
         this.newDeviceCallBack = newDeviceCallBack;
     }
 
@@ -95,6 +120,7 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
             promise.resolve(true);
         }
         promise.resolve(false);
+
     }
 
     @ReactMethod

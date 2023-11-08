@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface HAH_Device_Connection {
   pairable_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
@@ -11,12 +11,12 @@ export interface HAH_Device_Connection {
     parse: (xml: string) => Promise<Record<string, any>[]>,
   ) => Promise<Record<string, any>[]>;
   startDeviceScan: (
-    setNewDeviceAvailable: React.Dispatch<React.SetStateAction<boolean>>,
-    newDeviceAvailable: boolean,
+    setPairableDevices: React.Dispatch<React.SetStateAction<HAH_Device[]>>,
   ) => void;
-  stopDeviceScan: () => Promise<Boolean>;
+  stopDeviceScan: (
+    setPairableDevices: React.Dispatch<React.SetStateAction<HAH_Device[]>>,
+  ) => Promise<Boolean>;
 }
-
 
 export interface HAH_Device {
   address: string;
@@ -26,9 +26,9 @@ export interface HAH_Device {
   name: string;
 }
 
-export enum VitalType{
+export enum VitalType {
   WEIGHT,
   BLOOD_PRESSURE,
   BLOOD_OXYGEN,
-  HEART_RATE
+  HEART_RATE,
 }
