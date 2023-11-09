@@ -4,7 +4,6 @@ import PatientWeightNavCard from '../../Components/NavCards/PatientWeightNavCard
 import PatientBloodPressureNavCard from '../../Components/NavCards/PatientBloodPressureNavCard';
 import PatientHeartRateNavCard from '../../Components/NavCards/PatientHeartRateNavCard';
 import PatientBloodOxygenNavCard from '../../Components/NavCards/PatientBloodOxygenNavCard';
-import MenuNav from '../../Components/NavCards/MenuNav';
 
 export default function PatientMainPage({
   navigation,

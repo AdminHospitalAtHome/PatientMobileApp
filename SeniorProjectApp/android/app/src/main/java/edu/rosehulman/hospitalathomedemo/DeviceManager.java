@@ -1,7 +1,6 @@
 package edu.rosehulman.hospitalathomedemo;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -9,26 +8,14 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.medm.devicekit.*;
 
-import javax.annotation.Nullable;
-
-public class MedMDeviceManager extends ReactContextBaseJavaModule {
+public class DeviceManager extends ReactContextBaseJavaModule {
     private ReactApplicationContext context;
     private ArrayList<IDeviceDescription> pairableDevices = new ArrayList<>();
 
@@ -37,7 +24,7 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
 
     private int newDeviceDetectedListeners = 0;
 
-    MedMDeviceManager(ReactApplicationContext context) {
+    DeviceManager(ReactApplicationContext context) {
         super(context);
         this.context = context;
 
@@ -96,13 +83,6 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
     }
 
 
-
-    @ReactMethod
-    public void deviceScanSetNewCallback(Callback newDeviceCallBack) {
-        Log.d("MedMDeviceManager", "New Callback");
-        this.newDeviceCallBack = newDeviceCallBack;
-    }
-
     @ReactMethod
     public void pairableDeviceList(Promise promise){
         Log.d("MedMDeviceManager", JsonParser.toJson(pairableDevices));
@@ -136,5 +116,34 @@ public class MedMDeviceManager extends ReactContextBaseJavaModule {
         }
     }
 
+
+    @ReactMethod
+    public void getPairedDevices(Promise promise) {
+        MedMDeviceManager deviceManager = MedMDeviceKit.getDeviceManager();
+        Log.d("MedMDeviceManager", "GETTING PAIRED DEVICES");
+        Log.d("MedMDeviceManager", JsonParser.toJson(deviceManager.getDevicesList()));
+        promise.resolve(JsonParser.toJson(deviceManager.getDevicesList()));
+    }
+
+    @ReactMethod
+    public void pairDevice(String address) {
+        MedMDeviceManager deviceManager = MedMDeviceKit.getDeviceManager();
+        for (IDeviceDescription i: pairableDevices) {
+            if (i.getAddress().equals(address)) {
+                // TODO: Change PIN to Dynamic
+                deviceManager.addDevice(i, new HospitalAtHomeAddDeviceCallback(this));
+                break;
+            }
+        }
+
+    }
+
+    //
+    public void onDevicePair(Boolean success, IDeviceDescription device) {
+        WritableMap params= Arguments.createMap();
+        params.putString("pairedDevice", JsonParser.toJson(pairableDevices));
+        params.putString("success", String.valueOf(success));
+        sendNewDeviceDetectedEvent(context, "Pair_Device", params);
+    }
 
 }

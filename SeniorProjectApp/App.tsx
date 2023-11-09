@@ -29,7 +29,12 @@ const Tab = createBottomTabNavigator();
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{headerShown: false, tabBarIconStyle: {display: 'none'}, tabBarLabelStyle:{fontSize: 20}}}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarIconStyle: {display: 'none'},
+          tabBarLabelStyle: {fontSize: 20},
+        }}>
         <Tab.Screen name={'Home'} component={HomeScreenStack} />
         <Tab.Screen name={'Chat'} component={ChatScreenStack} />
         <Tab.Screen name={'Settings'} component={SettingsScreenStack} />
@@ -79,6 +84,11 @@ function SettingsScreenStack(): JSX.Element {
         name={'deviceSettingsPage'}
         component={DeviceSettingsPage}
         options={{title: 'My Devices'}}
+      />
+      <SettingsStack.Screen
+        name={'DevicePage'}
+        component={DevicePage}
+        options={{title: 'Device'}}
       />
     </SettingsStack.Navigator>
   );

@@ -5,7 +5,7 @@ import {
   getBloodPressure,
   getRecentBloodPressure,
 } from '../../BackEndFunctionCall/bloodPressureFunction';
-import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
+import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {useIsFocused} from '@react-navigation/native';
 import SingleLineChart from '../SingleLineChart';

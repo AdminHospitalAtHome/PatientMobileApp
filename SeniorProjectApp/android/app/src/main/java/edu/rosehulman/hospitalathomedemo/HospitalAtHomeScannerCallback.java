@@ -5,13 +5,11 @@ import android.util.Log;
 import com.medm.devicekit.IDeviceDescription;
 import com.medm.devicekit.IScannerCallback;
 
-import java.util.Set;
-
 public class HospitalAtHomeScannerCallback  implements IScannerCallback {
 
-    private MedMDeviceManager deviceManager;
+    private DeviceManager deviceManager;
 
-    public HospitalAtHomeScannerCallback(MedMDeviceManager deviceManager) {
+    public HospitalAtHomeScannerCallback(DeviceManager deviceManager) {
         this.deviceManager = deviceManager;
     }
 

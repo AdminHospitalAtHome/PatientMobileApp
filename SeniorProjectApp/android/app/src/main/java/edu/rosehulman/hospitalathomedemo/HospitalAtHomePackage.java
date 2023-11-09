@@ -20,7 +20,7 @@ public class HospitalAtHomePackage implements ReactPackage {
             ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
-        modules.add(new MedMDeviceManager(reactContext));
+        modules.add(new DeviceManager(reactContext));
 
         return modules;
     }

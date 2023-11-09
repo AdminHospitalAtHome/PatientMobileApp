@@ -4,7 +4,10 @@ export interface HAH_Device_Connection {
   pairable_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
   paired_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
   default_paried_device: (vital: VitalType) => Promise<HAH_Device>;
-  pair_device: (device: HAH_Device) => Promise<void>;
+  pair_device: (
+    device: HAH_Device,
+    navigation: any,
+  ) => Promise<void>;
   unpair_device: (device: HAH_Device) => Promise<void>;
   get_data: (
     id: number,
@@ -22,6 +25,7 @@ export interface HAH_Device {
   address: string;
   id: string;
   manufacturer: string;
+  model: string;
   modelName: string;
   name: string;
 }

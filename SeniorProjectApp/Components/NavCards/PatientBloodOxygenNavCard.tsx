@@ -6,7 +6,7 @@ import {
   getRecentBloodOxygen,
 } from '../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import {getAccessibilityMode} from '../../BackEndFunctionCall/userInfo';
+import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
 

@@ -6,6 +6,7 @@ import {
   EmitterSubscription,
 } from 'react-native';
 import React from 'react';
+import {name} from 'axios';
 
 const {MedMDeviceManager} = NativeModules;
 const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
@@ -16,6 +17,10 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   private newDeviceEventListiner: EmitterSubscription =
     eventEmitter.addListener('New_Device', event => {
       console.log('Event Running but not set yet.');
+    });
+  private pairDeviceEventListener: EmitterSubscription =
+    eventEmitter.addListener('Pair_Device', event => {
+      console.log('Pair Device Event Running but not set yet.');
     });
 
   public static getInstance(): HAH_Device_Connection {
@@ -65,19 +70,43 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   }
 
   paired_device_list(): Promise<HAH_Device[]> {
-    return MedMDeviceManager.pairableDeviceList().then(res => res.json());
+    console.log("Getting Paired Devices")
+    return MedMDeviceManager.getPairedDevices().then(res => parseDevicesJson(res));
   }
 
   default_paried_device(vital: VitalType): Promise<HAH_Device> {
     return new Promise((resolve, reject) => {
       resolve(
-        new MedMDevice('Address', '1', 'Omron', 'HN-290T', 'Omron HN-290T'),
+        new MedMDevice(
+          'Address',
+          '1',
+          'Omron',
+          'HN-290T',
+          'Omron HN-290T',
+          'Name',
+        ),
       );
     });
   }
 
-  pair_device(device: HAH_Device): Promise<void> {
+  pair_device(
+    device: HAH_Device,
+    navigation: any,
+  ): Promise<void> {
     return new Promise((resolve, reject) => {
+      this.pairDeviceEventListener.remove();
+      this.pairDeviceEventListener = eventEmitter.addListener(
+        'New_Device',
+        event => {
+          console.log('PairedDevice');
+          console.log(event.success);
+
+          navigation.goBack();
+
+          this.pairDeviceEventListener.remove();
+        },
+      );
+      MedMDeviceManager.pairDevice(device.address);
       resolve();
     });
   }
@@ -102,6 +131,7 @@ export class MedMDevice implements HAH_Device {
   address: string;
   id: string;
   manufacturer: string;
+  model: string;
   modelName: string;
   name: string;
 
@@ -109,6 +139,7 @@ export class MedMDevice implements HAH_Device {
     address: string,
     id: string,
     manufacturer: string,
+    model: string,
     modelName: string,
     name: string,
   ) {
@@ -116,6 +147,7 @@ export class MedMDevice implements HAH_Device {
     this.id = id;
     this.manufacturer = manufacturer;
     this.modelName = modelName;
+    this.model = model;
     this.name = name;
   }
 }
@@ -128,6 +160,7 @@ export function parseDevicesJson(text: string): HAH_Device[] {
       json[i].address,
       json[i].id,
       json[i].manufacturer,
+      json[i].model,
       json[i].modelName,
       json[i].name,
     );

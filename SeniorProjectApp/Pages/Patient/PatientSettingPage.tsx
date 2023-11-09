@@ -4,8 +4,9 @@ import {StyleSheet} from 'react-native';
 import {useEffect, useState} from 'react';
 import {
   getAccessibilityMode,
+  requestBluetoothPermissions,
   setAccessibilityMode,
-} from '../../BackEndFunctionCall/userInfo';
+} from '../../BackEndFunctionCall/settingsPageFunctions';
 import MenuNav from '../../Components/NavCards/MenuNav';
 
 const patientID = 100000001;
@@ -38,9 +39,17 @@ export default function PatientSettingPage({
         <TouchableOpacity
           style={styles.card}
           onPress={() => navigation.navigate('deviceSettingsPage')}>
-          <Text style={styles.text}>Devices</Text>
+          <Text style={styles.text}>My Devices</Text>
           <View style={styles.switchGroup}>
             <Text>click</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={requestBluetoothPermissions}>
+          <Text style={styles.text}>Grant Bluetooth permissions</Text>
+          <View style={styles.switchGroup}>
+            <Text style={styles.text}>click</Text>
           </View>
         </TouchableOpacity>
       </View>

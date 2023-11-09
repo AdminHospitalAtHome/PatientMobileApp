@@ -3,7 +3,7 @@ import {it, expect, jest} from '@jest/globals';
 import {
   getAccessibilityMode,
   setAccessibilityMode,
-} from '../BackEndFunctionCall/userInfo';
+} from '../BackEndFunctionCall/settingsPageFunctions';
 // This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
 jest.setTimeout(40000);
 
