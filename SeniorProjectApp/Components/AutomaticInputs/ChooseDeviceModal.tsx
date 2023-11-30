@@ -5,25 +5,33 @@ import {
   HAH_Device_Connection,
   VitalType,
 } from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
-import {MedMDeviceConnection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {
+  MedMDevice,
+  MedMDeviceConnection
+} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
 export default function ChooseDeviceModal({
   setModalVisible,
   modalVisible,
   setDataModalVisible,
+    vitalType,
 }: {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   modalVisible: boolean;
   setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  vitalType: VitalType;
 }): JSX.Element {
   const connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-  let device_name: string = '';
   const [deviceName, setDeviceName] = useState('');
+  let address = "";
 
   connection
-    .default_paried_device(VitalType.WEIGHT)
+    .default_paried_device(vitalType)
     .then(res => {
-      setDeviceName(res.name);
+      setDeviceName(res.modelName); // TODO: Maybe change later
+
+      address = res.address;
+
     })
     .catch(() => setDeviceName('N/A'));
 
@@ -64,6 +72,7 @@ export default function ChooseDeviceModal({
   );
 
   function yesOnPress(): void {
+    connection.setDeviceFilter(address);
     setModalVisible(false);
     setDataModalVisible(true);
   }

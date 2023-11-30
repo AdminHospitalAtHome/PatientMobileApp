@@ -31,8 +31,24 @@ export interface HAH_Device {
 }
 
 export enum VitalType {
-  WEIGHT,
-  BLOOD_PRESSURE,
-  BLOOD_OXYGEN,
-  HEART_RATE,
+  WEIGHT = 'Weight',
+  ACTIVITY = 'Activity',
+  BLOOD_COAGULATION = 'BloodCoagulation',
+  BLOOD_PRESSURE = 'BloodPressure',
+  COLESTEROL = 'Cholesterol',
+  ECG = 'ECG',
+  EXERCISE = 'Exercise',
+  FETAL_DOPPLER = 'Fetaldoppler',
+  GLUCOSE = 'Glucose',
+  HEART_RATE = 'HeartRate',
+  KETONE = 'Ketone',
+  LACTATE='Lactate',
+  MEDICATION_IN = 'MedicationIn',
+  NOTE = 'Note',
+  BLOOOD_OXYGEN = 'Oxygen',
+  RESPIRTION_RATE = 'RespirationRate',
+  SLEEP = 'Sleep',
+  SPIROMETRY = 'Spirometry',
+  TEMPERATURE = 'Tempature',
+  URIC_ACID = 'UricAcid',
 }

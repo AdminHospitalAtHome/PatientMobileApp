@@ -1,12 +1,11 @@
 import {HAH_Device, HAH_Device_Connection, VitalType} from './DeviceConnection';
 import {XMLParser} from 'fast-xml-parser';
 import {
-  NativeModules,
-  NativeEventEmitter,
   EmitterSubscription,
+  NativeEventEmitter,
+  NativeModules,
 } from 'react-native';
 import React from 'react';
-import {name} from 'axios';
 
 const {MedMDeviceManager} = NativeModules;
 const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
@@ -70,37 +69,32 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   }
 
   paired_device_list(): Promise<HAH_Device[]> {
-    console.log("Getting Paired Devices")
-    return MedMDeviceManager.getPairedDevices().then(res => parseDevicesJson(res));
+    console.log('Getting Paired Devices');
+    return MedMDeviceManager.getPairedDevices().then(res =>
+      parseDevicesJson(res),
+    );
   }
 
+  // Get Most stringly detected device
+  // TODO: May change later??
   default_paried_device(vital: VitalType): Promise<HAH_Device> {
     return new Promise((resolve, reject) => {
-      resolve(
-        new MedMDevice(
-          'Address',
-          '1',
-          'Omron',
-          'HN-290T',
-          'Omron HN-290T',
-          'Name',
-        ),
-      );
+      MedMDeviceManager.strongestSignalDevice(vital.valueOf())
+        .then(res => {
+          resolve(parseDeviceJson(res));
+        })
+        .catch(() => {
+          reject();
+        });
     });
   }
 
-  pair_device(
-    device: HAH_Device,
-    navigation: any,
-  ): Promise<void> {
+  pair_device(device: HAH_Device, navigation: any): Promise<void> {
     return new Promise((resolve, reject) => {
       this.pairDeviceEventListener.remove();
       this.pairDeviceEventListener = eventEmitter.addListener(
         'New_Device',
         event => {
-          console.log('PairedDevice');
-          console.log(event.success);
-
           navigation.goBack();
 
           this.pairDeviceEventListener.remove();
@@ -123,6 +117,22 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   ): Promise<Record<string, any>[]> {
     return new Promise((resolve, reject) => {
       resolve([{}]);
+    });
+  }
+
+  public setDeviceFilter(address: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (address === '') {
+        reject();
+      } else {
+        MedMDeviceManager.setDeviceFilter(address)
+          .then(() => {
+            resolve();
+          })
+          .catch(() => {
+            reject();
+          });
+      }
     });
   }
 }
@@ -166,8 +176,22 @@ export function parseDevicesJson(text: string): HAH_Device[] {
     );
     devices.push(device);
   }
-  console.log(json);
+
   return devices;
+}
+
+// TODO: Fix this to remove duplicated code
+export function parseDeviceJson(text: string): HAH_Device {
+  let json = JSON.parse(text);
+
+  return new MedMDevice(
+    json.address,
+    json.id,
+    json.manufacturer,
+    json.model,
+    json.modelName,
+    json.name,
+  );
 }
 
 export function parseXMLWeightData(

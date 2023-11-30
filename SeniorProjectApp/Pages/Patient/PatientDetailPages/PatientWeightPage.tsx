@@ -16,7 +16,7 @@ import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {PatientDetailStyles} from './Styles';
 import DataModal from '../../../Components/AutomaticInputs/DataModal';
-import {MedMDeviceConnection} from "../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection";
+import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -33,7 +33,6 @@ export default function PatientWeightPage(): JSX.Element {
   //TODO: Change to dynamic later!!!!
   const patientID = 100000001;
   const screenWidth: number = Dimensions.get('window').width;
-
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
