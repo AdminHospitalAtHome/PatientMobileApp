@@ -4,10 +4,7 @@ export interface HAH_Device_Connection {
   pairable_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
   paired_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
   default_paried_device: (vital: VitalType) => Promise<HAH_Device>;
-  pair_device: (
-    device: HAH_Device,
-    navigation: any,
-  ) => Promise<void>;
+  pair_device: (device: HAH_Device, navigation: any) => Promise<void>;
   unpair_device: (device: HAH_Device) => Promise<void>;
   get_data: (
     id: number,
@@ -19,6 +16,8 @@ export interface HAH_Device_Connection {
   stopDeviceScan: (
     setPairableDevices: React.Dispatch<React.SetStateAction<HAH_Device[]>>,
   ) => Promise<Boolean>;
+
+  setDefaultDevice: (address: string, vitalType: VitalType) => Promise<void>;
 }
 
 export interface HAH_Device {
@@ -42,7 +41,7 @@ export enum VitalType {
   GLUCOSE = 'Glucose',
   HEART_RATE = 'HeartRate',
   KETONE = 'Ketone',
-  LACTATE='Lactate',
+  LACTATE = 'Lactate',
   MEDICATION_IN = 'MedicationIn',
   NOTE = 'Note',
   BLOOOD_OXYGEN = 'Oxygen',

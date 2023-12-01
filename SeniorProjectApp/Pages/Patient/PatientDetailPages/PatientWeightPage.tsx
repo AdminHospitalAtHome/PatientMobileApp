@@ -17,6 +17,7 @@ import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceM
 import {PatientDetailStyles} from './Styles';
 import DataModal from '../../../Components/AutomaticInputs/DataModal';
 import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {VitalType} from "../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection";
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -82,6 +83,7 @@ export default function PatientWeightPage(): JSX.Element {
         setModalVisible={setChooseDeviceModalVisible}
         modalVisible={chooseDeviceModalVisible}
         setDataModalVisible={setDataModalVisible}
+        vitalType={VitalType.WEIGHT}
       />
       <DataModal
         dataModalVisible={dataModalVisible}

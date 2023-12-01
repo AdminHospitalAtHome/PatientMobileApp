@@ -1,12 +1,7 @@
-import {
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-  Switch,
-  StyleSheet,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
 import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {VitalType} from "../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection";
+
 export default function DevicePage({
   navigation,
   route,
@@ -52,6 +47,14 @@ export default function DevicePage({
         }}>
         <Text>Pair</Text>
       </TouchableOpacity>
+
+        <TouchableOpacity
+            style={Styles.ButtonContainer}
+            onPress={() => {
+                MedMDeviceConnection.getInstance().setDefaultDevice(device.address, VitalType.WEIGHT); // TODO: REmove HardCoded VItal Type
+            }}>
+            <Text>Set Default Device</Text>
+        </TouchableOpacity>
     </View>
   );
 }

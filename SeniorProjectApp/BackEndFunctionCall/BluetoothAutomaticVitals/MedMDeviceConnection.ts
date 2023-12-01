@@ -6,6 +6,7 @@ import {
   NativeModules,
 } from 'react-native';
 import React from 'react';
+import {ReactStorage} from '../ReactStorage';
 
 const {MedMDeviceManager} = NativeModules;
 const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
@@ -75,16 +76,34 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     );
   }
 
-  // Get Most stringly detected device
-  // TODO: May change later??
-  default_paried_device(vital: VitalType): Promise<HAH_Device> {
+  setDefaultDevice(address: string, vitalType: VitalType): Promise<void> {
     return new Promise((resolve, reject) => {
-      MedMDeviceManager.strongestSignalDevice(vital.valueOf())
-        .then(res => {
-          resolve(parseDeviceJson(res));
+      ReactStorage.getInstance()
+        .saveDefaultDevice(address, vitalType)
+        .then(() => {
+          resolve();
         })
         .catch(() => {
           reject();
+        });
+    });
+  }
+
+  default_paried_device(vital: VitalType): Promise<HAH_Device> {
+    return new Promise((resolve, reject) => {
+      ReactStorage.getInstance()
+        .getDefaultDevice(vital)
+        .then(address => {
+          MedMDeviceManager.getDeviceByAddress(address)
+            .then(deviceJson => {
+              resolve(parseDeviceJson(deviceJson));
+            })
+            .catch(() => {
+              reject(null);
+            });
+        })
+        .catch(() => {
+          reject(null);
         });
     });
   }

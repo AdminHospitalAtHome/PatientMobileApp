@@ -164,40 +164,18 @@ public class DeviceManager extends ReactContextBaseJavaModule {
         promise.reject("", "");
 
     }
-
-    //TODO: RSSI will always be -1 so we will need a better method to do this!!!! We will do this by using android api for bluetooth. THis will mean we are not doing default devices right now
     @ReactMethod
-    public void strongestSignalDevice(String deviceType, Promise promise) {
+    public void getDeviceByAddress(String address, Promise promise) {
         MedMDeviceManager deviceManager = MedMDeviceKit.getDeviceManager();
-        IDeviceDescription deviceList[] = deviceManager.getDevicesList();
-        Log.d("MEDMDeviceManager", JsonParser.toJson(deviceList));
-        // The strongest signal is the largest number
-        int strongestSignal = Integer.MIN_VALUE;
-        int indexOfStrongestSignal = -1;
-        for (int i = 0; i < deviceList.length; i++) {
-            List<MeasurementType> types = deviceList[i].getMeasurementTypes();
-            Log.d("MEDMDeviceManager",types.toString());
-            if(types.contains(MeasurementType.valueOf(deviceType))){
-                if(deviceList[i].getRssi() > strongestSignal) {
-                    Log.d("MEDMDeviceManager", String.valueOf(MeasurementType.valueOf(deviceType)));
-                    indexOfStrongestSignal = i;
-                    strongestSignal = deviceList[i].getRssi();
-                    Log.d("MEDMDeviceManager", "RSSI: " + String.valueOf(strongestSignal));
-                    Log.d("MEDMDeviceManager", "Index: " + String.valueOf(indexOfStrongestSignal));
-                }
-
+        for (IDeviceDescription device : deviceManager.getDevicesList()) {
+            if (device.getAddress().equals(address)) {
+                Log.d("MedMDeviceManager", address);
+                promise.resolve(JsonParser.toJson(device));
+                return;
             }
         }
 
-        if (indexOfStrongestSignal == -1){
-            Log.d("MEDMDeviceManager", "Rejected");
-            promise.reject("",""); // TODO: Figure out what these strings are supposed to be....
-        }else{
-            promise.resolve(JsonParser.toJson(deviceList[indexOfStrongestSignal]));
-        }
 
-
-
-
+        promise.reject("", "");
     }
 }
