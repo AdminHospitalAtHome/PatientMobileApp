@@ -25,7 +25,7 @@ export default function PatientWeightNavCard(): JSX.Element {
     getWeightCall(patientID, startDateTime, stopDateTime).then(res => {
       setWeightData(res);
     });
-    getAccessibilityMode(patientID)
+    getAccessibilityMode()
       .then(res => {
         setAccessibilityMode(res);
       })

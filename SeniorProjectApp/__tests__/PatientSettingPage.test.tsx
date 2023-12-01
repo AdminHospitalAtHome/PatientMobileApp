@@ -8,19 +8,19 @@ import {
 jest.setTimeout(40000);
 
 it('update and Gets accessibility mode', async () => {
-  await setAccessibilityMode(300000001, true).then(output => {
+  await setAccessibilityMode(true).then(output => {
     expect(output).toBe('set successful');
   });
 
-  await getAccessibilityMode(300000001).then(output => {
+  await getAccessibilityMode().then(output => {
     expect(output).toStrictEqual(true);
   });
 });
 
-it('fail to get accessibility mode ', async () => {
-  await expect(getAccessibilityMode(999999999)).rejects.toBe(
-    false,
-  );
-});
+// it('fail to get accessibility mode ', async () => {
+//   await expect(getAccessibilityMode(999999999)).rejects.toBe(
+//     false,
+//   );
+// });
 
 //todo: create fail to update accessibility mode when applying user identification

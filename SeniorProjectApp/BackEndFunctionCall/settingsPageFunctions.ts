@@ -1,6 +1,7 @@
 import {PermissionsAndroid} from 'react-native';
+import {ReactStorage} from './ReactStorage';
 
-export function setAccessibilityMode(
+export function setAccessibilityModeOld(
   patientID: number,
   mode: boolean,
 ): Promise<string> {
@@ -17,7 +18,7 @@ export function setAccessibilityMode(
   });
 }
 
-export function getAccessibilityMode(patientID: number): Promise<boolean> {
+export function getAccessibilityModeOld(patientID: number): Promise<boolean> {
   return new Promise((resolve, reject) => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getAccessbilityMode?patientID=${patientID}`,
@@ -35,6 +36,14 @@ export function getAccessibilityMode(patientID: number): Promise<boolean> {
         reject(false);
       });
   });
+}
+
+export function getAccessibilityMode(): Promise<boolean> {
+  return ReactStorage.getInstance().getAccessibilityMode();
+}
+
+export function setAccessibilityMode(mode: boolean): Promise<void> {
+  return ReactStorage.getInstance().saveAccessibilityMode(mode);
 }
 
 export async function requestBluetoothPermissions() {

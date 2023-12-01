@@ -24,7 +24,7 @@ export class ReactStorage {
         const val = AsyncStorage.setItem(vitalType.valueOf(), address);
         val
           .then(() => {
-            console.log("Saved Vital");
+            console.log('Saved Vital');
             resolve();
           })
           .catch(() => {
@@ -38,27 +38,65 @@ export class ReactStorage {
 
   public async getDefaultDevice(vitalType: VitalType): Promise<string> {
     return new Promise((resolve, reject) => {
-      console.log("CALLED LOAD");
+      console.log('CALLED LOAD');
       try {
         const val = AsyncStorage.getItem(vitalType.valueOf());
         val
           .then(res => {
             if (res !== null) {
-              console.log("Loaded " + res);
+              console.log('Loaded ' + res);
               resolve(res);
             } else {
-              console.log("Load Failed");
+              console.log('Load Failed');
               reject('no device');
             }
           })
           .catch(() => {
-            console.log("Load Failed 1");
+            console.log('Load Failed 1');
             reject('no device');
           });
       } catch (e) {
         console.log(e);
-        console.log("Load Failed 2");
+        console.log('Load Failed 2');
         reject('no device');
+      }
+    });
+  }
+
+  public async saveAccessibilityMode(mode: boolean): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        let tmp = 'false';
+        if (mode) {
+          tmp = 'true';
+        }
+        const val = AsyncStorage.setItem('AccessibilityMode?', tmp);
+        val.then(() => resolve()).catch(() => reject());
+      } catch {
+        reject();
+      }
+    });
+  }
+
+  public async getAccessibilityMode(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      try {
+        const val = AsyncStorage.getItem('AccessibilityMode?');
+        val
+          .then(res => {
+            if (res !== null) {
+              if (res === 'true') {
+                resolve(true);
+              } else {
+                resolve(false);
+              }
+            }
+          })
+          .catch(() => {
+            reject(false);
+          });
+      } catch (e) {
+        reject(false);
       }
     });
   }

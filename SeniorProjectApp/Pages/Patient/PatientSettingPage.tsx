@@ -18,7 +18,7 @@ export default function PatientSettingPage({
   const [mode, setMode] = useState(false);
 
   useEffect(() => {
-    getAccessibilityMode(patientID).then(res => setMode(res));
+    getAccessibilityMode().then(res => setMode(res));
   }, [mode]);
 
   return (
@@ -58,7 +58,7 @@ export default function PatientSettingPage({
 
   function switchOnPress(): void {
     setMode(!mode);
-    setAccessibilityMode(patientID, !mode);
+    setAccessibilityMode(!mode);
   }
 }
 

@@ -24,7 +24,7 @@ export default function PatientHeartRateNavCard(): JSX.Element {
     getHeartRate(patientID, startDateTime, stopDateTime).then(res => {
       setHeartRateData(res);
     });
-    getAccessibilityMode(patientID)
+    getAccessibilityMode()
       .then(res => {
         setAccessibilityMode(res);
       })
