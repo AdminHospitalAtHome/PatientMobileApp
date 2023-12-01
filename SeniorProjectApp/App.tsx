@@ -5,6 +5,7 @@
  * @format
  */
 import ChatPage from './Pages/ChatPage';
+import ChatContactPage from './Pages/Patient/ChatContactPage';
 
 <script src="http://locralhost:8097" />;
 
@@ -100,8 +101,13 @@ function ChatScreenStack(): JSX.Element {
     <ChatStack.Navigator>
       <ChatStack.Screen
         name={'patientChatPage'}
+        component={ChatContactPage}
+        options={{title: 'My Contacts'}}
+      />
+      <ChatStack.Screen
+        name={'contact1'}
         component={ChatPage}
-        options={{title: 'Patient Chat'}}
+        options={{title: 'First1 Last1(Provider)'}}
       />
     </ChatStack.Navigator>
   );
