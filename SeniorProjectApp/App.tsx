@@ -6,6 +6,7 @@
  */
 import ChatPage from './Pages/ChatPage';
 import ChatContactPage from './Pages/Patient/ChatContactPage';
+import ChatTest from './Pages/Patient/ChatTest';
 
 <script src="http://locralhost:8097" />;
 
@@ -108,6 +109,11 @@ function ChatScreenStack(): JSX.Element {
         name={'contact1'}
         component={ChatPage}
         options={{title: 'First1 Last1(Provider)'}}
+      />
+      <ChatStack.Screen
+        name={'test'}
+        component={ChatTest}
+        options={{title: 'azure function test'}}
       />
     </ChatStack.Navigator>
   );

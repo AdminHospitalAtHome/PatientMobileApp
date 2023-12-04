@@ -21,7 +21,7 @@ export default function ChatContactPage({
         <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate('contact1')}>
           <ContactCard name={'First1 Last1(Provider)'} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate('test')}>
           <ContactCard name={'First2 Last2'} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.card}>
