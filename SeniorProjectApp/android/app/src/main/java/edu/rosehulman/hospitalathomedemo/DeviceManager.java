@@ -23,8 +23,11 @@ public class DeviceManager extends ReactContextBaseJavaModule {
     private ArrayList<IDeviceDescription> pairableDevices = new ArrayList<>();
 
     private Callback newDeviceCallBack = null;
+    private Callback collectorCallback;
     private ScannerStopToken stopToken = null;
+    private CollectorStopToken collectorStopToken = null;
 
+    private HospitalAtHomeDataCallback dataCallback = new HospitalAtHomeDataCallback();
     private int newDeviceDetectedListeners = 0;
 
     DeviceManager(ReactApplicationContext context) {
@@ -101,8 +104,10 @@ public class DeviceManager extends ReactContextBaseJavaModule {
             stopToken.stopScan();
             Log.d("MedMDeviceManager", "Scanning Stopped");
             promise.resolve(true);
+        } else {
+            promise.resolve(false);
         }
-        promise.resolve(false);
+
 
     }
 
@@ -154,7 +159,7 @@ public class DeviceManager extends ReactContextBaseJavaModule {
         MedMCollector collector = MedMDeviceKit.getCollector();
         MedMDeviceManager deviceManager = MedMDeviceKit.getDeviceManager();
         for (IDeviceDescription device : deviceManager.getDevicesList()) {
-            if (device.getAddress() == address) {
+            if (device.getAddress().equals(address)) {
                 IDeviceDescription tmp[] = {device};
                 collector.setDeviceFilter(tmp);
                 promise.resolve(null);
@@ -177,5 +182,50 @@ public class DeviceManager extends ReactContextBaseJavaModule {
 
 
         promise.reject("", "");
+    }
+
+    @ReactMethod
+    public void startCollector(Callback callback) {
+        Log.d("MedMDeviceManager", "Start Collector");
+
+        collectorCallback = callback;
+
+        MedMCollector collector = MedMDeviceKit.getCollector();
+
+        Log.d("MedMDeviceManager", collector.getDeviceFilter().toString());
+        // Need 3 types of Callbacks
+        IDeviceStatusCallback statusCallback = new HospitalAtHomeDeviceStatusCallBack(this);
+        IErrorCallback errorCallback = new HospitalAtHomeScannerIErrorCallback();
+        // Set Callbacks
+        collector.setDataCallback(dataCallback);
+        collector.setDeviceStatusCallback(statusCallback);
+        collector.setErrorCallback(errorCallback);
+
+        collectorStopToken = collector.start();
+
+    }
+
+    @ReactMethod
+    public void manualStopCollector(Promise promise) {
+
+        if (collectorStopToken != null && !collectorStopToken.isStopped() && !collectorStopToken.isCollectFinished()) {
+            collectorStopToken.stopCollect();
+            Log.d("MedMDeviceManager", "Stop Collector");
+            promise.resolve(true);
+        } else {
+            promise.resolve(false);
+        }
+
+    }
+
+
+    public void automaticStopCollector(){
+        if (collectorStopToken != null && !collectorStopToken.isStopped() && !collectorStopToken.isCollectFinished()) {
+            collectorStopToken.stopCollect();
+            Log.d("MedMDeviceManager", "automatically stop Collector");
+        }
+        if (collectorCallback != null) {
+            collectorCallback.invoke(JsonParser.dataToJson(dataCallback.getData()));
+        }
     }
 }

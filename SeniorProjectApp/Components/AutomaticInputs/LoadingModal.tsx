@@ -1,59 +1,46 @@
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import VitalTable from '../VitalTable';
+import React, {useEffect, useState} from 'react';
+import {
+  HAH_Device,
+  HAH_Device_Connection,
+  VitalType,
+} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import {
+  MedMDevice,
+  MedMDeviceConnection,
+} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
-export default function DataModal({
-  dataModalVisible,
+export default function LoadingModal({
+  setLoadingModalVisible,
+  loadingModalVisible,
   setDataModalVisible,
-  getVitalColumns,
-                                    getVitalData,
-  addDataFunction,
 }: {
-  dataModalVisible: boolean;
+  setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  loadingModalVisible: boolean;
   setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  getVitalColumns: () => string[];
-  getVitalData: () => any[][];
-  addDataFunction: () => void;
 }): JSX.Element {
+  const connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
+
+  useEffect(() => {
+    if (loadingModalVisible) {
+      connection.startCollector(setLoadingModalVisible, setDataModalVisible);
+    }
+  }, [loadingModalVisible]);
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={dataModalVisible}
+      visible={loadingModalVisible}
       onRequestClose={() => {
-        setDataModalVisible(false);
+        setLoadingModalVisible(false);
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.labelText}>Get Data From Device</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              marginTop: 10,
-              marginBottom: 15,
-              alignItems: 'center',
-            }}>
-            <VitalTable
-              columnTitles={getVitalColumns()}
-              vitalData={getVitalData()}
-            />
-          </View>
-
+          <Text style={styles.labelText}>Loading From Device...</Text>
           <View style={styles.editButtonContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Edit Data</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={[styles.buttonContainer, styles.BottomContainer]}>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonBorder]}
-              onPress={() => setDataModalVisible(false)}>
+            <TouchableOpacity style={styles.button} onPress={cancel}>
               <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={addOnPress}>
-              <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -61,9 +48,9 @@ export default function DataModal({
     </Modal>
   );
 
-  function addOnPress(): void {
-    setDataModalVisible(false);
-    addDataFunction();
+  function cancel(): void {
+    setLoadingModalVisible(false);
+    connection.stopCollector();
   }
 }
 
@@ -75,8 +62,6 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    minHeight: '40%',
-    flexDirection: 'column',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -93,15 +78,25 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 25,
+    marginBottom: 10,
   },
   textContainer: {
     flexShrink: 0,
     flexDirection: 'column',
     alignItems: 'flex-start',
+    marginRight: 'auto',
+    marginLeft: 5,
   },
   text: {
-    fontSize: 15,
+    color: 'black',
+    fontSize: 20,
+  },
+
+  deviceLabelText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -117,10 +112,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#c87525',
     padding: 5,
     borderRadius: 10,
-
+    marginTop: 15,
     justifyContent: 'space-around',
   },
-
   button: {
     flex: 1,
   },

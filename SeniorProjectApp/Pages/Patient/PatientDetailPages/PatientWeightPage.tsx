@@ -17,7 +17,8 @@ import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceM
 import {PatientDetailStyles} from './Styles';
 import DataModal from '../../../Components/AutomaticInputs/DataModal';
 import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
-import {VitalType} from "../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection";
+import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
 
 export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,6 +32,7 @@ export default function PatientWeightPage(): JSX.Element {
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
+  const [loadingModalVisible, setLoadingModalVisible] = useState(false);
   //TODO: Change to dynamic later!!!!
   const patientID = 100000001;
   const screenWidth: number = Dimensions.get('window').width;
@@ -82,18 +84,24 @@ export default function PatientWeightPage(): JSX.Element {
       <ChooseDeviceModal
         setModalVisible={setChooseDeviceModalVisible}
         modalVisible={chooseDeviceModalVisible}
-        setDataModalVisible={setDataModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
         vitalType={VitalType.WEIGHT}
       />
+
+      <LoadingModal
+        setLoadingModalVisible={setLoadingModalVisible}
+        loadingModalVisible={loadingModalVisible}
+        setDataModalVisible={setDataModalVisible}
+      />
+
       <DataModal
         dataModalVisible={dataModalVisible}
         setDataModalVisible={setDataModalVisible}
         getVitalColumns={() => ['Date', 'Weight']}
-        getVitalData={() => [
-          ['10-24-2023\n3:45PM', '201 lbs'],
-          ['10-24-2023\n3:45PM', '201 lbs'],
-          ['10-24-2023\n3:45PM', '201 lbs'],
-        ]}
+        getVitalData={parseData}
+        addDataFunction={() => {
+          return;
+        }}
       />
 
       {addSuccessVisible && (
@@ -118,5 +126,11 @@ export default function PatientWeightPage(): JSX.Element {
       });
       setInput('');
     }
+  }
+
+  function parseData(): any[][] {
+      MedMDeviceConnection.getInstance().getCollectedData();
+      return [[]];
+
   }
 }

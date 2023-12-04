@@ -1,6 +1,7 @@
 package edu.rosehulman.hospitalathomedemo;
 
 import com.medm.devicekit.IDeviceDescription;
+import com.medm.devicekit.IDeviceStatusCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,5 +34,19 @@ public class JsonParser {
     public static String toJson(IDeviceDescription[] devices) {
         return toJson(Arrays.asList(devices));
 
+    }
+
+    public static String dataToJson(List<String> data){
+        String res = "[";
+        for (int i = 0; i < data.size(); i++) {
+            res+= "'";
+            res+=data.get(i);
+            res+= "'";
+            if (i != data.size()-1) {
+                res += ",";
+            }
+        }
+        res+="]";
+        return res;
     }
 }

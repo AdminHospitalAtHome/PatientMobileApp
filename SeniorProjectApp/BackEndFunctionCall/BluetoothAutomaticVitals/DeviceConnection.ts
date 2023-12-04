@@ -18,6 +18,16 @@ export interface HAH_Device_Connection {
   ) => Promise<Boolean>;
 
   setDefaultDevice: (address: string, vitalType: VitalType) => Promise<void>;
+
+  setDeviceFilter: (address: string) => Promise<void>;
+
+  startCollector: (
+    setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => void;
+  stopCollector: () => Promise<boolean>;
+
+  getCollectedData: () => string[];
 }
 
 export interface HAH_Device {

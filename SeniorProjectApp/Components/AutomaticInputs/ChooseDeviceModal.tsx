@@ -13,12 +13,12 @@ import {
 export default function ChooseDeviceModal({
   setModalVisible,
   modalVisible,
-  setDataModalVisible,
+  setLoadingModalVisible,
     vitalType,
 }: {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   modalVisible: boolean;
-  setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   vitalType: VitalType;
 }): JSX.Element {
   const connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
@@ -72,9 +72,15 @@ export default function ChooseDeviceModal({
   );
 
   function yesOnPress(): void {
-    connection.setDeviceFilter(address);
-    setModalVisible(false);
-    setDataModalVisible(true);
+    connection.setDeviceFilter(address).then(()=> {
+
+      setModalVisible(false);
+      setLoadingModalVisible(true);
+    });
+
+
+    //TODO: Temporary REMOVE!!!!
+
   }
 }
 

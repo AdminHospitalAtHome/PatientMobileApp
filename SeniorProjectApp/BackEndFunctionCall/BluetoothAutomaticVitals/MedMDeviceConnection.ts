@@ -13,6 +13,8 @@ const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
 
 export class MedMDeviceConnection implements HAH_Device_Connection {
   private static instance: MedMDeviceConnection;
+
+  private data: string[] = [];
   //private pairableDevices = new Array<HAH_Device>();
   private newDeviceEventListiner: EmitterSubscription =
     eventEmitter.addListener('New_Device', event => {
@@ -138,8 +140,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
       resolve([{}]);
     });
   }
-
-  public setDeviceFilter(address: string): Promise<void> {
+  setDeviceFilter(address: string): Promise<void> {
     return new Promise((resolve, reject) => {
       if (address === '') {
         reject();
@@ -153,6 +154,31 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
           });
       }
     });
+  }
+
+  startCollector(
+    setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  ): void {
+    MedMDeviceManager.startCollector((data) => {
+      this.data = JSON.parse(data);
+      setLoadingModalVisible(false);
+      setDataModalVisible(true);
+
+    });
+  }
+
+  stopCollector(): Promise<boolean> {
+    return new Promise(resolve => {
+      MedMDeviceManager.manualStopCollector().then(res => {
+        resolve(res);
+      });
+    });
+  }
+
+
+  getCollectedData(): string[] {
+    return this.data;
   }
 }
 
@@ -212,6 +238,7 @@ export function parseDeviceJson(text: string): HAH_Device {
     json.name,
   );
 }
+
 
 export function parseXMLWeightData(
   xml: string,
