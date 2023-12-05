@@ -3,6 +3,7 @@ import {View, Dimensions} from 'react-native';
 import {
   getWeightCall,
   addWeight,
+  addWeightAutomaticallyToServer,
 } from '../../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
@@ -16,7 +17,10 @@ import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {PatientDetailStyles} from './Styles';
 import DataModal from '../../../Components/AutomaticInputs/DataModal';
-import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {
+  MedMDeviceConnection,
+  parseXMLWeightData,
+} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
 
@@ -99,9 +103,7 @@ export default function PatientWeightPage(): JSX.Element {
         setDataModalVisible={setDataModalVisible}
         getVitalColumns={() => ['Date', 'Weight']}
         getVitalData={parseData}
-        addDataFunction={() => {
-          return;
-        }}
+        addDataFunction={addWeightAutomatically}
       />
 
       {addSuccessVisible && (
@@ -129,8 +131,33 @@ export default function PatientWeightPage(): JSX.Element {
   }
 
   function parseData(): any[][] {
-      MedMDeviceConnection.getInstance().getCollectedData();
-      return [[]];
+    let output: any[][] = [];
 
+    let data = MedMDeviceConnection.getInstance().getCollectedData();
+
+    for (let i = 0; i < data.length; i++) {
+      let parsedData: Record<string, any> = parseXMLWeightData(data[i]);
+        console.log(parsedData.DateTimeTaken)
+      output.push([parsedData.DateTimeTaken, parsedData.WeightInPounds]);
+    }
+
+    return output;
+  }
+
+  // TODO: Add Bulk function and change to check for error
+  function addWeightAutomatically(data: any[][]) {
+    for (let i = 0; i < data.length; i++) {
+        console.log("ASDFSDF", data[i][0]);
+      addWeightAutomaticallyToServer(patientID, Number(data[i][1]), data[i][0], false)
+        .then(() => {
+          setStopDateTime(new Date().toISOString());
+          console.log('Added Good');
+        })
+        .catch(() => {
+          console.log('FAIL');
+        });
+    }
+    setAddSuccessVisible(true);
+    setStopDateTime(new Date().toISOString());
   }
 }

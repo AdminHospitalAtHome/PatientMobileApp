@@ -45,7 +45,7 @@ export default function DeviceSettingsPage({
             setPairableDevices,
           );
         }}>
-        <Text style={{color: 'black'}}>Start Scaning for Device</Text>
+        <Text style={{color: 'black'}}>Start Scanning for Device</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

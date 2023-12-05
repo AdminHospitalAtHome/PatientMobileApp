@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableNativeArray;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -225,7 +226,7 @@ public class DeviceManager extends ReactContextBaseJavaModule {
             Log.d("MedMDeviceManager", "automatically stop Collector");
         }
         if (collectorCallback != null) {
-            collectorCallback.invoke(JsonParser.dataToJson(dataCallback.getData()));
+            collectorCallback.invoke(dataCallback.getData());
         }
     }
 }

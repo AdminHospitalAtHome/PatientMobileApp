@@ -160,11 +160,11 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
     setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
   ): void {
-    MedMDeviceManager.startCollector((data) => {
-      this.data = JSON.parse(data);
+    MedMDeviceManager.startCollector(data => {
+      this.data = data;
+      console.log(data);
       setLoadingModalVisible(false);
       setDataModalVisible(true);
-
     });
   }
 
@@ -175,7 +175,6 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
       });
     });
   }
-
 
   getCollectedData(): string[] {
     return this.data;
@@ -239,11 +238,8 @@ export function parseDeviceJson(text: string): HAH_Device {
   );
 }
 
+export function parseXMLWeightData(xml: string): Record<string, any> {
 
-export function parseXMLWeightData(
-  xml: string,
-): Promise<Record<string, any>[]> {
-  return new Promise((resolve, reject) => {
     try {
       const parser = new XMLParser();
       let obj = parser.parse(xml);
@@ -256,40 +252,35 @@ export function parseXMLWeightData(
       let dateTimeTaken: string = new Date(
         obj['measurements-weight']['measured-at'],
       ).toISOString();
-      resolve([{WeightInPounds: weightInPounds, DateTimeTaken: dateTimeTaken}]);
+      return {WeightInPounds: weightInPounds, DateTimeTaken: dateTimeTaken};
     } catch (e) {
-      reject([{}]);
+      return {}
     }
-  });
 }
 
 //Parses UTC datetime and average heart rate
-export function parseXMLHeartRateData(
-  xml: string,
-): Promise<Record<string, any>[]> {
-  return new Promise((resolve, reject) => {
-    try {
-      const parser = new XMLParser();
-      let obj = parser.parse(xml);
-      let heartRateInBPM: number = Math.floor(
-        Number(obj['measurements-heartrate-stream']['pulse-average']),
-      );
-      if (Number.isNaN(heartRateInBPM)) {
-        throw new Error('Invalid Number');
-      }
-      let dateTimeTaken: string = new Date(
-        obj['measurements-heartrate-stream']['measured-at'],
-      ).toISOString();
-      resolve([{HeartRateInBPM: heartRateInBPM, DateTimeTaken: dateTimeTaken}]);
-    } catch (e) {
-      reject([{}]);
+export function parseXMLHeartRateData(xml: string): Record<string, any> {
+  try {
+    const parser = new XMLParser();
+    let obj = parser.parse(xml);
+    let heartRateInBPM: number = Math.floor(
+      Number(obj['measurements-heartrate-stream']['pulse-average']),
+    );
+    if (Number.isNaN(heartRateInBPM)) {
+      throw new Error('Invalid Number');
     }
-  });
+    let dateTimeTaken: string = new Date(
+      obj['measurements-heartrate-stream']['measured-at'],
+    ).toISOString();
+    return {HeartRateInBPM: heartRateInBPM, DateTimeTaken: dateTimeTaken};
+  } catch (e) {
+    return {HeartRateInBPM: 123, DateTimeTaken: 'aaaa'};
+  }
 }
 
 export function parseXMLBloodPressureData(
   xml: string,
-): Promise<Record<string, any>[]> {
+): Promise<Record<string, any>> {
   return new Promise((resolve, reject) => {
     try {
       const parser = new XMLParser();
@@ -309,15 +300,13 @@ export function parseXMLBloodPressureData(
       let dateTimeTaken: string = new Date(
         obj['measurements-bloodpressure']['measured-at'],
       ).toISOString();
-      resolve([
-        {
-          SystolicBloodPressureInmmHg: systolicBloodPressureInmmHg,
-          DiastolicBloodPressureInmmHg: diastolicBloodPressureInmmHg,
-          DateTimeTaken: dateTimeTaken,
-        },
-      ]);
+      resolve({
+        SystolicBloodPressureInmmHg: systolicBloodPressureInmmHg,
+        DiastolicBloodPressureInmmHg: diastolicBloodPressureInmmHg,
+        DateTimeTaken: dateTimeTaken,
+      });
     } catch (e) {
-      reject([{}]);
+      reject({});
     }
   });
 }
@@ -341,14 +330,12 @@ export function parseXMLBloodOxygenData(
       let dateTimeTaken: string = new Date(
         obj['measurements-oxygen-stream']['measured-at'],
       ).toISOString();
-      resolve([
-        {
-          BloodOxygenInPercentage: bloodOxygenInPercentage,
-          DateTimeTaken: dateTimeTaken,
-        },
-      ]);
+      resolve({
+        BloodOxygenInPercentage: bloodOxygenInPercentage,
+        DateTimeTaken: dateTimeTaken,
+      });
     } catch (e) {
-      reject([{}]);
+      reject({});
     }
   });
 }

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.medm.devicekit.IDataCallback;
 import com.medm.devicekit.IDeviceDescription;
-
+import com.facebook.react.bridge.WritableNativeArray;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +23,11 @@ public class HospitalAtHomeDataCallback implements IDataCallback {
     }
 
 
-    public List<String> getData(){
-        ArrayList<String> dataTmp = (ArrayList<String>) data.clone();
+    public WritableNativeArray getData(){
+        WritableNativeArray dataTmp = new WritableNativeArray();
+        for(String s : data){
+            dataTmp.pushString(s);
+        }
         data.clear();
         return dataTmp;
     }

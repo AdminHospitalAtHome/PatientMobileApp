@@ -39,9 +39,9 @@ public class JsonParser {
     public static String dataToJson(List<String> data){
         String res = "[";
         for (int i = 0; i < data.size(); i++) {
-            res+= "'";
-            res+=data.get(i);
-            res+= "'";
+            res+= "\"";
+            res+=data.get(i).replaceAll("\"", "\\\""); // Replaces " with \"
+            res+= "\"";
             if (i != data.size()-1) {
                 res += ",";
             }

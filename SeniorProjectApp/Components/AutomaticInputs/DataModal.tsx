@@ -6,15 +6,16 @@ export default function DataModal({
   dataModalVisible,
   setDataModalVisible,
   getVitalColumns,
-                                    getVitalData,
+  getVitalData,
   addDataFunction,
 }: {
   dataModalVisible: boolean;
   setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   getVitalColumns: () => string[];
   getVitalData: () => any[][];
-  addDataFunction: () => void;
+  addDataFunction: (data: any[][]) => void;
 }): JSX.Element {
+  let data: any[][] = [];
   return (
     <Modal
       animationType="slide"
@@ -36,7 +37,7 @@ export default function DataModal({
             }}>
             <VitalTable
               columnTitles={getVitalColumns()}
-              vitalData={getVitalData()}
+              vitalData={getData()}
             />
           </View>
 
@@ -63,7 +64,12 @@ export default function DataModal({
 
   function addOnPress(): void {
     setDataModalVisible(false);
-    addDataFunction();
+    addDataFunction(data);
+  }
+
+  function getData(): any[][] {
+    data = getVitalData();
+    return data;
   }
 }
 
