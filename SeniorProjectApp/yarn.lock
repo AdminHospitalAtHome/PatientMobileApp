@@ -95,6 +95,11 @@
     "events" "^3.0.0"
     "tslib" "^1.10.0"
 
+"@azure/core-asynciterator-polyfill@^1.0.2":
+  "integrity" "sha512-3rkP4LnnlWawl0LZptJOdXNrT/fHp2eQMadoasa6afspXdpGrtPZuAQc2PD0cpgyuoXtUWyC3tv7xfntjGS5Dw=="
+  "resolved" "https://registry.npmjs.org/@azure/core-asynciterator-polyfill/-/core-asynciterator-polyfill-1.0.2.tgz"
+  "version" "1.0.2"
+
 "@azure/core-auth@^1.3.0", "@azure/core-auth@^1.4.0":
   "integrity" "sha512-udzoBuYG1VBoHVohDTrvKjyzel34zt77Bhp7dQntVGGD0ehVq48owENbBG8fIgkHRNUBQH5k1r0hpoMu5L8+kw=="
   "resolved" "https://registry.npmjs.org/@azure/core-auth/-/core-auth-1.5.0.tgz"

@@ -1,23 +1,22 @@
 import {View} from 'react-native';
 import {ChatClient} from '@azure/communication-chat';
 import {AzureCommunicationTokenCredential} from '@azure/communication-common';
+import '@azure/core-asynciterator-polyfill';
 export default function ChatTest(): JSX.Element {
   let endpointUrl =
     'https://hospitalathomechat.unitedstates.communication.azure.com';
   let userAccessToken =
-    'eyJhbGciOiJSUzI1NiIsImtpZCI6IjVFODQ4MjE0Qzc3MDczQUU1QzJCREU1Q0NENTQ0ODlEREYyQzRDODQiLCJ4NXQiOiJYb1NDRk1kd2M2NWNLOTVjelZSSW5kOHNUSVEiLCJ0eXAiOiJKV1QifQ.eyJza3lwZWlkIjoiYWNzOmY0ZGQ4YWZiLWE5MzUtNDJjMy04OWUzLTRiMzU4ZjA5Mzc4OV8wMDAwMDAxYy1kNGRiLTE3N2ItYjViYi1hNDNhMGQwMGNiNjAiLCJzY3AiOjE3OTIsImNzaSI6IjE3MDE2OTU4MTIiLCJleHAiOjE3MDE3ODIyMTIsInJnbiI6ImFtZXIiLCJhY3NTY29wZSI6ImNoYXQiLCJyZXNvdXJjZUlkIjoiZjRkZDhhZmItYTkzNS00MmMzLTg5ZTMtNGIzNThmMDkzNzg5IiwicmVzb3VyY2VMb2NhdGlvbiI6InVuaXRlZHN0YXRlcyIsImlhdCI6MTcwMTY5NTgxMn0.dXkrDNE4RCDkPBLYuG0QSguUt83Uj5Wd9uTUcDb6XlQHERsl1Ji72aRrbkxfWMf6dh_BV9caolVg2UV_CiE2hmsF79G05qv1zPyA3kH73q6p6xVGh4qBtc7xX79_IiyfDpAcIR4sNFkMHrfP3ETEdrMvSJRp_vT8_BG0D-833ueIJjRUl1gVv48OeJPNK8yOu3jmUBRfevinvzr24jxVInDCJGVyvpqg2HGXeW9LX3U4XiUzHJJz-H0Z11mwnhUJqh4eKuU5VzB2oJLyS8nFuwGGGLCAfNwxUKrD7MKdmTNMAwrmK2NAP0daH9UiXx-pqsgUkqpLYloTzvzVyWuyUQ';
-
+    'eyJhbGciOiJSUzI1NiIsImtpZCI6IjVFODQ4MjE0Qzc3MDczQUU1QzJCREU1Q0NENTQ0ODlEREYyQzRDODQiLCJ4NXQiOiJYb1NDRk1kd2M2NWNLOTVjelZSSW5kOHNUSVEiLCJ0eXAiOiJKV1QifQ.eyJza3lwZWlkIjoiYWNzOmY0ZGQ4YWZiLWE5MzUtNDJjMy04OWUzLTRiMzU4ZjA5Mzc4OV8wMDAwMDAxYy1kYjEzLWQ0YjAtNmEwYi0zNDNhMGQwMDRiYWEiLCJzY3AiOjE3OTIsImNzaSI6IjE3MDE4MDAxOTQiLCJleHAiOjE3MDE4ODY1OTQsInJnbiI6ImFtZXIiLCJhY3NTY29wZSI6ImNoYXQiLCJyZXNvdXJjZUlkIjoiZjRkZDhhZmItYTkzNS00MmMzLTg5ZTMtNGIzNThmMDkzNzg5IiwicmVzb3VyY2VMb2NhdGlvbiI6InVuaXRlZHN0YXRlcyIsImlhdCI6MTcwMTgwMDE5NH0.Fa1MpJQ2QX__HDm7SoFU7t18HXMdsPyh13B_fnQOrTbqyEhLK4VH2DsZk7QXxswZVtbq6yYeTG773Mb0k1q-5UxhpDFQhyvGxOPoIGF38QcmKAKG2EjQd1SCFRo0BgfBc0wB0_mRxOgYlT8xjou239Df9jwmglYw1VsgZlRjqxV_27vB8MLKF-bsgcE9cXiQxTi1kwePEse1uOLBlv638_LL5-0PXW_l6NuWpz-mw5kUa6L9rtxkDRASyLLfkwPMy4nyrjVnVEOb6yAMTus34NNIdREJZ2M_IhDKoaLE-tCSe9bY8tb2kcv07irsAgRnHmjIzxskVE5FNaEdAgwzgw'
   let chatClient = new ChatClient(
     endpointUrl,
     new AzureCommunicationTokenCredential(userAccessToken),
   );
-  console.log('Azure Communication Chat client created!');
-
   const userId =
-    '8:acs:f4dd8afb-a935-42c3-89e3-4b358f093789_0000001c-d4db-177b-b5bb-a43a0d00cb60';
+    '8:acs:f4dd8afb-a935-42c3-89e3-4b358f093789_0000001c-db13-d4b0-6a0b-343a0d004baa';
+
   async function createChatThread() {
     const createChatThreadRequest = {
-      topic: 'Hello, World!',
+      topic: 'test!',
     };
     const createChatThreadOptions = {
       participants: [
@@ -53,14 +52,10 @@ export default function ChatTest(): JSX.Element {
     );
     const messageId = sendChatMessageResult.id;
     console.log(`Message sent!, message id:${messageId}`);
-    // PLACEHOLDERS
-    // <CREATE CHAT THREAD CLIENT>
-    // <RECEIVE A CHAT MESSAGE FROM A CHAT THREAD>
-    // <SEND MESSAGE TO A CHAT THREAD>
-    // <LIST MESSAGES IN A CHAT THREAD>
-    // <ADD NEW PARTICIPANT TO THREAD>
-    // <LIST PARTICIPANTS IN A THREAD>
-    // <REMOVE PARTICIPANT FROM THREAD>
+    const messages = chatThreadClient.listMessages();
+    // for await (const message of messages) {
+    //   console.log(`Chat Thread message id:${message.id}`);
+    // }
   });
 
   return <View />;
