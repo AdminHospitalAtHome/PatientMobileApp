@@ -53,10 +53,11 @@ export default function ChatTest(): JSX.Element {
     const messageId = sendChatMessageResult.id;
     console.log(`Message sent!, message id:${messageId}`);
     const messages = chatThreadClient.listMessages();
-    // for await (const message of messages) {
-    //   console.log(`Chat Thread message id:${message.id}`);
-    // }
+    for await (const message of messages) {
+      console.log(`Chat Thread message id:${message.id}, message: ${message.content.message}`);
+    }
   });
 
-  return <View />;
+  return <View>
+  </View>;
 }

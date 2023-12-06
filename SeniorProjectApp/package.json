@@ -10,9 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "@azure/communication-chat": "^1.1.1",
+    "@azure/communication-calling": "^1.19.1",
+    "@azure/communication-chat": "^1.4.0",
     "@azure/communication-common": "^1.1.0",
     "@azure/communication-identity": "^1.2.0",
+    "@azure/communication-react": "^1.10.0",
     "@azure/communication-signaling": "^1.0.0-beta.11",
     "@azure/core-asynciterator-polyfill": "^1.0.2",
     "@react-native-async-storage/async-storage": "^1.21.0",
