@@ -140,6 +140,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
       resolve([{}]);
     });
   }
+
   setDeviceFilter(address: string): Promise<void> {
     return new Promise((resolve, reject) => {
       if (address === '') {
@@ -158,13 +159,12 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
 
   startCollector(
     setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
-    setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    sendToServer: (data: string[]) => Promise<void>,
   ): void {
     MedMDeviceManager.startCollector(data => {
-      this.data = data;
-      console.log(data);
-      setLoadingModalVisible(false);
-      setDataModalVisible(true);
+      sendToServer(data).then(() => {
+        setLoadingModalVisible(false);
+      });
     });
   }
 
@@ -239,23 +239,22 @@ export function parseDeviceJson(text: string): HAH_Device {
 }
 
 export function parseXMLWeightData(xml: string): Record<string, any> {
-
-    try {
-      const parser = new XMLParser();
-      let obj = parser.parse(xml);
-      let weightInPounds: number = Math.floor(
-        Number(obj['measurements-weight']['value-in-us']),
-      );
-      if (Number.isNaN(weightInPounds)) {
-        throw new Error('Invalid Number');
-      }
-      let dateTimeTaken: string = new Date(
-        obj['measurements-weight']['measured-at'],
-      ).toISOString();
-      return {WeightInPounds: weightInPounds, DateTimeTaken: dateTimeTaken};
-    } catch (e) {
-      return {}
+  try {
+    const parser = new XMLParser();
+    let obj = parser.parse(xml);
+    let weightInPounds: number = Math.floor(
+      Number(obj['measurements-weight']['value-in-us']),
+    );
+    if (Number.isNaN(weightInPounds)) {
+      throw new Error('Invalid Number');
     }
+    let dateTimeTaken: string = new Date(
+      obj['measurements-weight']['measured-at'],
+    ).toISOString();
+    return {WeightInPounds: weightInPounds, DateTimeTaken: dateTimeTaken};
+  } catch (e) {
+    return {};
+  }
 }
 
 //Parses UTC datetime and average heart rate

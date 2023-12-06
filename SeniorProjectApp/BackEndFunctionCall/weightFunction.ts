@@ -33,17 +33,28 @@ export function addWeight(
 
 export function addWeightAutomaticallyToServer(
   patientId: number,
-  weight: number,
-  dateTimeTaken: string,
+  weight: number[],
+  dateTimeTaken: string[],
   ifManualInput: boolean,
 ): Promise<string> {
   const promise: Promise<any> = new Promise((resolve, reject) => {
-    const dateTime: String = dateTimeTaken;
-    fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight', {
+    let dateTimeTakenString = '[';
+    let weightString = '[';
+    for (let i = 0; i < weight.length; i++) {
+      dateTimeTakenString += '"' + dateTimeTaken[i] + '"';
+      weightString += '"' + weight[i] + '"';
+      if (i !== weight.length - 1) {
+        dateTimeTakenString += ',';
+        weightString += ',';
+      }
+    }
+    dateTimeTakenString += ']';
+    weightString += ']';
+
+    fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeights', {
       method: 'POST',
-      body: `{"PatientID": ${patientId}, "DateTimeTaken": "${dateTime}", "WeightInPounds": ${weight}, "IfManualInput": ${ifManualInput}}`,
+      body: `{"PatientID": ${patientId}, "DateTimeTaken": ${dateTimeTakenString}, "WeightInPounds": ${weightString}, "IfManualInput": ${ifManualInput}}`,
     }).then(response => {
-      console.log(response);
       if (response.status === 201) {
         resolve('add successful');
       } else {

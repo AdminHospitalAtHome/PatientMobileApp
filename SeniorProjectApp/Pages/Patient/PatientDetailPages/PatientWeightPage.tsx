@@ -95,15 +95,7 @@ export default function PatientWeightPage(): JSX.Element {
       <LoadingModal
         setLoadingModalVisible={setLoadingModalVisible}
         loadingModalVisible={loadingModalVisible}
-        setDataModalVisible={setDataModalVisible}
-      />
-
-      <DataModal
-        dataModalVisible={dataModalVisible}
-        setDataModalVisible={setDataModalVisible}
-        getVitalColumns={() => ['Date', 'Weight']}
-        getVitalData={parseData}
-        addDataFunction={addWeightAutomatically}
+        sendToServer={addWeightAutomatically}
       />
 
       {addSuccessVisible && (
@@ -130,34 +122,39 @@ export default function PatientWeightPage(): JSX.Element {
     }
   }
 
-  function parseData(): any[][] {
-    let output: any[][] = [];
-
-    let data = MedMDeviceConnection.getInstance().getCollectedData();
-
-    for (let i = 0; i < data.length; i++) {
-      let parsedData: Record<string, any> = parseXMLWeightData(data[i]);
-        console.log(parsedData.DateTimeTaken)
-      output.push([parsedData.DateTimeTaken, parsedData.WeightInPounds]);
-    }
-
-    return output;
-  }
 
   // TODO: Add Bulk function and change to check for error
-  function addWeightAutomatically(data: any[][]) {
-    for (let i = 0; i < data.length; i++) {
-        console.log("ASDFSDF", data[i][0]);
-      addWeightAutomaticallyToServer(patientID, Number(data[i][1]), data[i][0], false)
+  function addWeightAutomatically(data: string[]): Promise<void> {
+    return new Promise(resolve => {
+      let parsedWeight: number[] = [];
+      let parsedDateTime: string[] = [];
+
+      // Parse Data
+      for (let i = 0; i < data.length; i++) {
+        let parsedData: Record<string, any> = parseXMLWeightData(data[i]);
+
+        parsedWeight.push(parsedData.WeightInPounds);
+        parsedDateTime.push(parsedData.DateTimeTaken);
+      }
+
+      addWeightAutomaticallyToServer(
+        patientID,
+        parsedWeight,
+        parsedDateTime,
+        false,
+      )
         .then(() => {
-          setStopDateTime(new Date().toISOString());
           console.log('Added Good');
+          setAddSuccessVisible(true);
+          setStopDateTime(new Date().toISOString());
+          resolve();
         })
         .catch(() => {
           console.log('FAIL');
+          setAddFailedVisible(true);
+          setStopDateTime(new Date().toISOString());
+          resolve();
         });
-    }
-    setAddSuccessVisible(true);
-    setStopDateTime(new Date().toISOString());
+    });
   }
 }

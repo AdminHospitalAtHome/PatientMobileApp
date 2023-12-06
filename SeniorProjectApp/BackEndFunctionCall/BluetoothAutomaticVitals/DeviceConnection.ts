@@ -23,7 +23,7 @@ export interface HAH_Device_Connection {
 
   startCollector: (
     setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
-    setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    sendToServer: (data: string[]) => Promise<void>,
   ) => void;
   stopCollector: () => Promise<boolean>;
 

@@ -13,17 +13,17 @@ import {
 export default function LoadingModal({
   setLoadingModalVisible,
   loadingModalVisible,
-  setDataModalVisible,
+    sendToServer,
 }: {
   setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   loadingModalVisible: boolean;
-  setDataModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  sendToServer: (data: string[]) => Promise<void>;
 }): JSX.Element {
   const connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
 
   useEffect(() => {
     if (loadingModalVisible) {
-      connection.startCollector(setLoadingModalVisible, setDataModalVisible);
+      connection.startCollector(setLoadingModalVisible, sendToServer);
     }
   }, [loadingModalVisible]);
 
