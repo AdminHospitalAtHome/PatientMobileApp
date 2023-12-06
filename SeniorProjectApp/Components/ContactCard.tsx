@@ -1,4 +1,10 @@
-import {Text, View, TouchableOpacity, Dimensions} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
 import {Circle} from 'react-native-svg';
 
 export default function ContactCard({name}: {name: string}): JSX.Element {
@@ -21,9 +27,21 @@ export default function ContactCard({name}: {name: string}): JSX.Element {
       </View>
       {/*info holder*/}
       <View style={{flex: 7}}>
-        <Text style={{fontSize: 20}}>{name}</Text>
-        <Text>replace this with most recent chat history</Text>
+        <Text style={styles.Name}>{name}</Text>
+        <Text style={styles.RecentChat}>
+          replace this with most recent chat history
+        </Text>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  Name: {
+    fontSize: 20,
+    color: 'black',
+  },
+  RecentChat: {
+    color: 'black',
+  },
+});
