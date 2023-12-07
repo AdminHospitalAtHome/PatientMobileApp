@@ -9,7 +9,7 @@ Ken Zheng: zhengy9@rose-hulman.edu
 
 Yunzhe Wei: weiy5@rose-hulman.edu
 
-## Environment Setup
+## 💻 Environment Setup
 > **important note for development on mac:**  
 > please do not clone this git repo to the folder synchronized by icloud, otherwise XCode will not be able to run due to some magical synchronization permission issues.  
 > for each time new dependencies are added, please run `pod install` in /ios
