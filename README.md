@@ -1,13 +1,5 @@
 # RHIT 2023-2024 CSSE Senior Project: Hospital At Home
-For any questions, please contact development team:
-
-Yuxuan Jiang: jiangy10@rose-hulman.edu
-
-Jake Wallis: wallisjm@rose-hulman.edu
-
-Ken Zheng: zhengy9@rose-hulman.edu
-
-Yunzhe Wei: weiy5@rose-hulman.edu
+For any questions, please contact the previous year's development team...
 
 ## 💻 Environment Setup
 > **important note for development on mac:**  
