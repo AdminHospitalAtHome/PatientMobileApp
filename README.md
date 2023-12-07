@@ -23,6 +23,7 @@ Reference: https://cocoapods.org/
 #### install external dependencies
 run `npm install` or `yarn install`  
 in /ios run `pod install`
+> (Optional) For MacBook with M1, install and enable [Rosetta](https://support.apple.com/en-us/HT211861) in Xcode.
 </details>
 
 <details>
