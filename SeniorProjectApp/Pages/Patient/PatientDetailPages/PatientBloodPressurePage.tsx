@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import DateSelectionBar from '../../../Components/DateSelectionBar';
 import {
   getBloodPressure,
-  addBloodPressure,
+  addBloodPressureOnClick,
 } from '../../../BackEndFunctionCall/bloodPressureFunction';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
@@ -30,14 +30,15 @@ export default function PatientBloodPressurePage(): JSX.Element {
   //TODO: Change to dynamic later!!!!
 
   useEffect(() => {
-    getBloodPressure(patientID, startDateTime, stopDateTime).then(
+    getBloodPressure(patientID, startDateTime, stopDateTime).then(data => {
       // @ts-ignore
-      setBloodPressureData,
-    );
+      setBloodPressureData(data);
+      console.log("DetailPage", data);
+    });
   }, [stopDateTime, startDateTime]);
 
   return (
-    <View style={styles.container}>
+    <View style={PatientDetailStyles.container}>
       <View style={PatientDetailStyles.chartContainer}>
         <DoubleLineChart
           data={bloodPressureData}
@@ -79,7 +80,21 @@ export default function PatientBloodPressurePage(): JSX.Element {
             setInput={[setInputSystolic, setInputDiastolic]}
           />
         }
-        addButtonFunction={addBloodPressureOnClick}
+        addButtonFunction={() => {
+          return addBloodPressureOnClick(
+            inputSystolic,
+            inputDiastolic,
+            numberRegex,
+            patientID,
+            setModalVisible,
+            modalVisible,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
+            setInputDiastolic,
+            setInputSystolic,
+          );
+        }}
       />
 
       {addSuccessVisible && (
@@ -88,100 +103,4 @@ export default function PatientBloodPressurePage(): JSX.Element {
       {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
-
-  //todo: add boolean argument for auto input later
-  function addBloodPressureOnClick(): void {
-    if (
-      inputSystolic === '' ||
-      inputDiastolic === '' ||
-      !numberRegex.test(inputSystolic) ||
-      !numberRegex.test(inputDiastolic)
-    ) {
-      //todo: raise error message dialog
-    } else {
-      addBloodPressure(
-        patientID,
-        Number(inputSystolic),
-        Number(inputDiastolic),
-        true,
-      ).then(successful => {
-        setModalVisible(!modalVisible);
-        if (successful === 'add successful') {
-          setAddSuccessVisible(true);
-        } else {
-          // Failed view here
-        }
-        setStopDateTime(new Date().toISOString());
-      });
-      setInputDiastolic('');
-      setInputSystolic('');
-    }
-  }
 }
-
-const styles = StyleSheet.create({
-  modalLabel: {
-    fontSize: 15,
-    color: 'grey',
-    alignItems: 'flex-start',
-  },
-
-  container: {
-    flex: 1,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 5,
-    textAlign: 'center',
-  },
-  modalButtonContainer: {
-    flexDirection: 'row',
-    width: 180,
-    justifyContent: 'space-between',
-  },
-  input: {
-    height: 40,
-    width: 200,
-    margin: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-    textAlign: 'center',
-  },
-});

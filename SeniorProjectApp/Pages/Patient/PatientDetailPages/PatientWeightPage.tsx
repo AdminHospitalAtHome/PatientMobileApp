@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {View, Dimensions} from 'react-native';
 import {
   getWeightCall,
-  addWeight,
-  addWeightAutomaticallyToServer,
+  addWeightAutomatically,
+  addWeightOnClick,
 } from '../../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
@@ -16,11 +16,6 @@ import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {PatientDetailStyles} from './Styles';
-import DataModal from '../../../Components/AutomaticInputs/DataModal';
-import {
-  MedMDeviceConnection,
-  parseXMLWeightData,
-} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
 
@@ -28,9 +23,7 @@ export default function PatientWeightPage(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
     useState(false);
-  const [dataModalVisible, setDataModalVisible] = useState(false);
   const [input, setInput] = useState('');
-  const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [weightData, setWeightData] = useState(null);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
@@ -40,6 +33,7 @@ export default function PatientWeightPage(): JSX.Element {
   //TODO: Change to dynamic later!!!!
   const patientID = 100000001;
   const screenWidth: number = Dimensions.get('window').width;
+  const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
 
   useEffect(() => {
     getWeightCall(patientID, startDateTime, stopDateTime).then(response => {
@@ -74,7 +68,19 @@ export default function PatientWeightPage(): JSX.Element {
       <InputManualModal
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
-        addButtonFunction={addWeightOnClick}
+        addButtonFunction={() => {
+          return addWeightOnClick(
+            input,
+            patientID,
+            numberRegex,
+            setModalVisible,
+            modalVisible,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
+            setInput,
+          );
+        }}
         inputBoxes={
           <SingleTextInput
             modalTitle={'Add Weight'}
@@ -95,7 +101,15 @@ export default function PatientWeightPage(): JSX.Element {
       <LoadingModal
         setLoadingModalVisible={setLoadingModalVisible}
         loadingModalVisible={loadingModalVisible}
-        sendToServer={addWeightAutomatically}
+        sendToServer={(data: string[]) => {
+          return addWeightAutomatically(
+            data,
+            patientID,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
+          );
+        }}
       />
 
       {addSuccessVisible && (
@@ -104,57 +118,4 @@ export default function PatientWeightPage(): JSX.Element {
       {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
-
-  function addWeightOnClick() {
-    if (input === '' || !numberRegex.test(input)) {
-      //todo : raise error message/dialog
-    } else {
-      addWeight(patientID, Number(input), true).then(successful => {
-        setModalVisible(!modalVisible);
-        if (successful === 'add successful') {
-          setAddSuccessVisible(true);
-        } else {
-          // Failed view here
-        }
-        setStopDateTime(new Date().toISOString());
-      });
-      setInput('');
-    }
-  }
-
-
-  // TODO: Add Bulk function and change to check for error
-  function addWeightAutomatically(data: string[]): Promise<void> {
-    return new Promise(resolve => {
-      let parsedWeight: number[] = [];
-      let parsedDateTime: string[] = [];
-
-      // Parse Data
-      for (let i = 0; i < data.length; i++) {
-        let parsedData: Record<string, any> = parseXMLWeightData(data[i]);
-
-        parsedWeight.push(parsedData.WeightInPounds);
-        parsedDateTime.push(parsedData.DateTimeTaken);
-      }
-
-      addWeightAutomaticallyToServer(
-        patientID,
-        parsedWeight,
-        parsedDateTime,
-        false,
-      )
-        .then(() => {
-          console.log('Added Good');
-          setAddSuccessVisible(true);
-          setStopDateTime(new Date().toISOString());
-          resolve();
-        })
-        .catch(() => {
-          console.log('FAIL');
-          setAddFailedVisible(true);
-          setStopDateTime(new Date().toISOString());
-          resolve();
-        });
-    });
-  }
 }

@@ -1,4 +1,7 @@
 import timeTableParser from './tableTimeParser';
+import {parseXMLWeightData} from './BluetoothAutomaticVitals/MedMDeviceConnection';
+import React from 'react';
+
 export function parseWeightData(weightJson: any) {
   let weightArr = [];
   for (let i = 0; i < weightJson.length; i++) {
@@ -92,4 +95,71 @@ export function getRecentWeight(patientID: number): Promise<string> {
         }
       });
   });
+}
+
+export function addWeightAutomatically(
+  data: string[],
+  patientID: number,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+): Promise<void> {
+  return new Promise(resolve => {
+    let parsedWeight: number[] = [];
+    let parsedDateTime: string[] = [];
+
+    // Parse Data
+    for (let i = 0; i < data.length; i++) {
+      let parsedData: Record<string, any> = parseXMLWeightData(data[i]);
+
+      parsedWeight.push(parsedData.WeightInPounds);
+      parsedDateTime.push(parsedData.DateTimeTaken);
+    }
+
+    addWeightAutomaticallyToServer(
+      patientID,
+      parsedWeight,
+      parsedDateTime,
+      false,
+    )
+      .then(() => {
+        console.log('Added Good');
+        setAddSuccessVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
+      })
+      .catch(() => {
+        console.log('FAIL');
+        setAddFailedVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
+      });
+  });
+}
+
+export function addWeightOnClick(
+  input: string,
+  patientID: number,
+  numberRegex: RegExp,
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  modalVisible: boolean,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+  setInput: React.Dispatch<React.SetStateAction<string>>,
+) {
+  if (input === '' || !numberRegex.test(input)) {
+  } else {
+    addWeight(patientID, Number(input), true).then(successful => {
+      setModalVisible(!modalVisible);
+      if (successful === 'add successful') {
+        setAddSuccessVisible(true);
+      } else {
+        // Failed view here
+        setAddFailedVisible(true);
+      }
+      setStopDateTime(new Date().toISOString());
+    });
+    setInput('');
+  }
 }

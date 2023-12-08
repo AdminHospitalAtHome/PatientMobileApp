@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import {defaultStyle, accessStyle} from './navStyle';
 import {
   getBloodPressure,
@@ -8,7 +8,6 @@ import {
 import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {useIsFocused} from '@react-navigation/native';
-import SingleLineChart from '../SingleLineChart';
 import DoubleLineChart from '../DoubleLineChart';
 
 const patientID = 100000001;
@@ -28,6 +27,7 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
   useEffect(() => {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(res => {
       setBloodPresureData(res);
+      console.log("NavCard",res);
     });
     getAccessibilityMode()
       .then(res => {
@@ -63,7 +63,8 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
       <View style={defaultStyle.container}>
         <View style={defaultStyle.labelHolder}>
           <Text style={defaultStyle.label}>
-            Blood Pressure: {recentSystolicBloodPressure}
+            {/* eslint-disable-next-line prettier/prettier */}
+            Blood Pressure: {recentSystolicBloodPressure + ' / ' + recentDiastolicBloodPressure}
           </Text>
         </View>
         <View style={defaultStyle.chartHolder}>

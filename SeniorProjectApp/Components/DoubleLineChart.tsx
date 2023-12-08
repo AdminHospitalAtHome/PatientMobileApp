@@ -30,6 +30,12 @@ export default function DoubleLineChart({
   const dates: number[] = [];
 
   if (data) {
+    // for (let i = 0; i < data.length; i++) {
+    //   chartData1.push(data[i][1]);
+    //   chartData2.push(data[i][2]);
+    //   dates.push(data[i][0]);
+    // }
+
     data.forEach((i): void => {
       chartData1.push(i[1]);
       chartData2.push(i[2]);

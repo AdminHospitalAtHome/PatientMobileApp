@@ -1,4 +1,5 @@
 import timeTableParser from './tableTimeParser';
+import React from 'react';
 
 export function addBloodPressure(
   patientID: number,
@@ -49,10 +50,8 @@ function parseBloodPressureData(bloodPressureJSON: any) {
   return bloodPressureArr;
 }
 
-export function getRecentBloodPressure(
-  patientID: number,
-): Promise<string[]> {
-  return new Promise((resolve) => {
+export function getRecentBloodPressure(patientID: number): Promise<string[]> {
+  return new Promise(resolve => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentBloodPressure?patientID=${patientID}`,
     )
@@ -68,4 +67,44 @@ export function getRecentBloodPressure(
         }
       });
   });
+}
+
+export function addBloodPressureOnClick(
+  inputSystolic: string,
+  inputDiastolic: string,
+  numberRegex: RegExp,
+  patientID: number,
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  modalVisible: boolean,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+  setInputDiastolic: React.Dispatch<React.SetStateAction<string>>,
+  setInputSystolic: React.Dispatch<React.SetStateAction<string>>,
+): void {
+  if (
+    inputSystolic === '' ||
+    inputDiastolic === '' ||
+    !numberRegex.test(inputSystolic) ||
+    !numberRegex.test(inputDiastolic)
+  ) {
+  } else {
+    addBloodPressure(
+      patientID,
+      Number(inputSystolic),
+      Number(inputDiastolic),
+      true,
+    ).then(successful => {
+      setModalVisible(!modalVisible);
+      if (successful === 'add successful') {
+        setAddSuccessVisible(true);
+      } else {
+        // Failed view here
+        setAddFailedVisible(true);
+      }
+      setStopDateTime(new Date().toISOString());
+    });
+    setInputDiastolic('');
+    setInputSystolic('');
+  }
 }

@@ -1,19 +1,12 @@
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {
-  HAH_Device,
-  HAH_Device_Connection,
-  VitalType,
-} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
-import {
-  MedMDevice,
-  MedMDeviceConnection,
-} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import React, {useEffect} from 'react';
+import {HAH_Device_Connection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import {MedMDeviceConnection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
 export default function LoadingModal({
   setLoadingModalVisible,
   loadingModalVisible,
-    sendToServer,
+  sendToServer,
 }: {
   setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   loadingModalVisible: boolean;
@@ -25,6 +18,8 @@ export default function LoadingModal({
     if (loadingModalVisible) {
       connection.startCollector(setLoadingModalVisible, sendToServer);
     }
+    // We do not want this code to run when any dependecy changes, only when loadingModalVisible Changes. Thus, we suppressed ESLINT
+    // eslint-disable-next-line
   }, [loadingModalVisible]);
 
   return (

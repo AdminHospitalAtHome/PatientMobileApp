@@ -1,20 +1,16 @@
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {
-  HAH_Device,
   HAH_Device_Connection,
   VitalType,
 } from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
-import {
-  MedMDevice,
-  MedMDeviceConnection
-} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {MedMDeviceConnection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
 export default function ChooseDeviceModal({
   setModalVisible,
   modalVisible,
   setLoadingModalVisible,
-    vitalType,
+  vitalType,
 }: {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   modalVisible: boolean;
@@ -23,7 +19,7 @@ export default function ChooseDeviceModal({
 }): JSX.Element {
   const connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
   const [deviceName, setDeviceName] = useState('');
-  let address = "";
+  let address = '';
 
   connection
     .default_paried_device(vitalType)
@@ -31,7 +27,6 @@ export default function ChooseDeviceModal({
       setDeviceName(res.modelName); // TODO: Maybe change later
 
       address = res.address;
-
     })
     .catch(() => setDeviceName('N/A'));
 
@@ -72,15 +67,10 @@ export default function ChooseDeviceModal({
   );
 
   function yesOnPress(): void {
-    connection.setDeviceFilter(address).then(()=> {
-
+    connection.setDeviceFilter(address).then(() => {
       setModalVisible(false);
       setLoadingModalVisible(true);
     });
-
-
-    //TODO: Temporary REMOVE!!!!
-
   }
 }
 
@@ -155,7 +145,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
   },
-
 
   buttonBorder: {
     borderColor: 'white',
