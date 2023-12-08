@@ -40,3 +40,39 @@ run `brew install --cask zulu11`
 #### install Android Studio
 download android studio at https://developer.android.com/studio
 </details>
+
+## 🧰 Development Resources
+<details>
+  <summary>basics</summary>
+
+#### react.js  
+- https://react.dev  
+#### react native  
+- https://reactnative.dev  
+#### page navigation
+- doc: [react navigation](https://reactnavigation.org)
+- page control: [stack navigator](https://reactnavigation.org/docs/stack-navigator)
+- menu bar: [tab navigator](https://reactnavigation.org/docs/bottom-tab-navigator)
+</details>
+
+<details>
+  <summary>vitals</summary>
+
+#### frontend
+- vital trend chart: [react-native-chart-kit](https://github.com/indiespirit/react-native-chart-kit)
+- vital data table: [react-native-reanimated-table](https://github.com/dohooo/react-native-reanimated-table)
+
+#### backend
+- database: [azure database services](https://azure.microsoft.com/en-us/products/azure-sql/database/)
+- function: [azure functions](https://azure.microsoft.com/en-us/products/functions/)
+</details>
+
+<details>
+  <summary>chat</summary>
+
+#### frontend
+- chat conposite: [azure communication ui library](https://azure.github.io/communication-ui-library)
+
+#### backend
+- thread control: [acure communication service](https://azure.microsoft.com/en-us/products/communication-services) 
+</details>
