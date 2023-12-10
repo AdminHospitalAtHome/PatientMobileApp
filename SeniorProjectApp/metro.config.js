@@ -14,8 +14,6 @@ const config = {
             tls: require.resolve('node-libs-react-native/mock/tls')
         }
     }
-
-
 };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);

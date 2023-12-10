@@ -7,7 +7,9 @@
 import ChatPage from './Pages/ChatPage';
 import ChatContactPage from './Pages/Patient/ChatContactPage';
 import ChatTest from './Pages/Patient/ChatTest';
-
+import 'node-libs-react-native/globals';
+import 'react-native-get-random-values';
+import 'react-native-url-polyfill/auto';
 <script src="http://locralhost:8097" />;
 
 import React from 'react';
