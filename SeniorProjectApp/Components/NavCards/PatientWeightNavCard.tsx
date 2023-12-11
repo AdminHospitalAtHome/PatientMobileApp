@@ -10,15 +10,14 @@ import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFuncti
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
 
-export default function PatientWeightNavCard(): JSX.Element {
+export default function PatientWeightNavCard(): React.JSX.Element {
   // This is done since there everytime the page is reloaded (any change) all the states are refreshed, so we do not want to call this function repeatedly if we do not need to.
-  const defaultStartTime: string = getDefaultStartTime();
   const initialStartTime: string = new Date().toISOString();
 
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [weightData, setWeightData] = useState<any[][]>([]);
   const [stopDateTime, setStopDateTime] = useState(initialStartTime);
-  const [startDateTime, setStartDateTime] = useState(defaultStartTime);
+  const startDateTime = getDefaultStartTime();
   const patientID: number = 100000001;
   const [recentWeight, setRecentWeight] = useState('Loading');
   const isFocused = useIsFocused();
@@ -33,6 +32,7 @@ export default function PatientWeightNavCard(): JSX.Element {
     setStopDateTime(tmpDate.toISOString());
     getWeightCall(patientID, startDateTime, stopDateTime).then(res => {
       setWeightData(res);
+      setRecentWeight(getRecentWeight(res));
     });
     getAccessibilityMode()
       .then(res => {
@@ -41,7 +41,7 @@ export default function PatientWeightNavCard(): JSX.Element {
       .catch(res => {
         setAccessibilityMode(res);
       });
-    setRecentWeight(getRecentWeight(weightData));
+
     // TODO: Look into using useReducer() and Reducers later to prevent infinite loop if all states are in dependency array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
