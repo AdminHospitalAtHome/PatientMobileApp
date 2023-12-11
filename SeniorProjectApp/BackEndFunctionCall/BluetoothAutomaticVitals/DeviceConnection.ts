@@ -40,11 +40,13 @@ export interface HAH_Device {
 }
 
 export enum VitalType {
+  // This is to keep it from flagging ESLint Errors for all the vitals we have not used.
+  // noinspection JSUnusedGlobalSymbols
   WEIGHT = 'Weight',
   ACTIVITY = 'Activity',
   BLOOD_COAGULATION = 'BloodCoagulation',
   BLOOD_PRESSURE = 'BloodPressure',
-  COLESTEROL = 'Cholesterol',
+  CHOLESTEROL = 'Cholesterol',
   ECG = 'ECG',
   EXERCISE = 'Exercise',
   FETAL_DOPPLER = 'Fetaldoppler',
@@ -54,10 +56,10 @@ export enum VitalType {
   LACTATE = 'Lactate',
   MEDICATION_IN = 'MedicationIn',
   NOTE = 'Note',
-  BLOOOD_OXYGEN = 'Oxygen',
-  RESPIRTION_RATE = 'RespirationRate',
+  BLOOD_OXYGEN = 'Oxygen',
+  RESPIRATION_RATE = 'RespirationRate',
   SLEEP = 'Sleep',
   SPIROMETRY = 'Spirometry',
-  TEMPERATURE = 'Tempature',
+  TEMPERATURE = 'Temperature',
   URIC_ACID = 'UricAcid',
 }

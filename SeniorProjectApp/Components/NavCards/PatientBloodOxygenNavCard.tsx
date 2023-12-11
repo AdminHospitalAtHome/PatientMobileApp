@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import SingleLineChart from '../SingleLineChart';
 import {
   getBloodOxygen,
@@ -10,7 +10,7 @@ import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFuncti
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
 
-export default function PatientBloodOxygenNavCard(): JSX.Element {
+export default function PatientBloodOxygenNavCard(): React.JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
   const [bloodOxygenData, setBloodOxygenData] = useState(null);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());

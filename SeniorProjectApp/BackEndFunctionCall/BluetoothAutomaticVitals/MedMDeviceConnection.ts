@@ -66,14 +66,14 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
 
   pairable_device_list(): Promise<HAH_Device[]> {
     console.log('get pairable devices');
-    return MedMDeviceManager.pairableDeviceList().then(res =>
+    return MedMDeviceManager.pairableDeviceList().then((res: string) =>
       parseDevicesJson(res),
     );
   }
 
   paired_device_list(): Promise<HAH_Device[]> {
     console.log('Getting Paired Devices');
-    return MedMDeviceManager.getPairedDevices().then(res =>
+    return MedMDeviceManager.getPairedDevices().then((res: string) =>
       parseDevicesJson(res),
     );
   }
@@ -97,7 +97,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
         .getDefaultDevice(vital)
         .then(address => {
           MedMDeviceManager.getDeviceByAddress(address)
-            .then(deviceJson => {
+            .then((deviceJson: string) => {
               resolve(parseDeviceJson(deviceJson));
             })
             .catch(() => {
@@ -161,7 +161,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
     sendToServer: (data: string[]) => Promise<void>,
   ): void {
-    MedMDeviceManager.startCollector(data => {
+    MedMDeviceManager.startCollector((data: string[]) => {
       sendToServer(data).then(() => {
         setLoadingModalVisible(false);
       });

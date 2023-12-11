@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import SingleLineChart from '../SingleLineChart';
 import {
   getWeightCall,
@@ -11,17 +11,26 @@ import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
 
 export default function PatientWeightNavCard(): JSX.Element {
+  // This is done since there everytime the page is reloaded (any change) all the states are refreshed, so we do not want to call this function repeatedly if we do not need to.
+  const defaultStartTime: string = getDefaultStartTime();
+  const initialStartTime: string = new Date().toISOString();
+
   const [accessibilityMode, setAccessibilityMode] = useState(false);
-  const [weightData, setWeightData] = useState(null);
-  const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
-  const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
+  const [weightData, setWeightData] = useState<any[][]>([]);
+  const [stopDateTime, setStopDateTime] = useState(initialStartTime);
+  const [startDateTime, setStartDateTime] = useState(defaultStartTime);
   const patientID: number = 100000001;
-  const [recentWeight, setRecentWeight] = useState(null);
+  const [recentWeight, setRecentWeight] = useState('Loading');
   const isFocused = useIsFocused();
   const windowWidth: number = Dimensions.get('window').width;
   const windowHeight: number = Dimensions.get('window').height;
 
   useEffect(() => {
+    // Updating Date to get any added data.
+    let tmpDate = new Date();
+    // Adding 1 minute to current Date to deal with not loading data that was just added.
+    tmpDate.setMinutes(tmpDate.getMinutes() + 1);
+    setStopDateTime(tmpDate.toISOString());
     getWeightCall(patientID, startDateTime, stopDateTime).then(res => {
       setWeightData(res);
     });
@@ -32,8 +41,9 @@ export default function PatientWeightNavCard(): JSX.Element {
       .catch(res => {
         setAccessibilityMode(res);
       });
-
-    getRecentWeight(patientID).then(res => setRecentWeight(res));
+    setRecentWeight(getRecentWeight(weightData));
+    // TODO: Look into using useReducer() and Reducers later to prevent infinite loop if all states are in dependency array.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   if (accessibilityMode) {

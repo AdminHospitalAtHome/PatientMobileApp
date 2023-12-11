@@ -19,7 +19,7 @@ export default function PatientHeartRatePage(): JSX.Element {
   const [input, setInput] = useState<string>('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
-  const [heartData, setHeartData] = useState(null);
+  const [heartData, setHeartData] = useState<any[][]>([]);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
@@ -28,7 +28,6 @@ export default function PatientHeartRatePage(): JSX.Element {
   const screenWidth: number = Dimensions.get('window').width;
 
   useEffect(() => {
-    // @ts-ignore
     getHeartRate(patientID, startDateTime, stopDateTime).then(setHeartData);
   }, [stopDateTime, startDateTime]);
 

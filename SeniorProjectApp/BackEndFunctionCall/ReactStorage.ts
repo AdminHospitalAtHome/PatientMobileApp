@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
 import {VitalType} from './BluetoothAutomaticVitals/DeviceConnection';
 
 export class ReactStorage {
@@ -38,26 +37,20 @@ export class ReactStorage {
 
   public async getDefaultDevice(vitalType: VitalType): Promise<string> {
     return new Promise((resolve, reject) => {
-      console.log('CALLED LOAD');
       try {
         const val = AsyncStorage.getItem(vitalType.valueOf());
         val
           .then(res => {
             if (res !== null) {
-              console.log('Loaded ' + res);
               resolve(res);
             } else {
-              console.log('Load Failed');
               reject('no device');
             }
           })
           .catch(() => {
-            console.log('Load Failed 1');
             reject('no device');
           });
       } catch (e) {
-        console.log(e);
-        console.log('Load Failed 2');
         reject('no device');
       }
     });

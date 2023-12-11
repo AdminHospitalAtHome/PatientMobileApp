@@ -17,13 +17,13 @@ import {PatientDetailStyles} from './Styles';
 
 const patientID = 100000001;
 const screenWidth = Dimensions.get('window').width;
-export default function PatientBloodPressurePage(): JSX.Element {
+export default function PatientBloodPressurePage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputSystolic, setInputSystolic] = useState('');
   const [inputDiastolic, setInputDiastolic] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
-  const [bloodPressureData, setBloodPressureData] = useState(null);
+  const [bloodPressureData, setBloodPressureData] = useState<any[][]>([]);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
@@ -31,9 +31,7 @@ export default function PatientBloodPressurePage(): JSX.Element {
 
   useEffect(() => {
     getBloodPressure(patientID, startDateTime, stopDateTime).then(data => {
-      // @ts-ignore
       setBloodPressureData(data);
-      console.log("DetailPage", data);
     });
   }, [stopDateTime, startDateTime]);
 

@@ -19,13 +19,13 @@ import {PatientDetailStyles} from './Styles';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
 
-export default function PatientWeightPage(): JSX.Element {
+export default function PatientWeightPage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
     useState(false);
   const [input, setInput] = useState('');
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
-  const [weightData, setWeightData] = useState(null);
+  const [weightData, setWeightData] = useState<any[][]>([]);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);

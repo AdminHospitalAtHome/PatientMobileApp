@@ -16,12 +16,12 @@ import InputManualModal from '../../../Components/ManualInputs/InputManualModal'
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import SingleLineChart from '../../../Components/SingleLineChart';
 
-export default function PatientBloodOxygen(): JSX.Element {
+export default function PatientBloodOxygen(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
-  const [bloodOxygenData, setBloodOxygenData] = useState(null);
+  const [bloodOxygenData, setBloodOxygenData] = useState<any[][]>([]);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
@@ -31,8 +31,7 @@ export default function PatientBloodOxygen(): JSX.Element {
 
   useEffect(() => {
     getBloodOxygen(patientID, startDateTime, stopDateTime).then(
-      // @ts-ignore
-      setBloodOxygenData, //TODO: suppressing typescript typing error, Fix Later...
+      setBloodOxygenData,
     );
   }, [stopDateTime, startDateTime]);
 
