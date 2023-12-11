@@ -1,6 +1,6 @@
 import 'react-native';
 
-import {it, expect} from '@jest/globals';
+import {it, expect, jest} from '@jest/globals';
 
 import {
   HAH_Device_Connection,
@@ -15,17 +15,9 @@ import {
   parseXMLWeightData,
 } from '../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
-// it('Test register license key', async () => {
-//   let connection: HAH_Device_Connection = new MedMDeviceConnection();
-//
-//   await expect(
-//     connection.register('Insert License Key Here'),
-//   ).resolves.toBeUndefined();
-//
-//   await expect(
-//     connection.register('Invalid License Key'),
-//   ).rejects.toBeUndefined();
-// });
+jest.mock('@react-native-async-storage/async-storage', () =>
+    require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
 
 it('Test List Pairable Devices', () => {
   let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();

@@ -17,6 +17,9 @@ import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
 // This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
 jest.setTimeout(40000);
+jest.mock('@react-native-async-storage/async-storage', () =>
+    require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
 
 it('Adds and Gets Weight', async () => {
   const startDateTime: string = new Date().toISOString();
