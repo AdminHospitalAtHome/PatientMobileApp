@@ -115,13 +115,17 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    packagingOptions {
+        pickFirst 'META-INF/LICENSE.md'
+        pickFirst 'META-INF/NOTICE.md'
+    }
 }
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation files('../../../../devicekit_android_release_2/MedMDeviceKit-2.13.300.123.aar')
-    implementation("com.azure.android:azure-communication-ui-chat:1.0.0-beta.2")
+    implementation("com.azure.android:azure-communication-ui-chat:+")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
