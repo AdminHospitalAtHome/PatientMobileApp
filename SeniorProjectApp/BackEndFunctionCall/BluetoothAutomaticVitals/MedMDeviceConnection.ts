@@ -276,19 +276,30 @@ export function parseXMLWeightData(xml: string): Record<string, any> {
   }
 }
 
-//Parses UTC datetime and average heart rate
+// Since HeartRate can come from multiple sources, our parser needs to be able to handle that
 export function parseXMLHeartRateData(xml: string): Record<string, any> {
   try {
     const parser = new XMLParser();
     let obj = parser.parse(xml);
+
+    let searchTerm = '';
+    let pulseTerm = '';
+    if (obj['measurements-bloodpressure'] !== null) {
+      searchTerm = 'measurements-bloodpressure';
+      pulseTerm = 'pulse';
+    }
+    if (searchTerm === '') {
+      throw new Error('Unsopported Measurement Type');
+    }
+
     let heartRateInBPM: number = Math.floor(
-      Number(obj['measurements-heartrate-stream']['pulse-average']),
+      Number(obj[searchTerm][pulseTerm]),
     );
     if (Number.isNaN(heartRateInBPM)) {
       throw new Error('Invalid Number');
     }
     let dateTimeTaken: string = new Date(
-      obj['measurements-heartrate-stream']['measured-at'],
+      obj[searchTerm]['measured-at'],
     ).toISOString();
     return {HeartRateInBPM: heartRateInBPM, DateTimeTaken: dateTimeTaken};
   } catch (e) {

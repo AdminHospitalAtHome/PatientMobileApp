@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {View, Dimensions} from 'react-native';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import {
-  addHeartRate,
+  addHeartRateAutomatically,
+  addHeartRateOnClick,
   getHeartRate,
 } from '../../../BackEndFunctionCall/heartRateFunction';
 import DateSelectionBar from '../../../Components/DateSelectionBar';
@@ -14,8 +15,13 @@ import InputManualModal from '../../../Components/ManualInputs/InputManualModal'
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import SingleLineChart from '../../../Components/SingleLineChart';
 import {PatientDetailStyles} from './Styles';
-export default function PatientHeartRatePage(): JSX.Element {
+import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
+import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
+export default function PatientHeartRatePage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
+  const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
+    useState(false);
   const [input, setInput] = useState<string>('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
@@ -23,6 +29,7 @@ export default function PatientHeartRatePage(): JSX.Element {
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [addFailedVisible, setAddFailedVisible] = useState(false);
+  const [loadingModalVisible, setLoadingModalVisible] = useState(false);
   const patientID = 100000001;
 
   const screenWidth: number = Dimensions.get('window').width;
@@ -30,24 +37,6 @@ export default function PatientHeartRatePage(): JSX.Element {
   useEffect(() => {
     getHeartRate(patientID, startDateTime, stopDateTime).then(setHeartData);
   }, [stopDateTime, startDateTime]);
-
-  function addHeartRateOnClick(): void {
-    if (input === '' || !numberRegex.test(input)) {
-      //todo : raise error message/dialog
-    } else {
-      addHeartRate(patientID, Number(input), true).then(successful => {
-        setModalVisible(!modalVisible);
-        if (successful === 'add successful') {
-          setAddSuccessVisible(true);
-        } else {
-          // Failed view here
-          setAddFailedVisible(true);
-        }
-        setStopDateTime(new Date().toISOString());
-      });
-      setInput('');
-    }
-  }
 
   return (
     <View style={PatientDetailStyles.container}>
@@ -73,12 +62,24 @@ export default function PatientHeartRatePage(): JSX.Element {
       </View>
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setModalVisible}
+        setAutoModalVisible={setChooseDeviceModalVisible}
       />
       <InputManualModal
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
-        addButtonFunction={addHeartRateOnClick}
+        addButtonFunction={() => {
+          return addHeartRateOnClick(
+            input,
+            patientID,
+            numberRegex,
+            setModalVisible,
+            modalVisible,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
+            setInput,
+          );
+        }}
         inputBoxes={
           <SingleTextInput
             modalTitle={'Add Heart Rate'}
@@ -88,6 +89,27 @@ export default function PatientHeartRatePage(): JSX.Element {
           />
         }
       />
+      <ChooseDeviceModal
+        setModalVisible={setChooseDeviceModalVisible}
+        modalVisible={chooseDeviceModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
+        vitalType={VitalType.HEART_RATE}
+      />
+
+      <LoadingModal
+        setLoadingModalVisible={setLoadingModalVisible}
+        loadingModalVisible={loadingModalVisible}
+        sendToServer={(data: string[]) => {
+          return addHeartRateAutomatically(
+            data,
+            patientID,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
+          );
+        }}
+      />
+
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}

@@ -1,11 +1,13 @@
 import timeTableParser from './tableTimeParser';
+import React from 'react';
+import {parseXMLHeartRateData} from './BluetoothAutomaticVitals/MedMDeviceConnection';
 
 export function addHeartRate(
   patientID: number,
   heartRate: number,
   IfManualInput: boolean,
 ) {
-  const promise: Promise<any> = new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addHeartRate',
@@ -21,7 +23,79 @@ export function addHeartRate(
       }
     });
   });
-  return promise;
+}
+
+export function addHeartRateAutomaticallyToServer(
+  patientId: number,
+  heartRate: number[],
+  dateTimeTaken: string[],
+  ifManualInput: boolean,
+): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
+    let dateTimeTakenString = '[';
+    let heartRateString = '[';
+    for (let i = 0; i < heartRate.length; i++) {
+      dateTimeTakenString += '"' + dateTimeTaken[i] + '"';
+      heartRateString += '"' + heartRate[i] + '"';
+      if (i !== heartRate.length - 1) {
+        dateTimeTakenString += ',';
+        heartRateString += ',';
+      }
+    }
+    dateTimeTakenString += ']';
+    heartRateString += ']';
+
+    fetch(
+      'https://hosptial-at-home-js-api.azurewebsites.net/api/addHeartRates',
+      {
+        method: 'POST',
+        body: `{"PatientID": ${patientId}, "DateTimeTaken": ${dateTimeTakenString},"HeartRateInBPM": ${heartRateString}, "IfManualInput": ${ifManualInput}}`,
+      },
+    ).then(response => {
+      if (response.status === 201) {
+        resolve('add successful');
+      } else {
+        reject('failed to add Heart Rate');
+      }
+    });
+  });
+}
+
+export function addHeartRateAutomatically(
+  data: string[],
+  patientID: number,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+): Promise<void> {
+  return new Promise(resolve => {
+    let parsedHeartRate: number[] = [];
+    let parsedDateTime: string[] = [];
+
+    // Parse Data
+    for (let i = 0; i < data.length; i++) {
+      let parsedData: Record<string, any> = parseXMLHeartRateData(data[i]);
+
+      parsedHeartRate.push(parsedData.HeartRateInBPM);
+      parsedDateTime.push(parsedData.DateTimeTaken);
+    }
+    addHeartRateAutomaticallyToServer(
+      patientID,
+      parsedHeartRate,
+      parsedDateTime,
+      false,
+    )
+      .then(() => {
+        setAddSuccessVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
+      })
+      .catch(() => {
+        setAddFailedVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
+      });
+  });
 }
 
 export function getHeartRate(
@@ -36,20 +110,11 @@ export function getHeartRate(
     .then(json => parseHeartRateData(json));
 }
 
-export async function getRecentHeartRate(patientID: number): Promise<string> {
-  return new Promise(resolve => {
-    fetch(
-      `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentHeartRate?patientID=${patientID}`,
-    )
-      .then(response => response.json())
-      .then(json => {
-        if (json.length === 1) {
-          resolve(`${json[0].HeartRateInBPM}`);
-        } else {
-          resolve('N/A');
-        }
-      });
-  });
+export function getRecentHeartRate(heartRateData: any[][]): string {
+  if (heartRateData.length === 0) {
+    return 'N/A';
+  }
+  return `${heartRateData[heartRateData.length - 1][1]} BPM`;
 }
 
 export function parseHeartRateData(heartRateJson: any) {
@@ -61,4 +126,31 @@ export function parseHeartRateData(heartRateJson: any) {
     ]);
   }
   return heartRateArr;
+}
+
+export function addHeartRateOnClick(
+  input: string,
+  patientID: number,
+  numberRegex: RegExp,
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  modalVisible: boolean,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+  setInput: React.Dispatch<React.SetStateAction<string>>,
+): void {
+  if (input === '' || !numberRegex.test(input)) {
+  } else {
+    addHeartRate(patientID, Number(input), true).then(successful => {
+      setModalVisible(!modalVisible);
+      if (successful === 'add successful') {
+        setAddSuccessVisible(true);
+      } else {
+        // Failed view here
+        setAddFailedVisible(true);
+      }
+      setStopDateTime(new Date().toISOString());
+    });
+    setInput('');
+  }
 }

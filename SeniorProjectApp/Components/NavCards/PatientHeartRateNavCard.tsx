@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 import {defaultStyle, accessStyle} from './navStyle';
@@ -10,19 +10,27 @@ import {
   getRecentHeartRate,
 } from '../../BackEndFunctionCall/heartRateFunction';
 const patientID = 100000001;
-export default function PatientHeartRateNavCard(): JSX.Element {
-  const [accessibilityMode, setAccessibilityMode] = useState(false);
-  const [heartRateData, setHeartRateData] = useState(null);
-  const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
-  const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
-  const [recentHeartRate, setRecentHeartRate] = useState('N/A');
-  const isFocused = useIsFocused();
 
+export default function PatientHeartRateNavCard(): React.JSX.Element {
+  const initialStartTime: string = new Date().toISOString();
+
+  const [accessibilityMode, setAccessibilityMode] = useState(false);
+  const [heartRateData, setHeartRateData] = useState<any[][]>([]);
+  const [stopDateTime, setStopDateTime] = useState(initialStartTime);
+  const startDateTime = getDefaultStartTime();
+  const [recentHeartRate, setRecentHeartRate] = useState('Loading');
+  const isFocused = useIsFocused();
   const windowWidth: number = Dimensions.get('window').width;
   const windowHeight: number = Dimensions.get('window').height;
+
   useEffect(() => {
+    let tmpDate = new Date();
+    // Adding 1 minute to current Date to deal with not loading data that was just added.
+    tmpDate.setMinutes(tmpDate.getMinutes() + 1);
+    setStopDateTime(tmpDate.toISOString());
     getHeartRate(patientID, startDateTime, stopDateTime).then(res => {
       setHeartRateData(res);
+      setRecentHeartRate(getRecentHeartRate(res));
     });
     getAccessibilityMode()
       .then(res => {
@@ -31,7 +39,7 @@ export default function PatientHeartRateNavCard(): JSX.Element {
       .catch(res => {
         setAccessibilityMode(res);
       });
-    getRecentHeartRate(patientID).then(setRecentHeartRate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   if (accessibilityMode) {
