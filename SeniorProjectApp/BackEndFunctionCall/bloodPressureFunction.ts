@@ -1,5 +1,18 @@
 import timeTableParser from './tableTimeParser';
 import React from 'react';
+import {parseXMLBloodPressureData} from './BluetoothAutomaticVitals/MedMDeviceConnection';
+
+export function parseBloodPressureData(bloodPressureJSON: any) {
+  let bloodPressureArr = [];
+  for (let i = 0; i < bloodPressureJSON.length; i++) {
+    bloodPressureArr.push([
+      timeTableParser(bloodPressureJSON[i].DateTimeTaken),
+      bloodPressureJSON[i].SystolicBloodPressureInMmHg,
+      bloodPressureJSON[i].DiastolicBloodPressureInMmHg,
+    ]);
+  }
+  return bloodPressureArr;
+}
 
 export function addBloodPressure(
   patientID: number,
@@ -7,7 +20,7 @@ export function addBloodPressure(
   DiastolicBloodPressureInMmHg: number,
   IfManualInput: boolean,
 ) {
-  const promise: Promise<any> = new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addBloodPressure',
@@ -23,50 +36,110 @@ export function addBloodPressure(
       }
     });
   });
-  return promise;
 }
 
-export function getBloodPressure(
-  patientID: number,
-  startDateTime: string,
-  stopDateTime: string,
-) {
-  return fetch(
-    `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodPressure?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-  )
-    .then(response => response.json())
-    .then(json => parseBloodPressureData(json));
-}
-
-function parseBloodPressureData(bloodPressureJSON: any) {
-  let bloodPressureArr = [];
-  for (var i = 0; i < bloodPressureJSON.length; i++) {
-    bloodPressureArr.push([
-      timeTableParser(bloodPressureJSON[i].DateTimeTaken),
-      bloodPressureJSON[i].SystolicBloodPressureInMmHg,
-      bloodPressureJSON[i].DiastolicBloodPressureInMmHg,
-    ]);
-  }
-  return bloodPressureArr;
-}
-
-export function getRecentBloodPressure(patientID: number): Promise<string[]> {
-  return new Promise(resolve => {
+export function addBloodPressureAutomaticallyToServer(
+  patientId: number,
+  SystolicBloodPressureInMmHg: number[],
+  DiastolicBloodPressureInMmHg: number[],
+  dateTimeTaken: string[],
+  ifManualInput: boolean,
+): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
+    let dateTimeTakenString = '[';
+    let systolicBloodPressureString = '[';
+    let diastolicBloodPressureString = '[';
+    for (let i = 0; i < SystolicBloodPressureInMmHg.length; i++) {
+      dateTimeTakenString += '"' + dateTimeTaken[i] + '"';
+      systolicBloodPressureString += '"' + SystolicBloodPressureInMmHg[i] + '"';
+      diastolicBloodPressureString +=
+        '"' + DiastolicBloodPressureInMmHg[i] + '"';
+      if (i !== SystolicBloodPressureInMmHg.length - 1) {
+        dateTimeTakenString += ',';
+        systolicBloodPressureString += ',';
+        diastolicBloodPressureString += ',';
+      }
+    }
+    dateTimeTakenString += ']';
+    systolicBloodPressureString += ']';
+    diastolicBloodPressureString += ']';
+    console.log(
+      `{"PatientID": ${patientId}, "DateTimeTaken": "${dateTimeTakenString}", "SystolicBloodPressureInMmHg": ${systolicBloodPressureString},"DiastolicBloodPressureInMmHg": ${diastolicBloodPressureString}, "IfManualInput": ${ifManualInput}}`,
+    );
     fetch(
-      `https://hosptial-at-home-js-api.azurewebsites.net/api/getRecentBloodPressure?patientID=${patientID}`,
+      'https://hosptial-at-home-js-api.azurewebsites.net/api/addBloodPressures',
+      {
+        method: 'POST',
+        body: `{"PatientID": ${patientId}, "DateTimeTaken": ${dateTimeTakenString}, "SystolicBloodPressureInMmHg": ${systolicBloodPressureString},"DiastolicBloodPressureInMmHg": ${diastolicBloodPressureString}, "IfManualInput": ${ifManualInput}}`,
+      },
+    ).then(response => {
+      if (response.status === 201) {
+        resolve('add successful');
+      } else {
+        reject('failed to add blood pressure');
+        console.log(response);
+      }
+    });
+  });
+}
+
+export function addBloodPressureAutomatically(
+  data: string[],
+  patientID: number,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+): Promise<void> {
+  return new Promise(resolve => {
+    let parsedSystolicBloodPressure: number[] = [];
+    let parsedDiastolicBloodPressure: number[] = [];
+    let parsedDateTime: string[] = [];
+
+    // Parse Data
+    for (let i = 0; i < data.length; i++) {
+      let parsedData: Record<string, any> = parseXMLBloodPressureData(data[i]);
+
+      parsedSystolicBloodPressure.push(parsedData.SystolicBloodPressureInmmHg);
+      parsedDiastolicBloodPressure.push(
+        parsedData.DiastolicBloodPressureInmmHg,
+      );
+      parsedDateTime.push(parsedData.DateTimeTaken);
+    }
+
+    addBloodPressureAutomaticallyToServer(
+      patientID,
+      parsedSystolicBloodPressure,
+      parsedDiastolicBloodPressure,
+      parsedDateTime,
+      false,
     )
-      .then(res => res.json())
-      .then(output => {
-        if (output.length === 1) {
-          resolve([
-            `${output[0].SystolicBloodPressureInMmHg}`,
-            `${output[0].DiastolicBloodPressureInMmHg}`,
-          ]);
-        } else {
-          resolve(['N/A', 'N/A']);
-        }
+      .then(() => {
+        setAddSuccessVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
+      })
+      .catch(() => {
+        setAddFailedVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
       });
   });
+}
+
+export function getRecentBloodPressure(
+  bloodPressureData: any[][],
+  type: string,
+): string {
+  if (bloodPressureData.length === 0) {
+    return 'N/A';
+  }
+  if (type === 'Systolic') {
+    return `${bloodPressureData[bloodPressureData.length - 1][1]}`;
+  }
+  if (type === 'Diastolic') {
+    return `${bloodPressureData[bloodPressureData.length - 1][2]}`;
+  }
+  return 'N/A';
 }
 
 export function addBloodPressureOnClick(
@@ -107,4 +180,16 @@ export function addBloodPressureOnClick(
     setInputDiastolic('');
     setInputSystolic('');
   }
+}
+
+export function getBloodPressure(
+  patientID: number,
+  startDateTime: string,
+  stopDateTime: string,
+) {
+  return fetch(
+    `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodPressure?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
+  )
+    .then(response => response.json())
+    .then(json => parseBloodPressureData(json));
 }

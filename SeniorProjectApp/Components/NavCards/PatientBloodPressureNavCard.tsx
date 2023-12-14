@@ -13,21 +13,26 @@ import DoubleLineChart from '../DoubleLineChart';
 const patientID = 100000001;
 export default function PatientBloodPressureNavCard(): JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
-  const [bloodPresureData, setBloodPresureData] = useState(null);
+  const [bloodPresureData, setBloodPresureData] = useState<any[][]>([]);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
-  const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
+  const startDateTime = getDefaultStartTime();
   const [recentSystolicBloodPressure, setRecentSystolicBloodPressure] =
-    useState(null);
+    useState('loading');
   const [recentDiastolicBloodPressure, setRecentDiastolicBloodPressure] =
-    useState(null);
+    useState('loading');
   const windowWidth: number = Dimensions.get('window').width;
   const windowHeight: number = Dimensions.get('window').height;
   const isFocused = useIsFocused();
 
   useEffect(() => {
+    let tmpDate = new Date();
+    // Adding 1 minute to current Date to deal with not loading data that was just added.
+    tmpDate.setMinutes(tmpDate.getMinutes() + 1);
+    setStopDateTime(tmpDate.toISOString());
     getBloodPressure(patientID, startDateTime, stopDateTime).then(res => {
       setBloodPresureData(res);
-      console.log("NavCard",res);
+      setRecentSystolicBloodPressure(getRecentBloodPressure(res, 'Systolic'));
+      setRecentDiastolicBloodPressure(getRecentBloodPressure(res, 'Diastolic'));
     });
     getAccessibilityMode()
       .then(res => {
@@ -36,10 +41,7 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
       .catch(res => {
         setAccessibilityMode(res);
       });
-    getRecentBloodPressure(patientID).then(res => {
-      setRecentSystolicBloodPressure(res[0]);
-      setRecentDiastolicBloodPressure(res[1]);
-    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   if (accessibilityMode) {

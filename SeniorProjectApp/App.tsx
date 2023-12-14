@@ -8,7 +8,7 @@ import ChatPage from './Pages/ChatPage';
 import ChatContactPage from './Pages/Patient/ChatContactPage';
 import ChatTest from './Pages/Patient/ChatTest';
 <script src="http://locralhost:8097" />;
-
+require('node-libs-react-native/globals');
 import React from 'react';
 import Login from './Login';
 import PatientMainPage from './Pages/Patient/PatientMainPage';

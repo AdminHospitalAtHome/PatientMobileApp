@@ -1,4 +1,9 @@
-import {HAH_Device, HAH_Device_Connection, VitalType} from './DeviceConnection';
+import {
+  HAH_Device,
+  HAH_Device_Connection,
+  VitalType,
+  VitalTypeUtilities,
+} from './DeviceConnection';
 import {XMLParser} from 'fast-xml-parser';
 import {
   EmitterSubscription,
@@ -188,6 +193,7 @@ export class MedMDevice implements HAH_Device {
   model: string;
   modelName: string;
   name: string;
+  vitalType: VitalType[];
 
   constructor(
     address: string,
@@ -196,6 +202,7 @@ export class MedMDevice implements HAH_Device {
     model: string,
     modelName: string,
     name: string,
+    vitalType: VitalType[],
   ) {
     this.address = address;
     this.id = id;
@@ -203,6 +210,7 @@ export class MedMDevice implements HAH_Device {
     this.modelName = modelName;
     this.model = model;
     this.name = name;
+    this.vitalType = vitalType;
   }
 }
 
@@ -210,6 +218,12 @@ export function parseDevicesJson(text: string): HAH_Device[] {
   let devices = new Array<HAH_Device>();
   let json = JSON.parse(text);
   for (let i = 0; i < json.length; i++) {
+    let vitals: VitalType[] = [];
+    console.log(json[i].measurementTypes);
+    for (let j = 0; j < json[i].measurementTypes.length; j++) {
+      console.log(json[i].measurementTypes[j]);
+      vitals.push(VitalTypeUtilities.fromString(json[i].measurementTypes[j]));
+    }
     let device = new MedMDevice(
       json[i].address,
       json[i].id,
@@ -217,6 +231,7 @@ export function parseDevicesJson(text: string): HAH_Device[] {
       json[i].model,
       json[i].modelName,
       json[i].name,
+      vitals,
     );
     devices.push(device);
   }
@@ -227,6 +242,11 @@ export function parseDevicesJson(text: string): HAH_Device[] {
 // TODO: Fix this to remove duplicated code
 export function parseDeviceJson(text: string): HAH_Device {
   let json = JSON.parse(text);
+  let vitals: VitalType[] = [];
+  for (let i = 0; i < json.measurementTypes.length; i++) {
+    console.log(json.measurementTypes[i]);
+    vitals.push(VitalTypeUtilities.fromString(json.measurementTypes[i]));
+  }
 
   return new MedMDevice(
     json.address,
@@ -235,6 +255,7 @@ export function parseDeviceJson(text: string): HAH_Device {
     json.model,
     json.modelName,
     json.name,
+    vitals,
   );
 }
 
@@ -273,41 +294,37 @@ export function parseXMLHeartRateData(xml: string): Record<string, any> {
     ).toISOString();
     return {HeartRateInBPM: heartRateInBPM, DateTimeTaken: dateTimeTaken};
   } catch (e) {
-    return {HeartRateInBPM: 123, DateTimeTaken: 'aaaa'};
+    return {};
   }
 }
 
-export function parseXMLBloodPressureData(
-  xml: string,
-): Promise<Record<string, any>> {
-  return new Promise((resolve, reject) => {
-    try {
-      const parser = new XMLParser();
-      let obj = parser.parse(xml);
-      let systolicBloodPressureInmmHg: number = Math.floor(
-        Number(obj['measurements-bloodpressure'].systolic),
-      );
-      let diastolicBloodPressureInmmHg: number = Math.floor(
-        Number(obj['measurements-bloodpressure'].diastolic),
-      );
-      if (
-        Number.isNaN(systolicBloodPressureInmmHg) ||
-        Number.isNaN(diastolicBloodPressureInmmHg)
-      ) {
-        throw new Error('Invalid Number');
-      }
-      let dateTimeTaken: string = new Date(
-        obj['measurements-bloodpressure']['measured-at'],
-      ).toISOString();
-      resolve({
-        SystolicBloodPressureInmmHg: systolicBloodPressureInmmHg,
-        DiastolicBloodPressureInmmHg: diastolicBloodPressureInmmHg,
-        DateTimeTaken: dateTimeTaken,
-      });
-    } catch (e) {
-      reject({});
+export function parseXMLBloodPressureData(xml: string): Record<string, any> {
+  try {
+    const parser = new XMLParser();
+    let obj = parser.parse(xml);
+    let systolicBloodPressureInmmHg: number = Math.floor(
+      Number(obj['measurements-bloodpressure'].systolic),
+    );
+    let diastolicBloodPressureInmmHg: number = Math.floor(
+      Number(obj['measurements-bloodpressure'].diastolic),
+    );
+    if (
+      Number.isNaN(systolicBloodPressureInmmHg) ||
+      Number.isNaN(diastolicBloodPressureInmmHg)
+    ) {
+      throw new Error('Invalid Number');
     }
-  });
+    let dateTimeTaken: string = new Date(
+      obj['measurements-bloodpressure']['measured-at'],
+    ).toISOString();
+    return {
+      SystolicBloodPressureInmmHg: systolicBloodPressureInmmHg,
+      DiastolicBloodPressureInmmHg: diastolicBloodPressureInmmHg,
+      DateTimeTaken: dateTimeTaken,
+    };
+  } catch (e) {
+    return {};
+  }
 }
 
 export function parseXMLBloodOxygenData(

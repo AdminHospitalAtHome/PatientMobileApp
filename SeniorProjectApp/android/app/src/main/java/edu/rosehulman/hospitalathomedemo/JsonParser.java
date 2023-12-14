@@ -1,7 +1,10 @@
 package edu.rosehulman.hospitalathomedemo;
 
+import android.util.Log;
+
 import com.medm.devicekit.IDeviceDescription;
 import com.medm.devicekit.IDeviceStatusCallback;
+import com.medm.devicekit.MeasurementType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +13,18 @@ import java.util.List;
 public class JsonParser {
 
     public static String toJson(IDeviceDescription device){
+        String types = "[";
+        List<MeasurementType> measurementTypes = device.getMeasurementTypes();
+        Log.d("MedMJsonParser", "Types: " + device.getMeasurementTypes());
+        for (int i = 0; i < measurementTypes.size(); i++) {
+            types += "\"" + measurementTypes.get(i).toString() + "\"";
+            if (i != measurementTypes.size() -1) types += ",";
+        }
+        types += "]";
+
+
         String res = "{\"address\": \""+ device.getAddress() + "\" , \"id\": \""+device.getSerial() + "\", \"manufacturer\": \""+ device.getManufacturer() + "\" , \"model\": \"" + device.getModel()+  "\" , \"name\": \""+device.getName()
-                + "\" , \"modelName\": \"" + device.getModelName()+  "\" }";
+                + "\" , \"modelName\": \"" + device.getModelName()+  "\" , \"measurementTypes\": " + types + "}";
 
         return res;
     }

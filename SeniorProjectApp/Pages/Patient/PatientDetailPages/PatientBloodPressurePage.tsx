@@ -4,6 +4,7 @@ import DateSelectionBar from '../../../Components/DateSelectionBar';
 import {
   getBloodPressure,
   addBloodPressureOnClick,
+  addBloodPressureAutomatically,
 } from '../../../BackEndFunctionCall/bloodPressureFunction';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
@@ -14,11 +15,17 @@ import MultipleTextInput from '../../../Components/ManualInputs/MultipleTextInpu
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import DoubleLineChart from '../../../Components/DoubleLineChart';
 import {PatientDetailStyles} from './Styles';
+import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
+import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
 
 const patientID = 100000001;
 const screenWidth = Dimensions.get('window').width;
 export default function PatientBloodPressurePage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
+  const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
+    useState(false);
+  const [loadingModalVisible, setLoadingModalVisible] = useState(false);
   const [inputSystolic, setInputSystolic] = useState('');
   const [inputDiastolic, setInputDiastolic] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
@@ -60,7 +67,7 @@ export default function PatientBloodPressurePage(): React.JSX.Element {
 
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setModalVisible}
+        setAutoModalVisible={setChooseDeviceModalVisible}
       />
 
       <InputManualModal
@@ -91,6 +98,27 @@ export default function PatientBloodPressurePage(): React.JSX.Element {
             setStopDateTime,
             setInputDiastolic,
             setInputSystolic,
+          );
+        }}
+      />
+
+      <ChooseDeviceModal
+        setModalVisible={setChooseDeviceModalVisible}
+        modalVisible={chooseDeviceModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
+        vitalType={VitalType.BLOOD_PRESSURE}
+      />
+
+      <LoadingModal
+        setLoadingModalVisible={setLoadingModalVisible}
+        loadingModalVisible={loadingModalVisible}
+        sendToServer={(data: string[]) => {
+          return addBloodPressureAutomatically(
+            data,
+            patientID,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
           );
         }}
       />

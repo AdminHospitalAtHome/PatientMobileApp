@@ -37,6 +37,7 @@ export interface HAH_Device {
   model: string;
   modelName: string;
   name: string;
+  vitalType: VitalType[];
 }
 
 export enum VitalType {
@@ -62,4 +63,54 @@ export enum VitalType {
   SPIROMETRY = 'Spirometry',
   TEMPERATURE = 'Temperature',
   URIC_ACID = 'UricAcid',
+  NOT_DEFINED = 'NotDefined',
+}
+
+export class VitalTypeUtilities {
+  public static fromString(vitalType: string): VitalType {
+    switch (vitalType) {
+      case 'Weight':
+        return VitalType.WEIGHT;
+      case 'Activity':
+        return VitalType.ACTIVITY;
+      case 'BloodCoagulation':
+        return VitalType.BLOOD_COAGULATION;
+      case 'BloodPressure':
+        return VitalType.BLOOD_PRESSURE;
+      case 'Cholesterol':
+        return VitalType.CHOLESTEROL;
+      case 'ECG':
+        return VitalType.ECG;
+      case 'Exercise':
+        return VitalType.EXERCISE;
+      case 'Fetaldoppler':
+        return VitalType.FETAL_DOPPLER;
+      case 'Glucose':
+        return VitalType.GLUCOSE;
+      case 'HeartRate':
+        return VitalType.HEART_RATE;
+      case 'Ketone':
+        return VitalType.KETONE;
+      case 'Lactate':
+        return VitalType.LACTATE;
+      case 'MedicationIn':
+        return VitalType.MEDICATION_IN;
+      case 'Note':
+        return VitalType.NOTE;
+      case 'Oxygen':
+        return VitalType.BLOOD_OXYGEN;
+      case 'RespirationRate':
+        return VitalType.RESPIRATION_RATE;
+      case 'Sleep':
+        return VitalType.SLEEP;
+      case 'Spirometry':
+        return VitalType.SPIROMETRY;
+      case 'Temperature':
+        return VitalType.TEMPERATURE;
+      case 'UricAcid':
+        return VitalType.URIC_ACID;
+      default:
+        return VitalType.NOT_DEFINED;
+    }
+  }
 }

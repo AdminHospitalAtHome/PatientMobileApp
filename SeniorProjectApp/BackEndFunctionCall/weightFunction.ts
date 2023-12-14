@@ -18,7 +18,7 @@ export function addWeight(
   weight: number,
   ifManualInput: boolean,
 ): Promise<string> {
-  const promise: Promise<any> = new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight', {
       method: 'POST',
@@ -31,7 +31,6 @@ export function addWeight(
       }
     });
   });
-  return promise;
 }
 
 export function addWeightAutomaticallyToServer(
@@ -40,7 +39,7 @@ export function addWeightAutomaticallyToServer(
   dateTimeTaken: string[],
   ifManualInput: boolean,
 ): Promise<string> {
-  const promise: Promise<any> = new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     let dateTimeTakenString = '[';
     let weightString = '[';
     for (let i = 0; i < weight.length; i++) {
@@ -65,26 +64,6 @@ export function addWeightAutomaticallyToServer(
       }
     });
   });
-  return promise;
-}
-
-export function getWeightCall(
-  patientID: number,
-  startDateTime: string,
-  stopDateTime: string,
-) {
-  return fetch(
-    `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-  )
-    .then(response => response.json())
-    .then(json => parseWeightData(json));
-}
-
-export function getRecentWeight(weightData: any[][]): string {
-  if (weightData.length === 0) {
-    return 'N/A';
-  }
-  return `${weightData[weightData.length - 1][1]} lbs`;
 }
 
 export function addWeightAutomatically(
@@ -152,4 +131,23 @@ export function addWeightOnClick(
     });
     setInput('');
   }
+}
+
+export function getWeightCall(
+  patientID: number,
+  startDateTime: string,
+  stopDateTime: string,
+) {
+  return fetch(
+    `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
+  )
+    .then(response => response.json())
+    .then(json => parseWeightData(json));
+}
+
+export function getRecentWeight(weightData: any[][]): string {
+  if (weightData.length === 0) {
+    return 'N/A';
+  }
+  return `${weightData[weightData.length - 1][1]} lbs`;
 }

@@ -15,10 +15,10 @@ import {
 // Note: test renderer must be required after react-native.
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 
-// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
+// This is due to Azure's Free plan having occasional long spin uptimes if the API has not been called recently
 jest.setTimeout(40000);
 jest.mock('@react-native-async-storage/async-storage', () =>
-    require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
 it('Adds and Gets Weight', async () => {
@@ -48,12 +48,17 @@ it('Get Weight Failure Test', async () => {
 });
 
 it('Get Recent Weight', async () => {
+  const startDateTime: string = new Date().toISOString();
   await addWeight(300000001, 180, true).then(output => {
     expect(output).toBe('add successful');
   });
-  await expect(getRecentWeight(300000001)).resolves.toBe('180 lbs');
+  const stopDateTime: string = new Date().toISOString();
+  //await expect(getRecentWeight(300000001)).resolves.toBe('180 lbs');
+  await getWeightCall(300000001, startDateTime, stopDateTime).then(output => {
+    expect(getRecentWeight(output)).toEqual('180 lbs');
+  });
 });
 
 it('Get Recent Weight Failure', async () => {
-  await expect(getRecentWeight(999999999)).resolves.toEqual('N/A');
+  await expect(getRecentWeight([])).resolves.toEqual('N/A');
 });
