@@ -14,11 +14,10 @@ public class JsonParser {
 
     public static String toJson(IDeviceDescription device){
         String types = "[";
-        List<MeasurementType> measurementTypes = device.getMeasurementTypes();
-        Log.d("MedMJsonParser", "Types: " + device.getMeasurementTypes());
-        for (int i = 0; i < measurementTypes.size(); i++) {
-            types += "\"" + measurementTypes.get(i).toString() + "\"";
-            if (i != measurementTypes.size() -1) types += ",";
+        String[] measurementTypes = DeviceMeasurementTypes.getTypes(device);
+        for (int i = 0; i < measurementTypes.length; i++) {
+            types += "\"" + measurementTypes[i] + "\"";
+            if (i != measurementTypes.length -1) types += ",";
         }
         types += "]";
 

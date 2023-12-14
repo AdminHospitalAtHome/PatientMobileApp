@@ -11,9 +11,9 @@ import {useIsFocused} from '@react-navigation/native';
 import DoubleLineChart from '../DoubleLineChart';
 
 const patientID = 100000001;
-export default function PatientBloodPressureNavCard(): JSX.Element {
+export default function PatientBloodPressureNavCard(): React.JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
-  const [bloodPresureData, setBloodPresureData] = useState<any[][]>([]);
+  const [bloodPressureData, setBloodPressureData] = useState<any[][]>([]);
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const startDateTime = getDefaultStartTime();
   const [recentSystolicBloodPressure, setRecentSystolicBloodPressure] =
@@ -30,7 +30,7 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
     tmpDate.setMinutes(tmpDate.getMinutes() + 1);
     setStopDateTime(tmpDate.toISOString());
     getBloodPressure(patientID, startDateTime, stopDateTime).then(res => {
-      setBloodPresureData(res);
+      setBloodPressureData(res);
       setRecentSystolicBloodPressure(getRecentBloodPressure(res, 'Systolic'));
       setRecentDiastolicBloodPressure(getRecentBloodPressure(res, 'Diastolic'));
     });
@@ -71,7 +71,7 @@ export default function PatientBloodPressureNavCard(): JSX.Element {
         </View>
         <View style={defaultStyle.chartHolder}>
           <DoubleLineChart
-            data={bloodPresureData}
+            data={bloodPressureData}
             unit={'mmHg'}
             width={windowWidth * 0.7}
             height={windowHeight * 0.18}
