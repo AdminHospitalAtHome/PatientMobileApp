@@ -23,11 +23,9 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   //private pairableDevices = new Array<HAH_Device>();
   private newDeviceEventListiner: EmitterSubscription =
     eventEmitter.addListener('New_Device', event => {
-      console.log('Event Running but not set yet.');
     });
   private pairDeviceEventListener: EmitterSubscription =
     eventEmitter.addListener('Pair_Device', event => {
-      console.log('Pair Device Event Running but not set yet.');
     });
 
   public static getInstance(): HAH_Device_Connection {
@@ -39,7 +37,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   }
 
   private constructor() {
-    //TODO: REGISTER HERE
+
     MedMDeviceManager.init();
   }
 
@@ -50,11 +48,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     this.newDeviceEventListiner = eventEmitter.addListener(
       'New_Device',
       event => {
-        console.log('AAGHH');
-        console.log(parseDevicesJson(event.pairableDevices));
         setPairableDevices(parseDevicesJson(event.pairableDevices));
-
-        console.log('Evnet Triggered');
       },
     );
 
@@ -217,9 +211,7 @@ export function parseDevicesJson(text: string): HAH_Device[] {
   let json = JSON.parse(text);
   for (let i = 0; i < json.length; i++) {
     let vitals: VitalType[] = [];
-    console.log(json[i].measurementTypes);
     for (let j = 0; j < json[i].measurementTypes.length; j++) {
-      console.log(json[i].measurementTypes[j]);
       vitals.push(VitalTypeUtilities.fromString(json[i].measurementTypes[j]));
     }
     let device = new MedMDevice(
@@ -242,7 +234,6 @@ export function parseDeviceJson(text: string): HAH_Device {
   let json = JSON.parse(text);
   let vitals: VitalType[] = [];
   for (let i = 0; i < json.measurementTypes.length; i++) {
-    console.log(json.measurementTypes[i]);
     vitals.push(VitalTypeUtilities.fromString(json.measurementTypes[i]));
   }
 

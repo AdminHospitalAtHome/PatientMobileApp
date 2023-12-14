@@ -1,6 +1,6 @@
 import 'react-native';
 
-import {it, expect, jest} from '@jest/globals';
+import {it, expect, jest, afterEach} from '@jest/globals';
 
 import {
   HAH_Device_Connection,
@@ -23,19 +23,11 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
-it('Test List Pairable Devices', () => {
-  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-
-  //TODO: Update once we know information for our devices
-  let deviceList: HAH_Device[] = [
-    new MedMDevice('Address', '1', 'Omron', 'HN-290T', 'Omron HN-290T'),
-    new MedMDevice('Address 2', '2', 'Omron', 'HEM-9200T', 'Omron HEM-9200T'),
-  ];
-
-  expect(connection.pairable_device_list()).toStrictEqual(deviceList);
+afterEach(() => {
+  jest.clearAllMocks();
 });
 
-it('Test List Paried Devices', () => {
+it('Test List Pairable Devices', async () => {
   let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
 
   let deviceList: HAH_Device[] = [
@@ -59,7 +51,43 @@ it('Test List Paried Devices', () => {
     ),
   ];
 
-  expect(connection.paired_device_list()).toStrictEqual(deviceList);
+  // Test Empty
+  await expect(connection.pairable_device_list()).resolves.toStrictEqual([]);
+  // Test with Devices
+  await expect(connection.pairable_device_list()).resolves.toStrictEqual(
+    deviceList,
+  );
+});
+
+it('Test List Paried Devices', async () => {
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
+
+  let deviceList: HAH_Device[] = [
+    new MedMDevice(
+      '34:81:F4:D4:8C:A1',
+      '20210101522F',
+      'Omron',
+      'null',
+      'Omron HN-290T',
+      'BLEsmart_000101053481F4D48CA1',
+      [VitalType.WEIGHT],
+    ),
+    new MedMDevice(
+      'B0:49:5F:08:6C:71',
+      '20200607031A',
+      'Omron',
+      'null',
+      'Omron HEM-9200T/9210T',
+      'BLEsmart_00000116B0495F086C71',
+      [VitalType.BLOOD_PRESSURE],
+    ),
+  ];
+  // Test Empty
+  await expect(connection.paired_device_list()).resolves.toStrictEqual([]);
+  // Test with Devices
+  await expect(connection.paired_device_list()).resolves.toStrictEqual(
+    deviceList,
+  );
 });
 
 it('Test Pairing a Device', async () => {
@@ -153,9 +181,10 @@ it('Test Parsing XML Weight Data', async () => {
     '  <bcp-gender>male</bcp-gender>\n' +
     '</measurements-weight>';
 
-  await expect(parseXMLWeightData(exampleGoodXML)).resolves.toStrictEqual([
-    {WeightInPounds: 173, DateTimeTaken: '2019-08-14T14:38:16.000Z'},
-  ]);
+  expect(parseXMLWeightData(exampleGoodXML)).toStrictEqual({
+    WeightInPounds: 173,
+    DateTimeTaken: '2019-08-14T14:38:16.000Z',
+  });
 
   let exampleBadXML =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -185,7 +214,7 @@ it('Test Parsing XML Weight Data', async () => {
     '  <bcp-gender>male</bcp-gender>\n' +
     '</measurements-weight>';
 
-  await expect(parseXMLWeightData(exampleBadXML)).rejects.toStrictEqual([{}]);
+  expect(parseXMLWeightData(exampleBadXML)).toStrictEqual({});
 
   let exampleBadXML2 =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -216,7 +245,7 @@ it('Test Parsing XML Weight Data', async () => {
     '  <bcp-gender>male</bcp-gender>\n' +
     '</measurements-weight>';
 
-  await expect(parseXMLWeightData(exampleBadXML2)).rejects.toStrictEqual([{}]);
+  expect(parseXMLWeightData(exampleBadXML2)).toStrictEqual({});
 
   let exampleBadXML3 =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -247,7 +276,7 @@ it('Test Parsing XML Weight Data', async () => {
     '  <bcp-gender>male</bcp-gender>\n' +
     '</measurements-weight>';
 
-  await expect(parseXMLWeightData(exampleBadXML3)).rejects.toStrictEqual([{}]);
+  expect(parseXMLWeightData(exampleBadXML3)).toStrictEqual({});
 });
 
 it('Test Parsing XML Heart Rate Data', async () => {
@@ -285,9 +314,10 @@ it('Test Parsing XML Heart Rate Data', async () => {
     '  </chunks>\n' +
     '</measurements-heartrate-stream>';
 
-  await expect(parseXMLHeartRateData(exampleGoodXML)).resolves.toStrictEqual([
-    {HeartRateInBPM: 102, DateTimeTaken: '2019-07-14T23:16:40.404Z'},
-  ]);
+  expect(parseXMLHeartRateData(exampleGoodXML)).toStrictEqual({
+    HeartRateInBPM: 102,
+    DateTimeTaken: '2019-07-14T23:16:40.404Z',
+  });
 
   let exampleBadXML: string =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -322,9 +352,7 @@ it('Test Parsing XML Heart Rate Data', async () => {
     '  </chunks>\n' +
     '</measurements-heartrate-stream>';
 
-  await expect(parseXMLHeartRateData(exampleBadXML)).rejects.toStrictEqual([
-    {},
-  ]);
+  expect(parseXMLHeartRateData(exampleBadXML)).rejects.toStrictEqual({});
 
   let exampleBadXML2: string =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -360,9 +388,7 @@ it('Test Parsing XML Heart Rate Data', async () => {
     '  </chunks>\n' +
     '</measurements-heartrate-stream>';
 
-  await expect(parseXMLHeartRateData(exampleBadXML2)).rejects.toStrictEqual([
-    {},
-  ]);
+  expect(parseXMLHeartRateData(exampleBadXML2)).toStrictEqual({});
 
   let exampleBadXML3: string =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -398,9 +424,7 @@ it('Test Parsing XML Heart Rate Data', async () => {
     '  </chunks>\n' +
     '</measurements-heartrate-stream>';
 
-  await expect(parseXMLHeartRateData(exampleBadXML3)).rejects.toStrictEqual([
-    {},
-  ]);
+  expect(parseXMLHeartRateData(exampleBadXML3)).toStrictEqual({});
 });
 
 it('Test Parsing XML Blood Pressure Data', async () => {
@@ -431,15 +455,11 @@ it('Test Parsing XML Blood Pressure Data', async () => {
     '    <device-db-id>95</device-db-id>\n' +
     '  </sensor>\n' +
     '</measurements-bloodpressure>';
-  await expect(
-    parseXMLBloodPressureData(exampleGoodXML),
-  ).resolves.toStrictEqual([
-    {
-      SystolicBloodPressureInmmHg: 113,
-      DiastolicBloodPressureInmmHg: 77,
-      DateTimeTaken: '2019-08-11T14:21:00.000Z',
-    },
-  ]);
+  expect(parseXMLBloodPressureData(exampleGoodXML)).toStrictEqual({
+    SystolicBloodPressureInmmHg: 113,
+    DiastolicBloodPressureInmmHg: 77,
+    DateTimeTaken: '2019-08-11T14:21:00.000Z',
+  });
 
   let exampleBadXML =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -468,9 +488,7 @@ it('Test Parsing XML Blood Pressure Data', async () => {
     '    <device-db-id>95</device-db-id>\n' +
     '  </sensor>\n' +
     '</measurements-bloodpressure>';
-  await expect(parseXMLBloodPressureData(exampleBadXML)).rejects.toStrictEqual([
-    {},
-  ]);
+  expect(parseXMLBloodPressureData(exampleBadXML)).toStrictEqual({});
 
   let exampleBadXML2 =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -498,9 +516,7 @@ it('Test Parsing XML Blood Pressure Data', async () => {
     '    <device-db-id>95</device-db-id>\n' +
     '  </sensor>\n' +
     '</measurements-bloodpressure>';
-  await expect(parseXMLBloodPressureData(exampleBadXML2)).rejects.toStrictEqual(
-    [{}],
-  );
+  expect(parseXMLBloodPressureData(exampleBadXML2)).toStrictEqual({});
 
   let exampleBadXML3 =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -529,9 +545,7 @@ it('Test Parsing XML Blood Pressure Data', async () => {
     '    <device-db-id>95</device-db-id>\n' +
     '  </sensor>\n' +
     '</measurements-bloodpressure>';
-  await expect(parseXMLBloodPressureData(exampleBadXML3)).rejects.toStrictEqual(
-    [{}],
-  );
+  expect(parseXMLBloodPressureData(exampleBadXML3)).toStrictEqual({});
 });
 
 it('Test Parsing XML Blood Oxygen Data', async () => {
@@ -568,12 +582,10 @@ it('Test Parsing XML Blood Oxygen Data', async () => {
     '  </chunks>\n' +
     '</measurements-oxygen-stream>\n';
 
-  await expect(parseXMLBloodOxygenData(exampleGoodXML)).resolves.toStrictEqual([
-    {
-      BloodOxygenInPercentage: 95,
-      DateTimeTaken: '2019-08-09T16:10:09.751Z',
-    },
-  ]);
+  expect(parseXMLBloodOxygenData(exampleGoodXML)).toStrictEqual({
+    BloodOxygenInPercentage: 95,
+    DateTimeTaken: '2019-08-09T16:10:09.751Z',
+  });
 
   //spo2 percentage can't be above 100
   let exampleBadXML =

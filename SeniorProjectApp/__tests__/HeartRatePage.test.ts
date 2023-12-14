@@ -15,6 +15,12 @@ import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 jest.setTimeout(40000);
 // Add Heart Rate test
 
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
+
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
 it('Adds and Gets Heart Rate', async () => {
   const startDateTime: string = new Date().toISOString();
   await addHeartRate(300000001, 76, true).then(output => {
@@ -42,12 +48,16 @@ it('Get Heart Rate Failure Test', async () => {
 });
 
 it('Get Recent HeartRate', async () => {
+  const startDateTime: string = new Date().toISOString();
   await addHeartRate(300000001, 76, true).then(output => {
     expect(output).toBe('add successful');
   });
-  await expect(getRecentHeartRate(300000001)).resolves.toBe('76');
+  const stopDateTime: string = new Date().toISOString();
+  await getHeartRate(300000001, startDateTime, stopDateTime).then(output => {
+    expect(getRecentHeartRate(output)).toEqual('76 BPM');
+  })
 });
 
-it('Get Recent HeartRate Failure', async () => {
-  await expect(getRecentHeartRate(999999999)).resolves.toEqual('N/A');
+it('Get Recent HeartRate Failure', () => {
+  expect(getRecentHeartRate([])).toEqual('N/A');
 });

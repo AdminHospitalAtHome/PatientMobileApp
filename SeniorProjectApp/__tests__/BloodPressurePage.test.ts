@@ -19,6 +19,8 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
 it('Adds and Gets Blood Pressure', async () => {
   const startDateTime: string = new Date().toISOString();
   await addBloodPressure(300000001, 120, 80, true).then(output => {
@@ -59,6 +61,7 @@ it('Get Recent Blood Pressure', async () => {
   ]);
 });
 
-it('Get Recent Blood Pressure Failure', async () => {
-  await expect(getRecentBloodPressure(999999999)).resolves.toStrictEqual(['N/A', 'N/A']);
+it('Get Recent Blood Pressure Failure', () => {
+  expect(getRecentBloodPressure([], 'Systolic')).toStrictEqual('N/A');
+  expect(getRecentBloodPressure([], 'Diastolic')).toStrictEqual('N/A');
 });
