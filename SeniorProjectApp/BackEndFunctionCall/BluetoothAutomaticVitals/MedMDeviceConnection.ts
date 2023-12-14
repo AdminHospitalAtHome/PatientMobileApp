@@ -70,14 +70,12 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   }
 
   pairable_device_list(): Promise<HAH_Device[]> {
-    console.log('get pairable devices');
     return MedMDeviceManager.pairableDeviceList().then((res: string) =>
       parseDevicesJson(res),
     );
   }
 
   paired_device_list(): Promise<HAH_Device[]> {
-    console.log('Getting Paired Devices');
     return MedMDeviceManager.getPairedDevices().then((res: string) =>
       parseDevicesJson(res),
     );

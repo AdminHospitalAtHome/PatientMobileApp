@@ -14,6 +14,10 @@ import window from '../__mocks__/window';
 // jest.spyOn(window.Navigator, 'userAgent');
 // jest.mock('node-libs-react-native/mock/net');
 // jest.mock('node-libs-react-native/mock/tls');
+
+jest.mock('node-libs-react-native/global', () =>
+  require('node-libs-react-native/mock/net'),
+);
 it('renders correctly', () => {
   renderer.create(<App />);
 });

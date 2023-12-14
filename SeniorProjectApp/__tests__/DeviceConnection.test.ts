@@ -5,6 +5,7 @@ import {it, expect, jest} from '@jest/globals';
 import {
   HAH_Device_Connection,
   HAH_Device,
+  VitalType,
 } from '../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import {
   MedMDevice,
@@ -14,10 +15,13 @@ import {
   parseXMLHeartRateData,
   parseXMLWeightData,
 } from '../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {NativeModules} from 'react-native';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
-    require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
+
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
 it('Test List Pairable Devices', () => {
   let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
@@ -26,21 +30,6 @@ it('Test List Pairable Devices', () => {
   let deviceList: HAH_Device[] = [
     new MedMDevice('Address', '1', 'Omron', 'HN-290T', 'Omron HN-290T'),
     new MedMDevice('Address 2', '2', 'Omron', 'HEM-9200T', 'Omron HEM-9200T'),
-    new MedMDevice('Address 3', '3', 'Contec', 'PM10', 'Contec PM10'),
-    new MedMDevice(
-      'Address 4',
-      '4',
-      'Nonin Medical',
-      'The Wrist Ox2 3150',
-      'Nonin Medical The Wrist Ox2 3150',
-    ),
-    new MedMDevice(
-      'Address 5',
-      '5',
-      'MIR',
-      'Spirobank Smart',
-      'MIR Spirobank Smart',
-    ),
   ];
 
   expect(connection.pairable_device_list()).toStrictEqual(deviceList);
@@ -49,24 +38,24 @@ it('Test List Pairable Devices', () => {
 it('Test List Paried Devices', () => {
   let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
 
-  //TODO: Update once we know information for our devices
   let deviceList: HAH_Device[] = [
-    new MedMDevice('Address', '1', 'Omron', 'HN-290T', 'Omron HN-290T'),
-    new MedMDevice('Address 2', '2', 'Omron', 'HEM-9200T', 'Omron HEM-9200T'),
-    new MedMDevice('Address 3', '3', 'Contec', 'PM10', 'Contec PM10'),
     new MedMDevice(
-      'Address 4',
-      '4',
-      'Nonin Medical',
-      'The Wrist Ox2 3150',
-      'Nonin Medical The Wrist Ox2 3150',
+      '34:81:F4:D4:8C:A1',
+      '20210101522F',
+      'Omron',
+      'null',
+      'Omron HN-290T',
+      'BLEsmart_000101053481F4D48CA1',
+      [VitalType.WEIGHT],
     ),
     new MedMDevice(
-      'Address 5',
-      '5',
-      'MIR',
-      'Spirobank Smart',
-      'MIR Spirobank Smart',
+      'B0:49:5F:08:6C:71',
+      '20200607031A',
+      'Omron',
+      'null',
+      'Omron HEM-9200T/9210T',
+      'BLEsmart_00000116B0495F086C71',
+      [VitalType.BLOOD_PRESSURE],
     ),
   ];
 

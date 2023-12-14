@@ -129,7 +129,6 @@ public class DeviceManager extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getPairedDevices(Promise promise) {
         MedMDeviceManager deviceManager = MedMDeviceKit.getDeviceManager();
-        Log.d("MedMDeviceManager", "GETTING PAIRED DEVICES");
         Log.d("MedMDeviceManager", JsonParser.toJson(deviceManager.getDevicesList()));
         promise.resolve(JsonParser.toJson(deviceManager.getDevicesList()));
     }

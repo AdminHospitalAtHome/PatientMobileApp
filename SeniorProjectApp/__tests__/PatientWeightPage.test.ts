@@ -21,6 +21,9 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
+
 it('Adds and Gets Weight', async () => {
   const startDateTime: string = new Date().toISOString();
   await addWeight(300000001, 180, true).then(output => {
@@ -60,5 +63,5 @@ it('Get Recent Weight', async () => {
 });
 
 it('Get Recent Weight Failure', async () => {
-  await expect(getRecentWeight([])).resolves.toEqual('N/A');
+  await expect(getRecentWeight([])).toEqual('N/A');
 });
