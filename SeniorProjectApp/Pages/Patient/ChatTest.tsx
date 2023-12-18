@@ -12,30 +12,46 @@ export default function ChatTest(): JSX.Element {
     const [communicationId, setCommunicationId] = useState('');
     const [chatThreadId, setChatThreadId] = useState('');
     const [chatMessage, setChatMessage] = useState([]);
-    
+
     useEffect(() => {
         getCommunicationId(300000001).then(res => {
             setCommunicationId(res);
-            return res;
-        }).then(communicationId => {
-            return getCommunicationToken(communicationId);
-        }).then(res => {
-            setAccessToken(res);
-            return res;
-        }).then(accessToken => {
-            return getChatThread(communicationId);
-        }).then(res => {
-            setChatThreadId(res);
-            return res;
-        }).then(chatThreadId => {
-            getMessage(chatThreadId, accessToken).then(res => {
-                console.log(res.value);
-                setChatMessage(res.value)
-            });
         }).catch(error => {
-            console.error(error)
+            console.error(error);
         });
     }, []);
+
+    useEffect(() => {
+        if (communicationId) {
+            getCommunicationToken(communicationId).then(res => {
+                setAccessToken(res);
+            }).catch(error => {
+                console.error(error);
+            });
+        }
+    }, [communicationId]);
+
+    useEffect(() => {
+        if (accessToken && communicationId) {
+            getChatThread(communicationId).then(res => {
+                setChatThreadId(res);
+            }).catch(error => {
+                console.error(error);
+            });
+        }
+    }, [accessToken, communicationId]);
+
+    useEffect(() => {
+        if (chatThreadId && accessToken) {
+            getMessage(chatThreadId, accessToken).then(res => {
+                console.log(res.value);
+                setChatMessage(res.value);
+            }).catch(error => {
+                console.error(error);
+            });
+        }
+    }, [chatThreadId, accessToken]);
+
 
     return <View/>;
 }
