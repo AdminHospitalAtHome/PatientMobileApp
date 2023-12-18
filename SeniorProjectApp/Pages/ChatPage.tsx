@@ -4,26 +4,24 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {GiftedChat, IMessage} from 'react-native-gifted-chat';
 import axios from 'axios';
 import {ChatClient, SendMessageOptions} from '@azure/communication-chat';
-import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
 import {AzureCommunicationTokenCredential} from '@azure/communication-common';
 import 'node-libs-react-native/globals';
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import {createUser} from '../BackEndFunctionCall/createUser';
 import {getUserToken} from '../BackEndFunctionCall/getUserToken';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function ChatPage(navigation: any): JSX.Element {
   let endpointUrl =
     'https://hospitalathomechat.unitedstates.communication.azure.com';
   // The user access token generated as part of the pre-requisites
   const [user, setUser] = useState(null);
-  // const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [chatClient, setChatClient] = useState(null);
-  const [chatThreadClient, setChatThreadClient] = useState(null);
+  const [threadClient, setChatThreadClient] = useState(null);
   const [userToken, setUserToken] = useState(null);
   const [providerToken, setProviderToken] = useState(null);
-  const [chatThreadId, setChatThreadId] = useState(null);
+  const [chatThreadId, setChatThreadId] = useState(String);
 
   //TO-DO: define patientUserId by patientId, give provider a unique userID
   const patientUserId =
@@ -45,6 +43,7 @@ export default function ChatPage(navigation: any): JSX.Element {
         );
         const newChatClient = new ChatClient(endpointUrl, tokenCredential);
 
+       
         await newChatClient.startRealtimeNotifications();
 
         newChatClient.on('chatMessageReceived', e => {
@@ -83,15 +82,22 @@ export default function ChatPage(navigation: any): JSX.Element {
           createChatThreadOptions,
         );
 
+      
+
+
         const threadId = createChatThreadResult.chatThread.id;
         let chatThreadClient = newChatClient.getChatThreadClient(threadId);
+        
+        
         setChatThreadClient(chatThreadClient);
+        console.log(threadClient)
+        setChatThreadId(threadId);
       } catch (err) {
         console.error('Error initializing chat:', err);
       }
     };
 
-    //initializeChat();
+    initializeChat();
 
     //   setTimeout(() => {
     //     curr = providerUserId;
@@ -100,103 +106,73 @@ export default function ChatPage(navigation: any): JSX.Element {
   }, []);
 
   //modify this to just send message base on current userID
-  // async function sendMessage(senderId: string, messageContent: string) {
-  //   // console.log("threadID"+chatThreadId)
-  //   if (chatThreadClient) {
-  //     const messageOptions = {
-  //       senderId: senderId,
-  //       content: messageContent,
-  //     };
-  //     // const messageId = await chatThreadClient.sendMessage(messageOptions);
-
-  //     // return messageId;
-  //   }
-  //   return 'N/A';
-  // }
+  async function sendMessage(senderId: string, messageContent: string) {
+    console.log(threadClient)
+    if (threadClient) {
+      
+      const messageOptions = {
+        senderId: senderId,
+        content: messageContent,
+      };
+      const messageId = await threadClient.sendMessage(messageOptions);
+      console.log("id of message"+messageId);
+      return true;
+    }
+    return false;
+  }
 
   const onSend = useCallback(async (messages: IMessage[] = []) => {
+    
+    if(threadClient){
+      console.log("listing all messages: " +threadClient.listMessages())
+    }else{
+      console.log("dont exist");
+    }
+
+    
+    
     for (const message of messages) {
-      const sentMessage: IMessage = {
-        _id: Math.round(Math.random() * 1000000),
-        text: message.text,
-        createdAt: new Date(),
-        user: {
-          _id: curr,
-          name: curr === patientUserId ? patientName : 'Provider',
-        },
-      };
+      let res = sendMessage(curr, message.text);
+      if(await res){
+        const sentMessage: IMessage = {
+          _id: Math.round(Math.random() * 1000000),
+          text: message.text,
+          createdAt: new Date(),
+          user: {
+            _id: curr,
+            name: curr === patientUserId ? patientName : 'Provider',
+          },
+        };
+  
+        setMessages(previousMessages =>
+          GiftedChat.append(previousMessages, [sentMessage]),
+        );
 
-      // setMessages(previousMessages =>
-      //   GiftedChat.append(previousMessages, [sentMessage]),
-      // );
+      }
+      
 
-      // const res = sendMessage(curr, message.text);
+      
     }
     curr = curr === providerUserId ? patientUserId : providerUserId;
     console.log(curr === providerUserId);
   }, []);
 
-  // if (!chatClient) {
-  //   return (
-  //     <View>
-  //       <Text>Loading chat...</Text>
-  //     </View>
-  //   );
-  // }
-  const [messages, setMessages] = useState<MessageType.Any[]>([])
-  const flyerUser = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
-
-  const addMessage = (message: MessageType.Any) => {
-    setMessages([message, ...messages])
-  }
-
-  const uuidv4 = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = Math.floor(Math.random() * 16)
-      const v = c === 'x' ? r : (r % 4) + 8
-      return v.toString(16)
-    })
-  }
-
-  const handleSendPress = (message: MessageType.PartialText) => {
-    const textMessage: MessageType.Text = {
-      author: flyerUser,
-      createdAt: Date.now(),
-      id: uuidv4(),
-      text: message.text,
-      type: 'text',
-    }
-    addMessage(textMessage)
+  if (!threadClient) {
+    return (
+      <View>
+        <Text>Loading chat...</Text>
+      </View>
+    );
   }
 
   return (
-    // Remove this provider if already registered elsewhere
-    // or you have React Navigation set up
-    <SafeAreaProvider>
-      <Chat
-        messages={messages}
-        onSendPress={handleSendPress}
-        user={flyerUser}
-      />
-    </SafeAreaProvider>
-  )
-
-  // return (
-  //   // <GiftedChat
-  //   //   messages={messages}
-  //   //   onSend={messages => onSend(messages)}
-  //   //   user={{
-  //   //     _id: curr,
-  //   //   }}
-  //   //   textInputStyle={{color: 'black'}}
-  //   // />
-
-  //   <SafeAreaProvider>
-  //     <Chat
-  //       messages={flyerMessages}
-  //       onSendPress={handleSendPress}
-  //       user={flyerUser}
-  //     />
-  //   </SafeAreaProvider>
-  // );
+    <GiftedChat
+      messages={messages}
+      onSend={messages => onSend(messages)}
+      user={{
+        _id: curr,
+      }}
+      textInputStyle={{color: 'black'}}
+    />
+  );
 }
