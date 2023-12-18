@@ -48,15 +48,9 @@ export function getMessage(threadId: string, accessToken: string): Promise<any> 
             `https://hospitalathomechat.unitedstates.communication.azure.com/chat/threads/${threadId}/messages?api-version=2023-11-07`,
             {method: 'GET', headers: {Authorization: `Bearer ${accessToken}`}},
         )
-            .then(res => {
-                if (res.status === 200) {
-                    return res.json();
-                } else {
-                    throw new Error(`Failed to get message, status: ${res.status}`);
-                }
-            })
+            .then(res => res.json())
             .then(res => resolve(res))
-            .catch(error => reject(error));
+
     });
 }
 
