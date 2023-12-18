@@ -64,11 +64,7 @@ export function sendMessage(
             `https://hospitalathomechat.unitedstates.communication.azure.com/chat/threads/${threadId}/messages?api-version=2023-11-07`,
             {
                 method: 'POST',
-                body: JSON.stringify({
-                    content: content,
-                    senderDisplayName: 'replace later',
-                    type: 'text',
-                }),
+                body: `{'content': ${content}`,
                 headers: {Authorization: `Bearer ${accessToken}`},
             },
         ).then(res => {
