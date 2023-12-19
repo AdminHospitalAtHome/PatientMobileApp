@@ -6,7 +6,7 @@ import {
   sendMessage,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
 import {useCallback, useEffect, useState} from 'react';
-import {GiftedChat} from 'react-native-gifted-chat';
+import {GiftedChat, Bubble } from 'react-native-gifted-chat';
 
 export default function ChatTest2(): JSX.Element {
   const [accessToken, setAccessToken] = useState('');
@@ -67,7 +67,7 @@ export default function ChatTest2(): JSX.Element {
                 .id,
               name: 'Patient',
               avatar:
-                'https://upload.wikimedia.org/wikipedia/en/e/ed/Rose%E2%80%93Hulman_Institute_of_Technology_seal.svg',
+                'https://pbs.twimg.com/profile_images/1276003977910517761/SOFf-4mY_400x400.jpg',
             },
           };
           parsedMsg.push(dic);
@@ -86,6 +86,21 @@ export default function ChatTest2(): JSX.Element {
     );
   }, []);
 
+  const renderBubble = (props) => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: {
+            backgroundColor: '#e6dfdf',
+          },
+        }}
+      />
+    );
+  };
+  
+
+
   return (
     <GiftedChat
       messages={giftedChatMessages}
@@ -94,6 +109,8 @@ export default function ChatTest2(): JSX.Element {
         _id: communicationId,
       }}
       textInputStyle={{color: 'black'}}
+      renderBubble={renderBubble}
+      showAvatarForEveryMessage ={true}
     />
   );
 }
