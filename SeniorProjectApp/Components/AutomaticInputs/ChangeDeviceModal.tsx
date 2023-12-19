@@ -1,36 +1,30 @@
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  HAH_Device,
   HAH_Device_Connection,
   VitalType,
 } from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import {MedMDeviceConnection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 
-export default function ChooseDeviceModal({
+export default function ChangeDeviceModal({
   setModalVisible,
   modalVisible,
   setLoadingModalVisible,
-  setChangeDeviceModalVisible,
+  setPreviousModalVisible,
   vitalType,
 }: {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   modalVisible: boolean;
   setLoadingModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setChangeDeviceModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setPreviousModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   vitalType: VitalType;
 }): React.JSX.Element {
   const connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-  const [deviceName, setDeviceName] = useState('');
-  let address = '';
-
-  connection
-    .default_paried_device(vitalType)
-    .then(res => {
-      setDeviceName(res.modelName); // TODO: Maybe change later
-
-      address = res.address;
-    })
-    .catch(() => setDeviceName('N/A'));
+  const [devices, setDevices] = useState<HAH_Device[]>([]);
+  useEffect(() => {
+    connection.paired_device_list_vital(vitalType).then(setDevices);
+  }, [connection, vitalType]);
 
   return (
     <Modal
@@ -42,30 +36,32 @@ export default function ChooseDeviceModal({
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.labelText}>Get Data From Device</Text>
-          <View style={styles.textContainer}>
-            <Text style={styles.deviceLabelText}>Device: </Text>
-            <Text style={styles.text}>{deviceName}</Text>
-          </View>
-          <View style={styles.editButtonContainer}>
+          <Text style={styles.labelText}>Select Device</Text>
+          {devices.map((device: HAH_Device) => {
+            // Device.name will need to change
+            return (
+              <View style={styles.buttonContainer} key={device.address}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => yesOnPress(device.address)}>
+                  <View>
+                    <View>
+                      <Text style={styles.deviceLabelText}>Device:</Text>
+                      <Text style={styles.text}>{device.modelName}</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+          <View style={styles.cancelButtonContainer}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 setModalVisible(false);
-                setChangeDeviceModalVisible(true);
+                setPreviousModalVisible(true);
               }}>
-              <Text style={styles.buttonText}>Change Device</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={[styles.buttonContainer, styles.BottomContainer]}>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonBorder]}
-              onPress={() => setModalVisible(false)}>
               <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={yesOnPress}>
-              <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -73,7 +69,7 @@ export default function ChooseDeviceModal({
     </Modal>
   );
 
-  function yesOnPress(): void {
+  function yesOnPress(address: string): void {
     connection.setDeviceFilter(address).then(() => {
       setModalVisible(false);
       setLoadingModalVisible(true);
@@ -116,12 +112,12 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   text: {
-    color: 'black',
+    color: 'white',
     fontSize: 20,
   },
 
   deviceLabelText: {
-    color: 'black',
+    color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -134,7 +130,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 
-  editButtonContainer: {
+  cancelButtonContainer: {
     flexDirection: 'row',
     backgroundColor: '#c87525',
     padding: 5,

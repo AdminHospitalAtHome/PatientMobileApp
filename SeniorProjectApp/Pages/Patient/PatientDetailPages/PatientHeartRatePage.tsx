@@ -18,9 +18,12 @@ import {PatientDetailStyles} from './Styles';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
+import ChangeDeviceModal from '../../../Components/AutomaticInputs/ChangeDeviceModal';
 export default function PatientHeartRatePage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
+    useState(false);
+  const [changeDeviceModalVisible, setChangeDeviceModalVisible] =
     useState(false);
   const [input, setInput] = useState<string>('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
@@ -93,6 +96,15 @@ export default function PatientHeartRatePage(): React.JSX.Element {
         setModalVisible={setChooseDeviceModalVisible}
         modalVisible={chooseDeviceModalVisible}
         setLoadingModalVisible={setLoadingModalVisible}
+        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
+        vitalType={VitalType.HEART_RATE}
+      />
+
+      <ChangeDeviceModal
+        setModalVisible={setChangeDeviceModalVisible}
+        modalVisible={changeDeviceModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
+        setPreviousModalVisible={setChooseDeviceModalVisible}
         vitalType={VitalType.HEART_RATE}
       />
 

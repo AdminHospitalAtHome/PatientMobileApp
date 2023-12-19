@@ -18,12 +18,15 @@ import {PatientDetailStyles} from './Styles';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
+import ChangeDeviceModal from '../../../Components/AutomaticInputs/ChangeDeviceModal';
 
 const patientID = 100000001;
 const screenWidth = Dimensions.get('window').width;
 export default function PatientBloodPressurePage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
+    useState(false);
+  const [changeDeviceModalVisible, setChangeDeviceModalVisible] =
     useState(false);
   const [loadingModalVisible, setLoadingModalVisible] = useState(false);
   const [inputSystolic, setInputSystolic] = useState('');
@@ -106,6 +109,15 @@ export default function PatientBloodPressurePage(): React.JSX.Element {
         setModalVisible={setChooseDeviceModalVisible}
         modalVisible={chooseDeviceModalVisible}
         setLoadingModalVisible={setLoadingModalVisible}
+        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
+        vitalType={VitalType.BLOOD_PRESSURE}
+      />
+
+      <ChangeDeviceModal
+        setModalVisible={setChangeDeviceModalVisible}
+        modalVisible={changeDeviceModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
+        setPreviousModalVisible={setChooseDeviceModalVisible}
         vitalType={VitalType.BLOOD_PRESSURE}
       />
 

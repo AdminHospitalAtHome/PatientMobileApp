@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {View, Dimensions} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import {
-  getWeightCall,
   addWeightAutomatically,
   addWeightOnClick,
+  getWeightCall,
 } from '../../../BackEndFunctionCall/weightFunction';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
@@ -18,10 +18,13 @@ import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceM
 import {PatientDetailStyles} from './Styles';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
+import ChangeDeviceModal from '../../../Components/AutomaticInputs/ChangeDeviceModal';
 
 export default function PatientWeightPage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [chooseDeviceModalVisible, setChooseDeviceModalVisible] =
+    useState(false);
+  const [changeDeviceModalVisible, setChangeDeviceModalVisible] =
     useState(false);
   const [input, setInput] = useState('');
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
@@ -95,6 +98,15 @@ export default function PatientWeightPage(): React.JSX.Element {
         setModalVisible={setChooseDeviceModalVisible}
         modalVisible={chooseDeviceModalVisible}
         setLoadingModalVisible={setLoadingModalVisible}
+        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
+        vitalType={VitalType.WEIGHT}
+      />
+
+      <ChangeDeviceModal
+        setModalVisible={setChangeDeviceModalVisible}
+        modalVisible={changeDeviceModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
+        setPreviousModalVisible={setChooseDeviceModalVisible}
         vitalType={VitalType.WEIGHT}
       />
 

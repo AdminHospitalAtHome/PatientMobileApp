@@ -1,8 +1,10 @@
 import React from 'react';
 
+// noinspection SpellCheckingInspection
 export interface HAH_Device_Connection {
-  pairable_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
-  paired_device_list: () => Promise<HAH_Device[]>; //first string: id, second string: name
+  pairable_device_list: () => Promise<HAH_Device[]>;
+  paired_device_list: () => Promise<HAH_Device[]>;
+  paired_device_list_vital: (vital: VitalType) => Promise<HAH_Device[]>;
   default_paried_device: (vital: VitalType) => Promise<HAH_Device>;
   pair_device: (device: HAH_Device, navigation: any) => Promise<void>;
   unpair_device: (device: HAH_Device) => Promise<void>;
@@ -42,7 +44,7 @@ export interface HAH_Device {
 
 export enum VitalType {
   // This is to keep it from flagging ESLint Errors for all the vitals we have not used.
-  // noinspection JSUnusedGlobalSymbols
+  // noinspection JSUnusedGlobalSymbols,SpellCheckingInspection
   WEIGHT = 'Weight',
   ACTIVITY = 'Activity',
   BLOOD_COAGULATION = 'BloodCoagulation',
@@ -66,6 +68,7 @@ export enum VitalType {
   NOT_DEFINED = 'NotDefined',
 }
 
+// noinspection SpellCheckingInspection
 export class VitalTypeUtilities {
   public static fromString(vitalType: string): VitalType {
     switch (vitalType) {

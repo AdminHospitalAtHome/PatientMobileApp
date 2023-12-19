@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 import {
   HAH_Device,
   HAH_Device_Connection,
@@ -22,11 +24,9 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   private data: string[] = [];
   //private pairableDevices = new Array<HAH_Device>();
   private newDeviceEventListiner: EmitterSubscription =
-    eventEmitter.addListener('New_Device', event => {
-    });
+    eventEmitter.addListener('New_Device', event => {});
   private pairDeviceEventListener: EmitterSubscription =
-    eventEmitter.addListener('Pair_Device', event => {
-    });
+    eventEmitter.addListener('Pair_Device', event => {});
 
   public static getInstance(): HAH_Device_Connection {
     if (!MedMDeviceConnection.instance) {
@@ -37,7 +37,6 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   }
 
   private constructor() {
-
     MedMDeviceManager.init();
   }
 
@@ -73,6 +72,21 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     return MedMDeviceManager.getPairedDevices().then((res: string) =>
       parseDevicesJson(res),
     );
+  }
+
+  paired_device_list_vital(vital: VitalType): Promise<HAH_Device[]> {
+    return new Promise<HAH_Device[]>(resolve => {
+      this.paired_device_list().then(devices => {
+        let filteredDevices: HAH_Device[] = [];
+        for (let i = 0; i < devices.length; i++) {
+          if (devices[i].vitalType.includes(vital)) {
+            filteredDevices.push(devices[i]);
+          }
+        }
+        console.log(filteredDevices);
+        resolve(filteredDevices);
+      });
+    });
   }
 
   setDefaultDevice(address: string, vitalType: VitalType): Promise<void> {
@@ -283,9 +297,7 @@ export function parseXMLHeartRateData(xml: string): Record<string, any> {
       throw new Error('Unsopported Measurement Type');
     }
 
-    let heartRateInBPM: number = Math.floor(
-      Number(obj[searchTerm][pulseTerm]),
-    );
+    let heartRateInBPM: number = Math.floor(Number(obj[searchTerm][pulseTerm]));
     if (Number.isNaN(heartRateInBPM)) {
       throw new Error('Invalid Number');
     }

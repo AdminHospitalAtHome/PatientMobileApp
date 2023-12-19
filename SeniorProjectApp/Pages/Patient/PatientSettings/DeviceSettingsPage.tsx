@@ -1,17 +1,7 @@
-import {
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-  Switch,
-  PermissionsAndroid,
-} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
-import {
-  MedMDevice,
-  MedMDeviceConnection,
-} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
-import {useEffect, useState} from 'react';
+import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import React, {useEffect, useState} from 'react';
 import {HAH_Device} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -19,7 +9,7 @@ export default function DeviceSettingsPage({
   navigation,
 }: {
   navigation: any;
-}): JSX.Element {
+}): React.JSX.Element {
   const [pairableDevices, setPairableDevices] = useState(
     new Array<HAH_Device>(),
   );
@@ -66,6 +56,7 @@ export default function DeviceSettingsPage({
       {pairedDevices.map((device: HAH_Device) => {
         return (
           <TouchableOpacity
+            key={device.address + '_paired'}
             style={styles.Device}
             onPress={() => navigation.navigate('DevicePage', {device: device})}>
             <Text style={styles.text}>{'View Data Of: ' + device.name}</Text>
@@ -78,6 +69,7 @@ export default function DeviceSettingsPage({
       {pairableDevices.map((device: HAH_Device) => {
         return (
           <TouchableOpacity
+            key={device.address + '_pairable'}
             style={styles.Device}
             onPress={() =>
               navigation.navigate('DevicePage', {

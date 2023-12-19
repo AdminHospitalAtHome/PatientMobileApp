@@ -1,10 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
-import {
-  HAH_Device,
-  VitalType,
-  VitalTypeUtilities,
-} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 
 export default function DevicePage({
   navigation,
@@ -52,6 +48,7 @@ export default function DevicePage({
       {device.vitalType.map((vitalType: VitalType) => {
         return (
           <TouchableOpacity
+            key={vitalType.valueOf()}
             style={Styles.ButtonContainer}
             onPress={() => {
               MedMDeviceConnection.getInstance().setDefaultDevice(
