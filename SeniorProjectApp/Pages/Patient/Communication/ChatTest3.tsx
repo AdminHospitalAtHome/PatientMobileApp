@@ -63,7 +63,8 @@ export default function ChatTest3(): JSX.Element {
             text: res.value[i].content.message,
             createdAt: res.value[i].createdOn,
             user: {
-              _id: communicationId,
+              _id: res.value[i].senderCommunicationIdentifier.communicationUser
+                .id,
               name: 'Patient',
               avatar:
                 'https://upload.wikimedia.org/wikipedia/en/e/ed/Rose%E2%80%93Hulman_Institute_of_Technology_seal.svg',
