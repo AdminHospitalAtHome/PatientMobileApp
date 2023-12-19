@@ -4,11 +4,11 @@ import {
   getCommunicationToken,
   getMessage,
   sendMessage,
-} from '../../BackEndFunctionCall/ChatFunctions/Message';
+} from '../../../BackEndFunctionCall/ChatFunctions/Message';
 import {useCallback, useEffect, useState} from 'react';
 import {GiftedChat} from 'react-native-gifted-chat';
 
-export default function ChatTest(): JSX.Element {
+export default function ChatTest2(): JSX.Element {
   const [accessToken, setAccessToken] = useState('');
   const [communicationId, setCommunicationId] = useState('');
   const [chatThreadId, setChatThreadId] = useState('');
@@ -16,7 +16,7 @@ export default function ChatTest(): JSX.Element {
   const [giftedChatMessages, setGiftedChatMessages] = useState([]);
 
   useEffect(() => {
-    getCommunicationId(300000001)
+    getCommunicationId(200000001)
       .then(res => {
         setCommunicationId(res);
       })

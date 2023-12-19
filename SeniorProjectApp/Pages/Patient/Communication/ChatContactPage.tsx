@@ -1,13 +1,13 @@
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
   Dimensions,
+  ScrollView,
   StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
-import ContactCard from '../../Components/ContactCard';
+import ContactCard from '../../../Components/ContactCard';
+
 const screenWidth: number = Dimensions.get('window').width;
 const screenHeight: number = Dimensions.get('window').width;
 export default function ChatContactPage({
@@ -18,14 +18,15 @@ export default function ChatContactPage({
   return (
     <View>
       <ScrollView contentContainerStyle={{alignItems: 'center', padding: 10}}>
-        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate('contact1')}>
-          <ContactCard name={'First1 Last1(Provider)'} />
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('test3')}>
+          <ContactCard name={'300000001'} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate('test')}>
-          <ContactCard name={'First2 Last2'} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <ContactCard name={'First3 Last3'} />
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('test2')}>
+          <ContactCard name={'200000001'} />
         </TouchableOpacity>
       </ScrollView>
     </View>

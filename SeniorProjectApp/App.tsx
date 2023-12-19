@@ -4,29 +4,27 @@
  *
  * @format
  */
-import ChatPage from './Pages/ChatPage';
-import ChatContactPage from './Pages/Patient/ChatContactPage';
-import ChatTest from './Pages/Patient/ChatTest';
-<script src="http://locralhost:8097" />;
-require('node-libs-react-native/globals');
+import ChatTest3 from './Pages/Patient/Communication/ChatTest3';
 import React from 'react';
-import Login from './Login';
 import PatientMainPage from './Pages/Patient/PatientMainPage';
-import {View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PatientWeightPage from './Pages/Patient/PatientDetailPages/PatientWeightPage';
 import PatientBloodPressurePage from './Pages/Patient/PatientDetailPages/PatientBloodPressurePage';
 import PatientHeartRatePage from './Pages/Patient/PatientDetailPages/PatientHeartRatePage';
-import PatientBloodOxygenPage from './Pages/Patient/PatientDetailPages/PatientBloodOxygenPage';
 import PatientSettingPage from './Pages/Patient/PatientSettingPage';
 import DeviceSettingsPage from './Pages/Patient/PatientSettings/DeviceSettingsPage';
 import DevicePage from './Pages/Patient/PatientSettings/DevicePage';
-import MenuNav from './Components/NavCards/MenuNav';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import ChatTest2 from './Pages/Patient/Communication/ChatTest2';
+import ChatContactPage from './Pages/Patient/Communication/ChatContactPage';
+
+<script src="http://locralhost:8097" />;
+require('node-libs-react-native/globals');
 
 const Tab = createBottomTabNavigator();
+
 function App(): JSX.Element {
   return (
     <NavigationContainer>
@@ -45,6 +43,7 @@ function App(): JSX.Element {
 }
 
 const HomeStack = createNativeStackNavigator();
+
 function HomeScreenStack(): JSX.Element {
   return (
     <HomeStack.Navigator>
@@ -73,6 +72,7 @@ function HomeScreenStack(): JSX.Element {
 }
 
 const SettingsStack = createNativeStackNavigator();
+
 function SettingsScreenStack(): JSX.Element {
   return (
     <SettingsStack.Navigator>
@@ -96,23 +96,24 @@ function SettingsScreenStack(): JSX.Element {
 }
 
 const ChatStack = createNativeStackNavigator();
+
 function ChatScreenStack(): JSX.Element {
   return (
     <ChatStack.Navigator>
       <ChatStack.Screen
-        name={'patientChatPage'}
+        name={'patientContactPage'}
         component={ChatContactPage}
-        options={{title: 'My Contacts'}}
+        options={{title: 'contacts'}}
       />
       <ChatStack.Screen
-        name={'contact1'}
-        component={ChatPage}
-        options={{title: 'First1 Last1(Provider)'}}
+        name={'test2'}
+        component={ChatTest2}
+        options={{title: 'user 200000001 (will replace later)'}}
       />
       <ChatStack.Screen
-        name={'test'}
-        component={ChatTest}
-        options={{title: 'azure function test'}}
+        name={'test3'}
+        component={ChatTest3}
+        options={{title: 'user 300000001 (will replace later)'}}
       />
     </ChatStack.Navigator>
   );
