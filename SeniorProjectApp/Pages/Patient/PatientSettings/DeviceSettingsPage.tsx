@@ -10,10 +10,7 @@ export default function DeviceSettingsPage({
 }: {
   navigation: any;
 }): React.JSX.Element {
-  const [pairableDevices, setPairableDevices] = useState(
-    new Array<HAH_Device>(),
-  );
-  const [pairedDevices, setPairedDevices] = useState(new Array<HAH_Device>());
+  const [pairedDevices, setPairedDevices] = useState<HAH_Device[]>([]);
 
   const isFocused = useIsFocused();
 
@@ -27,68 +24,30 @@ export default function DeviceSettingsPage({
 
   return (
     <View style={styles.mainView}>
-      <TouchableOpacity
-        style={styles.Button}
-        onPress={() => {
-          console.log('Start Scan');
-          MedMDeviceConnection.getInstance().startDeviceScan(
-            setPairableDevices,
-          );
-        }}>
-        <Text style={{color: 'black'}}>Start Scanning for Device</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.Button}
-        onPress={() => {
-          console.log('Stop Scan');
-          MedMDeviceConnection.getInstance()
-            .stopDeviceScan(setPairableDevices)
-            .then(res =>
-              console.log('Stopping Was Success? ' + res.toString()),
-            );
-        }}>
-        <Text style={{color: 'black'}}>Stop device scan</Text>
-      </TouchableOpacity>
-
-      <Text style={{color: 'black'}}>Paired Devices</Text>
-
       {pairedDevices.map((device: HAH_Device) => {
         return (
           <TouchableOpacity
             key={device.address + '_paired'}
             style={styles.Device}
             onPress={() => navigation.navigate('DevicePage', {device: device})}>
-            <Text style={styles.text}>{'View Data Of: ' + device.name}</Text>
+            <Text style={styles.text}>{device.modelName}</Text>
           </TouchableOpacity>
         );
       })}
-
-      <Text style={{color: 'black'}}>Pairable Devices</Text>
-
-      {pairableDevices.map((device: HAH_Device) => {
-        return (
-          <TouchableOpacity
-            key={device.address + '_pairable'}
-            style={styles.Device}
-            onPress={() =>
-              navigation.navigate('DevicePage', {
-                device: device,
-                setPairedDevices: setPairedDevices,
-              })
-            }>
-            <Text style={styles.text}>{'Pair to ' + device.modelName}</Text>
-          </TouchableOpacity>
-        );
-      })}
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={() => navigation.navigate('PairNewDevicePage')}>
+        <Text style={styles.text}>Pair New Device</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   Button: {
-    backgroundColor: 'yellow',
-    margin: 10,
+    backgroundColor: '#c87525',
+    marginTop: 10,
+    borderRadius: 10,
     padding: 10,
   },
   mainView: {
@@ -96,9 +55,11 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+    color: 'white',
   },
   Device: {
     backgroundColor: '#ba4618',
+    marginTop: 10,
     borderRadius: 10,
     padding: 10,
   },

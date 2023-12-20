@@ -1,15 +1,15 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {MedMDeviceConnection} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import React from 'react';
 
 export default function DevicePage({
-  navigation,
   route,
 }: {
   navigation: any;
   route: any;
-}): JSX.Element {
-  const {device, setPairedDevices} = route.params;
+}): React.JSX.Element {
+  const {device} = route.params;
   return (
     <View style={Styles.container}>
       <View style={Styles.AttributeContainer}>
@@ -37,24 +37,15 @@ export default function DevicePage({
         <Text style={Styles.AttributeText}>{device.address}</Text>
       </View>
 
-      <TouchableOpacity
-        style={Styles.ButtonContainer}
-        onPress={() => {
-          MedMDeviceConnection.getInstance().pair_device(device, navigation);
-        }}>
-        <Text>Pair</Text>
-      </TouchableOpacity>
-
       {device.vitalType.map((vitalType: VitalType) => {
         return (
           <TouchableOpacity
             key={vitalType.valueOf()}
             style={Styles.ButtonContainer}
             onPress={() => {
-              MedMDeviceConnection.getInstance().setDefaultDevice(
-                device.address,
-                vitalType,
-              );
+              MedMDeviceConnection.getInstance()
+                .setDefaultDevice(device.address, vitalType)
+                .then();
             }}>
             <Text>Set Default {vitalType.valueOf()} Device</Text>
           </TouchableOpacity>

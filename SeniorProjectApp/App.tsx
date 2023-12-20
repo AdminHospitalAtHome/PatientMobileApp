@@ -19,6 +19,8 @@ import DevicePage from './Pages/Patient/PatientSettings/DevicePage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ChatTest2 from './Pages/Patient/Communication/ChatTest2';
 import ChatContactPage from './Pages/Patient/Communication/ChatContactPage';
+import PatientBloodOxygenPage from "./Pages/Patient/PatientDetailPages/PatientBloodOxygenPage";
+import PairNewDevicePage from "./Pages/Patient/PatientSettings/PairNewDevicePage";
 
 <script src="http://locralhost:8097" />;
 require('node-libs-react-native/globals');
@@ -67,6 +69,11 @@ function HomeScreenStack(): JSX.Element {
         component={PatientHeartRatePage}
         options={{title: 'My Heart Rate'}}
       />
+      <HomeStack.Screen
+        name={'patientBloodOxygenPage'}
+        component={PatientBloodOxygenPage}
+        options={{title: 'My Blood Oxygen'}}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -90,6 +97,11 @@ function SettingsScreenStack(): JSX.Element {
         name={'DevicePage'}
         component={DevicePage}
         options={{title: 'Device'}}
+      />
+      <SettingsStack.Screen
+        name={'PairNewDevicePage'}
+        component={PairNewDevicePage}
+        options={{title: 'Pair New Device'}}
       />
     </SettingsStack.Navigator>
   );

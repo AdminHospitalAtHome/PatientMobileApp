@@ -6,12 +6,8 @@ export interface HAH_Device_Connection {
   paired_device_list: () => Promise<HAH_Device[]>;
   paired_device_list_vital: (vital: VitalType) => Promise<HAH_Device[]>;
   default_paried_device: (vital: VitalType) => Promise<HAH_Device>;
-  pair_device: (device: HAH_Device, navigation: any) => Promise<void>;
+  pair_device: (device: HAH_Device) => Promise<void>;
   unpair_device: (device: HAH_Device) => Promise<void>;
-  get_data: (
-    id: number,
-    parse: (xml: string) => Promise<Record<string, any>[]>,
-  ) => Promise<Record<string, any>[]>;
   startDeviceScan: (
     setPairableDevices: React.Dispatch<React.SetStateAction<HAH_Device[]>>,
   ) => void;

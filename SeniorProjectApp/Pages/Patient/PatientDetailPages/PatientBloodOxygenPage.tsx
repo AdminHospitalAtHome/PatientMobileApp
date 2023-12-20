@@ -16,7 +16,7 @@ import InputManualModal from '../../../Components/ManualInputs/InputManualModal'
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import SingleLineChart from '../../../Components/SingleLineChart';
 
-export default function PatientBloodOxygen(): React.JSX.Element {
+export default function PatientBloodOxygenPage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const numberRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;

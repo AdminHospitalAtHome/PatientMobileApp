@@ -121,14 +121,13 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     });
   }
 
-  pair_device(device: HAH_Device, navigation: any): Promise<void> {
-    return new Promise((resolve, reject) => {
+  // TODO: Add check for failed pairing
+  pair_device(device: HAH_Device): Promise<void> {
+    return new Promise(resolve => {
       this.pairDeviceEventListener.remove();
       this.pairDeviceEventListener = eventEmitter.addListener(
         'New_Device',
-        event => {
-          navigation.goBack();
-
+        () => {
           this.pairDeviceEventListener.remove();
         },
       );
@@ -140,15 +139,6 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   unpair_device(device: HAH_Device): Promise<void> {
     return new Promise((resolve, reject) => {
       resolve();
-    });
-  }
-
-  get_data(
-    id: number,
-    parse: (xml: string) => Promise<Record<string, any>[]>,
-  ): Promise<Record<string, any>[]> {
-    return new Promise((resolve, reject) => {
-      resolve([{}]);
     });
   }
 
@@ -181,7 +171,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
 
   stopCollector(): Promise<boolean> {
     return new Promise(resolve => {
-      MedMDeviceManager.manualStopCollector().then(res => {
+      MedMDeviceManager.manualStopCollector().then((res: boolean) => {
         resolve(res);
       });
     });
@@ -221,7 +211,7 @@ export class MedMDevice implements HAH_Device {
 }
 
 export function parseDevicesJson(text: string): HAH_Device[] {
-  let devices = new Array<HAH_Device>();
+  let devices: HAH_Device[] = [];
   let json = JSON.parse(text);
   for (let i = 0; i < json.length; i++) {
     let vitals: VitalType[] = [];
@@ -339,31 +329,27 @@ export function parseXMLBloodPressureData(xml: string): Record<string, any> {
   }
 }
 
-export function parseXMLBloodOxygenData(
-  xml: string,
-): Promise<Record<string, any>[]> {
-  return new Promise((resolve, reject) => {
-    try {
-      const parser = new XMLParser();
-      let obj = parser.parse(xml);
-      let bloodOxygenInPercentage: number = Math.floor(
-        Number(obj['measurements-oxygen-stream']['spo2-average']),
-      );
-      if (
-        Number.isNaN(bloodOxygenInPercentage) ||
-        Number(obj['measurements-oxygen-stream']['spo2-average']) > 100
-      ) {
-        throw new Error('Invalid Number');
-      }
-      let dateTimeTaken: string = new Date(
-        obj['measurements-oxygen-stream']['measured-at'],
-      ).toISOString();
-      resolve({
-        BloodOxygenInPercentage: bloodOxygenInPercentage,
-        DateTimeTaken: dateTimeTaken,
-      });
-    } catch (e) {
-      reject({});
+export function parseXMLBloodOxygenData(xml: string): Record<string, any> {
+  try {
+    const parser = new XMLParser();
+    let obj = parser.parse(xml);
+    let bloodOxygenInPercentage: number = Math.floor(
+      Number(obj['measurements-oxygen-stream']['spo2-average']),
+    );
+    if (
+      Number.isNaN(bloodOxygenInPercentage) ||
+      Number(obj['measurements-oxygen-stream']['spo2-average']) > 100
+    ) {
+      throw new Error('Invalid Number');
     }
-  });
+    let dateTimeTaken: string = new Date(
+      obj['measurements-oxygen-stream']['measured-at'],
+    ).toISOString();
+    return {
+      BloodOxygenInPercentage: bloodOxygenInPercentage,
+      DateTimeTaken: dateTimeTaken,
+    };
+  } catch (e) {
+    return {};
+  }
 }
