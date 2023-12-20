@@ -6,7 +6,7 @@ import {
   sendMessage,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
 import {useCallback, useEffect, useState} from 'react';
-import {GiftedChat, Bubble } from 'react-native-gifted-chat';
+import {Bubble, GiftedChat} from 'react-native-gifted-chat';
 
 export default function ChatTest2(): JSX.Element {
   const [accessToken, setAccessToken] = useState('');
@@ -78,15 +78,19 @@ export default function ChatTest2(): JSX.Element {
     }
   }, [chatThreadId, accessToken]);
 
-  const onSend = useCallback((messages = []) => {
-    console.log(messages[0].text);
-    sendMessage(chatThreadId, accessToken, messages[0].text);
-    setGiftedChatMessages((previousMessages: any) =>
-      GiftedChat.append(previousMessages, messages),
-    );
-  }, []);
+  const onSend = useCallback(
+    (messages = []) => {
+      if (chatThreadId && accessToken) {
+        sendMessage(chatThreadId, accessToken, messages[0].text);
+        setGiftedChatMessages((previousMessages: any) =>
+          GiftedChat.append(previousMessages, messages),
+        );
+      }
+    },
+    [chatThreadId, accessToken],
+  );
 
-  const renderBubble = (props) => {
+  const renderBubble = props => {
     return (
       <Bubble
         {...props}
@@ -98,8 +102,6 @@ export default function ChatTest2(): JSX.Element {
       />
     );
   };
-  
-
 
   return (
     <GiftedChat
@@ -110,7 +112,7 @@ export default function ChatTest2(): JSX.Element {
       }}
       textInputStyle={{color: 'black'}}
       renderBubble={renderBubble}
-      showAvatarForEveryMessage ={true}
+      showAvatarForEveryMessage={true}
     />
   );
 }
