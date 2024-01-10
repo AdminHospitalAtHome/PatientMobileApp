@@ -74,5 +74,9 @@ download android studio at https://developer.android.com/studio
 - chat conposite: [azure communication ui library](https://azure.github.io/communication-ui-library)
 
 #### backend
-- thread control: [acure communication service](https://azure.microsoft.com/en-us/products/communication-services) 
+- thread control: [acure communication service](https://azure.microsoft.com/en-us/products/communication-services)
+> **developer note:**
+> the message fetch function is using azure communication official RESTful api, for version update, please refer to [learn.microsoft.com](https://learn.microsoft.com/en-us/rest/api/communication/)
 </details>
+
+
