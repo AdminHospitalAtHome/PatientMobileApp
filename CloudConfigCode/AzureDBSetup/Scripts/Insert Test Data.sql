@@ -5,6 +5,9 @@ VALUES (100000001, 'John', 'Smith', '2001-01-01', 0),
         (400000004, 'Paul', 'Williams', '1965-12-04', 0),
         (500000001, 'Client', 'Demo', '2001-11-11', 0);
 
+INSERT INTO [dbo].[Provider_Info]
+VALUES (123456789, 'Joe', 'Person');
+
 INSERT INTO dbo.Patient_Weight (PatientID, DateTimeTaken, WeightInPounds, IfManualInput)
 VALUES (100000001, '2023-01-01 08:00:00.000', 190, 1),
 (100000001, '2023-01-02 08:00:00.000', 191, 0),

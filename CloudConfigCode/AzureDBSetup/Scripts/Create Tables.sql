@@ -6,6 +6,12 @@ CREATE TABLE Patient_Info (
 	IfAccessibilityMode BIT
 );
 
+create table Provider_Info(
+    ProviderId INT NOT NULL PRIMARY KEY,
+    FirstName varchar(20) NOT NULL,
+    LastName varchar(20) NOT NULL
+);
+
 
 -- Create Patient Weight Table
 CREATE TABLE Patient_Weight (
