@@ -1,4 +1,5 @@
-# RHIT 2023-2024 CSSE Senior Project: Hospital At Home
+# RHIT 2023-2024 CSSE Senior Project: Hospital At Home  
+This is the mobile app for patient side app, for provider side web page, please go to [provider side web github](https://github.com/AdminHospitalAtHome/ProviderSideWebPage)  
 For any questions, please contact the previous year's development team...
 
 ## 💻 Environment Setup
