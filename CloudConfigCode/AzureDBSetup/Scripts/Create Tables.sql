@@ -49,3 +49,15 @@ CREATE TABLE Patient_Heart_Rate (
 	HeartRateInBPM Int NOT NULL,
 	IfManualInput BIT NOT NULL -- 1 is yes, 0 if no
 )
+
+-- Create Alert Level Table
+-- TODO: Add a JSON line that if not null, is the specifics for the patient alert ranges
+CREATE TABLE Patient_Alert_Levels (
+	UniqueID INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- Unique ID for entry
+	PatientID INT FOREIGN KEY REFERENCES Patient_Info(PatientID), -- May change based on client Needs
+	Weight_Level INT, -- Check for Null when using
+	Heart_Rate_Level INT, -- 0 is Green
+	Blood_Oxygen_Level INT, -- 1 is Yellow
+	Blood_Pressure_Level INT, -- 2 is Red
+	CONSTRAINT PatientID_Unique UNIQUE(PatientID)
+)
