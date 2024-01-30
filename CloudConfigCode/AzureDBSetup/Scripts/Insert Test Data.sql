@@ -140,7 +140,7 @@ VALUES (100000001, '2023-01-01 08:00:00.000', 130, 71, 1),
 (200000001, '2023-03-31 08:00:00.000', 121, 64, 1);
 
 
-INSERT INTO dbo.Patinet_Blood_Oxygen (PatientID, DateTimeTaken, BloodOxygenLevelInPercentage, IfManualInput)
+INSERT INTO dbo.Patient_Blood_Oxygen (PatientID, DateTimeTaken, BloodOxygenLevelInPercentage, IfManualInput)
 VALUES (100000001, '2023-01-01 08:00:00.000', 98, 1),
 (100000001, '2023-01-02 08:00:00.000', 97, 0),
 (100000001, '2023-01-03 08:00:00.000', 97, 1),
@@ -206,7 +206,7 @@ VALUES (100000001, '2023-01-01 08:00:00.000', 98, 1),
 (200000001, '2023-03-31 08:00:00.000', 90, 1);
 
 
-INSERT INTO dbo.Patinet_Heart_Rate (PatientID, DateTimeTaken, HeartRateInBPM, IfManualInput)
+INSERT INTO dbo.Patient_Heart_Rate (PatientID, DateTimeTaken, HeartRateInBPM, IfManualInput)
 VALUES (100000001, '2023-01-01 08:00:00.000', 98, 1),
 (100000001, '2023-01-02 08:00:00.000', 97, 0),
 (100000001, '2023-01-03 08:00:00.000', 123, 1),

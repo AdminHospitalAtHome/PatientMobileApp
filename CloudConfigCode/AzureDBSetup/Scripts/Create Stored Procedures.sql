@@ -80,3 +80,137 @@ BEGIN
 	--RAISERROR(@ErrorMessage, 15, 1)
 
 END;
+
+
+
+CREATE OR ALTER TRIGGER [dbo].[Patient_Heart_Rate_Alert]
+ON [dbo].[Patient_Heart_Rate]
+AFTER INSERT AS
+BEGIN
+    DECLARE @patientID INT
+    SELECT @patientID = (SELECT TOP(1) PatientID FROM INSERTED)
+
+	DECLARE @MaxDateTime DATETIME
+	SELECT @MaxDateTime = (SELECT MAX(DateTimeTaken) FROM INSERTED)
+
+
+	DECLARE @heartRate INT
+	SELECT @heartRate = (SELECT TOP(1) HeartRateInBPM FROM INSERTED WHERE DateTimeTaken = @MaxDateTime)
+    -- CHECK IF PATIENTID IS IN THE IN THE Patient_weight_alert table
+	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT)
+
+	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	-- Default Alert Level to Green (0)
+	DECLARE @Alert_Level INT
+	SELECT @Alert_Level = 0
+	IF (@heartRate > 120)
+	BEGIN
+		SELECT @Alert_Level = 2
+	END
+	IF (@heartRate > 100 AND @Alert_Level = 0)
+	BEGIN
+		SELECT @Alert_Level = 1
+	END
+
+		IF EXISTS (SELECT 1 FROM @Temp_Patient_Alert_Level)
+	BEGIN
+		UPDATE [dbo].[Patient_Alert_Levels] SET Heart_Rate_Level = @Alert_Level WHERE PatientID = @patientID
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[Patient_Alert_Levels]
+		VALUES(@patientID, 0, @Alert_Level, 0, 0)
+
+	END
+
+END;
+
+
+
+CREATE OR ALTER TRIGGER [dbo].[Patient_Blood_Pressure_Alert]
+ON [dbo].[Patient_Blood_Pressure]
+AFTER INSERT AS
+BEGIN
+    DECLARE @patientID INT
+    SELECT @patientID = (SELECT TOP(1) PatientID FROM INSERTED)
+
+	DECLARE @MaxDateTime DATETIME
+	SELECT @MaxDateTime = (SELECT MAX(DateTimeTaken) FROM INSERTED)
+
+	DECLARE @systolicBP INT
+	SELECT @systolicBP = (SELECT TOP(1) SystolicBloodPressureInMmHg FROM INSERTED WHERE DateTimeTaken = @MaxDateTime)
+
+	DECLARE @diastolicBP INT
+	SELECT @diastolicBP = (SELECT TOP(1) DiastolicBloodPressureInMmHg FROM INSERTED WHERE DateTimeTaken = @MaxDateTime)
+
+	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT)
+
+	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	-- Default Alert Level to Green (0)
+	DECLARE @Alert_Level INT
+	SELECT @Alert_Level = 0
+
+	IF (@systolicBP > 180 OR @diastolicBP > 100)
+	BEGIN
+		SELECT @Alert_Level = 2
+	END
+
+	IF (@systolicBP > 150 OR @diastolicBP > 90)
+	BEGIN
+		IF (@Alert_Level = 0)
+		BEGIN
+			SELECT @Alert_Level = 1
+		END
+	END
+
+	IF EXISTS (SELECT 1 FROM @Temp_Patient_Alert_Level)
+	BEGIN
+		UPDATE [dbo].[Patient_Alert_Levels] SET Blood_Pressure_Level = @Alert_Level WHERE PatientID = @patientID
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[Patient_Alert_Levels]
+		VALUES(@patientID, 0, 0, 0, @Alert_Level)
+	END
+END;
+
+
+CREATE OR ALTER TRIGGER [dbo].[Patient_Blood_Oxygen_Alert]
+ON [dbo].[Patient_Blood_Oxygen]
+AFTER INSERT AS
+BEGIN
+    DECLARE @patientID INT
+    SELECT @patientID = (SELECT TOP(1) PatientID FROM INSERTED)
+
+	DECLARE @MaxDateTime DATETIME
+	SELECT @MaxDateTime = (SELECT MAX(DateTimeTaken) FROM INSERTED)
+
+	DECLARE @bloodOxygen INT
+	SELECT @bloodOxygen = (SELECT TOP(1) BloodOxygenLevelInPercentage FROM INSERTED WHERE DateTimeTaken = @MaxDateTime)
+
+	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT)
+
+	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	-- Default Alert Level to Green (0)
+	DECLARE @Alert_Level INT
+	SELECT @Alert_Level = 0
+
+	IF (@bloodOxygen <= 85)
+	BEGIN
+		SELECT @Alert_Level = 2
+	END
+	IF (@bloodOxygen <= 88 AND @Alert_Level = 0)
+	BEGIN
+		SELECT @Alert_Level = 1
+	END
+
+	IF EXISTS (SELECT 1 FROM @Temp_Patient_Alert_Level)
+	BEGIN
+		UPDATE [dbo].[Patient_Alert_Levels] SET Blood_Oxygen_Level = @Alert_Level WHERE PatientID = @patientID
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[Patient_Alert_Levels]
+		VALUES(@patientID, 0, 0, @Alert_Level, 0)
+	END
+END;
