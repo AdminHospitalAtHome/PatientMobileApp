@@ -1,0 +1,28 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "alertLevel",
+      "direction": "in",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE  PatientID = @PatientID",
+      "commandType": "Text",
+      "parameters": "@PatientID={Query.patientID}"
+    }
+  ]
+}
