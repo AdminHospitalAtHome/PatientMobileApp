@@ -59,5 +59,6 @@ CREATE TABLE Patient_Alert_Levels (
 	Heart_Rate_Level INT, -- 0 is Green
 	Blood_Oxygen_Level INT, -- 1 is Yellow
 	Blood_Pressure_Level INT, -- 2 is Red
+	Custom_Alert_Levels VARCHAR(MAX),
 	CONSTRAINT PatientID_Unique UNIQUE(PatientID)
 )
