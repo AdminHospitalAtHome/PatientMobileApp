@@ -118,3 +118,54 @@ export async function getParticipantInThread(
     resolve('Error');
   });
 }
+
+export function getAllMessages(
+  chatThreadClient: ChatThreadClient,
+  providerName: string
+): Promise<any[]> {
+  return new Promise(async resolve => {
+    const messages = chatThreadClient.listMessages();
+
+    let parsedMessages = [];
+
+    for await (const m of messages) {
+      // Incase it is a different kind of message like user added to chat or topic changed...
+      try {
+        //@ts-ignore
+        if (m.content?.message && m.sender?.communicationUserId) {
+          // If true we are sender
+          // @ts-ignore
+          if (temp_communicationId === m.sender.communicationUserId) {
+            let dictionary = {
+              _id: m.id,
+              text: m.content.message,
+              createdAt: m.createdOn,
+              user: {
+                //@ts-ignore
+                _id: m.sender.communicationUserId,
+                name: 'Me',
+              },
+            };
+            parsedMessages.push(dictionary);
+          } else {
+            let dictionary = {
+              _id: m.id,
+              text: m.content.message,
+              createdAt: m.createdOn,
+              user: {
+                //@ts-ignore
+                _id: m.sender.communicationUserId,
+                name: providerName,
+              },
+            };
+            parsedMessages.push(dictionary);
+          }
+
+        }
+
+      } catch {}
+    }
+
+    resolve(parsedMessages);
+  });
+}

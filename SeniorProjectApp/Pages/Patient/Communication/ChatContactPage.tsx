@@ -53,6 +53,7 @@ export default function ChatContactPage({
               onPress={() =>
                 navigation.navigate('azureChatPage', {
                   threadClient: threadClient,
+                  communicationID: temp_communicationId,
                 })
               }>
               <ContactCard
