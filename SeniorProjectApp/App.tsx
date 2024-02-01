@@ -21,6 +21,9 @@ import ChatTest2 from './Pages/Patient/Communication/ChatTest2';
 import ChatContactPage from './Pages/Patient/Communication/ChatContactPage';
 import PatientBloodOxygenPage from "./Pages/Patient/PatientDetailPages/PatientBloodOxygenPage";
 import PairNewDevicePage from "./Pages/Patient/PatientSettings/PairNewDevicePage";
+import 'node-libs-react-native/globals';
+import 'react-native-get-random-values';
+import 'react-native-url-polyfill/auto';
 
 <script src="http://locralhost:8097" />;
 require('node-libs-react-native/globals');

@@ -1,6 +1,9 @@
 import {ChatClient, ChatThreadClient} from '@azure/communication-chat';
 import {AzureCommunicationTokenCredential} from '@azure/communication-common';
-import * from '@azure/communication-react';
+import 'node-libs-react-native/globals';
+import 'react-native-get-random-values';
+import 'react-native-url-polyfill/auto';
+import '@azure/core-asynciterator-polyfill';
 
 export const endpointUrl =
   'https://hospitalathomechat.unitedstates.communication.azure.com';
