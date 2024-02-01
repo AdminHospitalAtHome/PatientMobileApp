@@ -6,32 +6,13 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Circle} from 'react-native-svg';
+import {ChatThreadClient} from "@azure/communication-chat";
 
-export default function ContactCard({name}: {name: string}): JSX.Element {
-  const screenWidth: number = Dimensions.get('window').width;
-  const screenHeight: number = Dimensions.get('window').width;
+export default function ContactCard({chatThreadClient}: {chatThreadClient: ChatThreadClient}): JSX.Element {
+
   return (
-    <View style={{flexDirection: 'row'}}>
-      {/*picture holder*/}
-      <View style={{flex: 2}}>
-        <View
-          style={{
-            backgroundColor: 'green',
-            flex: 1,
-            borderRadius: 50,
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 10,
-          }}
-        />
-      </View>
-      {/*info holder*/}
-      <View style={{flex: 7}}>
-        <Text style={styles.Name}>{name}</Text>
-        <Text style={styles.RecentChat}>
-          replace this with most recent chat history
-        </Text>
-      </View>
+    <View>
+      <Text>HELLO</Text>
     </View>
   );
 }

@@ -1,14 +1,59 @@
-const endpointurl =
+import {ChatClient, ChatThreadClient} from '@azure/communication-chat';
+import {AzureCommunicationTokenCredential} from '@azure/communication-common';
+import * from '@azure/communication-react';
+
+export const endpointUrl =
   'https://hospitalathomechat.unitedstates.communication.azure.com';
+
+export let temp_communicationId: string = '';
+let temp_provider_name: string = '';
+
+export function initChatClient(
+  userId: number,
+): Promise<ChatClient | undefined> {
+  return new Promise<ChatClient | undefined>(resolve => {
+    getCommunicationId(userId)
+      .then(res => {
+        temp_communicationId = res;
+        getCommunicationToken(res)
+          .then(accessToken => {
+            resolve(
+              new ChatClient(
+                endpointUrl,
+                new AzureCommunicationTokenCredential(accessToken),
+              ),
+            );
+          })
+          .catch(() => {
+            console.error('Failed to init chat client');
+            resolve(undefined);
+          });
+      })
+      .catch(() => {
+        console.error('Failed to init chat client');
+        resolve(undefined);
+      });
+  });
+}
 
 export function getCommunicationId(userId: number): Promise<string> {
   return new Promise((resolve, reject) => {
-    fetch(
-      `https://hosptial-at-home-js-api.azurewebsites.net/api/getCommunicationId?patientID=${userId}`,
-    )
+    // Checking if we have a providerID or a PatinetID. PatientIDs are 9 digits and providerIDs are 6. Both can not have a leading zero so this works.
+    let fetchString: string = '';
+    if (userId > 999999) {
+      fetchString = `/getCommunicationId?patientID=${userId}`;
+    } else {
+      fetchString = `/getProviderById?providerID=${userId}`;
+    }
+    fetch(`https://hosptial-at-home-js-api.azurewebsites.net/api${fetchString}`)
       .then(res => res.json())
       .then(res => {
         if (res.length === 1) {
+          if (userId < 1000000) {
+            temp_provider_name = res[0].FirstName + ' ' + res[0].LastName;
+          }
+
+          // noinspection JSUnresolvedReference
           resolve(res[0].CommunicationId);
         } else {
           reject('failed to get communicationId');
@@ -17,23 +62,12 @@ export function getCommunicationId(userId: number): Promise<string> {
   });
 }
 
-//should modify later when the provider site sis ready, call it on contact page
-export function getChatThread(userId: string): Promise<string> {
-  return new Promise((resolve, reject) => {
+export function getCommunicationToken(
+  communicationId: string,
+): Promise<string> {
+  return new Promise(resolve => {
     fetch(
-      `https://hosptial-at-home-js-api.azurewebsites.net/api/getChatThread?UserId=${userId}`,
-    )
-      .then(response => response.json())
-      .then(res => {
-        resolve(res[0].ThreadId);
-      });
-  });
-}
-
-export function getCommunicationToken(userId: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    fetch(
-      `https://hosptial-at-home-js-api.azurewebsites.net/api/getUserToken?userId=${userId}`,
+      `https://hosptial-at-home-js-api.azurewebsites.net/api/getUserToken?userId=${communicationId}`,
     )
       .then(res => res.json())
       .then(res => {
@@ -42,42 +76,21 @@ export function getCommunicationToken(userId: string): Promise<string> {
   });
 }
 
-export function getMessage(
-  threadId: string,
-  accessToken: string,
-): Promise<any> {
-  return new Promise((resolve, reject) => {
-    fetch(
-      `https://hospitalathomechat.unitedstates.communication.azure.com/chat/threads/${threadId}/messages?api-version=2023-11-07`,
-      {method: 'GET', headers: {Authorization: `Bearer ${accessToken}`}},
-    )
-      .then(res => res.json())
-      .then(res => resolve(res));
-  });
-}
-
-export function sendMessage(
-  threadId: string,
-  accessToken: string,
-  message: string,
-) {
-  return new Promise((resolve, reject) => {
-    fetch(
-      `https://hospitalathomechat.unitedstates.communication.azure.com/chat/threads/${threadId}/messages?api-version=2023-11-07`,
-      {
-        method: 'POST',
-        body: JSON.stringify({content: message}),
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      },
-    ).then(res => {
-      if (res.status === 201) {
-        resolve(res);
-      } else {
-        reject(`did not send message, status: ${res.status}`);
-      }
-    });
+export function getAllThreads(
+  chatClient: ChatClient,
+): Promise<ChatThreadClient[]> {
+  return new Promise<ChatThreadClient[]>(async resolve => {
+    console.log("HELLO???")
+    const threads = chatClient.listChatThreads();
+    let threadClients: ChatThreadClient[] = [];
+    for await (const t of threads) {
+      try {
+        if (!t.deletedOn) {
+          threadClients.push(chatClient.getChatThreadClient(t.id));
+          console.log("THREAD");
+        }
+      } catch {}
+    }
+    resolve(threadClients);
   });
 }
