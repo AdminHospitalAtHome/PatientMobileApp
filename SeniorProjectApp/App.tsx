@@ -24,6 +24,7 @@ import PairNewDevicePage from "./Pages/Patient/PatientSettings/PairNewDevicePage
 import 'node-libs-react-native/globals';
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
+import {AzureChatPage} from "./Pages/Patient/Communication/AzureChatPage";
 
 <script src="http://locralhost:8097" />;
 require('node-libs-react-native/globals');
@@ -121,14 +122,9 @@ function ChatScreenStack(): JSX.Element {
         options={{title: 'contacts'}}
       />
       <ChatStack.Screen
-        name={'test2'}
-        component={ChatTest2}
-        options={{title: 'user 200000001 (will replace later)'}}
-      />
-      <ChatStack.Screen
-        name={'test3'}
-        component={ChatTest3}
-        options={{title: 'user 300000001 (will replace later)'}}
+        name={'azureChatPage'}
+        component={AzureChatPage}
+        options={{title: 'Your Chat'}}
       />
     </ChatStack.Navigator>
   );

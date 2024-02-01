@@ -5,12 +5,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import React from 'react';
 import ContactCard from '../../../Components/ContactCard';
 import {ChatClient, ChatThreadClient} from '@azure/communication-chat';
 import {useEffect, useState} from 'react';
 import {
   getAllThreads,
-  getCommunicationToken,
   initChatClient,
   temp_communicationId,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
@@ -21,7 +21,7 @@ export default function ChatContactPage({
   navigation,
 }: {
   navigation: any;
-}): JSX.Element {
+}): React.JSX.Element {
   const patientID = 100000001;
   const [chatClient, setChatClient] = useState<ChatClient | undefined>(
     undefined,
@@ -48,16 +48,20 @@ export default function ChatContactPage({
       <ScrollView contentContainerStyle={{alignItems: 'center', padding: 10}}>
         {threadClients.map(threadClient => {
           return (
-            <TouchableOpacity style={styles.card}>
-              <ContactCard chatThreadClient={threadClient} />
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() =>
+                navigation.navigate('azureChatPage', {
+                  threadClient: threadClient,
+                })
+              }>
+              <ContactCard
+                chatThreadClient={threadClient}
+                patientCommunicationID={temp_communicationId}
+              />
             </TouchableOpacity>
           );
         })}
-        {/*<TouchableOpacity*/}
-        {/*  style={styles.card}*/}
-        {/*  onPress={() => navigation.navigate('test2')}> /!*  TODO: FIX *!/*/}
-        {/*  <ContactCard chatThreadClient={'200000001'} />*/}
-        {/*</TouchableOpacity>*/}
       </ScrollView>
     </View>
   );

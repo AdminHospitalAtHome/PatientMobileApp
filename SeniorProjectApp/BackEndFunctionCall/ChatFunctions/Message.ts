@@ -83,17 +83,38 @@ export function getAllThreads(
   chatClient: ChatClient,
 ): Promise<ChatThreadClient[]> {
   return new Promise<ChatThreadClient[]>(async resolve => {
-    console.log("HELLO???")
+    console.log('HELLO???');
     const threads = chatClient.listChatThreads();
     let threadClients: ChatThreadClient[] = [];
     for await (const t of threads) {
       try {
         if (!t.deletedOn) {
           threadClients.push(chatClient.getChatThreadClient(t.id));
-          console.log("THREAD");
+          console.log('THREAD');
         }
       } catch {}
     }
     resolve(threadClients);
+  });
+}
+
+export async function getParticipantInThread(
+  chatThreadClient: ChatThreadClient,
+  communicationID: string,
+) {
+  return new Promise<string | undefined>(async resolve => {
+    try {
+      let participants = chatThreadClient.listParticipants();
+      for await (const p of participants) {
+        // Assumes chats only have two people
+        // @ts-ignore
+        if (p.id.communicationUserId !== communicationID) {
+          resolve(p.displayName);
+        }
+      }
+    } catch {
+      console.log('error: get participant in thread function');
+    }
+    resolve('Error');
   });
 }
