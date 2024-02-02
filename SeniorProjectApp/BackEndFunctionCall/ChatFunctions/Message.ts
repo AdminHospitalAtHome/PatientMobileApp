@@ -4,6 +4,8 @@ import 'node-libs-react-native/globals';
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import '@azure/core-asynciterator-polyfill';
+import {GiftedChat} from 'react-native-gifted-chat';
+import BackgroundTimer from 'react-native-background-timer';
 
 export const endpointUrl =
   'https://hospitalathomechat.unitedstates.communication.azure.com';
@@ -121,7 +123,7 @@ export async function getParticipantInThread(
 
 export function getAllMessages(
   chatThreadClient: ChatThreadClient,
-  providerName: string
+  providerName: string,
 ): Promise<any[]> {
   return new Promise(async resolve => {
     const messages = chatThreadClient.listMessages();
@@ -160,12 +162,109 @@ export function getAllMessages(
             };
             parsedMessages.push(dictionary);
           }
-
         }
-
       } catch {}
     }
 
     resolve(parsedMessages);
   });
+}
+
+export function getMessageNotification(
+  chatThreadClient: ChatThreadClient,
+  setChatMessages: React.Dispatch<React.SetStateAction<any[]>>,
+  providerName: string,
+  chatMessages: any[],
+) {
+  BackgroundTimer.runBackgroundTimer(async () => {
+    const messages = chatThreadClient.listMessages();
+    let parsedMessages = [];
+
+    for await (const m of messages) {
+      // @ts-ignore
+      try {
+        // @ts-ignore
+        if (m.content?.message && m.sender?.communicationUserId) {
+          console.log(m.content.message);
+        }
+        if (chatMessages.length !== 0 && chatMessages[0] !== undefined) {
+          if (m.id === chatMessages[0]._id) {
+            console.log('HEY! I FOUND THE MESSAGE');
+            // @ts-ignore
+            if (m.content?.message && m.sender?.communicationUserId) {
+              console.log(m.content.message);
+            }
+            break;
+          } else {
+            // @ts-ignore
+            if (m.content?.message && m.sender?.communicationUserId) {
+              // @ts-ignore
+              if (temp_communicationId === m.sender.communicationUserId) {
+                let dictionary = {
+                  _id: m.id,
+                  text: m.content.message,
+                  createdAt: m.createdOn,
+                  user: {
+                    // @ts-ignore
+                    _id: m.sender.communicationUserId,
+                    name: 'Me',
+                  },
+                };
+                setChatMessages(previous =>
+                  GiftedChat.append(previous, [dictionary]),
+                );
+              } else {
+                let dictionary = {
+                  _id: m.id,
+                  text: m.content.message,
+                  createdAt: m.createdOn,
+                  user: {
+                    // @ts-ignore
+                    _id: m.sender.communicationUserId,
+                    name: providerName,
+                  },
+                };
+                setChatMessages(previous =>
+                  GiftedChat.append(previous, [dictionary]),
+                );
+              }
+            }
+          }
+        }
+      } catch {}
+    }
+  }, 3000);
+
+  // console.log('NEW MESSAGE RECIEVED');
+  // try {
+  //   // @ts-ignore
+  //   if (m.content?.message && m.sender?.communicationUserId) {
+  //     // @ts-ignore
+  //     if (temp_communicationId === m.sender.communicationUserId) {
+  //       let dictionary = {
+  //         _id: m.id,
+  //         text: m.message,
+  //         createdAt: m.createdOn,
+  //         user: {
+  //           // @ts-ignore
+  //           _id: m.sender.communicationUserId,
+  //           name: 'Me',
+  //         },
+  //       };
+  //       setChatMessages(previous => GiftedChat.append(previous, [dictionary]));
+  //     } else {
+  //       let dictionary = {
+  //         _id: m.id,
+  //         text: m.message,
+  //         createdAt: m.createdOn,
+  //         user: {
+  //           // @ts-ignore
+  //           _id: m.sender.communicationUserId,
+  //           name: providerName,
+  //         },
+  //       };
+  //       setChatMessages(previous => GiftedChat.append(previous, [dictionary]));
+  //     }
+  //   }
+  // } catch {}
 }

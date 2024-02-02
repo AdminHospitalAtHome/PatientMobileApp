@@ -25,9 +25,11 @@ import 'node-libs-react-native/globals';
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import {AzureChatPage} from "./Pages/Patient/Communication/AzureChatPage";
+// import window from "./__mocks__/window";
 
 <script src="http://locralhost:8097" />;
 require('node-libs-react-native/globals');
+
 
 const Tab = createBottomTabNavigator();
 

@@ -1,8 +1,9 @@
-import {ChatThreadClient} from '@azure/communication-chat';
+import {ChatClient, ChatThreadClient} from '@azure/communication-chat';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {useEffect, useState} from 'react';
 import {
   getAllMessages,
+  getMessageNotification,
   getParticipantInThread,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
 
@@ -15,6 +16,9 @@ export function AzureChatPage({
 }) {
   const {threadClient} = route.params;
   const chatThreadClient: ChatThreadClient = threadClient;
+
+  const {chatClient} = route.params;
+  const realChatClient: ChatClient = chatClient;
 
   const {communicationID} = route.params;
 
@@ -41,6 +45,14 @@ export function AzureChatPage({
     //@ts-ignore
     [],
   );
+  useEffect(() => {
+    getMessageNotification(
+      chatThreadClient,
+      setChatMessages,
+      providerName,
+      chatMessages,
+    );
+  }, []);
 
   return (
     <GiftedChat
