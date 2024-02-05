@@ -1,4 +1,4 @@
-import {ChatClient, ChatThreadClient} from '@azure/communication-chat';
+import {ChatThreadClient} from '@azure/communication-chat';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {useEffect, useState} from 'react';
 import {
@@ -6,6 +6,9 @@ import {
   getMessageNotification,
   getParticipantInThread,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
+import {Text} from 'react-native';
+import BackgroundTimer from 'react-native-background-timer';
+import {useIsFocused} from '@react-navigation/native';
 
 export function AzureChatPage({
   navigation,
@@ -17,20 +20,24 @@ export function AzureChatPage({
   const {threadClient} = route.params;
   const chatThreadClient: ChatThreadClient = threadClient;
 
-  const {chatClient} = route.params;
-  const realChatClient: ChatClient = chatClient;
-
   const {communicationID} = route.params;
+  const isFocused = useIsFocused();
 
   const [chatMessages, setChatMessages] = useState<any[]>([]); // TODO: Change to specific type later....
-  const [providerName, setProviderName] = useState<string>('Dr');
+  const [providerName, setProviderName] = useState<string>('Initial Config');
 
   useEffect(() => {
-    getAllMessages(chatThreadClient, providerName).then(res => {
-      setChatMessages(res);
-      console.log('got messages!!');
+    navigation.addListener('beforeRemove', () => {
+      BackgroundTimer.stopBackgroundTimer();
     });
-  }, []);
+    if (isFocused) {
+      if (providerName !== 'Initial Config') {
+        getMessageNotification(chatThreadClient, setChatMessages, providerName);
+      }
+    } else {
+      BackgroundTimer.stopBackgroundTimer();
+    }
+  }, [isFocused]);
 
   //@ts-ignore
   useEffect(
@@ -45,20 +52,31 @@ export function AzureChatPage({
     //@ts-ignore
     [],
   );
-  useEffect(() => {
-    getMessageNotification(
-      chatThreadClient,
-      setChatMessages,
-      providerName,
-      chatMessages,
-    );
-  }, []);
 
-  return (
-    <GiftedChat
-      messages={chatMessages}
-      user={{_id: communicationID}}
-      showAvatarForEveryMessage={true}
-    />
-  );
+  useEffect(() => {
+    if (providerName !== 'Initial Config') {
+      getAllMessages(chatThreadClient, providerName).then(res => {
+        setChatMessages(res);
+        console.log('got messages!!');
+      });
+    }
+  }, [providerName]);
+
+  useEffect(() => {
+    if (providerName !== 'Initial Config') {
+      getMessageNotification(chatThreadClient, setChatMessages, providerName);
+    }
+  }, [providerName]);
+
+  if (providerName !== 'Initial Config') {
+    return (
+      <GiftedChat
+        messages={chatMessages}
+        user={{_id: communicationID}}
+        showAvatarForEveryMessage={true}
+      />
+    );
+  } else {
+    return <Text>Loading...</Text>;
+  }
 }

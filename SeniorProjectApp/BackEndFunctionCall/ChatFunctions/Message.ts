@@ -174,26 +174,32 @@ export function getMessageNotification(
   chatThreadClient: ChatThreadClient,
   setChatMessages: React.Dispatch<React.SetStateAction<any[]>>,
   providerName: string,
-  chatMessages: any[],
 ) {
+  // Stop all timers to ensure you dont start multiple...
+  BackgroundTimer.stopBackgroundTimer();
+
+
   BackgroundTimer.runBackgroundTimer(async () => {
     const messages = chatThreadClient.listMessages();
+    // @ts-ignore
     let parsedMessages = [];
+    // @ts-ignore
+    let newMessages = [];
+
+    // This is necessary to get updated values. Because we are using useState, it breaks passing arrays as refrences...
+    setChatMessages(prevState => {
+      parsedMessages = prevState;
+      return prevState;
+    });
 
     for await (const m of messages) {
       // @ts-ignore
       try {
-        // @ts-ignore
-        if (m.content?.message && m.sender?.communicationUserId) {
-          console.log(m.content.message);
-        }
-        if (chatMessages.length !== 0 && chatMessages[0] !== undefined) {
-          if (m.id === chatMessages[0]._id) {
+        //@ts-ignore
+        if (parsedMessages.length !== 0 && parsedMessages[0] !== undefined) {
+          //@ts-ignore
+          if (m.id === parsedMessages[0]._id) {
             console.log('HEY! I FOUND THE MESSAGE');
-            // @ts-ignore
-            if (m.content?.message && m.sender?.communicationUserId) {
-              console.log(m.content.message);
-            }
             break;
           } else {
             // @ts-ignore
@@ -210,9 +216,7 @@ export function getMessageNotification(
                     name: 'Me',
                   },
                 };
-                setChatMessages(previous =>
-                  GiftedChat.append(previous, [dictionary]),
-                );
+                newMessages.push(dictionary);
               } else {
                 let dictionary = {
                   _id: m.id,
@@ -224,15 +228,17 @@ export function getMessageNotification(
                     name: providerName,
                   },
                 };
-                setChatMessages(previous =>
-                  GiftedChat.append(previous, [dictionary]),
-                );
+                newMessages.push(dictionary);
               }
             }
           }
         }
       } catch {}
     }
+
+
+    // @ts-ignore
+    setChatMessages(prevState => GiftedChat.append(prevState, newMessages));
   }, 3000);
 
   // console.log('NEW MESSAGE RECIEVED');

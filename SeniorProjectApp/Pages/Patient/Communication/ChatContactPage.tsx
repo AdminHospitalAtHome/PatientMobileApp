@@ -49,12 +49,12 @@ export default function ChatContactPage({
         {threadClients.map(threadClient => {
           return (
             <TouchableOpacity
+              key={threadClient.threadId}
               style={styles.card}
               onPress={() =>
                 navigation.navigate('azureChatPage', {
                   threadClient: threadClient,
                   communicationID: temp_communicationId,
-                  chatClient: chatClient,
                 })
               }>
               <ContactCard
