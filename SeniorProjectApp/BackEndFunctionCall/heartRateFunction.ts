@@ -45,6 +45,8 @@ export function addHeartRateAutomaticallyToServer(
     dateTimeTakenString += ']';
     heartRateString += ']';
 
+    console.log(heartRateString);
+
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addHeartRates',
       {

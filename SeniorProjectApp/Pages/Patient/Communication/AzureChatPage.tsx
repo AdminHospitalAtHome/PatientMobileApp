@@ -5,6 +5,7 @@ import {
   getAllMessages,
   getMessageNotification,
   getParticipantInThread,
+  sendMessage,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
 import {Text} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
@@ -74,6 +75,11 @@ export function AzureChatPage({
         messages={chatMessages}
         user={{_id: communicationID}}
         showAvatarForEveryMessage={true}
+        onSend={messages => {
+          sendMessage(messages, chatThreadClient);
+        }}
+        // @ts-ignore
+        textInputStyle={{color: 'black'}}
       />
     );
   } else {

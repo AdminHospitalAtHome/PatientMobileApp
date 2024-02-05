@@ -1,10 +1,14 @@
-import {ChatClient, ChatThreadClient} from '@azure/communication-chat';
+import {
+  ChatClient,
+  ChatThreadClient,
+  SendMessageRequest,
+} from '@azure/communication-chat';
 import {AzureCommunicationTokenCredential} from '@azure/communication-common';
 import 'node-libs-react-native/globals';
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import '@azure/core-asynciterator-polyfill';
-import {GiftedChat} from 'react-native-gifted-chat';
+import {GiftedChat, IMessage} from 'react-native-gifted-chat';
 import BackgroundTimer from 'react-native-background-timer';
 
 export const endpointUrl =
@@ -178,7 +182,6 @@ export function getMessageNotification(
   // Stop all timers to ensure you dont start multiple...
   BackgroundTimer.stopBackgroundTimer();
 
-
   BackgroundTimer.runBackgroundTimer(async () => {
     const messages = chatThreadClient.listMessages();
     // @ts-ignore
@@ -199,7 +202,7 @@ export function getMessageNotification(
         if (parsedMessages.length !== 0 && parsedMessages[0] !== undefined) {
           //@ts-ignore
           if (m.id === parsedMessages[0]._id) {
-            console.log('HEY! I FOUND THE MESSAGE');
+            // console.log('HEY! I FOUND THE MESSAGE');
             break;
           } else {
             // @ts-ignore
@@ -235,7 +238,6 @@ export function getMessageNotification(
         }
       } catch {}
     }
-
 
     // @ts-ignore
     setChatMessages(prevState => GiftedChat.append(prevState, newMessages));
@@ -273,4 +275,15 @@ export function getMessageNotification(
   //     }
   //   }
   // } catch {}
+}
+
+export function sendMessage(
+  newMessages: IMessage[],
+  chatThreadClient: ChatThreadClient,
+): void {
+  for (const m of newMessages) {
+    let sendMessageRequest: SendMessageRequest = {content: m.text};
+    chatThreadClient.sendMessage(sendMessageRequest);
+  }
+  return;
 }
