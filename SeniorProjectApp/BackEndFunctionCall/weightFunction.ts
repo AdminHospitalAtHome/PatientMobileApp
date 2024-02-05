@@ -18,16 +18,17 @@ export function addWeight(
   weight: number,
   ifManualInput: boolean,
 ): Promise<string> {
-  return new Promise<string>((resolve, reject) => {
+  return new Promise<string>((resolve) => {
     const dateTime: String = new Date().toISOString();
     fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight', {
       method: 'POST',
       body: `{"PatientID": ${patientId}, "DateTimeTaken": "${dateTime}", "WeightInPounds": ${weight}, "IfManualInput": ${ifManualInput}}`,
     }).then(response => {
+      console.log(response);
       if (response.status === 201) {
         resolve('add successful');
       } else {
-        reject('failed to add weight');
+        resolve('failed to add weight');
       }
     });
   });

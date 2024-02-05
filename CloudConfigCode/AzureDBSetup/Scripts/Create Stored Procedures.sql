@@ -1,4 +1,4 @@
-CREATE OR ALTER TRIGGER [dbo].[Patient_Weight_Alert]
+CREATE OR ALTER  TRIGGER [dbo].[Patient_Weight_Alert]
 ON [dbo].[Patient_Weight]
 AFTER INSERT AS
 BEGIN
@@ -25,10 +25,6 @@ BEGIN
 	SELECT @Json_Object = (SELECT TOP(1) Custom_Alert_Levels FROM @Temp_Patient_Alert_Level)
 
 
-	DECLARE @ErrorMessage NVARCHAR(200)
-	SELECT @ErrorMessage = 'Yellow_Weight_Change:' + CAST(ISJSON(@Json_Object) AS NVARCHAR(200));
-	RAISERROR(@ErrorMessage, 15, 1)
-
 	-- CHECK IF Custom_Weight_Alert is in JSON Object
 	IF (@Json_Object IS NOT NULL AND ISJSON(@Json_Object) > 0 AND
 		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Weight_Alert.Red_Day_Frame') = 1 AND
@@ -48,11 +44,6 @@ BEGIN
 
 		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Weight_Alert.Yellow_Weight_Change'))
 		SELECT @Yellow_Weight_Change = CAST(@TEMP AS INT)
-
-
-		--DECLARE @ErrorMessage NVARCHAR(200)
-		SELECT @ErrorMessage = 'Yellow_Weight_Change:' + CAST(@Yellow_Weight_Change AS NVARCHAR(200));
-		RAISERROR(@ErrorMessage, 15, 1)
 
 	END
 	ELSE
@@ -135,6 +126,7 @@ BEGIN
 	--RAISERROR(@ErrorMessage, 15, 1)
 
 END;
+
 
 
 
