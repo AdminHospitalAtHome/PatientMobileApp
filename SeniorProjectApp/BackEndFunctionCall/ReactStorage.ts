@@ -93,4 +93,34 @@ export class ReactStorage {
       }
     });
   }
+
+  // Removes any Reference to a device
+  public async removeDevice(
+    address: string,
+    vitalTypes: VitalType[],
+  ): Promise<void> {
+    return new Promise(resolve => {
+      try {
+        for (let v of vitalTypes) {
+          let tmp = AsyncStorage.getItem(v.valueOf());
+          tmp
+            .then(defaultAddr => {
+              if (defaultAddr !== null && defaultAddr === address) {
+                console.log('Removing', v.valueOf());
+                AsyncStorage.removeItem(v.valueOf())
+                  .catch(() => {
+                    console.log('ERROR');
+                  })
+                  .then();
+              }
+            })
+            .catch();
+        }
+
+        resolve();
+      } catch {
+        resolve();
+      }
+    });
+  }
 }

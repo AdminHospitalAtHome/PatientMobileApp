@@ -155,6 +155,12 @@ public class DeviceManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void removeDevice(String address) {
+        MedMDeviceManager deviceManager = MedMDeviceKit.getDeviceManager();
+        deviceManager.removeDevice(address);
+    }
+
+    @ReactMethod
     public void setDeviceFilter(String address, Promise promise) {
         MedMCollector collector = MedMDeviceKit.getCollector();
         MedMDeviceManager deviceManager = MedMDeviceKit.getDeviceManager();

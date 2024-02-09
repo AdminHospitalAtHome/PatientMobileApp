@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {ReactStorage} from '../ReactStorage';
+import * as stream from 'stream';
 
 const {MedMDeviceManager} = NativeModules;
 const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
@@ -126,19 +127,31 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     return new Promise(resolve => {
       this.pairDeviceEventListener.remove();
       this.pairDeviceEventListener = eventEmitter.addListener(
-        'New_Device',
+        'Pair_Device',
         () => {
+          console.log("PAIRED A DEVICE YALL")
           this.pairDeviceEventListener.remove();
+          resolve();
         },
       );
       MedMDeviceManager.pairDevice(device.address);
-      resolve();
+
     });
   }
 
   unpair_device(device: HAH_Device): Promise<void> {
-    return new Promise((resolve, reject) => {
-      resolve();
+    return new Promise(resolve => {
+      MedMDeviceManager.removeDevice(device.address);
+      ReactStorage.getInstance()
+        .removeDevice(device.address, device.vitalType)
+        .then(() => {
+          console.log("REMOVED  WHY NO TRIGGER")
+          resolve();
+        })
+        .catch(() => {
+          console.log("REMOVED  WHY NO TRIGGER ERROR")
+          resolve();
+        });
     });
   }
 

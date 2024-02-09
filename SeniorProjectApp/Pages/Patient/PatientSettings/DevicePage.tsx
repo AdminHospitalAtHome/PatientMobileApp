@@ -4,6 +4,7 @@ import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/D
 import React from 'react';
 
 export default function DevicePage({
+  navigation,
   route,
 }: {
   navigation: any;
@@ -47,10 +48,24 @@ export default function DevicePage({
                 .setDefaultDevice(device.address, vitalType)
                 .then();
             }}>
-            <Text>Set Default {vitalType.valueOf()} Device</Text>
+            <Text style={Styles.ButtonText}>
+              Set Default {vitalType.valueOf()} Device
+            </Text>
           </TouchableOpacity>
         );
       })}
+
+      <TouchableOpacity
+        style={Styles.DangerButtonContainer}
+        onPress={() => {
+          MedMDeviceConnection.getInstance()
+            .unpair_device(device)
+            .then(() => {
+              navigation.goBack(null);
+            });
+        }}>
+        <Text style={Styles.DangerButtonText}>Remove This Device</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -76,6 +91,23 @@ const Styles = StyleSheet.create({
   },
   ButtonContainer: {
     backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 15,
+    marginHorizontal: 15,
+  },
+  ButtonText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'white',
+  },
+  DangerButtonText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'black',
+  },
+  DangerButtonContainer: {
+    backgroundColor: 'orange',
     padding: 10,
     borderRadius: 10,
     marginTop: 15,

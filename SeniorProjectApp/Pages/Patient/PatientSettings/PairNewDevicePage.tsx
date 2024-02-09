@@ -45,7 +45,11 @@ export default function PairNewDevicePage({
             key={device.address + '_AbleToPair'}
             style={styles.Device}
             onPress={() => {
-              MedMDeviceConnection.getInstance().pair_device(device).then();
+              MedMDeviceConnection.getInstance()
+                .pair_device(device)
+                .then(() => {
+                  navigation.goBack(null);
+                });
             }}>
             <Text style={styles.text}>{'Pair: ' + device.modelName}</Text>
           </TouchableOpacity>
