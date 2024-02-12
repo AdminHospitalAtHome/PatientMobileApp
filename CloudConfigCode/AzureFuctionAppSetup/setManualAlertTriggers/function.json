@@ -1,0 +1,35 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "manualAlertTriggersIn",
+      "commandText": "SELECT TOP(1) * FROM [dbo].[Patient_Alert_Levels] Where PatientID = @PatientID",
+      "commandType": "Text",
+      "connectionStringSetting": "SqlConnectionString",
+      "parameters": "@PatientID={Query.PatientID}",
+      "direction": "in",
+      "type": "sql"
+    },
+    {
+      "name": "manualAlertTriggersOut",
+      "direction": "out",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "[dbo].[Patient_Alert_Levels]"
+    }
+  ]
+}
