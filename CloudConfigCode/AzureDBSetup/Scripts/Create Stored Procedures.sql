@@ -148,19 +148,45 @@ BEGIN
 	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT, Custom_Alert_Levels VARCHAR(MAX))
 
 	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+
+	DECLARE @Red_Heart_Rate INT
+	DECLARE @Yellow_Heart_Rate INT
+
+	-- GET VARIABLES HERE
+	DECLARE @Json_Object VARCHAR(MAX)
+	SELECT @Json_Object = (SELECT TOP(1) Custom_Alert_Levels FROM @Temp_Patient_Alert_Level)
+
+	IF (@Json_Object IS NOT NULL AND ISJSON(@Json_Object) > 0 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Heart_Rate_Alert.Red_Heart_Rate') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Heart_Rate_Alert.Yellow_Heart_Rate') = 1)
+	BEGIN
+		DECLARE @Temp NVARCHAR(MAX)
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Heart_Rate_Alert.Red_Heart_Rate'))
+		SELECT @Red_Heart_Rate = CAST(@TEMP AS INT)
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Heart_Rate_Alert.Yellow_Heart_Rate'))
+		SELECT @Yellow_Heart_Rate = CAST(@TEMP AS INT)
+
+	END
+	ELSE
+	BEGIN
+		SELECT @Red_Heart_Rate = 120
+		SELECT @Yellow_Heart_Rate = 100
+	END
+
 	-- Default Alert Level to Green (0)
 	DECLARE @Alert_Level INT
 	SELECT @Alert_Level = 0
-	IF (@heartRate > 120)
+	IF (@heartRate > @Red_Heart_Rate)
 	BEGIN
 		SELECT @Alert_Level = 2
 	END
-	IF (@heartRate > 100 AND @Alert_Level = 0)
+	IF (@heartRate > @Yellow_Heart_Rate AND @Alert_Level = 0)
 	BEGIN
 		SELECT @Alert_Level = 1
 	END
 
-		IF EXISTS (SELECT 1 FROM @Temp_Patient_Alert_Level)
+	IF EXISTS (SELECT 1 FROM @Temp_Patient_Alert_Level)
 	BEGIN
 		UPDATE [dbo].[Patient_Alert_Levels] SET Heart_Rate_Level = @Alert_Level WHERE PatientID = @patientID
 	END
@@ -193,17 +219,57 @@ BEGIN
 
 	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT, Custom_Alert_Levels VARCHAR(MAX))
 
+	DECLARE @RedSystolicBP INT
+	DECLARE @RedDiastolicBP INT
+	DECLARE @YellowSystolicBP INT
+	DECLARE @YellowDiastolicBP INT
+
 	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
 	-- Default Alert Level to Green (0)
 	DECLARE @Alert_Level INT
 	SELECT @Alert_Level = 0
 
-	IF (@systolicBP > 180 OR @diastolicBP > 100)
+	-- GET VARIABLES HERE
+	DECLARE @Json_Object VARCHAR(MAX)
+	SELECT @Json_Object = (SELECT TOP(1) Custom_Alert_Levels FROM @Temp_Patient_Alert_Level)
+
+
+	-- CHECK IF Custom_Weight_Alert is in JSON Object
+	IF (@Json_Object IS NOT NULL AND ISJSON(@Json_Object) > 0 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Blood_Pressure_Alert.RedSystolicBP') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Blood_Pressure_Alert.RedDiastolicBP') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Blood_Pressure_Alert.YellowSystolicBP') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Blood_Pressure_Alert.YellowDiastolicBP') = 1)
+	BEGIN
+		DECLARE @Temp NVARCHAR(MAX)
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Blood_Pressure_Alert.RedSystolicBP'))
+		SELECT @RedSystolicBP = CAST(@TEMP AS INT)
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Blood_Pressure_Alert.RedDiastolicBP'))
+		SELECT @RedDiastolicBP = CAST(@TEMP AS INT)
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Blood_Pressure_Alert.YellowSystolicBP'))
+		SELECT @YellowSystolicBP = CAST(@TEMP AS INT)
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Blood_Pressure_Alert.YellowDiastolicBP'))
+		SELECT @YellowDiastolicBP = CAST(@TEMP AS INT)
+
+	END
+	ELSE
+	BEGIN
+		SELECT @RedSystolicBP = 180
+		SELECT @RedDiastolicBP = 100
+		SELECT @YellowSystolicBP = 150
+		SELECT @YellowDiastolicBP = 90
+	END
+
+
+	IF (@systolicBP > @RedSystolicBP  OR @diastolicBP > @RedDiastolicBP)
 	BEGIN
 		SELECT @Alert_Level = 2
 	END
 
-	IF (@systolicBP > 150 OR @diastolicBP > 90)
+	IF (@systolicBP > @YellowSystolicBP OR @diastolicBP > @YellowDiastolicBP)
 	BEGIN
 		IF (@Alert_Level = 0)
 		BEGIN
@@ -223,6 +289,7 @@ BEGIN
 END;
 
 
+
 CREATE OR ALTER TRIGGER [dbo].[Patient_Blood_Oxygen_Alert]
 ON [dbo].[Patient_Blood_Oxygen]
 AFTER INSERT AS
@@ -238,16 +305,41 @@ BEGIN
 
 	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT, Custom_Alert_Levels VARCHAR(MAX))
 
+	DECLARE @RedBloodOxygenLevel INT
+	DECLARE @YellowBloodOxygenLevel INT
+
 	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
 	-- Default Alert Level to Green (0)
 	DECLARE @Alert_Level INT
 	SELECT @Alert_Level = 0
 
-	IF (@bloodOxygen <= 85)
+	-- GET VARIABLES HERE
+	DECLARE @Json_Object VARCHAR(MAX)
+	SELECT @Json_Object = (SELECT TOP(1) Custom_Alert_Levels FROM @Temp_Patient_Alert_Level)
+
+	IF (@Json_Object IS NOT NULL AND ISJSON(@Json_Object) > 0 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Blood_Oxygen_Alert.RedBloodOxygenLevel') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Blood_Oxygen_Alert.YellowBloodOxygenLevel') = 1)
+	BEGIN
+		DECLARE @Temp NVARCHAR(MAX)
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Blood_Oxygen_Alert.RedBloodOxygenLevel'))
+		SELECT @RedBloodOxygenLevel = CAST(@TEMP AS INT)
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Blood_Oxygen_Alert.YellowBloodOxygenLevel'))
+		SELECT @YellowBloodOxygenLevel = CAST(@TEMP AS INT)
+
+	END
+	ELSE
+	BEGIN
+		SELECT @RedBloodOxygenLevel = 85
+		SELECT @YellowBloodOxygenLevel = 88
+	END
+
+	IF (@bloodOxygen <= @RedBloodOxygenLevel)
 	BEGIN
 		SELECT @Alert_Level = 2
 	END
-	IF (@bloodOxygen <= 88 AND @Alert_Level = 0)
+	IF (@bloodOxygen <= @YellowBloodOxygenLevel AND @Alert_Level = 0)
 	BEGIN
 		SELECT @Alert_Level = 1
 	END
@@ -262,3 +354,18 @@ BEGIN
 		VALUES(@patientID, 0, 0, @Alert_Level, 0, '{}')
 	END
 END;
+
+CREATE OR ALTER PROCEDURE [dbo].[Set_Alert_Triggers]
+	@JsonData VARCHAR(MAX),
+	@PatientID INT
+AS
+BEGIN
+	IF EXISTS (SELECT 1 FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @PatientID)
+	BEGIN
+		UPDATE [dbo].[Patient_Alert_Levels] SET Custom_Alert_Levels = @JsonData WHERE PatientID = @patientID
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[Patient_Alert_Levels] VALUES (@PatientID, -1, -1, -1, -1, @JsonData)
+	END
+END
