@@ -1,5 +1,10 @@
 module.exports = async function (context, req, manualAlertTriggersIn) {
+
+    context.log(req.body.JsonData)
+
+    context.log(manualAlertTriggersIn.length)
     if (manualAlertTriggersIn.length === 1) {
+        context.log("AAHA", manualAlertTriggersIn[0].UniqueID)
         const newAlertTrigger = {
             "UniqueID": manualAlertTriggersIn[0].UniqueID,
             "PatientID": manualAlertTriggersIn[0].PatientID,
@@ -26,6 +31,6 @@ module.exports = async function (context, req, manualAlertTriggersIn) {
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: "Updated"
+        body: req.body.JsonData
     };
 }
