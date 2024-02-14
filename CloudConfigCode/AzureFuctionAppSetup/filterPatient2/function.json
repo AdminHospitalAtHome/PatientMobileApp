@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "result",
+      "commandText": "EXEC Filter_Patient @ProviderID = {Query.providerID}, @FirstName ={Query.firstName}, @LastName = {Query.lastName}, @Gender={Query.gender}",
+      "commandType": "StoredProcedure",
+      "connectionStringSetting": "SqlConnectionString",
+      "direction": "in",
+      "type": "sql"
+    }
+  ]
+}

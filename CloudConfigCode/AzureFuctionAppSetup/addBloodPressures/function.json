@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "connectionStringSetting": "SqlConnectionString",
+      "name": "patient",
+      "commandText": "[dbo].[Patient_Blood_Pressure]",
+      "direction": "out",
+      "type": "sql"
+    }
+  ]
+}

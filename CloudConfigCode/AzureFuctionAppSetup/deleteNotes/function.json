@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "delete"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "result",
+      "direction": "in",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "DELETE FROM [dbo].[Notes] WHERE uuid = @uuid",
+      "commandType": "Text",
+      "parameters": "@uuid={Query.uuid}"
+    }
+  ]
+}

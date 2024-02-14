@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "communicationId",
+      "commandText": "select CommunicationId from [dbo].[Patient_Info] where PatientID = @PatientID",
+      "commandType": "Text",
+      "connectionStringSetting": "SqlConnectionString",
+      "parameters": "@PatientID = {Query.patientID}",
+      "direction": "in",
+      "type": "sql"
+    }
+  ]
+}

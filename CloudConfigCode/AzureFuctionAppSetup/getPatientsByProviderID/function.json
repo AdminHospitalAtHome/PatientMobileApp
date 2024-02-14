@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "patients",
+      "direction": "in",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "SELECT [dbo].[Patient_Info].* FROM [dbo].[Patient_Info] INNER JOIN [dbo].[Patient_Provider] ON [dbo].[Patient_Info].PatientID = [dbo].[Patient_Provider].PatientID WHERE [dbo].[Patient_Provider].ProviderID = @ProviderID;",
+      "commandType": "Text",
+      "parameters": "@ProviderID={Query.providerID}"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "name": "req",
+      "authLevel": "anonymous",
+      "methods": [
+        "get",
+        "post"
+      ],
+      "direction": "in",
+      "type": "httpTrigger"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "allPatients",
+      "direction": "in",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "SELECT * FROM Patient_Info",
+      "commandType": "Text"
+    }
+  ]
+}

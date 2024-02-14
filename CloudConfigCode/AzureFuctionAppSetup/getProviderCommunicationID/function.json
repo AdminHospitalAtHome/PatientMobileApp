@@ -1,0 +1,28 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "communicationId",
+      "direction": "in",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "select CommunicationId from [dbo].[Provider_Info] where ProviderId = @ProviderID",
+      "commandType": "Text",
+      "parameters": "@ProviderID = {Query.ProviderID}"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "post",
+        "put"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "sqlOutput",
+      "direction": "out",
+      "type": "sql",
+      "connectionStringSetting": "SqlConnectionString",
+      "commandText": "[dbo].[Notes]"
+    }
+  ]
+}
