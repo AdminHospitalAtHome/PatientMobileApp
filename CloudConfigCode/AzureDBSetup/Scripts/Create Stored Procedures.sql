@@ -8,7 +8,8 @@ BEGIN
     -- CHECK IF PATIENTID IS IN THE IN THE Patient_weight_alert table
 	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT, Custom_Alert_Levels VARCHAR(MAX))
 
-	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	INSERT INTO @Temp_Patient_Alert_Level SELECT UniqueID, PatientID, Weight_Level, Heart_Rate_Level, Blood_Oxygen_Level, Blood_Pressure_Level, Custom_Alert_Levels
+	FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
 
 
 	DECLARE @Temp_Weight TABLE(UniqueID INT, PatientID INT, DateTimeTaken DATETIME, WeightInPounds INT, IfManualInput BIT)
@@ -114,9 +115,9 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		INSERT INTO [dbo].[Patient_Alert_Levels]
-		VALUES(@patientID, @Alert_Level, 0, 0, 0, '{}')
-
+		INSERT INTO [dbo].[Patient_Alert_Levels] (PatientID, Weight_Level, Should_Trigger_Weight, Heart_Rate_Level, Should_Trigger_Heart_Rate, Blood_Oxygen_Level, Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level, Should_Trigger_Blood_Pressure, Custom_Alert_Levels)
+		VALUES(@patientID, @Alert_Level, 0, 0, 0, 0, 0, 0, 0, '{}')
 	END
 
 
@@ -147,7 +148,8 @@ BEGIN
     -- CHECK IF PATIENTID IS IN THE IN THE Patient_weight_alert table
 	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT, Custom_Alert_Levels VARCHAR(MAX))
 
-	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	INSERT INTO @Temp_Patient_Alert_Level SELECT UniqueID, PatientID, Weight_Level, Heart_Rate_Level, Blood_Oxygen_Level, Blood_Pressure_Level, Custom_Alert_Levels
+	FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
 
 	DECLARE @Red_Heart_Rate INT
 	DECLARE @Yellow_Heart_Rate INT
@@ -192,13 +194,13 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		INSERT INTO [dbo].[Patient_Alert_Levels]
-		VALUES(@patientID, 0, @Alert_Level, 0, 0, '{}')
+		INSERT INTO [dbo].[Patient_Alert_Levels] (PatientID, Weight_Level, Should_Trigger_Weight, Heart_Rate_Level, Should_Trigger_Heart_Rate, Blood_Oxygen_Level, Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level, Should_Trigger_Blood_Pressure, Custom_Alert_Levels)
+		VALUES(@patientID, 0, 0, @Alert_Level, 0, 0, 0, 0, 0, '{}')
 
 	END
 
 END;
-
 
 
 CREATE OR ALTER TRIGGER [dbo].[Patient_Blood_Pressure_Alert]
@@ -224,7 +226,8 @@ BEGIN
 	DECLARE @YellowSystolicBP INT
 	DECLARE @YellowDiastolicBP INT
 
-	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	INSERT INTO @Temp_Patient_Alert_Level SELECT UniqueID, PatientID, Weight_Level, Heart_Rate_Level, Blood_Oxygen_Level, Blood_Pressure_Level, Custom_Alert_Levels
+	FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
 	-- Default Alert Level to Green (0)
 	DECLARE @Alert_Level INT
 	SELECT @Alert_Level = 0
@@ -283,8 +286,9 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		INSERT INTO [dbo].[Patient_Alert_Levels]
-		VALUES(@patientID, 0, 0, 0, @Alert_Level, '{}')
+		INSERT INTO [dbo].[Patient_Alert_Levels] (PatientID, Weight_Level, Should_Trigger_Weight, Heart_Rate_Level, Should_Trigger_Heart_Rate, Blood_Oxygen_Level, Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level, Should_Trigger_Blood_Pressure, Custom_Alert_Levels)
+		VALUES(@patientID, 0, 0, 0, 0, 0, 0, @Alert_Level, 0, '{}')
 	END
 END;
 
@@ -308,7 +312,8 @@ BEGIN
 	DECLARE @RedBloodOxygenLevel INT
 	DECLARE @YellowBloodOxygenLevel INT
 
-	INSERT INTO @Temp_Patient_Alert_Level SELECT * FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	INSERT INTO @Temp_Patient_Alert_Level SELECT UniqueID, PatientID, Weight_Level, Heart_Rate_Level, Blood_Oxygen_Level, Blood_Pressure_Level, Custom_Alert_Levels
+	FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
 	-- Default Alert Level to Green (0)
 	DECLARE @Alert_Level INT
 	SELECT @Alert_Level = 0
@@ -350,10 +355,15 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		INSERT INTO [dbo].[Patient_Alert_Levels]
-		VALUES(@patientID, 0, 0, @Alert_Level, 0, '{}')
+		INSERT INTO [dbo].[Patient_Alert_Levels] (PatientID, Weight_Level, Should_Trigger_Weight, Heart_Rate_Level, Should_Trigger_Heart_Rate, Blood_Oxygen_Level, Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level, Should_Trigger_Blood_Pressure, Custom_Alert_Levels)
+		VALUES(@patientID, 0, 0, 0, 0, @Alert_Level, 0, 0, 0, '{}')
 	END
 END;
+
+
+
+
 
 CREATE OR ALTER PROCEDURE [dbo].[Set_Alert_Triggers]
 	@JsonData VARCHAR(MAX),
@@ -366,6 +376,137 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		INSERT INTO [dbo].[Patient_Alert_Levels] VALUES (@PatientID, -1, -1, -1, -1, @JsonData)
+		INSERT INTO [dbo].[Patient_Alert_Levels] (PatientID, Weight_Level, Should_Trigger_Weight, Heart_Rate_Level, Should_Trigger_Heart_Rate, Blood_Oxygen_Level, Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level, Should_Trigger_Blood_Pressure, Custom_Alert_Levels)
+		VALUES (@PatientID, -1, 0, -1, 0, -1, 0, -1, 0, @JsonData)
 	END
-END
+END;
+
+
+
+CREATE OR ALTER TRIGGER [dbo].[Patient_Alert_Levels_Set_Alert]
+ON [dbo].[Patient_alert_levels]
+INSTEAD OF INSERT, UPDATE AS
+BEGIN
+	declare @PatientID int
+
+	declare @New_Weight_Level int, @New_Heart_Rate_Level int, @New_Blood_Oxygen_Level int, @New_Blood_Pressure_Level int
+	declare @New_Should_Trigger_Weight bit, @New_Should_Trigger_Heart_Rate bit, @New_Should_Trigger_Blood_Oxygen bit, @New_Should_Trigger_Blood_Pressure bit
+
+	declare @Custom_Alert_Levels VARCHAR(MAX)
+
+	select @New_Weight_Level=Weight_Level, @New_Heart_Rate_Level=Heart_Rate_Level, @New_Blood_Pressure_Level=Blood_Pressure_Level, @New_Blood_Oxygen_Level=Blood_Oxygen_Level,
+		@New_Should_Trigger_Weight=Should_Trigger_Weight, @New_Should_Trigger_Heart_Rate=Should_Trigger_Heart_Rate,
+		@New_Should_Trigger_Blood_Oxygen=Should_Trigger_Blood_Oxygen, @New_Should_Trigger_Blood_Pressure=Should_Trigger_Blood_Pressure,
+		@PatientID=PatientID, @Custom_Alert_Levels=Custom_Alert_Levels
+	FROM inserted;
+
+	IF EXISTS (Select 1 FROM [dbo].[Patient_alert_levels] WHERE PatientID = @PatientID)
+	BEGIN
+		declare @Old_Weight_Level int, @Old_Heart_Rate_Level int, @Old_Blood_Oxygen_Level int, @Old_Blood_Pressure_Level int
+		declare @Old_Should_Trigger_Weight bit, @Old_Should_Trigger_Heart_Rate bit, @Old_Should_Trigger_Blood_Oxygen bit, @Old_Should_Trigger_Blood_Pressure bit
+
+				select @Old_Weight_Level=Weight_Level, @Old_Heart_Rate_Level=Heart_Rate_Level, @Old_Blood_Pressure_Level=Blood_Pressure_Level, @Old_Blood_Oxygen_Level=Blood_Oxygen_Level,
+		@Old_Should_Trigger_Weight=Should_Trigger_Weight, @Old_Should_Trigger_Heart_Rate=Should_Trigger_Heart_Rate,
+		@Old_Should_Trigger_Blood_Oxygen=Should_Trigger_Blood_Oxygen, @Old_Should_Trigger_Blood_Pressure=Should_Trigger_Blood_Pressure
+		FROM [dbo].[Patient_alert_levels] WHERE PatientID = @PatientID;
+
+
+
+
+
+		-- Check Weight First
+		-- IF (@Old_Should_Trigger_Weight = 1 AND @New_Should_Trigger_Weight = 0) <- Keep New = 0
+		-- IF (@Old_Should_Trigger_Weight = 1 AND @New_Should_Trigger_Weight = 1) <- Keep New = 1
+		-- IF (@Old_Should_Trigger_Weight = 0 AND @New_Should_Trigger_Weight = 1) <- Keep New = 1 (Should Never Happen as this function is only thing sets New = 1
+		IF (@Old_Should_Trigger_Weight = 0 AND @New_Should_Trigger_Weight = 0)
+		BEGIN
+			-- <> means not equal
+			IF (@Old_Weight_Level <> 2 AND @New_Weight_Level = 2)
+			BEGIN
+				SELECT @New_Should_Trigger_Weight = 1
+			END
+		END
+
+		-- Check Heart_Rate Second
+		-- IF (@Old_Should_Trigger_Heart_Rate = 1 AND @New_Should_Trigger_Heart_Rate = 0) <- Keep New = 0
+		-- IF (@Old_Should_Trigger_Heart_Rate = 1 AND @New_Should_Trigger_Heart_Rate = 1) <- Keep New = 1
+		-- IF (@Old_Should_Trigger_Heart_Rate = 0 AND @New_Should_Trigger_Heart_Rate = 1) <- Keep New = 1 (Should Never Happen as this function is only thing sets New = 1
+		IF (@Old_Should_Trigger_Heart_Rate = 0 AND @New_Should_Trigger_Heart_Rate = 0)
+		BEGIN
+			-- <> means not equal
+			IF (@Old_Heart_Rate_Level <> 2 AND @New_Heart_Rate_Level = 2)
+			BEGIN
+				SELECT @New_Should_Trigger_Heart_Rate = 1
+			END
+		END
+
+		-- Check Blood_Pressure Third
+		-- IF (@Old_Should_Trigger_Blood_Pressure = 1 AND @New_Should_Trigger_Blood_Pressure = 0) <- Keep New = 0
+		-- IF (@Old_Should_Trigger_Blood_Pressure = 1 AND @New_Should_Trigger_Blood_Pressure = 1) <- Keep New = 1
+		-- IF (@Old_Should_Trigger_Blood_Pressure = 0 AND @New_Should_Trigger_Blood_Pressure = 1) <- Keep New = 1 (Should Never Happen as this function is only thing sets New = 1
+		IF (@Old_Should_Trigger_Blood_Pressure = 0 AND @New_Should_Trigger_Blood_Pressure = 0)
+		BEGIN
+			-- <> means not equal
+			IF (@Old_Blood_Pressure_Level <> 2 AND @New_Blood_Pressure_Level = 2)
+			BEGIN
+				SELECT @New_Should_Trigger_Blood_Pressure = 1
+			END
+		END
+
+		-- Check Blood_Oxygen Fourth
+		-- IF (@Old_Should_Trigger_Blood_Oxygen = 1 AND @New_Should_Trigger_Blood_Oxygen = 0) <- Keep New = 0
+		-- IF (@Old_Should_Trigger_Blood_Oxygen = 1 AND @New_Should_Trigger_Blood_Oxygen = 1) <- Keep New = 1
+		-- IF (@Old_Should_Trigger_Blood_Oxygen = 0 AND @New_Should_Trigger_Blood_Oxygen = 1) <- Keep New = 1 (Should Never Happen as this function is only thing sets New = 1
+		IF (@Old_Should_Trigger_Blood_Oxygen = 0 AND @New_Should_Trigger_Blood_Oxygen = 0)
+		BEGIN
+			-- <> means not equal
+			IF (@Old_Blood_Oxygen_Level <> 2 AND @New_Blood_Oxygen_Level = 2)
+			BEGIN
+				SELECT @New_Should_Trigger_Blood_Oxygen = 1
+			END
+		END
+
+		UPDATE [dbo].[Patient_Alert_Levels]
+		SET Custom_Alert_Levels = @Custom_Alert_Levels,
+			Weight_Level = @New_Weight_Level,
+			Should_Trigger_Weight = @New_Should_Trigger_Weight,
+			Heart_Rate_Level = @New_Heart_Rate_Level,
+			Should_Trigger_Heart_Rate = @New_Should_Trigger_Heart_Rate,
+			Blood_Oxygen_Level = @New_Blood_Oxygen_Level,
+			Should_Trigger_Blood_Oxygen = @New_Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level = @New_Blood_Pressure_Level,
+			Should_Trigger_Blood_Pressure = @New_Should_Trigger_Blood_Pressure
+		WHERE PatientID = @PatientID
+
+	END
+	ELSE
+	BEGIN
+		-- This case handles if the old data does not exist... (I.E. Insert)
+
+		IF (@New_Weight_Level = 2)
+		BEGIN
+			SELECT @New_Should_Trigger_Weight = 1
+		END
+
+		IF (@New_Heart_Rate_Level = 2)
+		BEGIN
+			SELECT @New_Should_Trigger_Heart_Rate = 1
+		END
+
+		IF (@New_Blood_Pressure_Level = 2)
+		BEGIN
+			SELECT @New_Should_Trigger_Blood_Pressure = 1
+		END
+
+		IF (@New_Blood_Oxygen_Level = 2)
+		BEGIN
+			SELECT @New_Should_Trigger_Blood_Oxygen = 1
+		END
+
+		INSERT INTO [dbo].[Patient_Alert_Levels] (PatientID, Weight_Level, Should_Trigger_Weight, Heart_Rate_Level, Should_Trigger_Heart_Rate, Blood_Oxygen_Level, Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level, Should_Trigger_Blood_Pressure, Custom_Alert_Levels)
+		VALUES (@PatientID, @New_Weight_Level, @New_Should_Trigger_Weight, @New_Heart_Rate_Level, @New_Should_Trigger_Heart_Rate, @New_Blood_Oxygen_Level, @New_Should_Trigger_Blood_Oxygen, @New_Blood_Pressure_Level, @New_Should_Trigger_Blood_Pressure, @Custom_Alert_Levels)
+	END
+
+END;
