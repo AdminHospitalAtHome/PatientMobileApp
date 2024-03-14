@@ -1,0 +1,253 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Condition": {
+        "actions": {
+          "Execute_a_SQL_query_(V2)_2": {
+            "inputs": {
+              "body": {
+                "actualParameters": {
+                  "patientID": "@variables('PatientID')"
+                },
+                "formalParameters": {
+                  "patientID": "INT"
+                },
+                "query": "UPDATE [dbo].[Patient_Alert_Levels] \nSET Should_Trigger_Weight = 0, \t\nShould_Trigger_Heart_Rate = 0,\nShould_Trigger_Blood_Oxygen = 0,\nShould_Trigger_Blood_Pressure = 0\nWHERE PatientID = @patientID"
+              },
+              "host": {
+                "connection": {
+                  "name": "@parameters('$connections')['sql_1']['connectionId']"
+                }
+              },
+              "method": "post",
+              "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+            },
+            "runAfter": {
+              "httpWebSocket_2": [
+                "Succeeded"
+              ]
+            },
+            "type": "ApiConnection"
+          },
+          "httpWebSocket_2": {
+            "inputs": {
+              "body": "@variables('JSON')",
+              "function": {
+                "id": "/subscriptions/16017e68-b049-4b34-8bad-20bb841b242d/resourceGroups/hospital-at-home/providers/Microsoft.Web/sites/hosptial-at-home-js-api/functions/httpWebSocket"
+              }
+            },
+            "runAfter": {},
+            "type": "Function"
+          }
+        },
+        "expression": {
+          "or": [
+            {
+              "equals": [
+                "@triggerBody()?['Should_Trigger_Weight']",
+                true
+              ]
+            },
+            {
+              "equals": [
+                "@triggerBody()?['Should_Trigger_Heart_Rate']",
+                true
+              ]
+            },
+            {
+              "equals": [
+                "@triggerBody()?['Should_Trigger_Blood_Oxygen']",
+                true
+              ]
+            },
+            {
+              "equals": [
+                "@triggerBody()?['Should_Trigger_Blood_Pressure']",
+                true
+              ]
+            }
+          ]
+        },
+        "runAfter": {
+          "Initialize_variable_4": [
+            "Succeeded"
+          ]
+        },
+        "type": "If"
+      },
+      "Execute_a_SQL_query_(V2)": {
+        "inputs": {
+          "body": {
+            "actualParameters": {
+              "patientID": "@variables('PatientID')"
+            },
+            "formalParameters": {
+              "patientID": "INT"
+            },
+            "query": "SELECT TOP(1) FirstName, LastName from [dbo].[Patient_Info] WHERE PatientID = @patientID"
+          },
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['sql_1']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+        },
+        "runAfter": {
+          "Initialize_variable": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      },
+      "For_each": {
+        "actions": {
+          "Append_to_array_variable": {
+            "inputs": {
+              "name": "FirstName",
+              "value": "@items('For_each')?['FirstName']"
+            },
+            "runAfter": {},
+            "type": "AppendToArrayVariable"
+          }
+        },
+        "foreach": "@body('Execute_a_SQL_query_(V2)')?['resultsets']?['Table1']",
+        "runAfter": {
+          "Initialize_variable_2": [
+            "Succeeded"
+          ]
+        },
+        "type": "Foreach"
+      },
+      "For_each_2": {
+        "actions": {
+          "Append_to_array_variable_2": {
+            "inputs": {
+              "name": "LastName",
+              "value": "@items('For_each_2')?['LastName']"
+            },
+            "runAfter": {},
+            "type": "AppendToArrayVariable"
+          }
+        },
+        "foreach": "@body('Execute_a_SQL_query_(V2)')?['resultsets']?['Table1']",
+        "runAfter": {
+          "Initialize_variable_3": [
+            "Succeeded"
+          ]
+        },
+        "type": "Foreach"
+      },
+      "Initialize_variable": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "PatientID",
+              "type": "integer",
+              "value": "@triggerBody()?['PatientID']"
+            }
+          ]
+        },
+        "runAfter": {},
+        "type": "InitializeVariable"
+      },
+      "Initialize_variable_2": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "FirstName",
+              "type": "array"
+            }
+          ]
+        },
+        "runAfter": {
+          "Execute_a_SQL_query_(V2)": [
+            "Succeeded"
+          ]
+        },
+        "type": "InitializeVariable"
+      },
+      "Initialize_variable_3": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "LastName",
+              "type": "array"
+            }
+          ]
+        },
+        "runAfter": {
+          "For_each": [
+            "Succeeded"
+          ]
+        },
+        "type": "InitializeVariable"
+      },
+      "Initialize_variable_4": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "JSON",
+              "type": "object",
+              "value": {
+                "FirstName": "@variables('FirstName')",
+                "Items": "@triggerBody()",
+                "LastName": "@variables('LastName')"
+              }
+            }
+          ]
+        },
+        "runAfter": {
+          "For_each_2": [
+            "Succeeded"
+          ]
+        },
+        "type": "InitializeVariable"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      }
+    },
+    "triggers": {
+      "When_an_item_is_modified_(V2)": {
+        "evaluatedRecurrence": {
+          "frequency": "Minute",
+          "interval": 1
+        },
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['sql_1']['connectionId']"
+            }
+          },
+          "method": "get",
+          "path": "/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('Patient_Alert_Levels'))}/onupdateditems"
+        },
+        "recurrence": {
+          "frequency": "Minute",
+          "interval": 1
+        },
+        "splitOn": "@triggerBody()?['value']",
+        "type": "ApiConnection"
+      }
+    }
+  },
+  "parameters": {
+    "$connections": {
+      "value": {
+        "sql_1": {
+          "connectionId": "/subscriptions/16017e68-b049-4b34-8bad-20bb841b242d/resourceGroups/hospitalAtHome_group/providers/Microsoft.Web/connections/sql-11",
+          "connectionName": "sql-11",
+          "id": "/subscriptions/16017e68-b049-4b34-8bad-20bb841b242d/providers/Microsoft.Web/locations/eastus/managedApis/sql"
+        }
+      }
+    }
+  }
+}
