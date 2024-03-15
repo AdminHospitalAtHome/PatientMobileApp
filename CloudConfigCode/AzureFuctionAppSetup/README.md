@@ -38,4 +38,8 @@ C:\home\site\wwwroot> npm install @azure/web-pubsub
    2. CommunicationConnectionString: Connection string from Azure Communication Service
    3. WebPubSubConnectionString: Connection String from Azure WebPubSub Service
 
-
+## Adding Functions to Code:
+Here is the fun part. Your function path may end up being slightly different than ours if
+your base function app is called. You will need to find EVERY single instance of functions being called in both the
+mobil app as well as the website and replace it. I recommend searching for all of our calls for the term 
+"hosptial-at-home-js-api" which should find every time our API is called. 
