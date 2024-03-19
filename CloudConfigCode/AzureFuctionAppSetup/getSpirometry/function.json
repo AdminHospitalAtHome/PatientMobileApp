@@ -1,0 +1,28 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "spirometry",
+      "commandText": "Select * FROM [dbo].[Patient_Spirometry] WHERE PatientID=@PatientID AND DateTimeTaken >= @StartDateTime AND DateTimeTaken <= @StopDateTime ORDER BY DateTimeTaken;",
+      "commandType": "Text",
+      "connectionStringSetting": "SqlConnectionString",
+      "parameters": "@PatientID={Query.patientID},@StartDateTime={Query.startDateTime},@StopDateTime={Query.stopDateTime}",
+      "direction": "in",
+      "type": "sql"
+    }
+  ]
+}

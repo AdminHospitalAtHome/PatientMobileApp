@@ -25,6 +25,7 @@ import 'node-libs-react-native/globals';
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import {AzureChatPage} from "./Pages/Patient/Communication/AzureChatPage";
+import PatientSpirometryPage from "./Pages/Patient/PatientDetailPages/PatientSpirometryPage";
 // import window from "./__mocks__/window";
 
 <script src="http://locralhost:8097" />;
@@ -79,6 +80,11 @@ function HomeScreenStack(): JSX.Element {
         name={'patientBloodOxygenPage'}
         component={PatientBloodOxygenPage}
         options={{title: 'My Blood Oxygen'}}
+      />
+      <HomeStack.Screen
+        name={'patientSpirometryPage'}
+        component={PatientSpirometryPage}
+        options={{title: 'My Spirometry'}}
       />
     </HomeStack.Navigator>
   );

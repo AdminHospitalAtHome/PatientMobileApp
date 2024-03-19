@@ -69,6 +69,7 @@ export default function PatientWeightNavCard(): React.JSX.Element {
             unit={'lb'}
             width={windowWidth * 0.7}
             height={windowHeight * 0.18}
+            decimalPlaces={0}
           />
         </View>
       </View>

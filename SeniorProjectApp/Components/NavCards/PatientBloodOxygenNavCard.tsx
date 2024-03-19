@@ -60,6 +60,7 @@ export default function PatientBloodOxygenNavCard(): React.JSX.Element {
             unit={'%'}
             width={windowWidth * 0.7}
             height={windowHeight * 0.18}
+            decimalPlaces={0}
           />
         </View>
       </View>

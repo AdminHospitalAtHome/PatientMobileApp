@@ -53,6 +53,7 @@ export default function PatientBloodOxygenPage(): React.JSX.Element {
           unit={'%'}
           width={0.95 * screenWidth}
           height={170}
+          decimalPlaces={0}
         />
       </View>
       <View style={PatientDetailStyles.dateSelectionContainer}>

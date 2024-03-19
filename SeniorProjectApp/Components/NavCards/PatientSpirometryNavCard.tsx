@@ -1,37 +1,41 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Dimensions} from 'react-native';
-import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
-import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
-import {defaultStyle, accessStyle} from './navStyle';
-import {useIsFocused} from '@react-navigation/native';
 import SingleLineChart from '../SingleLineChart';
+import {accessStyle, defaultStyle} from './navStyle';
+import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
+import {useIsFocused} from '@react-navigation/native';
 import {
-  getHeartRate,
-  getRecentHeartRate,
-} from '../../BackEndFunctionCall/heartRateFunction';
-const patientID = 100000001;
+  getRecentSpirometry,
+  getSpirometry, parseSpirometryForChart,
+} from '../../BackEndFunctionCall/spirometryFunction';
+import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 
-export default function PatientHeartRateNavCard(): React.JSX.Element {
+export default function PatientSpirometryNavCard(): React.JSX.Element {
+  // This is done since there everytime the page is reloaded (any change) all the states are refreshed, so we do not want to call this function repeatedly if we do not need to.
   const initialStartTime: string = new Date().toISOString();
 
   const [accessibilityMode, setAccessibilityMode] = useState(false);
-  const [heartRateData, setHeartRateData] = useState<any[][]>([]);
+  const [spirometryData, setSpirometryData] = useState<any[][]>([]);
   const [stopDateTime, setStopDateTime] = useState(initialStartTime);
   const startDateTime = getDefaultStartTime();
-  const [recentHeartRate, setRecentHeartRate] = useState('Loading');
+  const patientID: number = 100000001;
+  const [recentSpirometryFEV1, setRecentSpirometryFEV1] = useState('Loading');
   const isFocused = useIsFocused();
   const windowWidth: number = Dimensions.get('window').width;
   const windowHeight: number = Dimensions.get('window').height;
 
   useEffect(() => {
+    // Updating Date to get any added data.
     let tmpDate = new Date();
     // Adding 1 minute to current Date to deal with not loading data that was just added.
     tmpDate.setMinutes(tmpDate.getMinutes() + 1);
     setStopDateTime(tmpDate.toISOString());
-    getHeartRate(patientID, startDateTime, stopDateTime).then(res => {
-      setHeartRateData(res);
-      setRecentHeartRate(getRecentHeartRate(res));
+
+    getSpirometry(patientID, startDateTime, stopDateTime).then(res => {
+      setSpirometryData(res);
+      setRecentSpirometryFEV1(getRecentSpirometry(res));
     });
+
     getAccessibilityMode()
       .then(res => {
         setAccessibilityMode(res);
@@ -46,10 +50,10 @@ export default function PatientHeartRateNavCard(): React.JSX.Element {
     return (
       <View style={accessStyle.container}>
         <View style={accessStyle.labelHolder}>
-          <Text style={accessStyle.label}>Heart Rate</Text>
+          <Text style={accessStyle.label}>Spirometry FEV1</Text>
         </View>
         <View style={accessStyle.textHolder}>
-          <Text style={accessStyle.value}>{recentHeartRate}</Text>
+          <Text style={accessStyle.value}>{recentSpirometryFEV1}</Text>
         </View>
       </View>
     );
@@ -57,15 +61,17 @@ export default function PatientHeartRateNavCard(): React.JSX.Element {
     return (
       <View style={defaultStyle.container}>
         <View style={defaultStyle.labelHolder}>
-          <Text style={defaultStyle.label}>Heart Rate: {recentHeartRate}</Text>
+          <Text style={defaultStyle.label}>
+            Spirometry FEV1: {recentSpirometryFEV1}
+          </Text>
         </View>
         <View style={defaultStyle.chartHolder}>
           <SingleLineChart
-            data={heartRateData}
-            unit={'BPM'}
+            data={parseSpirometryForChart(spirometryData)}
+            unit={'L'}
             width={windowWidth * 0.7}
             height={windowHeight * 0.18}
-            decimalPlaces={0}
+            decimalPlaces={2}
           />
         </View>
       </View>

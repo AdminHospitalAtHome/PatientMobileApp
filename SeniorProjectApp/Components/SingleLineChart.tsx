@@ -10,11 +10,13 @@ export default function SingleLineChart({
   unit,
   width,
   height,
+  decimalPlaces,
 }: {
   data: any;
   unit: string;
   width: number;
   height: number;
+  decimalPlaces: number;
 }): JSX.Element {
   const chartData: number[] = [];
 
@@ -54,7 +56,7 @@ export default function SingleLineChart({
           chartConfig={{
             backgroundGradientFrom: '#f5f7fa',
             backgroundGradientTo: '#c3cfe2',
-            decimalPlaces: 0, // optional, defaults to 2dp
+            decimalPlaces: decimalPlaces, // optional, defaults to 2dp
             color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // Black label color
             labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             style: {

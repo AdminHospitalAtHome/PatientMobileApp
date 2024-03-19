@@ -50,6 +50,16 @@ CREATE TABLE Patient_Heart_Rate (
 	IfManualInput BIT NOT NULL -- 1 is yes, 0 if no
 )
 
+-- Create Spirometry Table
+CREATE TABLE Patient_Spirometry (
+	UniqueID INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- Unique ID for entry
+	PatientID INT FOREIGN KEY REFERENCES Patient_Info(PatientID), -- May change based on client Needs
+	DateTimeTaken DateTime NOT NULL,
+	FEV1InLiters DECIMAL(4,2) NOT NULL,
+	FEV1_FVCInPercentage INT NOT NULL,
+	IfManualInput BIT NOT NULL -- 1 is yes, 0 if no
+)
+
 -- Create Alert Level Table
 CREATE TABLE Patient_Alert_Levels (
 	UniqueID INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- Unique ID for entry

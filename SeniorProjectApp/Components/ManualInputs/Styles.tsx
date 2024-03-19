@@ -41,6 +41,7 @@ export const ManualTextInputStyle = StyleSheet.create({
 export const MultiTextInputStyle = StyleSheet.create({
   modalUnitText: {
     fontSize: 25,
+    color: 'black',
   },
   inputBorder: {
     borderBottomWidth: 3,
@@ -50,7 +51,7 @@ export const MultiTextInputStyle = StyleSheet.create({
   modalLabel: {
     marginTop: 10,
     fontSize: 18,
-    color: 'grey',
+    color: 'gray',
     alignItems: 'flex-start',
   },
 });

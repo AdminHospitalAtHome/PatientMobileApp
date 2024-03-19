@@ -52,6 +52,7 @@ export default function PatientWeightPage(): React.JSX.Element {
           unit={'lb'}
           width={0.95 * screenWidth}
           height={170}
+          decimalPlaces={0}
         />
       </View>
       <View style={PatientDetailStyles.dateSelectionContainer}>
