@@ -1,4 +1,5 @@
 import timeTableParser from './tableTimeParser';
+import React from 'react';
 
 export function getSpirometry(
   patientID: number,
@@ -39,4 +40,56 @@ export function parseSpirometryForChart(spirometryArr: any[][]) {
     newSpirometryArr.push([spirometryArr[i][0], spirometryArr[i][1]]);
   }
   return newSpirometryArr;
+}
+
+export function addSpirometryOnClick(
+  inputFEV1: string,
+  inputFEV1_FVC: string,
+  patientID: number,
+  FEV1Regex: RegExp,
+  FEV1_FVCRegex: RegExp,
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  modalVisible: boolean,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+  setInputFEV1: React.Dispatch<React.SetStateAction<string>>,
+  setInputFEV1_FVC: React.Dispatch<React.SetStateAction<string>>,
+) {
+  if (
+    inputFEV1 === '' ||
+    inputFEV1_FVC === '' ||
+    !FEV1_FVCRegex.test(inputFEV1_FVC) ||
+    !FEV1Regex.test(inputFEV1)
+  ) {
+    //warning messages will already be displayed in this case
+  } else {
+
+  }
+}
+
+
+export function addSpirometry(
+  patientID:number,
+  FEV1:string,
+  FEV1_FVC:string,
+  IfManualInput: boolean,
+){
+  return new Promise<string>((resolve, reject) => {
+    const dateTime: String = new Date().toISOString();
+    fetch(
+      'https://hosptial-at-home-js-api.azurewebsites.net/api/addSpirometry',
+      {
+        method: 'POST',
+        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}","FEV1InLiters": ${FEV1}, "FEV1_FVCInPercentage":${FEV1_FVC}, "IfManualInput": ${IfManualInput}}`,
+      },
+    ).then(response => {
+      if (response.status === 201) {
+        resolve('add successful');
+      } else {
+        reject('failed to add spirometry');
+      }
+    });
+  });
+
 }

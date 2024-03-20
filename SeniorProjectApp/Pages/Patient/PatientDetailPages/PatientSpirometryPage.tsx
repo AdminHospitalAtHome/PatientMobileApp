@@ -26,10 +26,10 @@ export default function PatientSpirometryPage(): React.JSX.Element {
     useState(false);
   const [loadingModalVisible, setLoadingModalVisible] =
     useState(false);
-  const [inputFEV1, setinputFEV1] = useState('');
+  const [inputFEV1, setInputFEV1] = useState('');
   const [inputFEV1_FVC, setInputFEV1_FVC] = useState('');
-  const numberIntRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
-  const numberDecimalRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/; // TODO: Fix to be 12.12
+  const FEV1_FVCRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
+  const FEV1Regex = /^-?(\d+|\.\d+|\d*\.\d+)$/; // TODO: Fix to be 12.12
   const [addSuccessVisible, setAddSuccessVisible] = useState(false);
   const [addFailedVisible, setAddFailedVisible] = useState(false);
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
@@ -82,8 +82,8 @@ export default function PatientSpirometryPage(): React.JSX.Element {
             ]}
             modalTitle={'Add Blood Pressure'}
             modalUnit={['L', '%']}
-            numberRegex={[numberDecimalRegex, numberIntRegex]}
-            setInput={[setinputFEV1, setInputFEV1_FVC]}
+            numberRegex={[FEV1Regex, FEV1_FVCRegex]}
+            setInput={[setInputFEV1, setInputFEV1_FVC]}
           />
         }
         addButtonFunction={() => {
