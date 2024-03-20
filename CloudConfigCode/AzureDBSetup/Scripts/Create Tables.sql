@@ -77,6 +77,23 @@ CREATE TABLE Patient_Alert_Levels (
 	CONSTRAINT PatientID_Unique UNIQUE(PatientID)
 )
 
+CREATE TABLE Historical_Patient_Alerts (
+	UniqueID INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- Unique ID for entry
+	PatientID INT FOREIGN KEY REFERENCES Patient_Info(PatientID),
+	DateTimeTriggered DateTime NOT NULL,
+	GeneratedID VARCHAR(250) Unique NOT NULL,
+	AlertString VARCHAR(MAX) NOT NULL,
+	HasBeenViewed Bit NOT NULL,
+)
+
+Create Table Alerts_Doctor_Views(
+	UniqueID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	AlertID varchar(250) references [dbo].[Historical_Patient_Alerts](GeneratedID),
+	ProviderId int foreign key references [dbo].[Provider_Info](ProviderId),
+	DateTimeViewed DateTime not null
+)
+
+
 ALTER DATABASE [hospital-at-home-db]
 SET CHANGE_TRACKING = ON
 (CHANGE_RETENTION = 30 Minutes, AUTO_CLEANUP = ON)

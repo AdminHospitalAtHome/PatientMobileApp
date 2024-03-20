@@ -1,12 +1,6 @@
 {
   "bindings": [
     {
-      "type": "webPubSub",
-      "name": "actions",
-      "hub": "Hub",
-      "direction": "out"
-    },
-    {
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
@@ -22,11 +16,12 @@
       "name": "res"
     },
     {
-      "name": "alert",
+      "name": "result",
       "direction": "out",
       "type": "sql",
-      "connectionStringSetting": "SqlConnectionString",
-      "commandText": "[dbo].[Historical_Patient_Alerts]"
+      "methods": [],
+      "commandText": "[dbo].[Alerts_Doctor_Views]",
+      "connectionStringSetting": "SqlConnectionString"
     }
   ]
 }
