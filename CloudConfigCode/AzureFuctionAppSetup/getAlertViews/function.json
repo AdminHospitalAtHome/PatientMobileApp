@@ -1,0 +1,29 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "name": "object",
+      "direction": "in",
+      "type": "sql",
+      "methods": [],
+      "commandText": "SELECT * FROM [dbo].[Alerts_Doctor_Views] as v INNER JOIN [dbo].[Provider_Info]as i ON v.ProviderId = i.ProviderId where AlertID = @AlertID",
+      "commandType": "Text",
+      "connectionStringSetting": "SqlConnectionString",
+      "parameters": "@AlertID={Query.AlertId}"
+    }
+  ]
+}

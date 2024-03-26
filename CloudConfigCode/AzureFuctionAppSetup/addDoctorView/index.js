@@ -1,4 +1,8 @@
 module.exports = async function (context, req) {
+
+    context.log("AlertID", req.body.AlertID)
+    context.log("ProviderId", req.body.ProviderId)
+    context.log("DateTimeViewed", req.body.DateTimeViewed)
     const viewedRecord = {
         "AlertID": req.body.AlertID,
         "ProviderId": req.body.ProviderId,

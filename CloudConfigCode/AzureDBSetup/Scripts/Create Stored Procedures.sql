@@ -510,3 +510,18 @@ BEGIN
 	END
 
 END;
+
+
+CREATE OR ALTER  TRIGGER [dbo].[Set_Alert_Viewed]
+ON [dbo].[Alerts_Doctor_Views]
+AFTER INSERT AS
+BEGIN
+    -- DECLARE @currentWeightAlert INT
+    DECLARE @ProviderId INT
+    SELECT @ProviderId = (SELECT TOP(1) ProviderId FROM INSERTED)
+
+	Declare @AlertID VARCHAR(250)
+	SELECT @AlertID = (SELECT TOP(1) AlertID FROM INSERTED)
+
+	UPDATE [dbo].[Historical_Patient_Alerts] SET HasBeenViewed = 1 WHERE GeneratedID = @AlertID
+END;
