@@ -20,7 +20,7 @@
       "direction": "in",
       "type": "sql",
       "methods": [],
-      "commandText": "SELECT * FROM Historical_Patient_Alerts",
+      "commandText": "SELECT * FROM Historical_Patient_Alerts ORDER BY DateTimeTriggered DESC",
       "commandType": "Text",
       "connectionStringSetting": "SqlConnectionString"
     }
