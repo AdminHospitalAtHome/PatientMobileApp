@@ -16,6 +16,8 @@ module.exports = async function (context, req, manualAlertTriggersIn) {
             "Should_Trigger_Blood_Oxygen": manualAlertTriggersIn[0].Should_Trigger_Blood_Oxygen,
             "Blood_Pressure_Level": manualAlertTriggersIn[0].Blood_Pressure_Level,
             "Should_Trigger_Blood_Pressure": manualAlertTriggersIn[0].Should_Trigger_Blood_Pressure,
+            "Spirometry_Level": manualAlertTriggersIn[0].Spirometry_Level,
+            "Should_Trigger_Spirometry": manualAlertTriggersIn[0].Should_Trigger_Spirometry,
             "Custom_Alert_Levels": JSON.stringify(req.body.JsonData),
         }
 
@@ -31,6 +33,8 @@ module.exports = async function (context, req, manualAlertTriggersIn) {
             "Should_Trigger_Blood_Oxygen": 0,
             "Blood_Pressure_Level": -1,
             "Should_Trigger_Blood_Pressure": 0,
+            "Spirometry_Level": -1,
+            "Should_Trigger_Spirometry": 0,
             "Custom_Alert_Levels": JSON.stringify(req.body.JsonData),
         }
 

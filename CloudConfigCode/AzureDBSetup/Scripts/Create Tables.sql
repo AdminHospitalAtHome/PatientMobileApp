@@ -72,6 +72,8 @@ CREATE TABLE Patient_Alert_Levels (
 	Should_Trigger_Blood_Oxygen BIT,
 	Blood_Pressure_Level INT,
 	Should_Trigger_Blood_Pressure BIT,
+	Spirometry_Level INT,
+    Should_Trigger_Spirometry BIT,
 	Custom_Alert_Levels VARCHAR(MAX),
 	VersionCol rowversion,
 	CONSTRAINT PatientID_Unique UNIQUE(PatientID)
