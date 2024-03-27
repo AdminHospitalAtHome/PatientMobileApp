@@ -18,13 +18,14 @@ export function addWeight(
   weight: number,
   ifManualInput: boolean,
 ): Promise<string> {
-  return new Promise<string>((resolve) => {
+  return new Promise<string>(resolve => {
     const dateTime: String = new Date().toISOString();
     fetch('https://hosptial-at-home-js-api.azurewebsites.net/api/addWeight', {
       method: 'POST',
-      body: `{"PatientID": ${patientId}, "DateTimeTaken": "${dateTime}", "WeightInPounds": ${weight}, "IfManualInput": ${ifManualInput}}`,
+      body: `{"PatientID": ${patientId}, "DateTimeTaken": "${dateTime}", "WeightInPounds": ${weight.toFixed(
+        0,
+      )}, "IfManualInput": ${ifManualInput}}`,
     }).then(response => {
-      console.log(response);
       if (response.status === 201) {
         resolve('add successful');
       } else {
@@ -45,7 +46,7 @@ export function addWeightAutomaticallyToServer(
     let weightString = '[';
     for (let i = 0; i < weight.length; i++) {
       dateTimeTakenString += '"' + dateTimeTaken[i] + '"';
-      weightString += '"' + weight[i] + '"';
+      weightString += '"' + weight[i].toFixed(0) + '"';
       if (i !== weight.length - 1) {
         dateTimeTakenString += ',';
         weightString += ',';
@@ -93,13 +94,11 @@ export function addWeightAutomatically(
       false,
     )
       .then(() => {
-        console.log('Added Good');
         setAddSuccessVisible(true);
         setStopDateTime(new Date().toISOString());
         resolve();
       })
       .catch(() => {
-        console.log('FAIL');
         setAddFailedVisible(true);
         setStopDateTime(new Date().toISOString());
         resolve();

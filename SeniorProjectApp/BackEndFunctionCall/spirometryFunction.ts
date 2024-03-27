@@ -64,24 +64,42 @@ export function addSpirometryOnClick(
   ) {
     //warning messages will already be displayed in this case
   } else {
-
+    addSpirometry(
+      patientID,
+      Number(inputFEV1),
+      Number(inputFEV1_FVC),
+      true,
+    ).then(successful => {
+      setModalVisible(!modalVisible);
+      if (successful === 'add successful') {
+        setAddSuccessVisible(true);
+      } else {
+        setAddFailedVisible(true);
+      }
+      setStopDateTime(new Date().toISOString());
+    });
+    setInputFEV1('');
+    setInputFEV1_FVC('');
   }
 }
 
-
 export function addSpirometry(
-  patientID:number,
-  FEV1:string,
-  FEV1_FVC:string,
+  patientID: number,
+  FEV1: number,
+  FEV1_FVC: number,
   IfManualInput: boolean,
-){
+) {
   return new Promise<string>((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addSpirometry',
       {
         method: 'POST',
-        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}","FEV1InLiters": ${FEV1}, "FEV1_FVCInPercentage":${FEV1_FVC}, "IfManualInput": ${IfManualInput}}`,
+        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}","FEV1InLiters": ${FEV1.toFixed(
+          2,
+        )}, "FEV1_FVCInPercentage":${FEV1_FVC.toFixed(
+          0,
+        )}, "IfManualInput": ${IfManualInput}}`,
       },
     ).then(response => {
       if (response.status === 201) {
@@ -91,5 +109,4 @@ export function addSpirometry(
       }
     });
   });
-
 }

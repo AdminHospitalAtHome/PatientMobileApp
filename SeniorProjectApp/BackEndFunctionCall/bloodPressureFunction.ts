@@ -26,7 +26,11 @@ export function addBloodPressure(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addBloodPressure',
       {
         method: 'POST',
-        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}", "SystolicBloodPressureInMmHg": ${SystolicBloodPressureInMmHg},"DiastolicBloodPressureInMmHg": ${DiastolicBloodPressureInMmHg}, "IfManualInput": ${IfManualInput}}`,
+        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}", "SystolicBloodPressureInMmHg": ${SystolicBloodPressureInMmHg.toFixed(
+          0,
+        )},"DiastolicBloodPressureInMmHg": ${DiastolicBloodPressureInMmHg.toFixed(
+          0,
+        )}, "IfManualInput": ${IfManualInput}}`,
       },
     ).then(response => {
       if (response.status === 201) {

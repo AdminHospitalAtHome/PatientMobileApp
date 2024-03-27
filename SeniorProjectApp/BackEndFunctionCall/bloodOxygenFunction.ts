@@ -13,7 +13,9 @@ export function addBloodOxygen(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addBloodOxygen',
       {
         method: 'POST',
-        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}", "BloodOxygenLevelInPercentage": ${bloodOxygenLevelInPercentage} ,"IfManualInput": ${IfManualInput}}`,
+        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}", "BloodOxygenLevelInPercentage": ${bloodOxygenLevelInPercentage.toFixed(
+          0,
+        )} ,"IfManualInput": ${IfManualInput}}`,
       },
     ).then(response => {
       if (response.status === 201) {
@@ -116,7 +118,7 @@ export function addBloodOxygenAutomaticallyToServer(
     let bloodOxygenString = '[';
     for (let i = 0; i < bloodOxygen.length; i++) {
       dateTimeTakenString += '"' + dateTimeTaken[i] + '"';
-      bloodOxygenString += '"' + bloodOxygen[i] + '"';
+      bloodOxygenString += '"' + bloodOxygen[i].toFixed(0) + '"'; // toFixed sets decimal points
       if (i !== bloodOxygen.length - 1) {
         dateTimeTakenString += ',';
         bloodOxygenString += ',';

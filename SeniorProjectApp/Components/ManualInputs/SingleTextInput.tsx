@@ -16,10 +16,10 @@ export default function SingleTextInput({
   function checkInput(text: string): void {
     if (numberRegex.test(text) || text === '') {
       setInvalidVisible(false);
-      setInput(text);
     } else {
       setInvalidVisible(true);
     }
+    setInput(text);
   }
 
   return (

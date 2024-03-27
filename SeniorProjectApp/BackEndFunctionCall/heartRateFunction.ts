@@ -13,7 +13,9 @@ export function addHeartRate(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addHeartRate',
       {
         method: 'POST',
-        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}","HeartRateInBPM": ${heartRate}, "IfManualInput": ${IfManualInput}}`,
+        body: `{"PatientID": ${patientID}, "DateTimeTaken": "${dateTime}","HeartRateInBPM": ${heartRate.toFixed(
+          0,
+        )}, "IfManualInput": ${IfManualInput}}`,
       },
     ).then(response => {
       if (response.status === 201) {
@@ -36,7 +38,7 @@ export function addHeartRateAutomaticallyToServer(
     let heartRateString = '[';
     for (let i = 0; i < heartRate.length; i++) {
       dateTimeTakenString += '"' + dateTimeTaken[i] + '"';
-      heartRateString += '"' + heartRate[i] + '"';
+      heartRateString += '"' + heartRate[i].toFixed(0) + '"';
       if (i !== heartRate.length - 1) {
         dateTimeTakenString += ',';
         heartRateString += ',';

@@ -24,10 +24,10 @@ export default function MultipleTextInput({
   function checkInput(text: string, num: number): void {
     if (numberRegex[num].test(text) || text === '') {
       invalidVisible[num][1](false);
-      setInput[num](text);
     } else {
       invalidVisible[num][1](true);
     }
+    setInput[num](text);
   }
 
   return (
