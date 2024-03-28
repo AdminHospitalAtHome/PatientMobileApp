@@ -5,8 +5,9 @@ module.exports = async function (context, req, manualAlertTriggersIn) {
     context.log(manualAlertTriggersIn.length)
     if (manualAlertTriggersIn.length === 1) {
         context.log("AAHA", manualAlertTriggersIn[0].UniqueID)
+        context.log("manual trigger", manualAlertTriggersIn[0])
         const newAlertTrigger = {
-            "UniqueID": manualAlertTriggersIn[0].UniqueID,
+            // "UniqueID": manualAlertTriggersIn[0].UniqueID,
             "PatientID": manualAlertTriggersIn[0].PatientID,
             "Weight_Level": manualAlertTriggersIn[0].Weight_Level,
             "Should_Trigger_Weight": manualAlertTriggersIn[0].Should_Trigger_Weight,
@@ -20,6 +21,9 @@ module.exports = async function (context, req, manualAlertTriggersIn) {
             "Should_Trigger_Spirometry": manualAlertTriggersIn[0].Should_Trigger_Spirometry,
             "Custom_Alert_Levels": JSON.stringify(req.body.JsonData),
         }
+
+        // "Spirometry_Level": manualAlertTriggersIn[0].Spirometry_Level,
+        // "Should_Trigger_Spirometry": manualAlertTriggersIn[0].Should_Trigger_Spirometry,
 
         context.bindings.manualAlertTriggersOut = JSON.stringify(newAlertTrigger);
     } else {
