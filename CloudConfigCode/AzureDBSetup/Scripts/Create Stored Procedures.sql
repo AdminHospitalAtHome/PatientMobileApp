@@ -365,6 +365,97 @@ END;
 
 
 
+CREATE OR ALTER TRIGGER [dbo].[Patient_Spirometry_Alert]
+ON [dbo].[Patient_Spirometry]
+AFTER INSERT AS
+BEGIN
+    DECLARE @patientID INT
+    SELECT @patientID = (SELECT TOP(1) PatientID FROM INSERTED)
+
+	DECLARE @MaxDateTime DATETIME
+	SELECT @MaxDateTime = (SELECT MAX(DateTimeTaken) FROM INSERTED)
+
+	DECLARE @FEV1InLiters INT
+	SELECT @FEV1InLiters = (SELECT TOP(1) FEV1InLiters FROM INSERTED WHERE DateTimeTaken = @MaxDateTime)
+
+	DECLARE @FEV1_FVCInPercentage INT
+	SELECT @FEV1_FVCInPercentage = (SELECT TOP(1) FEV1_FVCInPercentage FROM INSERTED WHERE DateTimeTaken = @MaxDateTime)
+
+	DECLARE @Temp_Patient_Alert_Level TABLE (UniqueID INT, PatientID INT, Weight_Level INT, Heart_Rate_Level INT, Blood_Oxygen_Level INT, Blood_Pressure_Level INT, Spirometry_Level INT, Custom_Alert_Levels VARCHAR(MAX))
+
+	DECLARE @RedFEV1Level DECIMAL(4,2)
+	DECLARE @RedFEV1_FVCLevel INT
+	DECLARE @YellowFEV1Level DECIMAL(4,2)
+	DECLARE @YellowFEV1_FVCLevel INT
+
+	INSERT INTO @Temp_Patient_Alert_Level SELECT UniqueID, PatientID, Weight_Level, Heart_Rate_Level, Blood_Oxygen_Level, Blood_Pressure_Level, Spirometry_Level, Custom_Alert_Levels
+	FROM [dbo].[Patient_Alert_Levels] WHERE PatientID = @patientID
+	-- Default Alert Level to Green (0)
+	DECLARE @Alert_Level INT
+	SELECT @Alert_Level = 0
+
+	-- GET VARIABLES HERE
+	DECLARE @Json_Object VARCHAR(MAX)
+	SELECT @Json_Object = (SELECT TOP(1) Custom_Alert_Levels FROM @Temp_Patient_Alert_Level)
+
+
+	-- CHECK IF Custom_Weight_Alert is in JSON Object
+	IF (@Json_Object IS NOT NULL AND ISJSON(@Json_Object) > 0 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Spirometry_Alert.RedFEV1Level') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Spirometry_Alert.RedFEV1_FVCLevel') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Spirometry_Alert.YellowFEV1Level') = 1 AND
+		JSON_PATH_EXISTS(@Json_Object, '$.Custom_Spirometry_Alert.YellowFEV1_FVCLevel') = 1)
+	BEGIN
+		DECLARE @Temp NVARCHAR(MAX)
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Spirometry_Alert.RedFEV1Level'))
+		SELECT @RedFEV1Level = CAST(@TEMP AS DECIMAL(4,2))
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Spirometry_Alert.RedFEV1_FVCLevel'))
+		SELECT @RedFEV1_FVCLevel = CAST(@TEMP AS INT)
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Spirometry_Alert.YellowFEV1Level'))
+		SELECT @YellowFEV1Level = CAST(@TEMP AS DECIMAL(4,2))
+
+		SELECT @TEMP = (JSON_VALUE(@Json_Object, '$.Custom_Spirometry_Alert.YellowFEV1_FVCLevel'))
+		SELECT @YellowFEV1_FVCLevel = CAST(@TEMP AS INT)
+
+	END
+	ELSE
+	BEGIN
+		SELECT @RedFEV1Level = -1.00
+		SELECT @RedFEV1_FVCLevel = -1
+		SELECT @YellowFEV1Level = -1.00
+		SELECT @YellowFEV1_FVCLevel = -1
+	END
+
+
+	IF (@FEV1InLiters < @RedFEV1Level  OR @FEV1_FVCInPercentage < @RedFEV1_FVCLevel)
+	BEGIN
+		SELECT @Alert_Level = 2
+	END
+
+	IF (@FEV1InLiters < @YellowFEV1Level OR @FEV1_FVCInPercentage < @YellowFEV1_FVCLevel)
+	BEGIN
+		IF (@Alert_Level = 0)
+		BEGIN
+			SELECT @Alert_Level = 1
+		END
+	END
+
+	IF EXISTS (SELECT 1 FROM @Temp_Patient_Alert_Level)
+	BEGIN
+		UPDATE [dbo].[Patient_Alert_Levels] SET Spirometry_Level = @Alert_Level WHERE PatientID = @patientID
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[Patient_Alert_Levels] (PatientID, Weight_Level, Should_Trigger_Weight, Heart_Rate_Level, Should_Trigger_Heart_Rate, Blood_Oxygen_Level, Should_Trigger_Blood_Oxygen,
+			Blood_Pressure_Level, Should_Trigger_Blood_Pressure, Spirometry_Level, Should_Trigger_Spirometry, Custom_Alert_Levels)
+		VALUES(@patientID, 0, 0, 0, 0, 0, 0, 0, 0, @Alert_Level, 0, '{}')
+	END
+END;
+
+
+
 CREATE OR ALTER PROCEDURE [dbo].[Set_Alert_Triggers]
 	@JsonData VARCHAR(MAX),
 	@PatientID INT
