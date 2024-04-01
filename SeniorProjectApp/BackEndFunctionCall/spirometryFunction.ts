@@ -21,7 +21,7 @@ export function getRecentSpirometry(spirometryData: any[][]): string {
 }
 
 // Sets the data to the format used by our application (includes FEV1 and FEV1/FVC
-export function parseSpirometryData(spirometryJson: any) {
+export function parseSpirometryData(spirometryJson: any): any[][] {
   let spirometryArr = [];
   for (let i = 0; i < spirometryJson.length; i++) {
     spirometryArr.push([
@@ -34,7 +34,7 @@ export function parseSpirometryData(spirometryJson: any) {
 }
 
 // Strips FEV1/FVC because we do not want that value for the Chart, only the table
-export function parseSpirometryForChart(spirometryArr: any[][]) {
+export function parseSpirometryForChart(spirometryArr: any[][]): any[][] {
   let newSpirometryArr = [];
   for (let i = 0; i < spirometryArr.length; i++) {
     newSpirometryArr.push([spirometryArr[i][0], spirometryArr[i][1]]);
