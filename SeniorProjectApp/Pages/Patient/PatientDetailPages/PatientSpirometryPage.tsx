@@ -3,6 +3,7 @@ import {Dimensions, View} from 'react-native';
 import {PatientDetailStyles} from './Styles';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import {
+  addSpirometryAutomatically,
   addSpirometryOnClick,
   getSpirometry,
   parseSpirometryForChart,
@@ -13,6 +14,10 @@ import VitalTable from '../../../Components/VitalTable';
 import AddButtons from '../../../Components/AddButtons';
 import MultipleTextInput from '../../../Components/ManualInputs/MultipleTextInput';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
+import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
+import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import ChangeDeviceModal from '../../../Components/AutomaticInputs/ChangeDeviceModal';
+import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
 
 export default function PatientSpirometryPage(): React.JSX.Element {
   const patientID = 100000001;
@@ -94,6 +99,36 @@ export default function PatientSpirometryPage(): React.JSX.Element {
             setStopDateTime,
             setInputFEV1,
             setInputFEV1_FVC,
+          );
+        }}
+      />
+
+      <ChooseDeviceModal
+        setModalVisible={setChooseDeviceModalVisible}
+        modalVisible={chooseDeviceModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
+        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
+        vitalType={VitalType.SPIROMETRY}
+      />
+
+      <ChangeDeviceModal
+        setModalVisible={setChangeDeviceModalVisible}
+        modalVisible={changeDeviceModalVisible}
+        setLoadingModalVisible={setLoadingModalVisible}
+        setPreviousModalVisible={setChooseDeviceModalVisible}
+        vitalType={VitalType.SPIROMETRY}
+      />
+
+      <LoadingModal
+        setLoadingModalVisible={setLoadingModalVisible}
+        loadingModalVisible={loadingModalVisible}
+        sendToServer={(data: string[]) => {
+          return addSpirometryAutomatically(
+            data,
+            patientID,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
           );
         }}
       />

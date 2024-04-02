@@ -1,5 +1,6 @@
 import timeTableParser from './tableTimeParser';
 import React from 'react';
+import {parseXMLSpirometryData} from './BluetoothAutomaticVitals/MedMDeviceConnection';
 
 export function getSpirometry(
   patientID: number,
@@ -100,6 +101,90 @@ export function addSpirometry(
         )}, "FEV1_FVCInPercentage":${FEV1_FVC.toFixed(
           0,
         )}, "IfManualInput": ${IfManualInput}}`,
+      },
+    ).then(response => {
+      if (response.status === 201) {
+        resolve('add successful');
+      } else {
+        reject('failed to add spirometry');
+      }
+    });
+  });
+}
+
+export function addSpirometryAutomatically(
+  data: string[],
+  patientID: number,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+): Promise<void> {
+  return new Promise(resolve => {
+    let parsedSpirometryFEV1: number[] = [];
+    let parsedSpirometryFEV1_FVC: number[] = [];
+    let parsedDateTime: string[] = [];
+
+    for (let i = 0; i < data.length; i++) {
+      let parsedData: Record<string, any> = parseXMLSpirometryData(data[i]);
+
+      parsedSpirometryFEV1.push(parsedData.SpirometryFEV1InLiters);
+      parsedSpirometryFEV1_FVC.push(parsedData.SpirometryFEV1_FVCInPercentage);
+      parsedDateTime.push(parsedData.DateTimeTaken);
+    }
+
+    addSpirometryAutomaticallyToServer(
+      patientID,
+      parsedSpirometryFEV1,
+      parsedSpirometryFEV1_FVC,
+      parsedDateTime,
+      false,
+    )
+      .then(() => {
+        setAddSuccessVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
+      })
+      .catch(() => {
+        setAddFailedVisible(true);
+        setStopDateTime(new Date().toISOString());
+        resolve();
+      });
+  });
+}
+
+export function addSpirometryAutomaticallyToServer(
+  patientId: number,
+  spirometryFEV1: number[],
+  spirometryFEV1_FVC: number[],
+  dateTimeTaken: string[],
+  ifManualInput: boolean,
+): Promise<String> {
+  return new Promise<string>((resolve, reject) => {
+    let dateTimeTakenString = '[';
+    let spirometryFEV1String = '[';
+    let spirometryFEV1_FVCString = '[';
+
+    for (let i = 0; i < spirometryFEV1.length; i++) {
+      dateTimeTakenString += '"' + dateTimeTaken[i] + '"';
+      spirometryFEV1String += '"' + spirometryFEV1[i] + '"';
+      spirometryFEV1_FVCString += '"' + spirometryFEV1_FVC[i] + '"';
+
+      if (i !== spirometryFEV1.length - 1) {
+        dateTimeTakenString += ',';
+        spirometryFEV1String += ',';
+        spirometryFEV1_FVCString += ',';
+      }
+    }
+
+    dateTimeTakenString += ']';
+    spirometryFEV1String += ']';
+    spirometryFEV1_FVCString += ']';
+
+    fetch(
+      'https://hosptial-at-home-js-api.azurewebsites.net/api/addSpirometries',
+      {
+        method: 'POST',
+        body: `{"PatientID": ${patientId}, "DateTimeTaken": ${dateTimeTakenString}, "FEV1InLiters": ${spirometryFEV1String}, "spirometryFEV1_FVCString": ${spirometryFEV1_FVCString}, "IfManualInput": ${ifManualInput}}`,
       },
     ).then(response => {
       if (response.status === 201) {

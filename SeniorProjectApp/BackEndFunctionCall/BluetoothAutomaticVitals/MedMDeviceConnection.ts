@@ -129,13 +129,12 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
       this.pairDeviceEventListener = eventEmitter.addListener(
         'Pair_Device',
         () => {
-          console.log("PAIRED A DEVICE YALL")
+          console.log('PAIRED A DEVICE YALL');
           this.pairDeviceEventListener.remove();
           resolve();
         },
       );
       MedMDeviceManager.pairDevice(device.address);
-
     });
   }
 
@@ -145,11 +144,11 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
       ReactStorage.getInstance()
         .removeDevice(device.address, device.vitalType)
         .then(() => {
-          console.log("REMOVED  WHY NO TRIGGER")
+          console.log('REMOVED  WHY NO TRIGGER');
           resolve();
         })
         .catch(() => {
-          console.log("REMOVED  WHY NO TRIGGER ERROR")
+          console.log('REMOVED  WHY NO TRIGGER ERROR');
           resolve();
         });
     });
@@ -363,6 +362,45 @@ export function parseXMLBloodOxygenData(xml: string): Record<string, any> {
       DateTimeTaken: dateTimeTaken,
     };
   } catch (e) {
+    return {};
+  }
+}
+
+export function parseXMLSpirometryData(xml: string): Record<string, any> {
+  try {
+    const parser = new XMLParser();
+    let obj = parser.parse(xml);
+    let dataJson = JSON.parse(obj['measurements-spirometry'].spirometry);
+    let spirometryFEV1InLiters: number = Number(dataJson.FEV1.value);
+    if (Number.isNaN(spirometryFEV1InLiters)) {
+      throw new Error('Invalid Number');
+    }
+    // THE FEV1 Is likely not in Liters, so need to convert...
+    if (dataJson.FEV1.units === 'cl') {
+      spirometryFEV1InLiters /= 100;
+    }
+
+    let spirometryFEV1_FVCInPercentage: number = Math.floor(
+      Number(dataJson.FEV1p.value),
+    );
+    if (
+      Number.isNaN(spirometryFEV1_FVCInPercentage) ||
+      spirometryFEV1_FVCInPercentage > 100
+    ) {
+      throw new Error('Invalid Number');
+    }
+
+    let dateTimeTaken: string = new Date(
+      obj['measurements-spirometry']['measured-at'],
+    ).toISOString();
+
+    return {
+      SpirometryFEV1InLiters: spirometryFEV1InLiters,
+      SpirometryFEV1_FVCInPercentage: spirometryFEV1_FVCInPercentage,
+      DateTimeTaken: dateTimeTaken,
+    };
+  } catch (e) {
+    console.log(e);
     return {};
   }
 }
