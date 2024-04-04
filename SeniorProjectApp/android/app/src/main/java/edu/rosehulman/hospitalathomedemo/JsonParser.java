@@ -30,13 +30,13 @@ public class JsonParser {
 
 
     public static String toJson(List<IDeviceDescription> devices){
+
         String res= "[";
         for(int i = 0; i < devices.size(); i++){
             res+=toJson(devices.get(i));
             if(i != devices.size()-1){
                 res+=",";
             }
-
         }
 
         res+="]";

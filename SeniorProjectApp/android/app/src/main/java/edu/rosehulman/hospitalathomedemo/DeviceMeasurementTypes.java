@@ -1,5 +1,7 @@
 package edu.rosehulman.hospitalathomedemo;
 
+import android.util.Log;
+
 import com.medm.devicekit.IDeviceDescription;
 import com.medm.devicekit.MeasurementType;
 
@@ -15,11 +17,13 @@ public class DeviceMeasurementTypes {
                 return new String[]{"BloodPressure", "HeartRate"};
             default:
                 List<MeasurementType> measurementTypes = device.getMeasurementTypes();
-                List<String> strings = new ArrayList<>();
+
+                String[] strings = new String[measurementTypes.size()];
                 for (int i = 0; i < measurementTypes.size(); i++) {
-                    strings.add(measurementTypes.get(i).toString());
+                    strings[i] = measurementTypes.get(i).toString();
                 }
-                return (String[]) strings.toArray();
+
+                return strings;
         }
 
     }

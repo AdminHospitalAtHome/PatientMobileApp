@@ -4,7 +4,8 @@ import {PatientDetailStyles} from './Styles';
 
 import {
   getBloodOxygen,
-  addBloodOxygen, addBloodOxygenAutomatically,
+  addBloodOxygenAutomatically,
+  addBloodOxygenOnClick,
 } from '../../../BackEndFunctionCall/bloodOxygenFunction';
 import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTime';
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
@@ -15,11 +16,10 @@ import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 import SingleLineChart from '../../../Components/SingleLineChart';
-import ChooseDeviceModal from "../../../Components/AutomaticInputs/ChooseDeviceModal";
-import {VitalType} from "../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection";
-import ChangeDeviceModal from "../../../Components/AutomaticInputs/ChangeDeviceModal";
-import {addWeightAutomatically} from "../../../BackEndFunctionCall/weightFunction";
-import LoadingModal from "../../../Components/AutomaticInputs/LoadingModal";
+import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
+import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
+import ChangeDeviceModal from '../../../Components/AutomaticInputs/ChangeDeviceModal';
+import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
 
 export default function PatientBloodOxygenPage(): React.JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -75,7 +75,19 @@ export default function PatientBloodOxygenPage(): React.JSX.Element {
       <InputManualModal
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
-        addButtonFunction={addBloodOxygenOnClick}
+        addButtonFunction={() => {
+          return addBloodOxygenOnClick(
+            input,
+            patientID,
+            numberRegex,
+            setModalVisible,
+            modalVisible,
+            setAddSuccessVisible,
+            setAddFailedVisible,
+            setStopDateTime,
+            setInput,
+          );
+        }}
         inputBoxes={
           <SingleTextInput
             modalTitle={'Add Blood Oxygen'}
@@ -123,21 +135,4 @@ export default function PatientBloodOxygenPage(): React.JSX.Element {
       {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
-
-  function addBloodOxygenOnClick(): void {
-    if (input === '' || !numberRegex.test(input)) {
-      //todo: raise error message dialog
-    } else {
-      addBloodOxygen(patientID, Number(input), true).then(successful => {
-        setModalVisible(!modalVisible);
-        if (successful === 'add successful') {
-          setAddSuccessVisible(true);
-        } else {
-          // Failed view here
-        }
-        setStopDateTime(new Date().toISOString());
-      });
-      setInput('');
-    }
-  }
 }

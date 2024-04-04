@@ -17,7 +17,9 @@ import InputManualModal from '../../../Components/ManualInputs/InputManualModal'
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import ChangeDeviceModal from '../../../Components/AutomaticInputs/ChangeDeviceModal';
-import LoadingModal from '../../../Components/AutomaticInputs/LoadingModal';
+import SpirometryReadingModal from '../../../Components/AutomaticInputs/SpirometryReadingModal';
+import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
+import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
 
 export default function PatientSpirometryPage(): React.JSX.Element {
   const patientID = 100000001;
@@ -27,7 +29,7 @@ export default function PatientSpirometryPage(): React.JSX.Element {
     useState(false);
   const [changeDeviceModalVisible, setChangeDeviceModalVisible] =
     useState(false);
-  const [loadingModalVisible, setLoadingModalVisible] = useState(false);
+
   const [inputFEV1, setInputFEV1] = useState('');
   const [inputFEV1_FVC, setInputFEV1_FVC] = useState('');
   const FEV1_FVCRegex = /^-?(\d+|\.\d+|\d*\.\d+)$/;
@@ -37,6 +39,7 @@ export default function PatientSpirometryPage(): React.JSX.Element {
   const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
   const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
   const [spirometryData, setSpirometryData] = useState<any[][]>([]);
+  const [readingModalVisible, setReadingModalVisible] = useState(false);
 
   useEffect(() => {
     getSpirometry(patientID, startDateTime, stopDateTime).then(data => {
@@ -106,7 +109,7 @@ export default function PatientSpirometryPage(): React.JSX.Element {
       <ChooseDeviceModal
         setModalVisible={setChooseDeviceModalVisible}
         modalVisible={chooseDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
+        setLoadingModalVisible={setReadingModalVisible}
         setChangeDeviceModalVisible={setChangeDeviceModalVisible}
         vitalType={VitalType.SPIROMETRY}
       />
@@ -114,14 +117,14 @@ export default function PatientSpirometryPage(): React.JSX.Element {
       <ChangeDeviceModal
         setModalVisible={setChangeDeviceModalVisible}
         modalVisible={changeDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
+        setLoadingModalVisible={setReadingModalVisible}
         setPreviousModalVisible={setChooseDeviceModalVisible}
         vitalType={VitalType.SPIROMETRY}
       />
-
-      <LoadingModal
-        setLoadingModalVisible={setLoadingModalVisible}
-        loadingModalVisible={loadingModalVisible}
+      {/*Instead of using the normal Loading Modal, we walk the user through 3 readings...*/}
+      <SpirometryReadingModal
+        readingModalVisible={readingModalVisible}
+        setReadingModalVisible={setReadingModalVisible}
         sendToServer={(data: string[]) => {
           return addSpirometryAutomatically(
             data,
@@ -132,6 +135,11 @@ export default function PatientSpirometryPage(): React.JSX.Element {
           );
         }}
       />
+      {addSuccessVisible && (
+        <AddSuccessfullyDialog setter={setAddSuccessVisible} />
+      )}
+
+      {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );
 }

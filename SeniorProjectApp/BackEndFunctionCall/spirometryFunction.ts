@@ -120,6 +120,7 @@ export function addSpirometryAutomatically(
   setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
 ): Promise<void> {
   return new Promise(resolve => {
+    console.log('Promise Triggered');
     let parsedSpirometryFEV1: number[] = [];
     let parsedSpirometryFEV1_FVC: number[] = [];
     let parsedDateTime: string[] = [];
@@ -127,10 +128,24 @@ export function addSpirometryAutomatically(
     for (let i = 0; i < data.length; i++) {
       let parsedData: Record<string, any> = parseXMLSpirometryData(data[i]);
 
+      try {
+        // Check if it is the right type
+        if (
+          parsedData.SpirometryFEV1InLiters === undefined ||
+          parsedData.SpirometryFEV1_FVCInPercentage === undefined ||
+          parsedData.DateTimeTaken === undefined
+        ) {
+          continue;
+        }
+      } catch (e) {
+        continue;
+      }
       parsedSpirometryFEV1.push(parsedData.SpirometryFEV1InLiters);
       parsedSpirometryFEV1_FVC.push(parsedData.SpirometryFEV1_FVCInPercentage);
       parsedDateTime.push(parsedData.DateTimeTaken);
     }
+
+    console.log("PARSED", parsedSpirometryFEV1, parsedSpirometryFEV1_FVC, parsedDateTime);
 
     addSpirometryAutomaticallyToServer(
       patientID,
@@ -180,11 +195,17 @@ export function addSpirometryAutomaticallyToServer(
     spirometryFEV1String += ']';
     spirometryFEV1_FVCString += ']';
 
+    console.log(
+      dateTimeTakenString,
+      spirometryFEV1String,
+      spirometryFEV1_FVCString,
+    );
+
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addSpirometries',
       {
         method: 'POST',
-        body: `{"PatientID": ${patientId}, "DateTimeTaken": ${dateTimeTakenString}, "FEV1InLiters": ${spirometryFEV1String}, "spirometryFEV1_FVCString": ${spirometryFEV1_FVCString}, "IfManualInput": ${ifManualInput}}`,
+        body: `{"PatientID": ${patientId}, "DateTimeTaken": ${dateTimeTakenString}, "FEV1InLiters": ${spirometryFEV1String}, "FEV1_FVCInPercentage": ${spirometryFEV1_FVCString}, "IfManualInput": ${ifManualInput}}`,
       },
     ).then(response => {
       if (response.status === 201) {

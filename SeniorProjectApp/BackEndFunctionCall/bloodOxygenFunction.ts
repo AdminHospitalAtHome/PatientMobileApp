@@ -107,6 +107,33 @@ export function addBloodOxygenAutomatically(
   });
 }
 
+export function addBloodOxygenOnClick(
+  input: string,
+  patientID: number,
+  numberRegex: RegExp,
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  modalVisible: boolean,
+  setAddSuccessVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setAddFailedVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
+  setInput: React.Dispatch<React.SetStateAction<string>>,
+): void {
+  if (input === '' || !numberRegex.test(input)) {
+    //warning messages will already be displayed in this case
+  } else {
+    addBloodOxygen(patientID, Number(input), true).then(successful => {
+      setModalVisible(!modalVisible);
+      if (successful === 'add successful') {
+        setAddSuccessVisible(true);
+      } else {
+        setAddFailedVisible(true);
+      }
+      setStopDateTime(new Date().toISOString());
+    });
+    setInput('');
+  }
+}
+
 export function addBloodOxygenAutomaticallyToServer(
   patientId: number,
   bloodOxygen: number[],

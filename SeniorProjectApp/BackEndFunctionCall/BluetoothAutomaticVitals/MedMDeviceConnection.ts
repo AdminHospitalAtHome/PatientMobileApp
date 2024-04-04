@@ -371,6 +371,7 @@ export function parseXMLSpirometryData(xml: string): Record<string, any> {
     const parser = new XMLParser();
     let obj = parser.parse(xml);
     let dataJson = JSON.parse(obj['measurements-spirometry'].spirometry);
+    console.log(dataJson);
     let spirometryFEV1InLiters: number = Number(dataJson.FEV1.value);
     if (Number.isNaN(spirometryFEV1InLiters)) {
       throw new Error('Invalid Number');
@@ -379,10 +380,20 @@ export function parseXMLSpirometryData(xml: string): Record<string, any> {
     if (dataJson.FEV1.units === 'cl') {
       spirometryFEV1InLiters /= 100;
     }
+    let spirometryFEV1_FVCInPercentage: number = 101;
+    try {
+      spirometryFEV1_FVCInPercentage = Math.floor(Number(dataJson.FEV1p.value));
+    } catch (e) {
+      // In this case, we need to try to calculate it on our own as it is not provided (or isn't correct)
+      let spirometryFVCinLiters: number = Number(dataJson.FVC.value);
+      if (dataJson.FVC.units === 'cl') {
+        spirometryFVCinLiters /= 100;
+      }
+      spirometryFEV1_FVCInPercentage = Math.floor(
+        (spirometryFEV1InLiters / spirometryFVCinLiters) * 100,
+      );
+    }
 
-    let spirometryFEV1_FVCInPercentage: number = Math.floor(
-      Number(dataJson.FEV1p.value),
-    );
     if (
       Number.isNaN(spirometryFEV1_FVCInPercentage) ||
       spirometryFEV1_FVCInPercentage > 100
@@ -400,7 +411,7 @@ export function parseXMLSpirometryData(xml: string): Record<string, any> {
       DateTimeTaken: dateTimeTaken,
     };
   } catch (e) {
-    console.log(e);
+    // This will happen alot as we we receive realtime data. That is discarded here...
     return {};
   }
 }
