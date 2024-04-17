@@ -83,8 +83,8 @@ android {
         applicationId "edu.rosehulman.hospitalathomedemo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 12
-        versionName "1.0.12"
+        versionCode 13
+        versionName "1.0.13"
         buildConfigField("String", "SECRET",apikeyProperties['SECRET'])
 
     }

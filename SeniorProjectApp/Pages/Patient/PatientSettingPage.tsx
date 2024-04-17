@@ -7,19 +7,26 @@ import {
   requestBluetoothPermissions,
   setAccessibilityMode,
 } from '../../BackEndFunctionCall/settingsPageFunctions';
-import MenuNav from '../../Components/NavCards/MenuNav';
+import {useIsFocused} from "@react-navigation/native";
 
-const patientID = 100000001;
 export default function PatientSettingPage({
   navigation,
 }: {
   navigation: any;
 }): JSX.Element {
   const [mode, setMode] = useState(false);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     getAccessibilityMode().then(res => setMode(res));
   }, [mode]);
+
+  useEffect(() => {
+    if (isFocused) {
+      // Won't ask if already have bluetooth permissions
+      requestBluetoothPermissions();
+    }
+  }, [isFocused]);
 
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
@@ -42,14 +49,6 @@ export default function PatientSettingPage({
           <Text style={styles.text}>My Devices</Text>
           <View style={styles.switchGroup}>
             <Text>click</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.card}
-          onPress={requestBluetoothPermissions}>
-          <Text style={styles.text}>Grant Bluetooth permissions</Text>
-          <View style={styles.switchGroup}>
-            <Text style={styles.text}>click</Text>
           </View>
         </TouchableOpacity>
       </View>

@@ -56,12 +56,3 @@ export async function requestBluetoothPermissions() {
     console.warn(e);
   }
 }
-
-// {
-//   title: 'Hospital At Home Bluetooth Request',
-//   message:
-//     'The Hospital At Home app needs permission to scan and connect to bluetooth devices in order to connect to your smart devices',
-//   buttonNeutral: 'Ask Me Later',
-//   buttonNegative: 'Cancel',
-//   buttonPositive: 'OK',
-// },

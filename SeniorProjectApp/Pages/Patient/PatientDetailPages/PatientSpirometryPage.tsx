@@ -82,7 +82,7 @@ export default function PatientSpirometryPage(): React.JSX.Element {
         inputBoxes={
           <MultipleTextInput
             inputTitles={['FEV1', 'FEV1/FVC']}
-            modalTitle={'Add Blood Pressure'}
+            modalTitle={'Add Spirometry'}
             modalUnit={['L', '%']}
             numberRegex={[FEV1Regex, FEV1_FVCRegex]}
             setInput={[setInputFEV1, setInputFEV1_FVC]}
