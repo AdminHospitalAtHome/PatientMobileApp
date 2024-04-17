@@ -4,7 +4,6 @@
  *
  * @format
  */
-import ChatTest3 from './Pages/Patient/Communication/ChatTest3';
 import React from 'react';
 import PatientMainPage from './Pages/Patient/PatientMainPage';
 
@@ -17,24 +16,31 @@ import PatientSettingPage from './Pages/Patient/PatientSettingPage';
 import DeviceSettingsPage from './Pages/Patient/PatientSettings/DeviceSettingsPage';
 import DevicePage from './Pages/Patient/PatientSettings/DevicePage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ChatTest2 from './Pages/Patient/Communication/ChatTest2';
 import ChatContactPage from './Pages/Patient/Communication/ChatContactPage';
-import PatientBloodOxygenPage from "./Pages/Patient/PatientDetailPages/PatientBloodOxygenPage";
-import PairNewDevicePage from "./Pages/Patient/PatientSettings/PairNewDevicePage";
+import PatientBloodOxygenPage from './Pages/Patient/PatientDetailPages/PatientBloodOxygenPage';
+import PairNewDevicePage from './Pages/Patient/PatientSettings/PairNewDevicePage';
 import 'node-libs-react-native/globals';
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
-import {AzureChatPage} from "./Pages/Patient/Communication/AzureChatPage";
-import PatientSpirometryPage from "./Pages/Patient/PatientDetailPages/PatientSpirometryPage";
+import {AzureChatPage} from './Pages/Patient/Communication/AzureChatPage';
+import PatientSpirometryPage from './Pages/Patient/PatientDetailPages/PatientSpirometryPage';
 // import window from "./__mocks__/window";
 
-<script src="http://locralhost:8097" />;
-require('node-libs-react-native/globals');
+// This prevents a warning we get by passing the chat threadClient in ChatContactPage as a parameter to AzureChatPage.
+// We can safely ignore it because we do not use state-persistence or deep linking.
+import {LogBox} from 'react-native';
 
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+
+// For Debugging?
+<script src="http://localhost:8097" />;
+require('node-libs-react-native/globals');
 
 const Tab = createBottomTabNavigator();
 
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Tab.Navigator

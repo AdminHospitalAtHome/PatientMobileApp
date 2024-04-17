@@ -16,7 +16,7 @@ import {
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
 
 const screenWidth: number = Dimensions.get('window').width;
-const screenHeight: number = Dimensions.get('window').width;
+const screenHeight: number = Dimensions.get('window').height;
 export default function ChatContactPage({
   navigation,
 }: {
@@ -45,7 +45,7 @@ export default function ChatContactPage({
 
   return (
     <View>
-      <ScrollView contentContainerStyle={{alignItems: 'center', padding: 10}}>
+      <ScrollView contentContainerStyle={styles.ScrollContainer}>
         {threadClients.map(threadClient => {
           return (
             <TouchableOpacity
@@ -71,12 +71,16 @@ export default function ChatContactPage({
 const styles = StyleSheet.create({
   card: {
     width: screenWidth * 0.8,
-    height: screenHeight * 0.18,
+    height: screenHeight * 0.1,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 5,
     margin: 5,
+  },
+  ScrollContainer: {
+    alignItems: 'center',
+    padding: 10,
   },
 });

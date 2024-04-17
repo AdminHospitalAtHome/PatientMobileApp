@@ -250,7 +250,9 @@ export function sendMessage(
 ): void {
   for (const m of newMessages) {
     let sendMessageRequest: SendMessageRequest = {content: m.text};
-    chatThreadClient.sendMessage(sendMessageRequest).finally();
+    chatThreadClient.sendMessage(sendMessageRequest).catch(e => {
+      console.log(e);
+    });
   }
   return;
 }

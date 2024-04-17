@@ -1,6 +1,6 @@
 import {ChatThreadClient} from '@azure/communication-chat';
 import {GiftedChat} from 'react-native-gifted-chat';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   getAllMessages,
   getMessageNotification,
@@ -8,6 +8,7 @@ import {
   sendMessage,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
 import {Text} from 'react-native';
+// @ts-ignore
 import BackgroundTimer from 'react-native-background-timer';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -38,6 +39,7 @@ export function AzureChatPage({
     } else {
       BackgroundTimer.stopBackgroundTimer();
     }
+    // @ts-ignore
   }, [isFocused]);
 
   //@ts-ignore
