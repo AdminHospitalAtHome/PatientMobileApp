@@ -9,13 +9,14 @@ import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import '@azure/core-asynciterator-polyfill';
 import {GiftedChat, IMessage} from 'react-native-gifted-chat';
+// @ts-ignore
 import BackgroundTimer from 'react-native-background-timer';
+import React from 'react';
 
 export const endpointUrl =
   'https://hospitalathomechat.unitedstates.communication.azure.com';
 
 export let temp_communicationId: string = '';
-let temp_provider_name: string = '';
 
 export function initChatClient(
   userId: number,
@@ -47,8 +48,8 @@ export function initChatClient(
 
 export function getCommunicationId(userId: number): Promise<string> {
   return new Promise((resolve, reject) => {
-    // Checking if we have a providerID or a PatinetID. PatientIDs are 9 digits and providerIDs are 6. Both can not have a leading zero so this works.
-    let fetchString: string = '';
+    // Checking if we have a providerID or a PatientID. PatientIDs are 9 digits and providerIDs are 6. Both can not have a leading zero so this works.
+    let fetchString: string;
     if (userId > 999999) {
       fetchString = `/getCommunicationId?patientID=${userId}`;
     } else {
@@ -58,10 +59,6 @@ export function getCommunicationId(userId: number): Promise<string> {
       .then(res => res.json())
       .then(res => {
         if (res.length === 1) {
-          if (userId < 1000000) {
-            temp_provider_name = res[0].FirstName + ' ' + res[0].LastName;
-          }
-
           // noinspection JSUnresolvedReference
           resolve(res[0].CommunicationId);
         } else {
@@ -74,13 +71,16 @@ export function getCommunicationId(userId: number): Promise<string> {
 export function getCommunicationToken(
   communicationId: string,
 ): Promise<string> {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     fetch(
       `https://hosptial-at-home-js-api.azurewebsites.net/api/getUserToken?userId=${communicationId}`,
     )
       .then(res => res.json())
       .then(res => {
         resolve(res.token);
+      })
+      .catch(() => {
+        reject('Error');
       });
   });
 }
@@ -135,7 +135,7 @@ export function getAllMessages(
     let parsedMessages = [];
 
     for await (const m of messages) {
-      // Incase it is a different kind of message like user added to chat or topic changed...
+      // In case it is a different kind of message like user added to chat or topic changed...
       try {
         //@ts-ignore
         if (m.content?.message && m.sender?.communicationUserId) {
@@ -189,7 +189,7 @@ export function getMessageNotification(
     // @ts-ignore
     let newMessages = [];
 
-    // This is necessary to get updated values. Because we are using useState, it breaks passing arrays as refrences...
+    // This is necessary to get updated values. Because we are using useState, it breaks passing arrays as references...
     setChatMessages(prevState => {
       parsedMessages = prevState;
       return prevState;
@@ -242,39 +242,6 @@ export function getMessageNotification(
     // @ts-ignore
     setChatMessages(prevState => GiftedChat.append(prevState, newMessages));
   }, 3000);
-
-  // console.log('NEW MESSAGE RECIEVED');
-  // try {
-  //   // @ts-ignore
-  //   if (m.content?.message && m.sender?.communicationUserId) {
-  //     // @ts-ignore
-  //     if (temp_communicationId === m.sender.communicationUserId) {
-  //       let dictionary = {
-  //         _id: m.id,
-  //         text: m.message,
-  //         createdAt: m.createdOn,
-  //         user: {
-  //           // @ts-ignore
-  //           _id: m.sender.communicationUserId,
-  //           name: 'Me',
-  //         },
-  //       };
-  //       setChatMessages(previous => GiftedChat.append(previous, [dictionary]));
-  //     } else {
-  //       let dictionary = {
-  //         _id: m.id,
-  //         text: m.message,
-  //         createdAt: m.createdOn,
-  //         user: {
-  //           // @ts-ignore
-  //           _id: m.sender.communicationUserId,
-  //           name: providerName,
-  //         },
-  //       };
-  //       setChatMessages(previous => GiftedChat.append(previous, [dictionary]));
-  //     }
-  //   }
-  // } catch {}
 }
 
 export function sendMessage(
@@ -283,7 +250,7 @@ export function sendMessage(
 ): void {
   for (const m of newMessages) {
     let sendMessageRequest: SendMessageRequest = {content: m.text};
-    chatThreadClient.sendMessage(sendMessageRequest);
+    chatThreadClient.sendMessage(sendMessageRequest).finally();
   }
   return;
 }

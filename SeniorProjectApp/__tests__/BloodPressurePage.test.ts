@@ -52,16 +52,25 @@ it('Get Blood Oxygen Failure Test', async () => {
 });
 
 it('Get Recent Blood Pressure', async () => {
-  await addBloodPressure(300000001, 121, 81, true).then(output => {
-    expect(output).toBe('add successful');
-  });
-  await expect(getRecentBloodPressure(300000001)).resolves.toStrictEqual([
-    '121',
-    '81',
-  ]);
-});
-
-it('Get Recent Blood Pressure Failure', () => {
-  expect(getRecentBloodPressure([], 'Systolic')).toStrictEqual('N/A');
-  expect(getRecentBloodPressure([], 'Diastolic')).toStrictEqual('N/A');
+  expect(
+    getRecentBloodPressure(
+      [
+        ['DateTime', '123', '81'],
+        ['DateTime', '122', '82'],
+        ['DateTime', '121', '81'],
+      ],
+      'Systolic',
+    ),
+  ).toEqual('121');
+  expect(
+    getRecentBloodPressure(
+      [
+        ['DateTime', '123', '83'],
+        ['DateTime', '122', '82'],
+        ['DateTime', '121', '81'],
+      ],
+      'Diastolic',
+    ),
+  ).toEqual('81');
+  expect(getRecentBloodPressure([], 'Diastolic')).toEqual('N/A');
 });

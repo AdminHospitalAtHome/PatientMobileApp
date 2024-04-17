@@ -308,6 +308,7 @@ export function parseXMLHeartRateData(xml: string): Record<string, any> {
     ).toISOString();
     return {HeartRateInBPM: heartRateInBPM, DateTimeTaken: dateTimeTaken};
   } catch (e) {
+    console.log(e);
     return {};
   }
 }

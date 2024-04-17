@@ -1,19 +1,19 @@
 import {View, Text, Dimensions, TouchableOpacity, Switch} from 'react-native';
 import {StyleSheet} from 'react-native';
 
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   getAccessibilityMode,
   requestBluetoothPermissions,
   setAccessibilityMode,
 } from '../../BackEndFunctionCall/settingsPageFunctions';
-import {useIsFocused} from "@react-navigation/native";
+import {useIsFocused} from '@react-navigation/native';
 
 export default function PatientSettingPage({
   navigation,
 }: {
   navigation: any;
-}): JSX.Element {
+}): React.JSX.Element {
   const [mode, setMode] = useState(false);
   const isFocused = useIsFocused();
 
@@ -24,13 +24,13 @@ export default function PatientSettingPage({
   useEffect(() => {
     if (isFocused) {
       // Won't ask if already have bluetooth permissions
-      requestBluetoothPermissions();
+      requestBluetoothPermissions().then();
     }
   }, [isFocused]);
 
   return (
-    <View style={{flex: 1, alignItems: 'center'}}>
-      <View style={{flex: 13}}>
+    <View style={styles.pageContainer}>
+      <View style={styles.pageContainerFlex}>
         <View style={styles.card}>
           <Text style={styles.text}>Accessibility Mode</Text>
           <View style={styles.switchGroup}>
@@ -57,7 +57,7 @@ export default function PatientSettingPage({
 
   function switchOnPress(): void {
     setMode(!mode);
-    setAccessibilityMode(!mode);
+    setAccessibilityMode(!mode).finally();
   }
 }
 
@@ -82,5 +82,12 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     marginLeft: 10,
+  },
+  pageContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  pageContainerFlex: {
+    flex: 13,
   },
 });

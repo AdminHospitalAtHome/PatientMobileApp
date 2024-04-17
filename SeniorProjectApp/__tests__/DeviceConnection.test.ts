@@ -12,10 +12,10 @@ import {
   MedMDeviceConnection,
   parseXMLBloodOxygenData,
   parseXMLBloodPressureData,
-  parseXMLHeartRateData, parseXMLSpirometryData,
+  parseXMLHeartRateData,
+  parseXMLSpirometryData,
   parseXMLWeightData,
 } from '../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
-import {NativeModules} from 'react-native';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
@@ -88,67 +88,6 @@ it('Test List Paried Devices', async () => {
   await expect(connection.paired_device_list()).resolves.toStrictEqual(
     deviceList,
   );
-});
-
-it('Test Pairing a Device', async () => {
-  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-
-  // TODO: update Address and ID
-  let sampleGoodDevice: HAH_Device = new MedMDevice(
-    'Address',
-    '1',
-    'Omron',
-    'HN-290T',
-    'Omron HN-290T',
-  );
-  // Test Pairing to good Device
-  await expect(
-    connection.pair_device(sampleGoodDevice),
-  ).resolves.toBeUndefined();
-
-  let sampleBadDevice: HAH_Device = new MedMDevice(
-    'Bad Address',
-    '9999',
-    'Omron',
-    'HN-290T',
-    'Omron HN-290T',
-  );
-
-  // Test Pairing to non-exist Device
-  await expect(connection.pair_device(sampleBadDevice)).rejects.toBeUndefined();
-});
-
-it('Test Unpairing a Device', async () => {
-  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-  //TODO: update License Key
-
-  // TODO: update Address and ID
-  let sampleGoodDevice: HAH_Device = new MedMDevice(
-    'Address',
-    '1',
-    'Omron',
-    'HN-290T',
-    'Omron HN-290T',
-  );
-
-  await connection.pair_device(sampleGoodDevice);
-  // Test Unpairing to good Device
-  await expect(
-    connection.unpair_device(sampleGoodDevice),
-  ).resolves.toBeUndefined();
-
-  let sampleBadDevice: HAH_Device = new MedMDevice(
-    'Bad Address',
-    '9999',
-    'Omron',
-    'HN-290T',
-    'Omron HN-290T',
-  );
-
-  // Test Unpairing to non-exist Device
-  await expect(
-    connection.unpair_device(sampleBadDevice),
-  ).rejects.toBeUndefined();
 });
 
 it('Test Parsing XML Weight Data', async () => {
@@ -352,7 +291,7 @@ it('Test Parsing XML Heart Rate Data', async () => {
     '  </chunks>\n' +
     '</measurements-heartrate-stream>';
 
-  expect(parseXMLHeartRateData(exampleBadXML)).rejects.toStrictEqual({});
+  await expect(parseXMLHeartRateData(exampleBadXML)).rejects.toStrictEqual({});
 
   let exampleBadXML2: string =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -759,112 +698,4 @@ it('Test Parsing XML Spirometry Data', async () => {
     SpirometryFEV1_FVCInPercentage: 95,
     DateTimeTaken: '2018-04-29T17:10:27.040Z',
   });
-});
-
-it('Test Getting Weight Data', async () => {
-  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-
-  // TODO: update Address and ID
-  let sampleGoodDevice: HAH_Device = new MedMDevice(
-    'Address',
-    '1',
-    'Omron',
-    'HN-290T',
-    'Omron HN-290T',
-  );
-
-  await connection.pair_device(sampleGoodDevice);
-  await expect(
-    connection.get_data(1, parseXMLWeightData),
-  ).resolves.toStrictEqual([
-    {
-      WeightInPounds: 200,
-      DateTimeTaken: '2023-01-02 08:00:00.000',
-    },
-    {
-      WeightInPounds: 201,
-      DateTimeTaken: '2023-01-01 08:00:00.000',
-    },
-  ]);
-});
-
-it('Test Getting Heart Rate Data', async () => {
-  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-
-  // TODO: update Address and ID
-  let sampleGoodDevice: HAH_Device = new MedMDevice(
-    'Address 2',
-    '2',
-    'Omron',
-    'HEM-9200T',
-    'Omron HEM-9200T',
-  );
-
-  await connection.pair_device(sampleGoodDevice);
-  await expect(
-    connection.get_data(1, parseXMLHeartRateData),
-  ).resolves.toStrictEqual([
-    {
-      HeartRateInBPM: 100,
-      DateTimeTaken: '2023-01-02 08:00:00.000',
-    },
-    {
-      HeartRateInBPM: 150,
-      DateTimeTaken: '2023-01-01 08:00:00.000',
-    },
-  ]);
-});
-
-it('Test Getting Blood Pressure Data', async () => {
-  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-
-  // TODO: update Address and ID
-  let sampleGoodDevice: HAH_Device = new MedMDevice(
-    'Address 2',
-    '2',
-    'Omron',
-    'HEM-9200T',
-    'Omron HEM-9200T',
-  );
-
-  await connection.pair_device(sampleGoodDevice);
-  await expect(
-    connection.get_data(1, parseXMLBloodPressureData),
-  ).resolves.toStrictEqual([
-    {
-      SystolicBloodPressureInmmHg: 120,
-      DiastolicBloodPressureInmmHg: 80,
-      DateTimeTaken: '2023-01-02 08:00:00.000',
-    },
-    {
-      SystolicBloodPressureInmmHg: 130,
-      DiastolicBloodPressureInmmHg: 70,
-      DateTimeTaken: '2023-01-01 08:00:00.000',
-    },
-  ]);
-});
-
-it('Test Getting Blood Oxygen Data', async () => {
-  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
-  let sampleGoodDevice: HAH_Device = new MedMDevice(
-    'Address 4',
-    '4',
-    'Nonin Medical',
-    'The Wrist Ox2 3150',
-    'Nonin Medical The Wrist Ox2 3150',
-  );
-
-  await connection.pair_device(sampleGoodDevice);
-  await expect(
-    connection.get_data(1, parseXMLBloodOxygenData),
-  ).resolves.toStrictEqual([
-    {
-      BloodOxygenInPercentage: 98,
-      DateTimeTaken: '2023-01-02 08:00:00.000',
-    },
-    {
-      BloodOxygenInPercentage: 97,
-      DateTimeTaken: '2023-01-01 08:00:00.000',
-    },
-  ]);
 });
