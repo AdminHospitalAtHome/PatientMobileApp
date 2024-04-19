@@ -36,7 +36,7 @@ export default function DoubleLineChart({
     //   dates.push(data[i][0]);
     // }
 
-    data.forEach((i): void => {
+    data.forEach((i: any): void => {
       chartData1.push(i[1]);
       chartData2.push(i[2]);
       dates.push(i[0]);
@@ -45,15 +45,16 @@ export default function DoubleLineChart({
     return (
       <LineChart
         data={{
+          labels: [],
           datasets: [
             {
               data: chartData1,
-              color: opacity => `rgba(0,0,0, ${0.7})`,
+              color: () => `rgba(0,0,0, ${0.7})`,
               strokeWidth: 3,
             },
             {
               data: chartData2,
-              color: opacity => `rgba(0, 0, 0, ${0.5})`,
+              color: () => `rgba(0, 0, 0, ${0.5})`,
               strokeWidth: 3,
             },
           ],

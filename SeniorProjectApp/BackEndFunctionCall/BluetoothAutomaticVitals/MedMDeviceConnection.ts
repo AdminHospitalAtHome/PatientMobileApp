@@ -371,7 +371,6 @@ export function parseXMLSpirometryData(xml: string): Record<string, any> {
     const parser = new XMLParser();
     let obj = parser.parse(xml);
     let dataJson = JSON.parse(obj['measurements-spirometry'].spirometry);
-    console.log(dataJson);
     let spirometryFEV1InLiters: number = Number(dataJson.FEV1.value);
     if (Number.isNaN(spirometryFEV1InLiters)) {
       throw new Error('Invalid Number');

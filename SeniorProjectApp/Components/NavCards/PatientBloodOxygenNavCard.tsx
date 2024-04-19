@@ -12,11 +12,11 @@ import {useIsFocused} from '@react-navigation/native';
 
 export default function PatientBloodOxygenNavCard(): React.JSX.Element {
   const [accessibilityMode, setAccessibilityMode] = useState(false);
-  const [bloodOxygenData, setBloodOxygenData] = useState(null);
-  const [stopDateTime, setStopDateTime] = useState(new Date().toISOString());
-  const [startDateTime, setStartDateTime] = useState(getDefaultStartTime());
+  const [bloodOxygenData, setBloodOxygenData] = useState<any[][]>([]);
+  const [stopDateTime] = useState(new Date().toISOString());
+  const [startDateTime] = useState(getDefaultStartTime());
   const patientID: number = 100000001;
-  const [recentBloodOxygen, setRecentBloodOxygen] = useState(null);
+  const [recentBloodOxygen, setRecentBloodOxygen] = useState('Loading');
   const windowWidth: number = Dimensions.get('window').width;
   const windowHeight: number = Dimensions.get('window').height;
   const isFocused = useIsFocused();

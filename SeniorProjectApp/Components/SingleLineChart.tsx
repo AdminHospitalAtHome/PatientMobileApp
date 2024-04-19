@@ -40,6 +40,7 @@ export default function SingleLineChart({
       <View>
         <LineChart
           data={{
+            labels: [],
             datasets: [
               {
                 data: chartData,

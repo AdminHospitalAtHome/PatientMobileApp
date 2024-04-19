@@ -195,11 +195,6 @@ export function addSpirometryAutomaticallyToServer(
     spirometryFEV1String += ']';
     spirometryFEV1_FVCString += ']';
 
-    console.log(
-      dateTimeTakenString,
-      spirometryFEV1String,
-      spirometryFEV1_FVCString,
-    );
 
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addSpirometries',
