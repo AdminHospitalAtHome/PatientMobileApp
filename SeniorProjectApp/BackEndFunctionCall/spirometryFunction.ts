@@ -120,7 +120,6 @@ export function addSpirometryAutomatically(
   setStopDateTime: React.Dispatch<React.SetStateAction<string>>,
 ): Promise<void> {
   return new Promise(resolve => {
-    console.log('Promise Triggered');
     let parsedSpirometryFEV1: number[] = [];
     let parsedSpirometryFEV1_FVC: number[] = [];
     let parsedDateTime: string[] = [];
@@ -144,8 +143,6 @@ export function addSpirometryAutomatically(
       parsedSpirometryFEV1_FVC.push(parsedData.SpirometryFEV1_FVCInPercentage);
       parsedDateTime.push(parsedData.DateTimeTaken);
     }
-
-    console.log("PARSED", parsedSpirometryFEV1, parsedSpirometryFEV1_FVC, parsedDateTime);
 
     addSpirometryAutomaticallyToServer(
       patientID,

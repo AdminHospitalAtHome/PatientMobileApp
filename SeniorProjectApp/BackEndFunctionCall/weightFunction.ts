@@ -1,6 +1,8 @@
 import timeTableParser from './tableTimeParser';
 import {parseXMLWeightData} from './BluetoothAutomaticVitals/MedMDeviceConnection';
 import React from 'react';
+import {expect, it} from '@jest/globals';
+import {addHeartRateAutomatically, getHeartRate} from './heartRateFunction';
 
 export function parseWeightData(weightJson: any) {
   let weightArr = [];

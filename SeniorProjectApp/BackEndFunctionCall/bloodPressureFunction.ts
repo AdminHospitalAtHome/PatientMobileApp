@@ -67,9 +67,6 @@ export function addBloodPressureAutomaticallyToServer(
     dateTimeTakenString += ']';
     systolicBloodPressureString += ']';
     diastolicBloodPressureString += ']';
-    console.log(
-      `{"PatientID": ${patientId}, "DateTimeTaken": "${dateTimeTakenString}", "SystolicBloodPressureInMmHg": ${systolicBloodPressureString},"DiastolicBloodPressureInMmHg": ${diastolicBloodPressureString}, "IfManualInput": ${ifManualInput}}`,
-    );
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addBloodPressures',
       {

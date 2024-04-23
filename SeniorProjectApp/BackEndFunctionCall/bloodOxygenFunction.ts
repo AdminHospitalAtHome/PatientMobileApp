@@ -93,13 +93,11 @@ export function addBloodOxygenAutomatically(
       false,
     )
       .then(() => {
-        console.log('Added Good');
         setAddSuccessVisible(true);
         setStopDateTime(new Date().toISOString());
         resolve();
       })
       .catch(() => {
-        console.log('FAIL');
         setAddFailedVisible(true);
         setStopDateTime(new Date().toISOString());
         resolve();
