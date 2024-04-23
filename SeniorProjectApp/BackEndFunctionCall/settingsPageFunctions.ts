@@ -1,6 +1,7 @@
 import {PermissionsAndroid} from 'react-native';
 import {ReactStorage} from './ReactStorage';
 
+/*
 export function setAccessibilityModeOld(
   patientID: number,
   mode: boolean,
@@ -37,7 +38,7 @@ export function getAccessibilityModeOld(patientID: number): Promise<boolean> {
       });
   });
 }
-
+*/
 export function getAccessibilityMode(): Promise<boolean> {
   return ReactStorage.getInstance().getAccessibilityMode();
 }

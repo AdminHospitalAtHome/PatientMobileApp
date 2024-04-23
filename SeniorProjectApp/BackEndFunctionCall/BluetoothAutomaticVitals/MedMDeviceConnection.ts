@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import {ReactStorage} from '../ReactStorage';
-import * as stream from 'stream';
 
 const {MedMDeviceManager} = NativeModules;
 const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
@@ -25,9 +24,9 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   private data: string[] = [];
   //private pairableDevices = new Array<HAH_Device>();
   private newDeviceEventListiner: EmitterSubscription =
-    eventEmitter.addListener('New_Device', event => {});
+    eventEmitter.addListener('New_Device', () => {});
   private pairDeviceEventListener: EmitterSubscription =
-    eventEmitter.addListener('Pair_Device', event => {});
+    eventEmitter.addListener('Pair_Device', () => {});
 
   public static getInstance(): HAH_Device_Connection {
     if (!MedMDeviceConnection.instance) {

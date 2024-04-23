@@ -1,15 +1,16 @@
 import 'react-native';
 
-import {it, expect, jest, afterEach} from '@jest/globals';
+import {afterEach, expect, it, jest} from '@jest/globals';
 
 import {
-  HAH_Device_Connection,
   HAH_Device,
+  HAH_Device_Connection,
   VitalType,
 } from '../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import {
   MedMDevice,
   MedMDeviceConnection,
+  parseDevicesJson,
   parseXMLBloodOxygenData,
   parseXMLBloodPressureData,
   parseXMLHeartRateData,
@@ -20,8 +21,6 @@ import {
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
-
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -90,7 +89,7 @@ it('Test List Paried Devices', async () => {
   );
 });
 
-it('Test Parsing XML Weight Data',  () => {
+it('Test Parsing XML Weight Data', () => {
   let exampleGoodXML =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<measurements-weight>\n' +
@@ -657,4 +656,31 @@ it('Test Parsing XML Spirometry Data', () => {
     '</measurements-spirometry>\n';
 
   expect(parseXMLSpirometryData(exampleBadXML)).toStrictEqual({});
+});
+
+it('Test Start and Stop Device Scan', () => {
+  // First Test that it clears devices correctly when done...
+  let testDevices: any[] = ['hello'];
+  let fakeStateFunction: any = (parsedDevices: HAH_Device[]) => {
+    testDevices = parsedDevices;
+  };
+
+  MedMDeviceConnection.getInstance().startDeviceScan(fakeStateFunction);
+
+  MedMDeviceConnection.getInstance().stopDeviceScan(fakeStateFunction);
+  expect(testDevices).toStrictEqual([]);
+  let device1: HAH_Device = new MedMDevice(
+    'F6:60:4C:E1:E7:74',
+    'null',
+    'MIR',
+    'null',
+    'MIR Spirobank Smart',
+    'SM-009-Z121980',
+    [VitalType.SPIROMETRY],
+  );
+  expect(
+    parseDevicesJson(
+      '[{"address": "F6:60:4C:E1:E7:74", "id": "null", "manufacturer": "MIR", "model": "null", "modelName": "MIR Spirobank Smart", "name": "SM-009-Z121980", "measurementTypes": ["Spirometry"]}]',
+    ),
+  ).toStrictEqual([device1]);
 });

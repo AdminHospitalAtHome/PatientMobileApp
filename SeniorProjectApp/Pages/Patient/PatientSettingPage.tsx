@@ -56,8 +56,11 @@ export default function PatientSettingPage({
   );
 
   function switchOnPress(): void {
-    setMode(!mode);
-    setAccessibilityMode(!mode).finally();
+    let newMode: boolean = !mode;
+    setMode(newMode);
+    setAccessibilityMode(newMode).catch(e => {
+      console.log(e);
+    });
   }
 }
 

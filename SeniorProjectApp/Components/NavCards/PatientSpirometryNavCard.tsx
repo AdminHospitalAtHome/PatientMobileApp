@@ -6,7 +6,8 @@ import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {useIsFocused} from '@react-navigation/native';
 import {
   getRecentSpirometry,
-  getSpirometry, parseSpirometryForChart,
+  getSpirometry,
+  parseSpirometryForChart,
 } from '../../BackEndFunctionCall/spirometryFunction';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 
