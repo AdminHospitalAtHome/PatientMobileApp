@@ -35,7 +35,17 @@ NativeModules.MedMDeviceManager = {
         resolve('[]');
       });
     }),
-  getDeviceByAddress: jest.fn(),
+  getDeviceByAddress: jest.fn().mockImplementation(address => {
+    return new Promise<string>((resolve, reject) => {
+      if (address === '34:81:F4:D4:8C:A1') {
+        resolve(
+          '{"address": "34:81:F4:D4:8C:A1", "id": "20210101522F", "manufacturer": "Omron", "model": "null", "modelName": "Omron HN-290T", "name": "BLEsmart_000101053481F4D48CA1", "measurementTypes": ["Weight"]}',
+        );
+      } else {
+        reject('');
+      }
+    });
+  }),
   pairDevice: jest.fn(),
   setDeviceFilter: jest.fn(),
   startCollector: jest.fn(),

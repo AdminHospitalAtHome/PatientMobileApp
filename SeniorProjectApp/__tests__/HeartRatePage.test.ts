@@ -5,15 +5,14 @@ import 'react-native';
 
 import {it, expect, jest} from '@jest/globals';
 import {
-  addHeartRate, addHeartRateAutomatically,
+  addHeartRate,
+  addHeartRateAutomatically,
   getHeartRate,
   getRecentHeartRate,
 } from '../BackEndFunctionCall/heartRateFunction';
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
-import {addBloodOxygenAutomatically, getBloodOxygen} from "../BackEndFunctionCall/bloodOxygenFunction";
-import {addBloodPressureAutomatically, getBloodPressure} from "../BackEndFunctionCall/bloodPressureFunction";
 
-// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
+// This is due to Azure's Free plan having occasional long spin uptimes if the API has not been called recently
 jest.setTimeout(40000);
 // Add Heart Rate test
 
@@ -57,7 +56,7 @@ it('Get Recent HeartRate', async () => {
   const stopDateTime: string = new Date().toISOString();
   await getHeartRate(300000001, startDateTime, stopDateTime).then(output => {
     expect(getRecentHeartRate(output)).toEqual('76 BPM');
-  })
+  });
 });
 
 it('Get Recent HeartRate Failure', () => {
@@ -108,9 +107,7 @@ it('Add Heart Rate Automatically', async () => {
     const stopDateTime: string = new Date().toISOString();
     await getHeartRate(300000001, startDateTime, stopDateTime).then(
       (result: any[][]) => {
-        expect(result).toStrictEqual([
-          [timeTableParser(startDateTime), 81],
-        ]);
+        expect(result).toStrictEqual([[timeTableParser(startDateTime), 81]]);
       },
     );
   });

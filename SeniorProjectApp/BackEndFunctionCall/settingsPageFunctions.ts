@@ -1,6 +1,8 @@
 import {PermissionsAndroid} from 'react-native';
 import {ReactStorage} from './ReactStorage';
 
+// These functions were from when we were storing Accessibility Mode on the internet...
+// They are left here in case they are wanted/needed later...
 /*
 export function setAccessibilityModeOld(
   patientID: number,

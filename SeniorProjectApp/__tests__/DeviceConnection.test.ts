@@ -89,6 +89,33 @@ it('Test List Paried Devices', async () => {
   );
 });
 
+it('Test Set Default Device', async () => {
+  let connection: HAH_Device_Connection = MedMDeviceConnection.getInstance();
+  await connection
+    .setDefaultDevice('34:81:F4:D4:8C:A1', VitalType.WEIGHT)
+    .then(() => {
+      // There is probably a better way to do this, but if we get here, we consider it a success...
+      expect('Success').toBe('Success');
+    })
+    .catch(() => {
+      // There is probably a better way to do this, but if we get here, we consider it a failure...
+      expect('Failed').toBe('Success');
+    });
+
+  const device: HAH_Device = new MedMDevice(
+    '34:81:F4:D4:8C:A1',
+    '20210101522F',
+    'Omron',
+    'null',
+    'Omron HN-290T',
+    'BLEsmart_000101053481F4D48CA1',
+    [VitalType.WEIGHT],
+  );
+  await expect(
+    connection.default_paried_device(VitalType.WEIGHT),
+  ).resolves.toStrictEqual(device);
+});
+
 it('Test Parsing XML Weight Data', () => {
   let exampleGoodXML =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +

@@ -12,17 +12,15 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 );
 
 it('update and Gets accessibility mode', async () => {
-  // await setAccessibilityMode(true).then(output => {
-  //   expect(output).toBe('set successful');
-  // });
-  //
-  // await getAccessibilityMode().then(output => {
-  //   expect(output).toStrictEqual(true);
-  // });
-
   await setAccessibilityMode(true);
-
   expect(AsyncStorage.setItem).toBeCalledWith('AccessibilityMode?', 'true');
+  await getAccessibilityMode().then(res => {
+    expect(res).toBe(true);
+  });
+  await setAccessibilityMode(false);
+  await getAccessibilityMode().then(res => {
+    expect(res).toBe(false);
+  });
 });
 
 // it('fail to get accessibility mode ', async () => {
