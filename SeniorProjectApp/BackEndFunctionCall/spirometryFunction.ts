@@ -2,16 +2,16 @@ import timeTableParser from './tableTimeParser';
 import React from 'react';
 import {parseXMLSpirometryData} from './BluetoothAutomaticVitals/MedMDeviceConnection';
 
-export function getSpirometry(
+export async function getSpirometry(
   patientID: number,
   startDateTime: string,
   stopDateTime: string,
 ) {
-  return fetch(
+  const response = await fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getSpirometry?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-  )
-    .then(response => response.json())
-    .then(json => parseSpirometryData(json));
+  );
+  const json = await response.json();
+  return parseSpirometryData(json);
 }
 
 export function getRecentSpirometry(spirometryData: any[][]): string {
@@ -191,7 +191,6 @@ export function addSpirometryAutomaticallyToServer(
     dateTimeTakenString += ']';
     spirometryFEV1String += ']';
     spirometryFEV1_FVCString += ']';
-
 
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addSpirometries',

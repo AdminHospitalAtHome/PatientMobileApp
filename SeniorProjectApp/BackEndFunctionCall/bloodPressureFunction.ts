@@ -183,14 +183,14 @@ export function addBloodPressureOnClick(
   }
 }
 
-export function getBloodPressure(
+export async function getBloodPressure(
   patientID: number,
   startDateTime: string,
   stopDateTime: string,
 ) {
-  return fetch(
+  const response = await fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodPressure?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-  )
-    .then(response => response.json())
-    .then(json => parseBloodPressureData(json));
+  );
+  const json = await response.json();
+  return parseBloodPressureData(json);
 }

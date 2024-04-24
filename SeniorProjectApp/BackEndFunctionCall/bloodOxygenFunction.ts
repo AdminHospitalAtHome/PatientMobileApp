@@ -7,7 +7,7 @@ export function addBloodOxygen(
   bloodOxygenLevelInPercentage: number,
   IfManualInput: boolean,
 ): Promise<any> {
-  const promise: Promise<any> = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const dateTime: String = new Date().toISOString();
     fetch(
       'https://hosptial-at-home-js-api.azurewebsites.net/api/addBloodOxygen',
@@ -25,24 +25,23 @@ export function addBloodOxygen(
       }
     });
   });
-  return promise;
 }
 
-export function getBloodOxygen(
+export async function getBloodOxygen(
   patientID: number,
   startDateTime: string,
   stopDateTime: string,
 ) {
-  return fetch(
+  const response = await fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getBloodOxygen?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-  )
-    .then(response => response.json())
-    .then(json => parseBloodOxygenData(json));
+  );
+  const json = await response.json();
+  return parseBloodOxygenData(json);
 }
 
 export function parseBloodOxygenData(bloodOxygenJson: any) {
   let bloodOxygenArr = [];
-  for (var i = 0; i < bloodOxygenJson.length; i++) {
+  for (let i = 0; i < bloodOxygenJson.length; i++) {
     bloodOxygenArr.push([
       timeTableParser(bloodOxygenJson[i].DateTimeTaken),
       bloodOxygenJson[i].BloodOxygenLevelInPercentage,

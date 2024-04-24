@@ -1,12 +1,10 @@
-import 'react-native';
-
 import {it, expect, jest} from '@jest/globals';
 import {
   getCommunicationId,
   getCommunicationToken,
 } from '../BackEndFunctionCall/ChatFunctions/Message';
 
-// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
+// This is due to Azure's Free plan having occasional long spin-up times if the API has not been called recently
 jest.setTimeout(40000);
 
 // Replaces imports that are not needed for automatic testing with blank mocks

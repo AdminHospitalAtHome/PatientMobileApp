@@ -4,7 +4,7 @@ const getUserTokenUrl =
 export function getUserToken(userId: string): Promise<any> {
   const urlWithParams = new URL(getUserTokenUrl);
   urlWithParams.searchParams.append('userId', userId);
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     fetch(urlWithParams.toString())
       .then(response => response.json())
       .then(json => {

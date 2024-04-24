@@ -12,12 +12,8 @@ import {
   getRecentBloodOxygen,
 } from '../BackEndFunctionCall/bloodOxygenFunction';
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
-import {
-  addBloodPressureAutomatically,
-  getBloodPressure,
-} from '../BackEndFunctionCall/bloodPressureFunction';
 
-// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
+// This is due to Azure's Free plan having occasional long spin-up times if the API has not been called recently
 jest.setTimeout(40000);
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),

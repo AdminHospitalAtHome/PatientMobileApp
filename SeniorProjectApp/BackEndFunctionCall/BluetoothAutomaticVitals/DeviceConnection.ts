@@ -24,8 +24,6 @@ export interface HAH_Device_Connection {
     sendToServer: (data: string[]) => Promise<void>,
   ) => void;
   stopCollector: () => Promise<boolean>;
-
-  getCollectedData: () => string[];
 }
 
 export interface HAH_Device {

@@ -5,7 +5,6 @@ import {
   setAccessibilityMode,
 } from '../BackEndFunctionCall/settingsPageFunctions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// This is due to Azure's Free plan having occasional long spin up times if the API has not been called recently
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
@@ -22,11 +21,4 @@ it('update and Gets accessibility mode', async () => {
     expect(res).toBe(false);
   });
 });
-
-// it('fail to get accessibility mode ', async () => {
-//   await expect(getAccessibilityMode(999999999)).rejects.toBe(
-//     false,
-//   );
-// });
-
 //todo: create fail to update accessibility mode when applying user identification

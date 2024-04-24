@@ -23,7 +23,6 @@ export class ReactStorage {
         const val = AsyncStorage.setItem(vitalType.valueOf(), address);
         val
           .then(() => {
-            console.log('Saved Vital');
             resolve();
           })
           .catch(() => {

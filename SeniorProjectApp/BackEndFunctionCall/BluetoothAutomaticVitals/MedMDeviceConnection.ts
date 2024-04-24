@@ -20,9 +20,6 @@ const eventEmitter = new NativeEventEmitter(NativeModules.MedMDeviceManager);
 
 export class MedMDeviceConnection implements HAH_Device_Connection {
   private static instance: MedMDeviceConnection;
-
-  private data: string[] = [];
-  //private pairableDevices = new Array<HAH_Device>();
   private newDeviceEventListiner: EmitterSubscription =
     eventEmitter.addListener('New_Device', () => {});
   private pairDeviceEventListener: EmitterSubscription =
@@ -57,6 +54,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
   public stopDeviceScan(
     setPairableDevices: React.Dispatch<React.SetStateAction<HAH_Device[]>>,
   ): Promise<Boolean> {
+    // eslint-disable-next-line no-array-constructor
     setPairableDevices(new Array<HAH_Device>());
     this.newDeviceEventListiner.remove();
     return MedMDeviceManager.stopDeviceScan();
@@ -83,7 +81,6 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
             filteredDevices.push(devices[i]);
           }
         }
-        console.log(filteredDevices);
         resolve(filteredDevices);
       });
     });
@@ -121,7 +118,7 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     });
   }
 
-  // TODO: Add check for failed pairing
+  // TODO: Need to understand Mocking event listeners first before we can test this...
   pair_device(device: HAH_Device): Promise<void> {
     return new Promise(resolve => {
       this.pairDeviceEventListener.remove();
@@ -186,10 +183,6 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
         resolve(res);
       });
     });
-  }
-
-  getCollectedData(): string[] {
-    return this.data;
   }
 }
 
@@ -409,7 +402,7 @@ export function parseXMLSpirometryData(xml: string): Record<string, any> {
       DateTimeTaken: dateTimeTaken,
     };
   } catch (e) {
-    // This will happen alot as we we receive realtime data. That is discarded here...
+    // This will happen alot as we receive realtime data. That is discarded here...
     return {};
   }
 }

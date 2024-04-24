@@ -100,16 +100,16 @@ export function addHeartRateAutomatically(
   });
 }
 
-export function getHeartRate(
+export async function getHeartRate(
   patientID: number,
   startDateTime: string,
   stopDateTime: string,
 ) {
-  return fetch(
+  const response = await fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getHeartRate?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-  )
-    .then(response => response.json())
-    .then(json => parseHeartRateData(json));
+  );
+  const json = await response.json();
+  return parseHeartRateData(json);
 }
 
 export function getRecentHeartRate(heartRateData: any[][]): string {

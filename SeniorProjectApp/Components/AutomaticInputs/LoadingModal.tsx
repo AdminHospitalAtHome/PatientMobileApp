@@ -19,6 +19,7 @@ export default function LoadingModal({
       connection.startCollector(setLoadingModalVisible, sendToServer);
     }
     // We do not want this code to run when any dependecy changes, only when loadingModalVisible Changes. Thus, we suppressed ESLINT
+    // TODO: Suppress specific error instead of everything...
     // eslint-disable-next-line
   }, [loadingModalVisible]);
 

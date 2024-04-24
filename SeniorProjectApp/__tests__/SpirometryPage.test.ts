@@ -3,15 +3,12 @@ import 'react-native';
 import {it, expect, jest} from '@jest/globals';
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
 import {
-  addSpirometry, addSpirometryAutomatically,
+  addSpirometry,
+  addSpirometryAutomatically,
   addSpirometryAutomaticallyToServer,
   getRecentSpirometry,
   getSpirometry,
 } from '../BackEndFunctionCall/spirometryFunction';
-import {
-  addHeartRateAutomatically,
-  getHeartRate,
-} from '../BackEndFunctionCall/heartRateFunction';
 
 jest.setTimeout(40000);
 jest.mock('@react-native-async-storage/async-storage', () =>
@@ -116,7 +113,9 @@ it('Add Spirometry Automatically', async () => {
     const stopDateTime: string = new Date().toISOString();
     await getSpirometry(300000001, startDateTime, stopDateTime).then(
       (result: any[][]) => {
-        expect(result).toStrictEqual([[timeTableParser(startDateTime), 2.58, 95]]);
+        expect(result).toStrictEqual([
+          [timeTableParser(startDateTime), 2.58, 95],
+        ]);
       },
     );
   });

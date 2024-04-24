@@ -1,9 +1,3 @@
-/*
- * @format
- */
-
-import 'react-native';
-
 // Note: import explicitly to use the types shipped with jest.
 import {it, expect, jest} from '@jest/globals';
 import {
@@ -15,10 +9,6 @@ import {
 
 // Note: test renderer must be required after react-native.
 import timeTableParser from '../BackEndFunctionCall/tableTimeParser';
-import {
-  addHeartRateAutomatically,
-  getHeartRate,
-} from '../BackEndFunctionCall/heartRateFunction';
 
 // This is due to Azure's Free plan having occasional long spin uptimes if the API has not been called recently
 jest.setTimeout(40000);
@@ -65,8 +55,8 @@ it('Get Recent Weight', async () => {
   });
 });
 
-it('Get Recent Weight Failure', async () => {
-  await expect(getRecentWeight([])).toEqual('N/A');
+it('Get Recent Weight Failure', () => {
+  expect(getRecentWeight([])).toEqual('N/A');
 });
 
 it('Add Weight Automatically', async () => {

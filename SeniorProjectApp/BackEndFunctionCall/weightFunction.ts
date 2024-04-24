@@ -1,8 +1,6 @@
 import timeTableParser from './tableTimeParser';
 import {parseXMLWeightData} from './BluetoothAutomaticVitals/MedMDeviceConnection';
 import React from 'react';
-import {expect, it} from '@jest/globals';
-import {addHeartRateAutomatically, getHeartRate} from './heartRateFunction';
 
 export function parseWeightData(weightJson: any) {
   let weightArr = [];
@@ -135,16 +133,16 @@ export function addWeightOnClick(
   }
 }
 
-export function getWeightCall(
+export async function getWeightCall(
   patientID: number,
   startDateTime: string,
   stopDateTime: string,
 ) {
-  return fetch(
+  const response = await fetch(
     `https://hosptial-at-home-js-api.azurewebsites.net/api/getWeight?patientID=${patientID}&startDateTime=${startDateTime}&stopDateTime=${stopDateTime}`,
-  )
-    .then(response => response.json())
-    .then(json => parseWeightData(json));
+  );
+  const json = await response.json();
+  return parseWeightData(json);
 }
 
 export function getRecentWeight(weightData: any[][]): string {
