@@ -5,7 +5,7 @@ export default function AddSuccessfullyDialog({
   setter,
 }: {
   setter: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <Modal animationType="slide" transparent={true}>
       <View style={AddDialogStyle.centeredView}>
@@ -21,5 +21,3 @@ export default function AddSuccessfullyDialog({
     </Modal>
   );
 }
-
-

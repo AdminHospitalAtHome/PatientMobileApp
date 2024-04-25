@@ -2,7 +2,7 @@ import {LineChart} from 'react-native-chart-kit';
 
 import {View} from 'react-native';
 
-import {useState} from 'react';
+import React, {useState} from 'react';
 import Svg, {Text as TextSVG} from 'react-native-svg';
 
 export default function DoubleLineChart({
@@ -15,7 +15,7 @@ export default function DoubleLineChart({
   unit: string;
   width: number;
   height: number;
-}): JSX.Element {
+}): React.JSX.Element {
   const chartData1: number[] = [];
   const chartData2: number[] = [];
 
@@ -30,12 +30,6 @@ export default function DoubleLineChart({
   const dates: number[] = [];
 
   if (data) {
-    // for (let i = 0; i < data.length; i++) {
-    //   chartData1.push(data[i][1]);
-    //   chartData2.push(data[i][2]);
-    //   dates.push(data[i][0]);
-    // }
-
     data.forEach((i: any): void => {
       chartData1.push(i[1]);
       chartData2.push(i[2]);

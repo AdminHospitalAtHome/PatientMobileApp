@@ -60,16 +60,14 @@ export class MedMDeviceConnection implements HAH_Device_Connection {
     return MedMDeviceManager.stopDeviceScan();
   }
 
-  pairable_device_list(): Promise<HAH_Device[]> {
-    return MedMDeviceManager.pairableDeviceList().then((res: string) =>
-      parseDevicesJson(res),
-    );
+  async pairable_device_list(): Promise<HAH_Device[]> {
+    let res = await MedMDeviceManager.pairableDeviceList();
+    return parseDevicesJson(res);
   }
 
-  paired_device_list(): Promise<HAH_Device[]> {
-    return MedMDeviceManager.getPairedDevices().then((res: string) =>
-      parseDevicesJson(res),
-    );
+  async paired_device_list(): Promise<HAH_Device[]> {
+    let res = await MedMDeviceManager.getPairedDevices();
+    return parseDevicesJson(res);
   }
 
   paired_device_list_vital(vital: VitalType): Promise<HAH_Device[]> {

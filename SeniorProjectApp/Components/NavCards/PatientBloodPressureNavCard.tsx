@@ -39,7 +39,11 @@ export default function PatientBloodPressureNavCard(): React.JSX.Element {
         setAccessibilityMode(res);
       })
       .catch(res => {
-        setAccessibilityMode(res);
+        if (typeof res === 'boolean') {
+          setAccessibilityMode(res);
+        } else {
+          setAccessibilityMode(false);
+        }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);

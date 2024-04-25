@@ -9,9 +9,9 @@ export default function InputManualModal({
 }: {
   setModalVisible: React.Dispatch<React.SetStateAction<any>>;
   modalVisible: boolean;
-  inputBoxes: JSX.Element;
+  inputBoxes: React.JSX.Element;
   addButtonFunction: () => void;
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <Modal
       animationType="slide"

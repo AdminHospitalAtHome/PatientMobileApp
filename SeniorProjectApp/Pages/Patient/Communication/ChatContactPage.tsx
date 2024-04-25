@@ -31,7 +31,6 @@ export default function ChatContactPage({
   useEffect(() => {
     initChatClient(patientID).then(res => {
       setChatClient(res);
-      // getCommunicationToken(temp_communicationId).then(setCommunicationToken)
     });
   }, []);
 

@@ -11,7 +11,7 @@ export default function SingleTextInput({
   modalUnit: string;
   numberRegex: RegExp;
   setInput: React.Dispatch<React.SetStateAction<any>>;
-}): JSX.Element {
+}): React.JSX.Element {
   const [invalidVisible, setInvalidVisible] = useState(false);
   function checkInput(text: string): void {
     if (numberRegex.test(text) || text === '') {

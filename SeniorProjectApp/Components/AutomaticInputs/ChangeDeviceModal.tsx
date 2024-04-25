@@ -1,4 +1,4 @@
-import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Modal, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   HAH_Device,
@@ -6,6 +6,7 @@ import {
   VitalType,
 } from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import {MedMDeviceConnection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {AutomaticInputStyles} from './Styles';
 
 export default function ChangeDeviceModal({
   setModalVisible,
@@ -34,34 +35,40 @@ export default function ChangeDeviceModal({
       onRequestClose={() => {
         setModalVisible(!modalVisible);
       }}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.labelText}>Select Device</Text>
+      <View style={AutomaticInputStyles.centeredView}>
+        <View style={AutomaticInputStyles.modalView}>
+          <Text style={AutomaticInputStyles.labelText}>Select Device</Text>
           {devices.map((device: HAH_Device) => {
             // Device.name will need to change
             return (
-              <View style={styles.buttonContainer} key={device.address}>
+              <View
+                style={AutomaticInputStyles.buttonContainer}
+                key={device.address}>
                 <TouchableOpacity
-                  style={styles.button}
+                  style={AutomaticInputStyles.button}
                   onPress={() => yesOnPress(device.address)}>
                   <View>
                     <View>
-                      <Text style={styles.deviceLabelText}>Device:</Text>
-                      <Text style={styles.text}>{device.modelName}</Text>
+                      <Text style={AutomaticInputStyles.deviceLabelText_white}>
+                        Device:
+                      </Text>
+                      <Text style={AutomaticInputStyles.text_white}>
+                        {device.modelName}
+                      </Text>
                     </View>
                   </View>
                 </TouchableOpacity>
               </View>
             );
           })}
-          <View style={styles.cancelButtonContainer}>
+          <View style={AutomaticInputStyles.cancelButtonContainer}>
             <TouchableOpacity
-              style={styles.button}
+              style={AutomaticInputStyles.button}
               onPress={() => {
                 setModalVisible(false);
                 setPreviousModalVisible(true);
               }}>
-              <Text style={styles.buttonText}>Cancel</Text>
+              <Text style={AutomaticInputStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -76,85 +83,3 @@ export default function ChangeDeviceModal({
     });
   }
 }
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  labelText: {
-    color: 'black',
-    fontSize: 25,
-    marginBottom: 10,
-  },
-  textContainer: {
-    flexShrink: 0,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginRight: 'auto',
-    marginLeft: 5,
-  },
-  text: {
-    color: 'white',
-    fontSize: 20,
-  },
-
-  deviceLabelText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#ba4618',
-    padding: 5,
-    borderRadius: 10,
-
-    justifyContent: 'space-around',
-  },
-
-  cancelButtonContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#c87525',
-    padding: 5,
-    borderRadius: 10,
-    marginTop: 15,
-    justifyContent: 'space-around',
-  },
-  button: {
-    flex: 1,
-  },
-
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-
-  buttonBorder: {
-    borderColor: 'white',
-    borderRightWidth: 2,
-  },
-
-  BottomContainer: {
-    marginTop: 15,
-  },
-});

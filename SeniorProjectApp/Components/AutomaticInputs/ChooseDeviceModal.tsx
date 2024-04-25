@@ -1,10 +1,11 @@
-import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Modal, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {
   HAH_Device_Connection,
   VitalType,
 } from '../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import {MedMDeviceConnection} from '../../BackEndFunctionCall/BluetoothAutomaticVitals/MedMDeviceConnection';
+import {AutomaticInputStyles} from './Styles';
 
 export default function ChooseDeviceModal({
   setModalVisible,
@@ -40,32 +41,45 @@ export default function ChooseDeviceModal({
       onRequestClose={() => {
         setModalVisible(!modalVisible);
       }}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.labelText}>Get Data From Device</Text>
-          <View style={styles.textContainer}>
-            <Text style={styles.deviceLabelText}>Device: </Text>
-            <Text style={styles.text}>{deviceName}</Text>
+      <View style={AutomaticInputStyles.centeredView}>
+        <View style={AutomaticInputStyles.modalView}>
+          <Text style={AutomaticInputStyles.labelText}>
+            Get Data From Device
+          </Text>
+          <View style={AutomaticInputStyles.textContainer}>
+            <Text style={AutomaticInputStyles.deviceLabelText_black}>
+              Device:{' '}
+            </Text>
+            <Text style={AutomaticInputStyles.text_black}>{deviceName}</Text>
           </View>
-          <View style={styles.editButtonContainer}>
+          <View style={AutomaticInputStyles.editButtonContainer}>
             <TouchableOpacity
-              style={styles.button}
+              style={AutomaticInputStyles.button}
               onPress={() => {
                 setModalVisible(false);
                 setChangeDeviceModalVisible(true);
               }}>
-              <Text style={styles.buttonText}>Change Device</Text>
+              <Text style={AutomaticInputStyles.buttonText}>Change Device</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.buttonContainer, styles.BottomContainer]}>
+          <View
+            style={[
+              AutomaticInputStyles.buttonContainer,
+              AutomaticInputStyles.BottomContainer,
+            ]}>
             <TouchableOpacity
-              style={[styles.button, styles.buttonBorder]}
+              style={[
+                AutomaticInputStyles.button,
+                AutomaticInputStyles.buttonBorder,
+              ]}
               onPress={() => setModalVisible(false)}>
-              <Text style={styles.buttonText}>Cancel</Text>
+              <Text style={AutomaticInputStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={yesOnPress}>
-              <Text style={styles.buttonText}>Yes</Text>
+            <TouchableOpacity
+              style={AutomaticInputStyles.button}
+              onPress={yesOnPress}>
+              <Text style={AutomaticInputStyles.buttonText}>Yes</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -80,85 +94,3 @@ export default function ChooseDeviceModal({
     });
   }
 }
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  labelText: {
-    color: 'black',
-    fontSize: 25,
-    marginBottom: 10,
-  },
-  textContainer: {
-    flexShrink: 0,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginRight: 'auto',
-    marginLeft: 5,
-  },
-  text: {
-    color: 'black',
-    fontSize: 20,
-  },
-
-  deviceLabelText: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#ba4618',
-    padding: 5,
-    borderRadius: 10,
-
-    justifyContent: 'space-around',
-  },
-
-  editButtonContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#c87525',
-    padding: 5,
-    borderRadius: 10,
-    marginTop: 15,
-    justifyContent: 'space-around',
-  },
-  button: {
-    flex: 1,
-  },
-
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-
-  buttonBorder: {
-    borderColor: 'white',
-    borderRightWidth: 2,
-  },
-
-  BottomContainer: {
-    marginTop: 15,
-  },
-});

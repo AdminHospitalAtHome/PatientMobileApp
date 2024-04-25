@@ -60,7 +60,7 @@ function App(): React.JSX.Element {
 
 const HomeStack = createNativeStackNavigator();
 
-function HomeScreenStack(): JSX.Element {
+function HomeScreenStack(): React.JSX.Element {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
@@ -99,7 +99,7 @@ function HomeScreenStack(): JSX.Element {
 
 const SettingsStack = createNativeStackNavigator();
 
-function SettingsScreenStack(): JSX.Element {
+function SettingsScreenStack(): React.JSX.Element {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
@@ -128,7 +128,7 @@ function SettingsScreenStack(): JSX.Element {
 
 const ChatStack = createNativeStackNavigator();
 
-function ChatScreenStack(): JSX.Element {
+function ChatScreenStack(): React.JSX.Element {
   return (
     <ChatStack.Navigator>
       <ChatStack.Screen

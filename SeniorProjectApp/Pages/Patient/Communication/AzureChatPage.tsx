@@ -7,7 +7,7 @@ import {
   getParticipantInThread,
   sendMessage,
 } from '../../../BackEndFunctionCall/ChatFunctions/Message';
-import {Text} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 // @ts-ignore
 import BackgroundTimer from 'react-native-background-timer';
 import {useIsFocused} from '@react-navigation/native';
@@ -39,10 +39,9 @@ export function AzureChatPage({
     } else {
       BackgroundTimer.stopBackgroundTimer();
     }
-    // @ts-ignore
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
-  //@ts-ignore
   useEffect(
     () => {
       getParticipantInThread(chatThreadClient, communicationID).then(name => {
@@ -50,9 +49,8 @@ export function AzureChatPage({
           setProviderName(name);
         }
       });
-      //@ts-ignore
     },
-    //@ts-ignore
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -63,12 +61,14 @@ export function AzureChatPage({
         console.log('got messages!!');
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [providerName]);
 
   useEffect(() => {
     if (providerName !== 'Initial Config') {
       getMessageNotification(chatThreadClient, setChatMessages, providerName);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [providerName]);
 
   if (providerName !== 'Initial Config') {
@@ -81,10 +81,16 @@ export function AzureChatPage({
           sendMessage(messages, chatThreadClient);
         }}
         // @ts-ignore
-        textInputStyle={{color: 'black'}}
+        textInputStyle={styles.textInput}
       />
     );
   } else {
     return <Text>Loading...</Text>;
   }
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    color: 'black',
+  },
+});

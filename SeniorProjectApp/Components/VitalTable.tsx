@@ -2,14 +2,13 @@ import {ScrollView, StyleSheet, View, Text} from 'react-native';
 import React from 'react';
 import {Row, Rows, Table} from 'react-native-reanimated-table';
 
-
 export default function VitalTable({
   columnTitles,
   vitalData,
 }: {
   columnTitles: string[];
   vitalData: any[][];
-}): JSX.Element {
+}): React.JSX.Element {
   if (vitalData === null || vitalData.length === 0) {
     return (
       <View style={styles.textContainer}>
@@ -58,9 +57,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
   },
-  textContainer:{
+  textContainer: {
     alignItems: 'center',
-
-  }
-
+  },
 });

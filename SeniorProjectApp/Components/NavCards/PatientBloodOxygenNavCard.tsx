@@ -28,11 +28,16 @@ export default function PatientBloodOxygenNavCard(): React.JSX.Element {
     getAccessibilityMode()
       .then(res => {
         setAccessibilityMode(res);
-      }) // TODO: Check that the catch is always returning a boolean
+      })
       .catch(res => {
-        setAccessibilityMode(res);
+        if (typeof res === 'boolean') {
+          setAccessibilityMode(res);
+        } else {
+          setAccessibilityMode(false);
+        }
       });
     getRecentBloodOxygen(patientID).then(res => setRecentBloodOxygen(res));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   if (accessibilityMode) {

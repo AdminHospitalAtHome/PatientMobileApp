@@ -7,7 +7,7 @@ export default function AddButtons({
 }: {
   setManualModalVisible: React.Dispatch<React.SetStateAction<any>>;
   setAutoModalVisible: React.Dispatch<React.SetStateAction<any>>;
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <View style={styles.container}>
       <TouchableOpacity

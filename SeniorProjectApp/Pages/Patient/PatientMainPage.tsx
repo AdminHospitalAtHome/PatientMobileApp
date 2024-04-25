@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, ScrollView, View} from 'react-native';
+import {TouchableOpacity, ScrollView, View, StyleSheet} from 'react-native';
 import PatientWeightNavCard from '../../Components/NavCards/PatientWeightNavCard';
 import PatientBloodPressureNavCard from '../../Components/NavCards/PatientBloodPressureNavCard';
 import PatientHeartRateNavCard from '../../Components/NavCards/PatientHeartRateNavCard';
@@ -10,12 +10,12 @@ export default function PatientMainPage({
   navigation,
 }: {
   navigation: any;
-}): JSX.Element {
+}): React.JSX.Element {
   // Function to navigate to the PatientWeightPage
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 13}}>
-        <ScrollView contentContainerStyle={{alignItems: 'center', padding: 5}}>
+    <View style={styles.container}>
+      <View style={styles.innerContainer}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate('patientWeightPage')}>
             <PatientWeightNavCard />
@@ -41,3 +41,16 @@ export default function PatientMainPage({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  innerContainer: {
+    flex: 13,
+  },
+  contentContainer: {
+    alignItems: 'center',
+    padding: 5,
+  },
+});

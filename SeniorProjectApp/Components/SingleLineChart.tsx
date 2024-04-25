@@ -2,7 +2,7 @@ import {LineChart} from 'react-native-chart-kit';
 
 import {View} from 'react-native';
 
-import {useState} from 'react';
+import React, {useState} from 'react';
 import Svg, {Text as TextSVG} from 'react-native-svg';
 
 export default function SingleLineChart({
@@ -17,7 +17,7 @@ export default function SingleLineChart({
   width: number;
   height: number;
   decimalPlaces: number;
-}): JSX.Element {
+}): React.JSX.Element {
   const chartData: number[] = [];
 
   let [tooltipPos, setTooltipPos] = useState({

@@ -57,7 +57,7 @@ export const accessStyle = StyleSheet.create({
   },
   label: {
     fontSize: 30,
-    color: 'black'
+    color: 'black',
   },
   textHolder: {
     flex: 7,
@@ -68,7 +68,7 @@ export const accessStyle = StyleSheet.create({
   value: {
     fontSize: 90,
     fontWeight: 'bold',
-    color: 'black'
+    color: 'black',
   },
   text: {
     fontSize: 50,

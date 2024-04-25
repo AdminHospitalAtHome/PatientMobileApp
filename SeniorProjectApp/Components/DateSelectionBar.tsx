@@ -7,7 +7,7 @@ export default function DateSelectionBar({
 }: {
   setStartDateTime: React.Dispatch<React.SetStateAction<any>>;
   setStopDateTime: React.Dispatch<React.SetStateAction<any>>;
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -16,10 +16,7 @@ export default function DateSelectionBar({
         <Text style={styles.buttonText}>Day</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[
-          styles.pressable,
-          {borderColor: 'white', borderLeftWidth: 2, borderRightWidth: 2},
-        ]}
+        style={styles.middlePressable}
         onPress={() => select(7, setStartDateTime, setStopDateTime)}>
         <Text style={styles.buttonText}>Week</Text>
       </TouchableOpacity>
@@ -44,6 +41,7 @@ function select(
   setStopDateTime(new Date().toISOString());
 }
 
+// noinspection SpellCheckingInspection
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -61,5 +59,11 @@ const styles = StyleSheet.create({
   },
   pressable: {
     flex: 1,
+  },
+  middlePressable: {
+    flex: 1,
+    borderColor: 'white',
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
   },
 });

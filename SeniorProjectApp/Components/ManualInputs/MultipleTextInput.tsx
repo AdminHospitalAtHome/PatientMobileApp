@@ -13,7 +13,7 @@ export default function MultipleTextInput({
   inputTitles: string[];
   numberRegex: RegExp[];
   setInput: React.Dispatch<React.SetStateAction<any>>[];
-}): JSX.Element {
+}): React.JSX.Element {
   //const [invalidVisible, setInvalidVisible] = useState(false);
   let invalidVisible: any[] = [];
   for (let i = 0; i < numberRegex.length; i++) {
