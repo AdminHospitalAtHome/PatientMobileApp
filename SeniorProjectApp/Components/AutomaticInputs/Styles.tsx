@@ -65,8 +65,6 @@ export const AutomaticInputStyles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 
-
-
   editButtonContainer: {
     flexDirection: 'row',
     backgroundColor: '#c87525',
