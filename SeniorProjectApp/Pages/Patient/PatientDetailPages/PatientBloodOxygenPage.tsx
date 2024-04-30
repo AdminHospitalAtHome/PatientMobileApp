@@ -15,7 +15,7 @@ import AddButtons from '../../../Components/AddButtons';
 import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
-import SingleLineChart from '../../../Components/SingleLineChart';
+import SingleLineChart from '../../../Components/Charts/SingleLineChart';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';
 import ChangeDeviceModal from '../../../Components/AutomaticInputs/ChangeDeviceModal';

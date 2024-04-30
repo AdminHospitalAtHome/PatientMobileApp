@@ -1,9 +1,8 @@
 import {LineChart} from 'react-native-chart-kit';
-
 import {View} from 'react-native';
-
 import React, {useState} from 'react';
 import Svg, {Text as TextSVG} from 'react-native-svg';
+import {ChartStyles} from './Styles';
 
 export default function SingleLineChart({
   data,
@@ -53,7 +52,6 @@ export default function SingleLineChart({
           height={height}
           yAxisSuffix={unit}
           yAxisInterval={1} // optional, defaults to 1
-          // withDots={false}
           chartConfig={{
             backgroundGradientFrom: '#f5f7fa',
             backgroundGradientTo: '#c3cfe2',
@@ -63,20 +61,13 @@ export default function SingleLineChart({
             style: {
               borderRadius: 10,
             },
-
-            propsForLabels: {
-              // fontSize: Dimensions.get('screen').width / 30,
-            },
             propsForDots: {
               r: '5',
               strokeWidth: '2',
               stroke: '#ffa726',
             },
           }}
-          style={{
-            marginVertical: 8,
-            borderRadius: 10,
-          }}
+          style={ChartStyles.chart}
           bezier={false}
           withShadow={false}
           decorator={() => {
@@ -85,7 +76,6 @@ export default function SingleLineChart({
               strArr = tooltipPos.value.split('\n');
             }
             let flag: number = 0;
-            // console.log(chartData);
             let largest: number;
             largest = Math.max(...chartData);
             let smallest: number;
@@ -122,7 +112,6 @@ export default function SingleLineChart({
             ) : null;
           }}
           onDataPointClick={data => {
-            // console.log(dates[data.index]);
             let isSamePoint =
               tooltipPos.x === data.x && tooltipPos.y === data.y;
             isSamePoint

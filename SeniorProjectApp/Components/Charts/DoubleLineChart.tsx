@@ -4,6 +4,7 @@ import {View} from 'react-native';
 
 import React, {useState} from 'react';
 import Svg, {Text as TextSVG} from 'react-native-svg';
+import {ChartStyles} from './Styles';
 
 export default function DoubleLineChart({
   data,
@@ -80,10 +81,7 @@ export default function DoubleLineChart({
         }}
         bezier={false}
         withShadow={false}
-        style={{
-          marginVertical: 8,
-          borderRadius: 10,
-        }}
+        style={ChartStyles.chart}
         decorator={() => {
           let strArr: string[] = [];
           if (tooltipPos.visible) {
@@ -127,7 +125,6 @@ export default function DoubleLineChart({
           ) : null;
         }}
         onDataPointClick={data => {
-          // console.log(dates[data.index]);
           let isSamePoint = tooltipPos.x === data.x && tooltipPos.y === data.y;
           isSamePoint
             ? setTooltipPos(previousState => {

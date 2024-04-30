@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Dimensions} from 'react-native';
-import SingleLineChart from '../SingleLineChart';
+import SingleLineChart from '../Charts/SingleLineChart';
 import {accessStyle, defaultStyle} from './navStyle';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {useIsFocused} from '@react-navigation/native';

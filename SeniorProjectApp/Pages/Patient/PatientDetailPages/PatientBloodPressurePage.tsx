@@ -13,7 +13,7 @@ import AddButtons from '../../../Components/AddButtons';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import MultipleTextInput from '../../../Components/ManualInputs/MultipleTextInput';
 import AddFailedDialog from '../../../Components/Dialogs/AddFailedDialog';
-import DoubleLineChart from '../../../Components/DoubleLineChart';
+import DoubleLineChart from '../../../Components/Charts/DoubleLineChart';
 import {PatientDetailStyles} from './Styles';
 import ChooseDeviceModal from '../../../Components/AutomaticInputs/ChooseDeviceModal';
 import {VitalType} from '../../../BackEndFunctionCall/BluetoothAutomaticVitals/DeviceConnection';

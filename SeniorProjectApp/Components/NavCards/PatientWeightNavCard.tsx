@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Dimensions} from 'react-native';
-import SingleLineChart from '../SingleLineChart';
+import SingleLineChart from '../Charts/SingleLineChart';
 import {
   getWeightCall,
   getRecentWeight,

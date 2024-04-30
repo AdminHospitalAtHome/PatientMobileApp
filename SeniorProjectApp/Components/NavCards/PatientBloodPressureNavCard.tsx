@@ -8,7 +8,7 @@ import {
 import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {useIsFocused} from '@react-navigation/native';
-import DoubleLineChart from '../DoubleLineChart';
+import DoubleLineChart from '../Charts/DoubleLineChart';
 
 const patientID = 100000001;
 export default function PatientBloodPressureNavCard(): React.JSX.Element {

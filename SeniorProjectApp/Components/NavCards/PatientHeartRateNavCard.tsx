@@ -4,7 +4,7 @@ import getDefaultStartTime from '../../BackEndFunctionCall/getDefaultStartTime';
 import {getAccessibilityMode} from '../../BackEndFunctionCall/settingsPageFunctions';
 import {defaultStyle, accessStyle} from './navStyle';
 import {useIsFocused} from '@react-navigation/native';
-import SingleLineChart from '../SingleLineChart';
+import SingleLineChart from '../Charts/SingleLineChart';
 import {
   getHeartRate,
   getRecentHeartRate,

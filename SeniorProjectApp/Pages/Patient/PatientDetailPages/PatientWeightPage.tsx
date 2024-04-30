@@ -9,7 +9,7 @@ import getDefaultStartTime from '../../../BackEndFunctionCall/getDefaultStartTim
 import AddSuccessfullyDialog from '../../../Components/Dialogs/AddSuccessfullyDialog';
 import DateSelectionBar from '../../../Components/DateSelectionBar';
 import VitalTable from '../../../Components/VitalTable';
-import SingleLineChart from '../../../Components/SingleLineChart';
+import SingleLineChart from '../../../Components/Charts/SingleLineChart';
 import AddButtons from '../../../Components/AddButtons';
 import InputManualModal from '../../../Components/ManualInputs/InputManualModal';
 import SingleTextInput from '../../../Components/ManualInputs/SingleTextInput';

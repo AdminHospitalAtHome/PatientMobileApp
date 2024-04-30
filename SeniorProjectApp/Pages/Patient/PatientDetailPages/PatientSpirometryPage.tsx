@@ -8,7 +8,7 @@ import {
   getSpirometry,
   parseSpirometryForChart,
 } from '../../../BackEndFunctionCall/spirometryFunction';
-import SingleLineChart from '../../../Components/SingleLineChart';
+import SingleLineChart from '../../../Components/Charts/SingleLineChart';
 import DateSelectionBar from '../../../Components/DateSelectionBar';
 import VitalTable from '../../../Components/VitalTable';
 import AddButtons from '../../../Components/AddButtons';
