@@ -70,7 +70,10 @@ export default function PatientBloodPressurePage(): React.JSX.Element {
 
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Uncomment to add Automatic Adding of Vitals...
+        // setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Comment to add Automatic Adding of Vitals...
+        setAutoModalVisible={setModalVisible}
       />
 
       <InputManualModal
@@ -105,21 +108,22 @@ export default function PatientBloodPressurePage(): React.JSX.Element {
         }}
       />
 
-      <ChooseDeviceModal
-        setModalVisible={setChooseDeviceModalVisible}
-        modalVisible={chooseDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
-        vitalType={VitalType.BLOOD_PRESSURE}
-      />
+      {/* TODO: Uncomment to add Automatic Adding of Vitals... */}
+      {/*<ChooseDeviceModal*/}
+      {/*  setModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  modalVisible={chooseDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setChangeDeviceModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.BLOOD_PRESSURE}*/}
+      {/*/>*/}
 
-      <ChangeDeviceModal
-        setModalVisible={setChangeDeviceModalVisible}
-        modalVisible={changeDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setPreviousModalVisible={setChooseDeviceModalVisible}
-        vitalType={VitalType.BLOOD_PRESSURE}
-      />
+      {/*<ChangeDeviceModal*/}
+      {/*  setModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  modalVisible={changeDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setPreviousModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.BLOOD_PRESSURE}*/}
+      {/*/>*/}
 
       <LoadingModal
         setLoadingModalVisible={setLoadingModalVisible}

@@ -70,7 +70,10 @@ export default function PatientBloodOxygenPage(): React.JSX.Element {
       </View>
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Uncomment to add Automatic Adding of Vitals...
+        // setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Comment to add Automatic Adding of Vitals...
+        setAutoModalVisible={setModalVisible}
       />
       <InputManualModal
         setModalVisible={setModalVisible}
@@ -98,21 +101,21 @@ export default function PatientBloodOxygenPage(): React.JSX.Element {
         }
       />
 
-      <ChooseDeviceModal
-        setModalVisible={setChooseDeviceModalVisible}
-        modalVisible={chooseDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
-        vitalType={VitalType.BLOOD_OXYGEN}
-      />
-
-      <ChangeDeviceModal
-        setModalVisible={setChangeDeviceModalVisible}
-        modalVisible={changeDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setPreviousModalVisible={setChooseDeviceModalVisible}
-        vitalType={VitalType.BLOOD_OXYGEN}
-      />
+      {/* TODO: Uncomment to add Automatic Adding of Vitals... */}
+      {/*<ChooseDeviceModal*/}
+      {/*  setModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  modalVisible={chooseDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setChangeDeviceModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.BLOOD_OXYGEN}*/}
+      {/*/>*/}
+      {/*<ChangeDeviceModal*/}
+      {/*  setModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  modalVisible={changeDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setPreviousModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.BLOOD_OXYGEN}*/}
+      {/*/>*/}
 
       <LoadingModal
         setLoadingModalVisible={setLoadingModalVisible}
@@ -127,11 +130,9 @@ export default function PatientBloodOxygenPage(): React.JSX.Element {
           );
         }}
       />
-
       {addSuccessVisible && (
         <AddSuccessfullyDialog setter={setAddSuccessVisible} />
       )}
-
       {addFailedVisible && <AddFailedDialog setter={setAddFailedVisible} />}
     </View>
   );

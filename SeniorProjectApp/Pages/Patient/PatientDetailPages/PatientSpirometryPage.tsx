@@ -73,7 +73,10 @@ export default function PatientSpirometryPage(): React.JSX.Element {
 
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Uncomment to add Automatic Adding of Vitals...
+        // setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Comment to add Automatic Adding of Vitals...
+        setAutoModalVisible={setModalVisible}
       />
 
       <InputManualModal
@@ -106,21 +109,22 @@ export default function PatientSpirometryPage(): React.JSX.Element {
         }}
       />
 
-      <ChooseDeviceModal
-        setModalVisible={setChooseDeviceModalVisible}
-        modalVisible={chooseDeviceModalVisible}
-        setLoadingModalVisible={setReadingModalVisible}
-        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
-        vitalType={VitalType.SPIROMETRY}
-      />
+      {/* TODO: Uncomment to add Automatic Adding of Vitals... */}
+      {/*<ChooseDeviceModal*/}
+      {/*  setModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  modalVisible={chooseDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setReadingModalVisible}*/}
+      {/*  setChangeDeviceModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.SPIROMETRY}*/}
+      {/*/>*/}
 
-      <ChangeDeviceModal
-        setModalVisible={setChangeDeviceModalVisible}
-        modalVisible={changeDeviceModalVisible}
-        setLoadingModalVisible={setReadingModalVisible}
-        setPreviousModalVisible={setChooseDeviceModalVisible}
-        vitalType={VitalType.SPIROMETRY}
-      />
+      {/*<ChangeDeviceModal*/}
+      {/*  setModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  modalVisible={changeDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setReadingModalVisible}*/}
+      {/*  setPreviousModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.SPIROMETRY}*/}
+      {/*/>*/}
       {/*Instead of using the normal Loading Modal, we walk the user through 3 readings...*/}
       <SpirometryReadingModal
         readingModalVisible={readingModalVisible}

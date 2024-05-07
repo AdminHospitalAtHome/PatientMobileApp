@@ -66,7 +66,10 @@ export default function PatientWeightPage(): React.JSX.Element {
       </View>
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Uncomment to add Automatic Adding of Vitals...
+        // setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Comment to add Automatic Adding of Vitals...
+        setAutoModalVisible={setModalVisible}
       />
 
       <InputManualModal
@@ -95,21 +98,22 @@ export default function PatientWeightPage(): React.JSX.Element {
         }
       />
 
-      <ChooseDeviceModal
-        setModalVisible={setChooseDeviceModalVisible}
-        modalVisible={chooseDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
-        vitalType={VitalType.WEIGHT}
-      />
+      {/* TODO: Uncomment to add Automatic Adding of Vitals... */}
+      {/*<ChooseDeviceModal*/}
+      {/*  setModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  modalVisible={chooseDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setChangeDeviceModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.WEIGHT}*/}
+      {/*/>*/}
 
-      <ChangeDeviceModal
-        setModalVisible={setChangeDeviceModalVisible}
-        modalVisible={changeDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setPreviousModalVisible={setChooseDeviceModalVisible}
-        vitalType={VitalType.WEIGHT}
-      />
+      {/*<ChangeDeviceModal*/}
+      {/*  setModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  modalVisible={changeDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setPreviousModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.WEIGHT}*/}
+      {/*/>*/}
 
       <LoadingModal
         setLoadingModalVisible={setLoadingModalVisible}

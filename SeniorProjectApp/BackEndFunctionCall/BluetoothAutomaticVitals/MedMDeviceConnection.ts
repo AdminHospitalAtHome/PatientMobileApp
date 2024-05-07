@@ -286,7 +286,7 @@ export function parseXMLHeartRateData(xml: string): Record<string, any> {
       pulseTerm = 'pulse';
     }
     if (searchTerm === '') {
-      throw new Error('Unsopported Measurement Type');
+      throw new Error('Unsupported Measurement Type');
     }
 
     let heartRateInBPM: number = Math.floor(Number(obj[searchTerm][pulseTerm]));
@@ -361,10 +361,10 @@ export function parseXMLSpirometryData(xml: string): Record<string, any> {
     const parser = new XMLParser();
     let obj = parser.parse(xml);
     let dataJson = JSON.parse(obj['measurements-spirometry'].spirometry);
-    let spirometryFEV1InLiters: number = Number(dataJson.FEV1.value);
-    if (Number.isNaN(spirometryFEV1InLiters)) {
+    if (Number.isNaN(Number(dataJson.FEV1.value))) {
       throw new Error('Invalid Number');
     }
+    let spirometryFEV1InLiters: number = Number(dataJson.FEV1.value);
     // THE FEV1 Is likely not in Liters, so need to convert...
     if (dataJson.FEV1.units === 'cl') {
       spirometryFEV1InLiters /= 100;

@@ -66,7 +66,10 @@ export default function PatientHeartRatePage(): React.JSX.Element {
       </View>
       <AddButtons
         setManualModalVisible={setModalVisible}
-        setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Uncomment to add Automatic Adding of Vitals...
+        // setAutoModalVisible={setChooseDeviceModalVisible}
+        // TODO: Comment to add Automatic Adding of Vitals...
+        setAutoModalVisible={setModalVisible}
       />
       <InputManualModal
         setModalVisible={setModalVisible}
@@ -93,21 +96,23 @@ export default function PatientHeartRatePage(): React.JSX.Element {
           />
         }
       />
-      <ChooseDeviceModal
-        setModalVisible={setChooseDeviceModalVisible}
-        modalVisible={chooseDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setChangeDeviceModalVisible={setChangeDeviceModalVisible}
-        vitalType={VitalType.HEART_RATE}
-      />
 
-      <ChangeDeviceModal
-        setModalVisible={setChangeDeviceModalVisible}
-        modalVisible={changeDeviceModalVisible}
-        setLoadingModalVisible={setLoadingModalVisible}
-        setPreviousModalVisible={setChooseDeviceModalVisible}
-        vitalType={VitalType.HEART_RATE}
-      />
+      {/* TODO: Uncomment to add Automatic Adding of Vitals... */}
+      {/*<ChooseDeviceModal*/}
+      {/*  setModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  modalVisible={chooseDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setChangeDeviceModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.HEART_RATE}*/}
+      {/*/>*/}
+
+      {/*<ChangeDeviceModal*/}
+      {/*  setModalVisible={setChangeDeviceModalVisible}*/}
+      {/*  modalVisible={changeDeviceModalVisible}*/}
+      {/*  setLoadingModalVisible={setLoadingModalVisible}*/}
+      {/*  setPreviousModalVisible={setChooseDeviceModalVisible}*/}
+      {/*  vitalType={VitalType.HEART_RATE}*/}
+      {/*/>*/}
 
       <LoadingModal
         setLoadingModalVisible={setLoadingModalVisible}
